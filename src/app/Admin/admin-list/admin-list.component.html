@@ -1,0 +1,102 @@
+<div class="d-flex justify-content-between align-items-center mt-5">
+    <h2>Manage Admins</h2>
+  </div>
+  <div class="container-fluid mt-6">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <button class="btn btn-primary" routerLink="/add-admin">
+        <i class="bi bi-plus-circle"></i> Add Admin
+      </button>
+      <input type="text" class="form-control w-25" placeholder="Search Admins" >
+    </div>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of users">
+          <td>{{item.userId}}</td>
+          <td>{{item.name}}</td>
+          <td>{{item.email}}</td>
+          <td class="text-center">
+            <button class="btn btn-primary me-2"  >
+             <i class="fa fa-pencil" ></i>
+            </button>
+            <button class="btn btn-danger" (click)="deleteAdmin(item.userId)">
+            <i class="fa fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+<!-- <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addModalLabel">Add Admin</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form #addForm="ngForm">
+            <div class="mb-3">
+              <label for="addName" class="form-label">Name</label>
+              <input type="text" class="form-control" id="addName" [(ngModel)]="newAdmin.name" name="name" required>
+            </div>
+            <div class="mb-3">
+              <label for="addSurname" class="form-label">Surname</label>
+              <input type="text" class="form-control" id="addSurname" [(ngModel)]="newAdmin.surname" name="surname" required>
+            </div>
+            <div class="mb-3">
+              <label for="addEmail" class="form-label">Email</label>
+              <input type="email" class="form-control" id="addEmail" [(ngModel)]="newAdmin.email" name="email" required>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" (click)="addAdmin()">Add Admin</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editModalLabel">Edit Admin</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form #editForm="ngForm">
+            <div class="mb-3">
+              <label for="editName" class="form-label">Name</label>
+              <input type="text" class="form-control" id="editName" [(ngModel)]="selectedAdmin.name" name="name" required>
+            </div>
+            <div class="mb-3">
+              <label for="editSurname" class="form-label">Surname</label>
+              <input type="text" class="form-control" id="editSurname" [(ngModel)]="selectedAdmin.surname" name="surname" required>
+            </div>
+            <div class="mb-3">
+              <label for="editEmail" class="form-label">Email</label>
+              <input type="email" class="form-control" id="editEmail" [(ngModel)]="selectedAdmin.email" name="email" required>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" (click)="editAdmin()">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div> -->
