@@ -1,0 +1,23 @@
+<div class="container">
+    <div class="search-bar">
+      <input type="text" [(ngModel)]="searchQuery" placeholder="Search driver by name">
+      <button (click)="searchDriver()">Search</button>
+    </div>
+  
+    <!-- driver.component.html -->
+  <div *ngFor="let driver of drivers; let i = index" class="driver-box">
+    <div class="driver-info">
+      <!-- Driver info -->
+      <strong>{{ driver.name }} {{ driver.surname }}</strong>
+      <ul>
+        <li>Username: {{ driver.username }}</li>
+        <li>Email: {{ driver.email }}</li>
+        <li>Number: {{ driver.number }}</li>
+      </ul>
+    </div>
+    <div class="driver-actions">
+      <button class="edit-button" (click)="editDriver(driver)">Edit</button>
+      <button class="delete-button" (click)="deleteDriver(driver.username)">Delete</button>
+    </div>
+  </div>
+  

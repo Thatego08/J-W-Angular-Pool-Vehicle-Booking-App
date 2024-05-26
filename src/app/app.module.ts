@@ -9,7 +9,14 @@ import { AdminListComponent } from './Admin/admin-list/admin-list.component';
 import { AdminAddComponent } from './Admin/admin-add/admin-add.component';
 import { AdminEditComponent } from './Admin/admin-edit/admin-edit.component';
 import { AdminHomeComponent } from './Admin/admin-home/admin-home.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';  
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms'; 
+import { DriverComponent } from './driver/driver.component';
+import { NavigationComponent } from './navigation/navigation.component';  
+
+import { ReactiveFormsModule } from '@angular/forms';
+import { RegisterDriverComponent } from './register-driver/register-driver.component';
+import { EditDriverComponent } from './edit-driver/edit-driver.component';
 
 @NgModule({
   declarations: [
@@ -19,13 +26,19 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     AdminAddComponent,
     AdminEditComponent,
     AdminHomeComponent,
+    DriverComponent,
+    NavigationComponent,
+    RegisterDriverComponent,
+    EditDriverComponent,
   
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    NgbModule 
+    NgbModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
