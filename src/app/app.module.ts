@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,6 +17,19 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RegisterDriverComponent } from './register-driver/register-driver.component';
 import { EditDriverComponent } from './edit-driver/edit-driver.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { RegisterComponent } from './user/register/register.component';
+import { LoginComponent } from './user/login/login.component';
+import { DashboardComponent } from './user/dashboard/dashboard.component';
+import { SettingsComponent } from './user/settings/settings.component';
+import { FeedbackComponent } from './user/feedback/feedback.component';
+import { NotificationsComponent } from './user/notifications/notifications.component';
+import { ProfileComponent } from './user/profile/profile.component';
+import { AuthGuard } from './auth.guard';
+import { AuthInterceptor } from './Tools/auth.interceptor';
+import { AuthService } from './user/auth.service';
+import { UserService } from './user/user.service';
+
 
 @NgModule({
   declarations: [
@@ -30,7 +43,13 @@ import { EditDriverComponent } from './edit-driver/edit-driver.component';
     NavigationComponent,
     RegisterDriverComponent,
     EditDriverComponent,
-  
+    RegisterComponent,
+    LoginComponent,
+    DashboardComponent,
+    SettingsComponent,
+    FeedbackComponent,
+    NotificationsComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +59,15 @@ import { EditDriverComponent } from './edit-driver/edit-driver.component';
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    AuthService,
+    AuthGuard,
+    UserService,
+    HttpClient,
+    provideAnimationsAsync()
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

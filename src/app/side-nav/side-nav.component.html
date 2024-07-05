@@ -1,37 +1,27 @@
-<body class="bg-gray-100">
-  <div class="flex">
-      <!-- Sidebar -->
-      <div class="w-64 h-screen bg-gray-800 text-white flex flex-col">
-          <!-- Logo -->
-          <div class="h-16 flex items-center justify-center border-b border-gray-700">
-              <span class="text-2xl font-semibold">Logo</span>
-          </div>
-          <!-- Navigation -->
-          <nav class="flex-1 px-4 py-6">
-              <ul>
-                  <li>
-                      <a href="#" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">Dashboard</a>
-                  </li>
-                  <li>
-                      <a href="#" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">Profile</a>
-                  </li>
-                  <li>
-                      <a href="#" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">Settings</a>
-                  </li>
-                  <li>
-                      <a href="#" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">Notifications</a>
-                  </li>
-              </ul>
-          </nav>
-          <!-- Footer -->
-          <div class="h-16 flex items-center justify-center border-t border-gray-700">
-              <span class="text-sm">&copy; 2024 Your Company</span>
-          </div>
-      </div>
-      <!-- Main Content -->
-      <div class="flex-1 p-6">
-          <h1 class="text-3xl font-semibold mb-4">Main Content</h1>
-          <p>This is where your main content goes.</p>
-      </div>
-  </div>
-</body>
+<div class="w-64 h-screen bg-gray-800 text-white flex flex-col">
+    <!-- Logo -->
+    <div class="h-16 flex items-center justify-center border-b border-gray-700">
+        <span class="text-2xl font-semibold">Logo</span>
+    </div>
+    <!-- Navigation -->
+    <nav class="flex-1 px-4 py-6">
+        <ul>
+            <li>
+                <a routerLink="/app-dashboard" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">Dashboard</a>
+            </li>
+            <li>
+                <a routerLink="/app-profile" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">Profile</a>
+            </li>
+            <li>
+                <a routerLink="/app-settings" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">Settings</a>
+            </li>
+            <li>
+                <a routerLink="/app-notifications" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">Notifications</a>
+            </li>
+        </ul>
+    </nav>
+    <!-- Footer -->
+    <div class="h-16 flex items-center justify-center border-t border-gray-700">
+        <span class="text-sm">&copy; J&W Vehicle System</span>
+    </div>
+</div>
