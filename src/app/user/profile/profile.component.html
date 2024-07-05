@@ -1,0 +1,15 @@
+<!-- profile.component.html -->
+<div  *ngIf="user" >
+    <h2>User Profile</h2>
+    <p><strong>Username:</strong> {{user.userName}}</p>
+    <p><strong>Email:</strong> {{user.email}}</p>
+    <p><strong>Name:</strong> {{user.name}}</p>
+    <p><strong>Surname:</strong> {{user.surname}} </p>
+    <p><strong>Role:</strong> {{user.role}}</p>
+  </div>
+  <!-- <div *ngIf="errorMessage">
+    <p>Error: {{errorMessage}}</p>
+  </div> -->
+  
+  <button (click)="logout()">Logout</button>
+  

@@ -1,0 +1,14 @@
+<h2>Feedback</h2>
+<form (ngSubmit)="submitFeedback()">
+  <div>
+    <label for="message">Message</label>
+    <textarea id="message" [(ngModel)]="feedbackData.message" name="message" required></textarea>
+  </div>
+  <div>
+    <label for="rating">Rating</label>
+    <select id="rating" [(ngModel)]="feedbackData.rating" name="rating" required>
+      <option *ngFor="let r of [1, 2, 3, 4, 5]" [value]="r">{{r}}</option>
+    </select>
+  </div>
+  <button type="submit">Submit Feedback</button>
+</form>

@@ -1,3 +1,10 @@
-
-<app-side-nav></app-side-nav>
-<router-outlet></router-outlet>
+<div class="flex h-screen">
+    <!-- Sidebar Component -->
+    <app-side-nav class="w-64 bg-gray-800 text-white"></app-side-nav>
+  
+    <!-- Main Content -->
+    <div class="flex-1 p-6 overflow-y-auto">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+  
