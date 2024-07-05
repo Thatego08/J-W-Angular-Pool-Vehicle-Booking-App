@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DriverService } from '../driver.service';
-import { DriverModel } from '../driver.model';
+import { DriverService } from '../../services/driver.service';
+import { DriverModel } from '../../models/driver.model';
 import { Router } from '@angular/router';
 
 @Component({
