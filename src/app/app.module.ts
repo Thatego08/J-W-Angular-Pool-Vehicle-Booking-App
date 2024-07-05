@@ -15,8 +15,8 @@ import { DriverComponent } from './driver/driver.component';
 import { NavigationComponent } from './navigation/navigation.component';  
 
 import { ReactiveFormsModule } from '@angular/forms';
-import { RegisterDriverComponent } from './register-driver/register-driver.component';
-import { EditDriverComponent } from './edit-driver/edit-driver.component';
+import { RegisterDriverComponent } from './driver/register-driver/register-driver.component';
+import { EditDriverComponent } from './driver/edit-driver/edit-driver.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { RegisterComponent } from './user/register/register.component';
 import { LoginComponent } from './user/login/login.component';

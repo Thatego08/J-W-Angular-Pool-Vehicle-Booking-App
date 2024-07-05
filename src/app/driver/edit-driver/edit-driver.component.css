@@ -13,6 +13,7 @@
   padding: 20px; /* Add padding to create space inside the container */
   box-sizing: border-box; /* Ensure padding is included in the width calculation */
 }
+
 /* Table styling */
 table {
   width: 100%;

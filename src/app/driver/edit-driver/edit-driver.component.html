@@ -1,0 +1,40 @@
+<div class="container">
+  <h1>Edit Driver</h1>
+
+  <div class="row">
+    <div class="col-6">
+      <form #form="ngForm" (ngSubmit)="updateDrivers(form)">
+        <div class="row mb-3">
+          <label for="name" class="col-sm-2 col-form-label">Name</label>
+          <input style="border-color: darkgray;" type="text" class="form-control" id="name" name="name" [(ngModel)]="updatedDriver.name" required>
+        </div>
+
+        <div class="row mb-3">
+          <label for="surname" class="col-sm-2 col-form-label">Surname</label>
+          <input style="border-color: darkgray;" type="text" class="form-control" id="surname" name="surname" [(ngModel)]="updatedDriver.surname" required>
+        </div>
+
+        <div class="row mb-3">
+          <label for="email" class="col-sm-2 col-form-label">Email</label>
+          <input style="border-color: darkgray;" type="text" class="form-control" id="email" name="email" [(ngModel)]="updatedDriver.email" required>
+        </div>
+
+        <div class="row mb-3">
+          <label for="userName" class="col-sm-2 col-form-label">User Name</label>
+          <input style="border-color: darkgray;" type="text" class="form-control" id="userName" name="userName" [(ngModel)]="updatedDriver.userName" required>
+        </div>
+
+        <div class="row mb-3">
+          <label for="phoneNumber" class="col-sm-2 col-form-label">Phone Number</label>
+          <input style="border-color: darkgray;" type="text" class="form-control" id="phoneNumber" name="phoneNumber" [(ngModel)]="updatedDriver.phoneNumber" required>
+        </div>
+
+        <button type="submit" class="btn-save action-button bg-blue-500 hover:bg-blue-700">Save</button>
+        <button type="button" class="btn-cancel action-button bg-red-500 hover:bg-red-700" (click)="cancel()">Cancel</button>
+      </form>
+    </div>
+  </div>
+
+  <div *ngIf="successMessage" class="alert alert-success mt-3">{{ successMessage }}</div>
+  <div *ngIf="errorMessage" class="alert alert-danger mt-3">{{ errorMessage }}</div>
+</div>

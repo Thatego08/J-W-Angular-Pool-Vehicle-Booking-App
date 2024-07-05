@@ -1,23 +1,44 @@
-<div class="container">
-    <div class="search-bar">
-      <input type="text" [(ngModel)]="searchQuery" placeholder="Search driver by name">
-      <button (click)="searchDriver()">Search</button>
-    </div>
-  
-    <!-- driver.component.html -->
-  <div *ngFor="let driver of drivers; let i = index" class="driver-box">
-    <div class="driver-info">
-      <!-- Driver info -->
-      <strong>{{ driver.name }} {{ driver.surname }}</strong>
-      <ul>
-        <li>Username: {{ driver.username }}</li>
-        <li>Email: {{ driver.email }}</li>
-        <li>Number: {{ driver.number }}</li>
-      </ul>
-    </div>
-    <div class="driver-actions">
-      <button class="edit-button" (click)="editDriver(driver)">Edit</button>
-      <button class="delete-button" (click)="deleteDriver(driver.username)">Delete</button>
-    </div>
+
+<img src="assets/logo.png" alt="Logo" class="logo-image">
+
+<div class="container mx-auto p-6">
+  <div class="search-bar">
+    <input type="text" [(ngModel)]="searchUsername" placeholder="Search by username" class="search-input">
+    <button (click)="searchDriver()" class="search-button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+      Search
+    </button>
   </div>
-  
+ 
+  <div *ngIf="drivers.length > 0">
+    <table class="min-w-full bg-white border border-gray-200 shadow-md rounded-md overflow-hidden mt-6">
+      <thead class="bg-blue-500 text-white uppercase text-sm">
+        <tr>
+          <th class="py-3 px-6 text-left">Name</th>
+          <th class="py-3 px-6 text-left">Surname</th>
+          <th class="py-3 px-6 text-left">Email</th>
+          <th class="py-3 px-6 text-left">UserName</th>
+          <th class="py-3 px-6 text-left">Phone</th>
+          <th class="py-3 px-6 text-left">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let driver of drivers" class="text-gray-700">
+          <td class="py-3 px-6">{{ driver.name }}</td>
+          <td class="py-3 px-6">{{ driver.surname }}</td>
+          <td class="py-3 px-6">{{ driver.email }}</td>
+          <td class="py-3 px-6">{{ driver.userName }}</td>
+          <td class="py-3 px-6">{{ driver.phoneNumber }}</td>
+          <td class="py-3 px-6">
+            <button class="btn-edit" [routerLink]="['/edit-driver', driver.userName]">Edit</button>
+            <button (click)="deleteDriver(driver.userName)" class="action-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div *ngIf="drivers.length === 0" class="text-center mt-4 text-gray-600">
+    No drivers found.
+  </div>
+</div>

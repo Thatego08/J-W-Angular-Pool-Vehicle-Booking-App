@@ -12,7 +12,7 @@ export class AdminService {
   }
 
   constructor(private http:HttpClient) { }
-  endPoint:string ="https://localhost:7167/api/Admin/";
+  endPoint:string ="https://localhost:7041/api/Admin/";
  //R
   GetAllAdmins()
   {

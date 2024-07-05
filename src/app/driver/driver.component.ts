@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DriverService } from '../driver.service';
-import { DriverModel } from '../driver.model';
+import { DriverService } from '../services/driver.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,47 +8,60 @@ import { Router } from '@angular/router';
   styleUrls: ['./driver.component.css']
 })
 export class DriverComponent implements OnInit {
-  drivers: DriverModel[] = [];
-  searchQuery: string = '';
-//
-  constructor(private driverService: DriverService, private router: Router) {}
+  drivers: any[] = [];
+  searchUsername: string = '';
+  searchedDriver: any = null; // Variable to hold the searched driver
 
-  ngOnInit(): void {
-    this.loadDrivers();
+  constructor(private driverService: DriverService, private router: Router) { }
+
+  ngOnInit() {
+    this.fetchDrivers();
   }
 
-  loadDrivers(): void {
-    this.driverService.getAllDrivers().subscribe((drivers) => {
-      this.drivers = drivers;
-    });
+  fetchDrivers() {
+    this.driverService.getAllDrivers().subscribe(
+      (data: any[]) => {
+        this.drivers = data;
+      },
+      error => {
+        console.error('Error fetching drivers', error);
+      }
+    );
   }
 
-  searchDriver(): void {
-    if (this.searchQuery.trim()) {
-      this.driverService.searchDriver(this.searchQuery).subscribe(searchResult => {
-        if (searchResult !== null) {
-          this.drivers = [searchResult];
-        } else {
-          this.drivers = [];
+
+  deleteDriver(userName: string) {
+    if (confirm('Are you sure you want to delete this driver?')) {
+      this.driverService.deleteDriver(userName).subscribe(
+        () => {
+          // Remove deleted driver from local list
+          this.drivers = this.drivers.filter(d => d.userName !== userName);
+          // Clear searched driver when deleted
+          if (this.searchedDriver && this.searchedDriver.userName === userName) {
+            this.searchedDriver = null;
+          }
+        },
+        error => {
+          console.error('Error deleting driver', error);
         }
-      }, error => {
-        console.error('Failed to search driver:', error);
-        alert('Failed to search driver. Please try again.');
-      });
-    } else {
-      this.loadDrivers();
+      );
     }
   }
-  
-  
 
-  editDriver(driver: DriverModel): void {
-    this.router.navigate(['/edit-driver', driver.username]);
+  searchDriver() {
+    if (this.searchUsername.trim() === '') {
+      // If search input is empty, fetch all drivers
+      this.fetchDrivers();
+    } else {
+      // Filter drivers based on username
+      this.drivers = this.drivers.filter(driver =>
+        driver.userName.toLowerCase().includes(this.searchUsername.toLowerCase())
+      );
+    }
   }
 
-  deleteDriver(username: string): void {
-    this.driverService.removeDriver(username).subscribe(() => {
-      this.loadDrivers();
-    });
+  clearSearch() {
+    this.searchUsername = ''; // Clear the search input
+    this.fetchDrivers(); // Fetch all drivers to reset the list
   }
 }
