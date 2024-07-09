@@ -35,6 +35,6 @@ describe('AuthGuard', () => {
     const route = {} as ActivatedRouteSnapshot;
     const state = {} as RouterStateSnapshot;
     expect(guard.canActivate(route, state)).toBeFalsy();
-    expect(router.navigate).toHaveBeenCalledWith(['/login']);
+    expect(router.navigate).toHaveBeenCalledWith(['/app-login']);
   });
 });

@@ -14,6 +14,8 @@ import { ProfileComponent } from './user/profile/profile.component';
 import { RegisterComponent } from './user/register/register.component';
 import { SettingsComponent } from './user/settings/settings.component';
 import { AuthGuard } from './auth.guard';
+import { ForgotPasswordComponent } from './user/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './user/reset-password/reset-password.component';
 
 
 
@@ -21,14 +23,16 @@ const routes: Routes = [
  {path:'', pathMatch:'full', redirectTo: 'app-login'} ,
  {path:'admin-home', component:AdminListComponent} ,
  {path:'add-admin',component:AdminAddComponent},
- {path: 'driver', component:DriverComponent},
+ {path: 'driver', component:DriverComponent, canActivate: [AuthGuard]},
  {path: 'register-driver', component:RegisterDriverComponent},
  {path: 'edit-driver/:userName', component:EditDriverComponent},
 
  //User routes
  { path: 'app-login', component: LoginComponent },
   { path: 'app-register', component: RegisterComponent },
-
+  { path: 'app-forgot-password', component: ForgotPasswordComponent },
+  { path: 'app-reset-password', component: ResetPasswordComponent },
+ 
   {path: 'app-dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
   { path: 'app-profile', component: ProfileComponent, canActivate: [AuthGuard]},
   
