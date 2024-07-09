@@ -29,6 +29,8 @@ import { AuthGuard } from './auth.guard';
 import { AuthInterceptor } from './Tools/auth.interceptor';
 import { AuthService } from './user/auth.service';
 import { UserService } from './user/user.service';
+import { ForgotPasswordComponent } from './user/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './user/reset-password/reset-password.component';
 
 
 @NgModule({
@@ -49,7 +51,9 @@ import { UserService } from './user/user.service';
     SettingsComponent,
     FeedbackComponent,
     NotificationsComponent,
-    ProfileComponent
+    ProfileComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,
