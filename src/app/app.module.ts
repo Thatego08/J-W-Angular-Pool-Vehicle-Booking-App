@@ -31,6 +31,7 @@ import { AuthService } from './user/auth.service';
 import { UserService } from './user/user.service';
 import { ForgotPasswordComponent } from './user/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './user/reset-password/reset-password.component';
+import { FeedbackListComponent } from './user/feedback-list/feedback-list.component';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import { ResetPasswordComponent } from './user/reset-password/reset-password.com
     NotificationsComponent,
     ProfileComponent,
     ForgotPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    FeedbackListComponent
   ],
   imports: [
     BrowserModule,

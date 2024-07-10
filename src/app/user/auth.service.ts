@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap, catchError, throwError } from 'rxjs';
+import { Feedback } from '../models/feedback.model';
 
 
 // Define the interface for the response from the login API
@@ -16,7 +17,7 @@ export class AuthService {
 
 
   private apiUrl = 'https://localhost:7041/api/User';
-  
+  private FapiUrl = 'https://localhost:7041/api/Feedback';
   constructor(private http: HttpClient) {}
 
   login(credentials: { userName: string; password: string }): Observable<LoginResponse> {
@@ -84,5 +85,16 @@ export class AuthService {
     // Handle error accordingly
     console.error('An error occurred:', error);
     return throwError(error);
+  }
+
+
+  //Feedback uses FapiUrl
+
+  submitFeedback(feedback: Feedback): Observable<any> {
+    return this.http.post(`${this.FapiUrl}/submit`, feedback);
+  }
+
+  getAllFeedbacks(): Observable<Feedback[]> {
+    return this.http.get<Feedback[]>(`${this.FapiUrl}/all`);
   }
 }

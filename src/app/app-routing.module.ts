@@ -16,6 +16,7 @@ import { SettingsComponent } from './user/settings/settings.component';
 import { AuthGuard } from './auth.guard';
 import { ForgotPasswordComponent } from './user/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './user/reset-password/reset-password.component';
+import { FeedbackListComponent } from './user/feedback-list/feedback-list.component';
 
 
 
@@ -38,7 +39,8 @@ const routes: Routes = [
   
   { path: 'app-notifications', component: NotificationsComponent, canActivate: [AuthGuard]},
   { path: 'app-settings', component: SettingsComponent, canActivate: [AuthGuard] },
-  { path: 'app-feedback', component: FeedbackComponent, canActivate: [AuthGuard] }//canActivate: [AuthGuard] }, 
+  { path: 'app-feedback', component: FeedbackComponent, canActivate: [AuthGuard] }, 
+  { path: 'app-feedback-list', component: FeedbackListComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
