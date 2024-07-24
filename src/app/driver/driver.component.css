@@ -89,3 +89,90 @@ thead {
   background-color: #ffcc00; /* Yellow on hover */
   color: #042446; /* Dark blue text on hover */
 }
+/* Add these styles in your styles.css or component-specific CSS file */
+
+.container {
+  max-width: 1200px;
+}
+
+.search-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.search-input {
+  flex: 1;
+  padding: 0.5rem;
+  margin-right: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+}
+
+.search-button {
+  flex-shrink: 0;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse; /* Ensures borders are not doubled */
+}
+
+.table th,
+.table td {
+  border: 1px solid #ddd; /* Border color for table cells */
+}
+
+.button-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.action-button {
+  display: inline-block;
+  text-align: center;
+  width: 100px; /* Set a fixed width for buttons to ensure they are the same size */
+  height: 50px; /* Set a fixed height for buttons */
+  line-height: 40px; /* Center text vertically */
+}
+
+.btn-edit {
+  text-decoration: none;
+}
+
+.bg-blue-500 {
+  background-color: #081e42;
+}
+
+.bg-blue-700 {
+  background-color: #0a1e4b;
+}
+
+.bg-red-500 {
+  background-color: #ef4444;
+}
+
+.bg-red-700 {
+  background-color: #dc2626;
+}
+
+.hover\:bg-blue-700:hover {
+  background-color: #0a2153;
+}
+
+.hover\:bg-red-700:hover {
+  background-color: #dc2626;
+}
+
+.text-white {
+  color: white;
+}
+
+.font-bold {
+  font-weight: bold;
+}
+
+.rounded {
+  border-radius: 0.25rem;
+}
+

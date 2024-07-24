@@ -17,6 +17,13 @@ import { AuthGuard } from './auth.guard';
 
 
 
+import { TripComponent } from './trip/trip.component';
+import { CreateTripComponent } from './create-trip/create-trip.component';
+import { EditTripComponent } from './edit-trip/edit-trip.component';
+import { GetTripComponent } from './get-trip/get-trip.component';
+
+
+
 const routes: Routes = [
  {path:'', pathMatch:'full', redirectTo: 'app-login'} ,
  {path:'admin-home', component:AdminListComponent} ,
@@ -25,6 +32,12 @@ const routes: Routes = [
  {path: 'register-driver', component:RegisterDriverComponent},
  {path: 'edit-driver/:userName', component:EditDriverComponent},
 
+ //Trip Routes
+ {path: 'trip', component:TripComponent},
+ {path: 'create-trip', component:CreateTripComponent},
+ { path: 'edit-trip/:id', component: EditTripComponent },
+
+ {path: 'get-trip', component:GetTripComponent},
  //User routes
  { path: 'app-login', component: LoginComponent },
   { path: 'app-register', component: RegisterComponent },
