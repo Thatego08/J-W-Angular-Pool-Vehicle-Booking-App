@@ -1,0 +1,112 @@
+<div class="container">
+    <h2>Create a New Trip</h2>
+
+    <!-- Main Trip Details Section -->
+    <form [formGroup]="tripForm" (ngSubmit)="onSubmit()" class="trip-form">
+        <div class="form-section">
+            <!-- Vehicle ID -->
+            <div class="form-group">
+                <label for="name">Vehicle Name</label>
+                <input type="text" id="name" formControlName="name" class="form-control">
+                <div *ngIf="tripForm.get('name')?.invalid && tripForm.get('name')?.touched"
+                    class="text-danger">
+                    Vehicle name is required.
+                </div>
+            </div>
+
+            <!-- Location -->
+            <div class="form-group">
+                <label for="location">Location</label>
+                <input type="text" id="location" formControlName="location" class="form-control">
+                <div *ngIf="tripForm.get('location')?.invalid && tripForm.get('location')?.touched"
+                    class="text-danger">
+                    Location is required.
+                </div>
+            </div>
+
+            <!-- Fuel Amount -->
+            <div class="form-group">
+                <label for="fuelAmount">Fuel Amount</label>
+                <input type="number" id="fuelAmount" formControlName="fuelAmount" class="form-control">
+                <div *ngIf="tripForm.get('fuelAmount')?.invalid && tripForm.get('fuelAmount')?.touched"
+                    class="text-danger">
+                    Fuel Amount is required.
+                </div>
+            </div>
+
+            <!-- Comment -->
+            <div class="form-group">
+                <label for="comment">Description</label>
+                <textarea id="comment" formControlName="comment" class="form-control"></textarea>
+            </div>
+
+           <!-- get-trip.component.html -->
+
+<!-- Travel Start DateTime -->
+<div class="form-group">
+    <label for="travelStart">Travel Start</label>
+    <input type="datetime-local" id="travelStart" formControlName="travelStart" class="form-control">
+    <div *ngIf="tripForm.get('travelStart')?.invalid && tripForm.get('travelStart')?.touched" class="text-danger">
+      Travel Start Date and Time is required.
+    </div>
+  </div>
+  
+  <!-- Travel End DateTime -->
+  <div class="form-group">
+    <label for="travelEnd">Travel End</label>
+    <input type="datetime-local" id="travelEnd" formControlName="travelEnd" class="form-control">
+    <div *ngIf="tripForm.get('travelEnd')?.invalid && tripForm.get('travelEnd')?.touched" class="text-danger">
+      Travel End Date and Time is required.
+    </div>
+  </div>
+  
+
+            <!-- Registration Number -->
+            <div class="form-group">
+                <label for="registrationNumber">Registration Number</label>
+                <input type="text" id="registrationNumber" formControlName="registrationNumber" class="form-control">
+            </div>
+        </div>
+
+        <!-- Media Upload Section -->
+        <div class="section-divider"></div>
+
+        <div class="section-heading">
+            <h3>Record Incident</h3>
+        </div>
+
+ <!-- Image Upload -->
+ <div class="form-group">
+    <label for="mediaFiles">Upload Image</label>
+    <input type="file" id="mediaFiles" (change)="onFileChange($event)" accept="image/*" class="form-control">
+    <div *ngIf="fileError" class="text-danger">
+      {{ fileError }}
+    </div>
+    <img *ngIf="imagePreview" [src]="imagePreview" alt="Image Preview" style="max-width: 100%; max-height: 200px;"/>
+  </div>
+
+        <div class="form-group">
+            <label for="mediaDescription">Comment</label>
+            <input id="mediaDescription" formControlName="mediaDescription" class="form-control">
+        </div>
+
+        <!-- Image preview section -->
+        <div class="image-preview">
+            <div *ngIf="imagePreview" class="preview-container">
+                <img [src]="imagePreview" alt="Image Preview" class="img-preview">
+                <button type="button" class="btn btn-link cancel-button" (click)="cancelImage()">Cancel</button>
+            </div>
+        </div>
+
+        <!-- Submit button -->
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary" [disabled]="tripForm.invalid">Submit</button>
+        </div>
+    </form>
+
+    <!-- Success message -->
+    <div *ngIf="message" class="alert alert-success">
+        {{ message }}
+    </div>
+</div>
+

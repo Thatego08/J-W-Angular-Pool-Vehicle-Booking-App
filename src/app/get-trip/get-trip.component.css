@@ -1,0 +1,105 @@
+/* Container for form and table */
+.container {
+    padding: 20px;
+    max-width: 1500px;
+    margin: 0 auto;
+}
+
+/* Form styling */
+.search-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.search-form label {
+    font-weight: bold;
+    color: #333;
+}
+
+.search-form input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Button group styling */
+.button-group {
+    display: flex;
+    gap: 10px; /* Space between buttons */
+}
+
+/* Button styling */
+.btn-submit {
+    background-color: #0c3057;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    flex: 1; /* Make button flexible to fill the space */
+}
+
+.btn-submit:hover {
+    background-color: #0d2846;
+}
+
+/* Table styling */
+.trip-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.trip-table th, .trip-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+.trip-table thead {
+    background-color: #0a2b4e;
+    color: white;
+}
+
+.trip-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.trip-table tbody tr:hover {
+    background-color: #ddd;
+}
+
+/* Action buttons */
+.action-button {
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.bg-blue-500 {
+    background-color: #072442;
+}
+
+.bg-blue-500:hover {
+    background-color: #082c53;
+}
+
+.bg-red-500 {
+    background-color: #dc3545;
+}
+
+.bg-red-500:hover {
+    background-color: #c82333;
+}
+
+.text-white {
+    color: white;
+}
+
+.font-bold {
+    font-weight: bold;
+}

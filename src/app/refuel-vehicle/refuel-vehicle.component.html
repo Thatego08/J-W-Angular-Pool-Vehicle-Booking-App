@@ -1,0 +1,31 @@
+<form [formGroup]="refuelVehicleForm" (ngSubmit)="onSubmit()" class="custom-form">
+    <div class="form-group row align-items-center">
+      <div class="col-sm-4">
+        <label for="tripId">Trip ID</label>
+      </div>
+      <div class="col-sm-1">
+        <!-- Empty div for alignment -->
+      </div>
+      <div class="col-sm-7">
+        <input type="number" id="tripId" formControlName="tripId" class="form-control" required />
+        <div *ngIf="refuelVehicleForm.get('tripId')?.invalid && refuelVehicleForm.get('tripId')?.touched" class="text-danger">
+          Trip ID is required.
+        </div>
+      </div>
+    </div>
+  
+    <div class="form-group row align-items-center" *ngFor="let field of fields">
+      <div class="col-sm-4">
+        <label>{{ field.label }}</label>
+      </div>
+      <div class="col-sm-1 text-center">
+        <input type="checkbox" formControlName="{{ field.name }}" />
+      </div>
+      <div class="col-sm-7">
+        <input type="text" formControlName="{{ field.comment }}" class="form-control" placeholder="Add comments" />
+      </div>
+    </div>
+  
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+  

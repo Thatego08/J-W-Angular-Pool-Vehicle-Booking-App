@@ -1,0 +1,11 @@
+<div class="feedback-list">
+    <h2>All Feedbacks</h2>
+    <ul>
+      <li *ngFor="let feedback of feedbacks">
+        <p><strong>{{ feedback.userName }}</strong> ({{ feedback.rating }}/5)</p>
+        <p>{{ feedback.message }}</p>
+        <p><small>{{ feedback.timestamp | date:'short' }}</small></p>
+      </li>
+    </ul>
+  </div>
+  

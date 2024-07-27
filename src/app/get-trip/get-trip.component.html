@@ -1,0 +1,54 @@
+<div class="container">
+  <form (ngSubmit)="fetchPreviousTrips()" class="search-form">
+    <label for="userName">Enter Username:</label>
+    <input type="text" id="userName" [(ngModel)]="userName" name="userName" required />
+    <div class="button-group">
+      <button type="submit" class="btn-submit">Get Previous Trips</button>
+    </div>
+  </form>
+
+  <div *ngIf="previousTrips.length > 0">
+    <table class="trip-table">
+      <thead>
+        <tr>
+          <th>Trip ID</th>
+          <th>Vehicle Name</th>
+          <th>Location</th>
+          <th>Fuel Amount</th>
+          <th>Comment</th>
+          <th>Travel Start</th>
+          <th>Travel End</th>
+          <th>Registration Number</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let trip of previousTrips">
+          <td>{{ trip.tripId }}</td>
+          <td>{{ trip.name }}</td>
+          <td>{{ trip.location }}</td>
+          <td>{{ trip.fuelAmount }}</td>
+          <td>{{ trip.comment }}</td>
+          <td>{{ trip.travelStart | date: 'short' }}</td>
+          <td>{{ trip.travelEnd | date: 'short' }}</td>
+          <td>{{ trip.registrationNumber }}</td>
+          <td>
+            <div class="button-group">
+              <button (click)="editTrip(trip)" class="action-button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Edit
+              </button>
+              <button (click)="deleteTrip(trip.tripId)" class="action-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                Delete
+              </button>
+            </div>
+          </td>
+          
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="previousTrips.length === 0 && userName">
+    <p>No previous trips found for user {{ userName }}.</p>
+  </div>
+</div>

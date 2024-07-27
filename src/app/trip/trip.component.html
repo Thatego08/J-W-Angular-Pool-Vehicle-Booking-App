@@ -1,0 +1,42 @@
+<div class="trips-list">
+    <h2>All Trips</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Trip ID</th>
+          <th>Vehicle ID</th>
+          <th>Location</th>
+          <th>Fuel Amount</th>
+          <th>Comment</th>
+          <th>Travel Start</th>
+          <th>Travel End</th>
+          <th>Registration Number</th>
+          <th>Driver UserName</th>
+          <th>Actions</th> <!-- Add Actions column header -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let trip of trips">
+          <td>{{ trip.tripId }}</td>
+          <td>{{ trip.vehicleId }}</td>
+          <td>{{ trip.location }}</td>
+          <td>{{ trip.fuelAmount }}</td>
+          <td>{{ trip.comment }}</td>
+          <td>{{ trip.travelStart }}</td>
+          <td>{{ trip.travelEnd }}</td>
+          <td>{{ trip.registrationNumber }}</td>
+          <td>
+            {{ trip.userName }}
+          </td>
+          <td>
+           
+            <button (click)="deleteTrip(trip.tripId)" class="action-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  
