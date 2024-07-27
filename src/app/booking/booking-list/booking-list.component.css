@@ -1,0 +1,35 @@
+.container {
+  max-width: 1200px;
+  border: 2px solid lightblue; /* Light blue border for the container */
+  background-color: rgba(34, 7, 168, 0.874); /* Light blue background color for the container */
+  padding: 20px; /* Add padding to create space inside the container */
+  border-radius: 8px; /* Optional: Add rounded corners to the container */
+
+}
+
+.card {
+  margin: 0 auto;
+  border: 3px solid #160257;
+}
+
+.logo-image {
+  max-width: 5000px; /* Adjust maximum width as needed */
+  height: 150px;
+  margin: auto; /* Center align the container */
+  padding: 20px; /* Add padding to create space inside the container */
+  box-sizing: border-box; /* Ensure padding is included in the width calculation */
+}
+
+.card-title {
+  font-weight: bold; /* Make the 'Booking' header bold */
+}
+
+.card-text strong {
+  font-weight: semi-bold; /* Make the labels less bold than the 'Booking' header */
+}
+
+.btn-edit {
+  background-color: rgb(7, 185, 7); /* Green background color */
+  border-color: green; /* Green border */
+  color: white; /* White text */
+}

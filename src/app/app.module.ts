@@ -10,9 +10,9 @@ import { AdminAddComponent } from './Admin/admin-add/admin-add.component';
 import { AdminEditComponent } from './Admin/admin-edit/admin-edit.component';
 import { AdminHomeComponent } from './Admin/admin-home/admin-home.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule } from '@angular/forms';
 import { DriverComponent } from './driver/driver.component';
-import { NavigationComponent } from './navigation/navigation.component';  
+import { NavigationComponent } from './navigation/navigation.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { RegisterDriverComponent } from './driver/register-driver/register-driver.component';
@@ -31,7 +31,13 @@ import { AuthService } from './user/auth.service';
 import { UserService } from './user/user.service';
 import { ForgotPasswordComponent } from './user/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './user/reset-password/reset-password.component';
-
+import { BookingComponent } from './booking/booking.component';
+import { AddBookingComponent } from './booking/add-booking/add-booking.component';
+import { BookingListComponent } from './booking/booking-list/booking-list.component';
+import { EditBookingComponent } from './booking/edit-booking/edit-booking.component';
+import { BookingService } from './services/booking.service';
+import { ToastrModule } from 'ngx-toastr';
+import { BookingHistoryComponent } from './booking/booking-history/booking-history.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +59,12 @@ import { ResetPasswordComponent } from './user/reset-password/reset-password.com
     NotificationsComponent,
     ProfileComponent,
     ForgotPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    BookingComponent,
+    AddBookingComponent,
+    BookingListComponent,
+    EditBookingComponent,
+    BookingHistoryComponent
   ],
   imports: [
     BrowserModule,
@@ -62,12 +73,14 @@ import { ResetPasswordComponent } from './user/reset-password/reset-password.com
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
+    ToastrModule.forRoot(),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     AuthService,
     AuthGuard,
     UserService,
+    BookingService,
     HttpClient,
     provideAnimationsAsync()
 

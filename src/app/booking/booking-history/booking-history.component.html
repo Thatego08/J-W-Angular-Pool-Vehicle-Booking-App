@@ -1,0 +1,44 @@
+
+<img src="assets/logo.png" alt="Logo" class="logo-image">
+
+<!-- src/app/components/booking-history/booking-history.component.html -->
+<div class="container">
+  <h2>Booking History</h2>
+  <div class="form-group">
+    <label for="username">Enter Username:</label>
+    <input type="text" id="username" [(ngModel)]="searchUsername" class="form-control" />
+  </div>
+  <button (click)="searchBookingHistory()" class="btn btn-primary">Search</button>
+
+  <div *ngIf="bookings.length > 0">
+    <h3>Booking Results</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Booking ID</th>
+          <th>Username</th>
+          <th>Event</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Vehicle</th>
+          <th>Project</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let booking of bookings">
+          <td>{{ booking.bookingID }}</td>
+          <td>{{ booking.userName }}</td>
+          <td>{{ booking.event }}</td>
+          <td>{{ booking.startDate | date }}</td>
+          <td>{{ booking.endDate | date }}</td>
+          <td>{{ booking.vehicleName }}</td>
+          <td>{{ booking.projectName }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="bookings.length === 0 && searchUsername">
+    <p>No bookings found for this user.</p>
+  </div>
+</div>

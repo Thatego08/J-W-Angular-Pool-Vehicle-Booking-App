@@ -16,7 +16,11 @@ import { SettingsComponent } from './user/settings/settings.component';
 import { AuthGuard } from './auth.guard';
 import { ForgotPasswordComponent } from './user/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './user/reset-password/reset-password.component';
-
+import { BookingComponent } from './booking/booking.component';
+import { AddBookingComponent } from './booking/add-booking/add-booking.component';
+import { EditBookingComponent } from './booking/edit-booking/edit-booking.component';
+import { BookingListComponent } from './booking/booking-list/booking-list.component';
+import { BookingHistoryComponent } from './booking/booking-history/booking-history.component';
 
 
 const routes: Routes = [
@@ -27,18 +31,27 @@ const routes: Routes = [
  {path: 'register-driver', component:RegisterDriverComponent},
  {path: 'edit-driver/:userName', component:EditDriverComponent},
 
+ //Booking
+ {path: 'booking', component:BookingComponent},
+ {path: 'add-booking', component:AddBookingComponent},
+ {path: 'edit-booking', component:EditBookingComponent},
+ {path: 'booking-list', component:BookingListComponent},
+ {path: 'booking-history', component:BookingHistoryComponent},
+ // Fallback route
+ { path: '**', redirectTo: 'booking-list' },
+
  //User routes
  { path: 'app-login', component: LoginComponent },
   { path: 'app-register', component: RegisterComponent },
   { path: 'app-forgot-password', component: ForgotPasswordComponent },
   { path: 'app-reset-password', component: ResetPasswordComponent },
- 
+
   {path: 'app-dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
   { path: 'app-profile', component: ProfileComponent, canActivate: [AuthGuard]},
-  
+
   { path: 'app-notifications', component: NotificationsComponent, canActivate: [AuthGuard]},
   { path: 'app-settings', component: SettingsComponent, canActivate: [AuthGuard] },
-  { path: 'app-feedback', component: FeedbackComponent, canActivate: [AuthGuard] }//canActivate: [AuthGuard] }, 
+  { path: 'app-feedback', component: FeedbackComponent, canActivate: [AuthGuard] }//canActivate: [AuthGuard] },
 ];
 
 @NgModule({

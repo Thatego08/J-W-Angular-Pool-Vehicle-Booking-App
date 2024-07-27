@@ -1,0 +1,70 @@
+.modal-header .close {
+  margin-left: auto;
+}
+
+.logo-image {
+  max-width: 5000px; /* Adjust maximum width as needed */
+  height: 150px;
+  margin: auto; /* Center align the container */
+  padding: 20px; /* Add padding to create space inside the container */
+  box-sizing: border-box; /* Ensure padding is included in the width calculation */
+}
+
+.btn-success {
+  background-color: rgb(7, 185, 7);
+  border-color: #28a745;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.close.text-white {
+  color: #fff;
+  background-color: #dc3545;
+  border: none;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.25rem;
+}
+
+.close.text-white span {
+  color: #fff;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+#event {
+  width: 100%;
+}
+
+.radio-group {
+  display: flex;
+  align-items: center;
+}
+
+.radio-group label {
+  margin-right: 20px;
+}
+
+.custom-select-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.custom-select-wrapper select {
+  width: 100%;
+  appearance: none;
+  padding-right: 30px; /* Space for the icon */
+}
+
+.dropdown-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none; /* To make sure icon doesn't interfere with select box */
+}
