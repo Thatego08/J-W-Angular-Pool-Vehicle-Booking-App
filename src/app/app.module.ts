@@ -20,12 +20,6 @@ import { AdminEditComponent } from './Admin/admin-edit/admin-edit.component';
 import { AdminHomeComponent } from './Admin/admin-home/admin-home.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { FormsModule } from '@angular/forms';
-import { DriverComponent } from './driver/driver.component';
-import { NavigationComponent } from './navigation/navigation.component';
-
-import { ReactiveFormsModule } from '@angular/forms';
-
 import { DriverComponent } from './driver/driver.component';
 import { NavigationComponent } from './navigation/navigation.component';
 
@@ -93,7 +87,7 @@ import { FeedbackListComponent } from './user/feedback-list/feedback-list.compon
     AddBookingComponent,
     BookingListComponent,
     EditBookingComponent,
-    BookingHistoryComponent
+    BookingHistoryComponent,
 
     FeedbackListComponent
 
@@ -126,10 +120,6 @@ import { FeedbackListComponent } from './user/feedback-list/feedback-list.compon
 
     BookingService,
     HttpClient,
-    provideAnimationsAsync()
-
-
-    HttpClient
 
   ],
   bootstrap: [AppComponent]

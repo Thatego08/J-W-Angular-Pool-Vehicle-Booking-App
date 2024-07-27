@@ -38,29 +38,28 @@ import { RefuelVehicleComponent } from './refuel-vehicle/refuel-vehicle.componen
 
 const routes: Routes = [
  {path:'', pathMatch:'full', redirectTo: 'app-login'} ,
- {path:'admin-home', component:AdminListComponent} ,
- {path:'add-admin',component:AdminAddComponent},
+ {path:'admin-home', component:AdminListComponent, canActivate: [AuthGuard]} ,
+ {path:'add-admin',component:AdminAddComponent, canActivate: [AuthGuard]},
  {path: 'driver', component:DriverComponent, canActivate: [AuthGuard]},
  {path: 'register-driver', component:RegisterDriverComponent},
  {path: 'edit-driver/:userName', component:EditDriverComponent},
 
 
  //Booking
- {path: 'booking', component:BookingComponent},
- {path: 'add-booking', component:AddBookingComponent},
- {path: 'edit-booking', component:EditBookingComponent},
- {path: 'booking-list', component:BookingListComponent},
- {path: 'booking-history', component:BookingHistoryComponent},
+ {path: 'booking', component:BookingComponent, canActivate: [AuthGuard]},
+ {path: 'add-booking', component:AddBookingComponent, canActivate: [AuthGuard]},
+ {path: 'edit-booking', component:EditBookingComponent, canActivate: [AuthGuard]},
+ {path: 'booking-list', component:BookingListComponent, canActivate: [AuthGuard]},
+ {path: 'booking-history', component:BookingHistoryComponent, canActivate: [AuthGuard]},
  // Fallback route
- { path: '**', redirectTo: 'booking-list' },
 
 
  //Trip Routes
- {path: 'trip', component:TripComponent},
- {path: 'create-trip', component:CreateTripComponent},
- { path: 'edit-trip/:id', component: EditTripComponent },
- {path: 'refuel-vehicle', component:RefuelVehicleComponent},
- {path: 'get-trip', component:GetTripComponent},
+ {path: 'trip', component:TripComponent, canActivate: [AuthGuard]},
+ {path: 'create-trip', component:CreateTripComponent, canActivate: [AuthGuard]},
+ { path: 'edit-trip/:id', component: EditTripComponent, canActivate: [AuthGuard] },
+ {path: 'refuel-vehicle', component:RefuelVehicleComponent, canActivate: [AuthGuard]},
+ {path: 'get-trip', component:GetTripComponent, canActivate: [AuthGuard]},
 
  //User routes
  { path: 'app-login', component: LoginComponent },
