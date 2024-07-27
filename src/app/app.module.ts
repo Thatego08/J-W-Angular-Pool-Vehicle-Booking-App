@@ -38,6 +38,7 @@ import { TripComponent } from './trip/trip.component';
 import { CreateTripComponent } from './create-trip/create-trip.component';
 import { EditTripComponent } from './edit-trip/edit-trip.component';
 import { GetTripComponent } from './get-trip/get-trip.component';
+import { RefuelVehicleComponent } from './refuel-vehicle/refuel-vehicle.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { GetTripComponent } from './get-trip/get-trip.component';
     TripComponent,
     CreateTripComponent,
     EditTripComponent,
-    GetTripComponent
+    GetTripComponent,
+    RefuelVehicleComponent
   ],
   imports: [
     BrowserModule,

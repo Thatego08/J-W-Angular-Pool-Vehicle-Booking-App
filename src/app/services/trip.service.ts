@@ -60,6 +60,11 @@ export class TripService {
 
     return this.http.get<TripModel[]>(`${this.apiUrl}/GetPreviousTripsByUserName/${userName}`, { headers });
   }
+
+  createRefuelVehicle(data: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/refuel-vehicle`, data);
+  }
+
   private handleError(error: any) {
     console.error('An error occurred:', error);
     return throwError(error);

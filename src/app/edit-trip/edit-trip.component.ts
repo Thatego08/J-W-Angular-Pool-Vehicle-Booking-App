@@ -13,7 +13,7 @@ export class EditTripComponent implements OnInit {
 
   trip: TripModel = {
     tripId: 0,
-    vehicleId: 0,
+    name: '',
     location: '',
     fuelAmount: 0,
     comment: '',

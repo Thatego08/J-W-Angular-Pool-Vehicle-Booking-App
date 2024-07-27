@@ -13,11 +13,12 @@ export class CreateTripComponent implements OnInit{
     message: string = '';
     trips: any[] = [];
     imagePreview: string | ArrayBuffer | null = null; // To store image preview URL
+    fileError: string | null = null; // To store file upload errors
     
   
     constructor(private formBuilder: FormBuilder, private tripService: TripService) {
       this.tripForm = this.formBuilder.group({
-        vehicleId: ['', Validators.required],
+        name: ['', Validators.required],
         location: ['', Validators.required],
         fuelAmount: ['', Validators.required],
         comment: [''],
@@ -39,7 +40,7 @@ export class CreateTripComponent implements OnInit{
     onSubmit(): void {
       if (this.tripForm.valid) {
         const formData = new FormData();
-        formData.append('vehicleId', this.tripForm.value.vehicleId);
+        formData.append('name', this.tripForm.value.name);
         formData.append('location', this.tripForm.value.location);
         formData.append('fuelAmount', this.tripForm.value.fuelAmount);
         formData.append('comment', this.tripForm.value.comment);
@@ -87,14 +88,28 @@ export class CreateTripComponent implements OnInit{
     }
   
     onFileChange(event: any): void {
-      if (event.target.files && event.target.files.length > 0) {
-        const file = event.target.files[0];
-        const reader = new FileReader();
-        reader.onload = () => {
-          this.imagePreview = reader.result; // Set image preview
-        };
-        reader.readAsDataURL(file);
+      const file = event.target.files[0];
+      if (file) {
+        const fileType = file.type;
+  
+        // Validate file type
+        if (fileType.startsWith('image/')) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            this.imagePreview = reader.result; // Set image preview
+          };
+          reader.readAsDataURL(file);
+          this.fileError = null; // Clear file error message
+          this.tripForm.patchValue({
+            mediaFiles: event.target.files // Update form control with file
+          });
+        } else {
+          this.fileError = 'Please upload a valid image file (e.g., JPG, PNG).';
+          this.imagePreview = null; // Clear image preview
+          this.tripForm.patchValue({
+            mediaFiles: null // Clear form control
+          });
+        }
       }
     }
   }
-  

@@ -1,7 +1,7 @@
 export interface TripModel {
     MediaFiles: any;
     tripId: number;
-    vehicleId: number;
+    name: string;
     location: string;
     fuelAmount: number;
     comment: string;

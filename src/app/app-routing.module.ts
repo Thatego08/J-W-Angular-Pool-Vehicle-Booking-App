@@ -21,6 +21,7 @@ import { TripComponent } from './trip/trip.component';
 import { CreateTripComponent } from './create-trip/create-trip.component';
 import { EditTripComponent } from './edit-trip/edit-trip.component';
 import { GetTripComponent } from './get-trip/get-trip.component';
+import { RefuelVehicleComponent } from './refuel-vehicle/refuel-vehicle.component';
 
 
 
@@ -36,7 +37,7 @@ const routes: Routes = [
  {path: 'trip', component:TripComponent},
  {path: 'create-trip', component:CreateTripComponent},
  { path: 'edit-trip/:id', component: EditTripComponent },
-
+ {path: 'refuel-vehicle', component:RefuelVehicleComponent},
  {path: 'get-trip', component:GetTripComponent},
  //User routes
  { path: 'app-login', component: LoginComponent },

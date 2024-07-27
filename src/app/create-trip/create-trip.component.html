@@ -6,11 +6,11 @@
         <div class="form-section">
             <!-- Vehicle ID -->
             <div class="form-group">
-                <label for="vehicleId">Vehicle ID</label>
-                <input type="text" id="vehicleId" formControlName="vehicleId" class="form-control">
-                <div *ngIf="tripForm.get('vehicleId')?.invalid && tripForm.get('vehicleId')?.touched"
+                <label for="name">Vehicle Name</label>
+                <input type="text" id="name" formControlName="name" class="form-control">
+                <div *ngIf="tripForm.get('name')?.invalid && tripForm.get('name')?.touched"
                     class="text-danger">
-                    Vehicle ID is required.
+                    Vehicle name is required.
                 </div>
             </div>
 
@@ -36,29 +36,30 @@
 
             <!-- Comment -->
             <div class="form-group">
-                <label for="comment">Comment</label>
+                <label for="comment">Description</label>
                 <textarea id="comment" formControlName="comment" class="form-control"></textarea>
             </div>
 
-            <!-- Travel Start Date -->
-            <div class="form-group">
-                <label for="travelStart">Travel Start Date</label>
-                <input type="date" id="travelStart" formControlName="travelStart" class="form-control">
-                <div *ngIf="tripForm.get('travelStart')?.invalid && tripForm.get('travelStart')?.touched"
-                    class="text-danger">
-                    Travel Start Date is required.
-                </div>
-            </div>
+           <!-- get-trip.component.html -->
 
-            <!-- Travel End Date -->
-            <div class="form-group">
-                <label for="travelEnd">Travel End Date</label>
-                <input type="date" id="travelEnd" formControlName="travelEnd" class="form-control">
-                <div *ngIf="tripForm.get('travelEnd')?.invalid && tripForm.get('travelEnd')?.touched"
-                    class="text-danger">
-                    Travel End Date is required.
-                </div>
-            </div>
+<!-- Travel Start DateTime -->
+<div class="form-group">
+    <label for="travelStart">Travel Start</label>
+    <input type="datetime-local" id="travelStart" formControlName="travelStart" class="form-control">
+    <div *ngIf="tripForm.get('travelStart')?.invalid && tripForm.get('travelStart')?.touched" class="text-danger">
+      Travel Start Date and Time is required.
+    </div>
+  </div>
+  
+  <!-- Travel End DateTime -->
+  <div class="form-group">
+    <label for="travelEnd">Travel End</label>
+    <input type="datetime-local" id="travelEnd" formControlName="travelEnd" class="form-control">
+    <div *ngIf="tripForm.get('travelEnd')?.invalid && tripForm.get('travelEnd')?.touched" class="text-danger">
+      Travel End Date and Time is required.
+    </div>
+  </div>
+  
 
             <!-- Registration Number -->
             <div class="form-group">
@@ -74,14 +75,18 @@
             <h3>Record Incident</h3>
         </div>
 
-        <div class="form-group">
-            <label for="mediaFiles">Media Files</label>
-            <input type="file" id="mediaFiles" formControlName="mediaFiles" class="form-control-file"
-                (change)="onFileChange($event)">
-        </div>
+ <!-- Image Upload -->
+ <div class="form-group">
+    <label for="mediaFiles">Upload Image</label>
+    <input type="file" id="mediaFiles" (change)="onFileChange($event)" accept="image/*" class="form-control">
+    <div *ngIf="fileError" class="text-danger">
+      {{ fileError }}
+    </div>
+    <img *ngIf="imagePreview" [src]="imagePreview" alt="Image Preview" style="max-width: 100%; max-height: 200px;"/>
+  </div>
 
         <div class="form-group">
-            <label for="mediaDescription">Media Description</label>
+            <label for="mediaDescription">Comment</label>
             <input id="mediaDescription" formControlName="mediaDescription" class="form-control">
         </div>
 

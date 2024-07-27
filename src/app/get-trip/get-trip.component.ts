@@ -38,14 +38,17 @@ export class GetTripComponent implements OnInit {
   }
 
   deleteTrip(tripId: number) {
-    this.tripService.deleteTrip(tripId).subscribe(
-      () => {
-        console.log('Deleted trip with ID:', tripId);
-        this.previousTrips = this.previousTrips.filter(trip => trip.tripId !== tripId);
-      },
-      error => {
-        console.error('Error deleting trip', error);
-      }
-    );
+    const confirmation = confirm('Are you sure you want to delete this trip?');
+    if (confirmation) {
+      this.tripService.deleteTrip(tripId).subscribe(
+        () => {
+          console.log('Deleted trip with ID:', tripId);
+          this.previousTrips = this.previousTrips.filter(trip => trip.tripId !== tripId);
+        },
+        error => {
+          console.error('Error deleting trip', error);
+        }
+      );
+    }
   }
 }
