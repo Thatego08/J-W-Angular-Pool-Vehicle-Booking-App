@@ -39,6 +39,9 @@ import { CreateTripComponent } from './create-trip/create-trip.component';
 import { EditTripComponent } from './edit-trip/edit-trip.component';
 import { GetTripComponent } from './get-trip/get-trip.component';
 import { RefuelVehicleComponent } from './refuel-vehicle/refuel-vehicle.component';
+import { ForgotPasswordComponent } from './user/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './user/reset-password/reset-password.component';
+import { FeedbackListComponent } from './user/feedback-list/feedback-list.component';
 
 @NgModule({
   declarations: [
@@ -59,11 +62,16 @@ import { RefuelVehicleComponent } from './refuel-vehicle/refuel-vehicle.componen
     FeedbackComponent,
     NotificationsComponent,
     ProfileComponent,
+
     TripComponent,
     CreateTripComponent,
     EditTripComponent,
     GetTripComponent,
-    RefuelVehicleComponent
+    RefuelVehicleComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
+    FeedbackListComponent
+
   ],
   imports: [
     BrowserModule,
