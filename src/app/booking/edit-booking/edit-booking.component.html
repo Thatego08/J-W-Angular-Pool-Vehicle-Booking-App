@@ -1,0 +1,61 @@
+<div class="modal show d-block" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Edit Booking</h4>
+        <button type="button" class="close ml-auto text-white" (click)="activeModal.dismiss()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="userName">Username</label>
+            <input id="userName" formControlName="userName" class="form-control" placeholder="Enter username" />
+          </div>
+          <div class="form-group">
+            <label for="vehicleName">Vehicle</label>
+            <div class="custom-select-wrapper">
+              <select id="vehicleName" formControlName="vehicleName" class="form-control">
+                <option *ngFor="let vehicle of vehicles" [value]="vehicle">{{ vehicle }}</option>
+              </select>
+              <i class="fa fa-caret-down dropdown-icon"></i>
+            </div>
+          </div>
+          <div class="form-group radio-group">
+            <label>
+              <input type="radio" name="type" (change)="toggleEventProject(true)" [checked]="isEvent" /> Event
+            </label>
+            <label>
+              <input type="radio" name="type" (change)="toggleEventProject(false)" [checked]="!isEvent" /> Project
+            </label>
+          </div>
+          <div *ngIf="!isEvent" class="form-group">
+            <label for="projectName">Project Number:</label>
+            <div class="custom-select-wrapper">
+              <select id="projectNumber" formControlName="projectNumber" class="form-control">
+                <option *ngFor="let project of projects" [value]="project">{{ project }}</option>
+              </select>
+              <i class="fa fa-caret-down dropdown-icon"></i>
+            </div>
+          </div>
+
+          <div *ngIf="isEvent" class="form-group">
+            <label for="event">Event:</label>
+            <input id="event" formControlName="event" class="form-control" placeholder="Enter event" />
+          </div>
+          <div class="form-group">
+            <label for="startDate">Start Date</label>
+            <input id="startDate" formControlName="startDate" class="form-control" type="datetime-local" />
+          </div>
+          <div class="form-group">
+            <label for="endDate">End Date</label>
+            <input id="endDate" formControlName="endDate" class="form-control" type="datetime-local" />
+          </div>
+          <button type="submit" class="btn btn-success" [disabled]="!bookingForm.valid">Save Changes</button>
+          <button type="button" class="btn btn-danger" (click)="activeModal.dismiss()">Cancel</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

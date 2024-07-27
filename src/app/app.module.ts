@@ -19,8 +19,16 @@ import { AdminAddComponent } from './Admin/admin-add/admin-add.component';
 import { AdminEditComponent } from './Admin/admin-edit/admin-edit.component';
 import { AdminHomeComponent } from './Admin/admin-home/admin-home.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+import { FormsModule } from '@angular/forms';
 import { DriverComponent } from './driver/driver.component';
 import { NavigationComponent } from './navigation/navigation.component';
+
+import { ReactiveFormsModule } from '@angular/forms';
+
+import { DriverComponent } from './driver/driver.component';
+import { NavigationComponent } from './navigation/navigation.component';
+
 import { RegisterDriverComponent } from './driver/register-driver/register-driver.component';
 import { EditDriverComponent } from './driver/edit-driver/edit-driver.component';
 import { RegisterComponent } from './user/register/register.component';
@@ -41,7 +49,17 @@ import { GetTripComponent } from './get-trip/get-trip.component';
 import { RefuelVehicleComponent } from './refuel-vehicle/refuel-vehicle.component';
 import { ForgotPasswordComponent } from './user/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './user/reset-password/reset-password.component';
+
+import { BookingComponent } from './booking/booking.component';
+import { AddBookingComponent } from './booking/add-booking/add-booking.component';
+import { BookingListComponent } from './booking/booking-list/booking-list.component';
+import { EditBookingComponent } from './booking/edit-booking/edit-booking.component';
+import { BookingService } from './services/booking.service';
+import { ToastrModule } from 'ngx-toastr';
+import { BookingHistoryComponent } from './booking/booking-history/booking-history.component';
+
 import { FeedbackListComponent } from './user/feedback-list/feedback-list.component';
+
 
 @NgModule({
   declarations: [
@@ -70,7 +88,15 @@ import { FeedbackListComponent } from './user/feedback-list/feedback-list.compon
     RefuelVehicleComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
+
+    BookingComponent,
+    AddBookingComponent,
+    BookingListComponent,
+    EditBookingComponent,
+    BookingHistoryComponent
+
     FeedbackListComponent
+
 
   ],
   imports: [
@@ -80,6 +106,9 @@ import { FeedbackListComponent } from './user/feedback-list/feedback-list.compon
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
+
+    ToastrModule.forRoot(),
+
     BrowserAnimationsModule,
     MatInputModule,
     MatButtonModule,
@@ -87,13 +116,21 @@ import { FeedbackListComponent } from './user/feedback-list/feedback-list.compon
     MatNativeDateModule,
     MatFormFieldModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
+
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     AuthService,
     AuthGuard,
     UserService,
+
+    BookingService,
+    HttpClient,
+    provideAnimationsAsync()
+
+
     HttpClient
+
   ],
   bootstrap: [AppComponent]
 })
