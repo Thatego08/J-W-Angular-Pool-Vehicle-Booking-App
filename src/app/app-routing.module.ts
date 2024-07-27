@@ -20,6 +20,14 @@ import { FeedbackListComponent } from './user/feedback-list/feedback-list.compon
 
 
 
+import { TripComponent } from './trip/trip.component';
+import { CreateTripComponent } from './create-trip/create-trip.component';
+import { EditTripComponent } from './edit-trip/edit-trip.component';
+import { GetTripComponent } from './get-trip/get-trip.component';
+import { RefuelVehicleComponent } from './refuel-vehicle/refuel-vehicle.component';
+
+
+
 const routes: Routes = [
  {path:'', pathMatch:'full', redirectTo: 'app-login'} ,
  {path:'admin-home', component:AdminListComponent} ,
@@ -28,6 +36,12 @@ const routes: Routes = [
  {path: 'register-driver', component:RegisterDriverComponent},
  {path: 'edit-driver/:userName', component:EditDriverComponent},
 
+ //Trip Routes
+ {path: 'trip', component:TripComponent},
+ {path: 'create-trip', component:CreateTripComponent},
+ { path: 'edit-trip/:id', component: EditTripComponent },
+ {path: 'refuel-vehicle', component:RefuelVehicleComponent},
+ {path: 'get-trip', component:GetTripComponent},
  //User routes
  { path: 'app-login', component: LoginComponent },
   { path: 'app-register', component: RegisterComponent },
