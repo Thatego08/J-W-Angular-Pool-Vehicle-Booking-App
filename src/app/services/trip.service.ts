@@ -29,9 +29,15 @@ export class TripService {
   
 
   createTrip(trip: FormData): Observable<any> {
+    // Retrieve the token from local storage
+    const token = localStorage.getItem('token');
+
+    // Set up headers with authorization token
     const headers = new HttpHeaders({
-      'Authorization': `Bearer ${localStorage.getItem('token')}`
+      'Authorization': `Bearer ${token}`
     });
+
+    // Make the POST request with FormData and headers
     return this.http.post<any>(`${this.apiUrl}/createTrip`, trip, { headers });
   }
 
