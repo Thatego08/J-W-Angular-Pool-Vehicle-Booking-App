@@ -72,6 +72,12 @@ import { ChecklistComponent } from './vehicle/checklist/checklist.component';
 import { PostChecklistComponent } from './vehicle/post-checklist/post-checklist.component';
 import { EditColourComponent } from './vehicle/edit-colour/edit-colour.component';
 import { ServiceComponent } from './vehicle/service/service.component';
+import { FuelTypeComponent } from './vehicle/fuel-type/fuel-type.component';
+import { VehicleMakeComponent } from './vehicle/vehicle-make/vehicle-make.component';
+import { VehicleModelComponent } from './vehicle/vehicle-model/vehicle-model.component';
+import { StatusComponent } from './vehicle/status/status.component';
+import { LicenseDisksComponent } from './vehicle/license-disc/license-disc.component';
+import { ManageComponent } from './vehicle/manage/manage.component';
 
 @NgModule({
   declarations: [
@@ -127,7 +133,13 @@ import { ServiceComponent } from './vehicle/service/service.component';
       ChecklistComponent,
       PostChecklistComponent,
       EditColourComponent,
-      ServiceComponent
+      ServiceComponent,
+      FuelTypeComponent,
+      VehicleMakeComponent,
+      VehicleModelComponent,
+      StatusComponent,
+      LicenseDisksComponent,
+      ManageComponent
       
 
 
