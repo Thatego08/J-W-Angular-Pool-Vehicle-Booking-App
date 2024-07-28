@@ -1,0 +1,79 @@
+<!-- <div class="header-container">
+  <img src="assets/logo.png" alt="Logo" class="logo">
+
+</div> -->
+<div class="menu-bar" style="background-color: blue;">
+    <ul>
+      <li><a routerLink="/pool-vehicles" class="text-white uppercase text-sm" >VEHICLES</a></li>
+      <li><a routerLink="/pool-vehicle" class="text-white uppercase text-sm">Pool Vehicles</a></li>
+      <li><a routerLink="/manage-vehicle" class="text-white uppercase text-sm">Manage Vehicles <i class="fas fa-caret-down"></i></a>
+          <!-- <div class="dropdown-menu">
+              <ul>
+                <li><a routerLink="/colour">Colours</a></li>
+                <li><a routerLink="/fuel-type">Fuel Types</a></li>
+                <li><a routerLink="/insurance">Insurance Covers</a></li>
+                <li><a routerLink="/vehicle-make">Vehicle Makes</a></li>
+                <li><a routerLink="/vehicle-model">Vehicle Models</a></li>
+                <li><a routerLink="/status">Status</a></li>
+                <li>
+                  <a routerLink="/pool-vehicles">Colour <i class="fas fa-caret-right"></i></a>
+                  
+                  <div class="dropdown-menu-1">
+                    <ul>
+                      <li><a routerLink="/add-colour"> Add Colour </a></li>
+                      <li><a routerLink="/colour">Manage Colours </a></li>
+                      <li><a routerLink="/pool-vehicles">Team-3</a></li>
+                      <li><a routerLink="/pool-vehicles">Team-4</a></li>
+                    </ul>
+                  </div>
+                </li>
+                <li><a routerLink="/pool-vehicles">FAQ</a></li>
+              </ul>
+            </div> -->
+      </li>
+      <li><a routerLink="/license-disks" class="text-white uppercase text-sm">License Discs</a>
+      </li>
+      <li><a routerLink="/service" class="text-white uppercase text-sm">Service</a></li>
+    </ul>
+  </div>
+  
+  
+  <div class="container mx-auto p-6" style="width: 100%;">
+    <button class="btn btn-danger" routerLink="/add-vehicle"> Add Vehicle </button>
+    <br>
+    <br>
+   
+    <div *ngIf="vehicles.length > 0">
+      <table class="min-w-full bg-white border border-gray-1000 shadow-md rounded-md overflow-hidden mt-6">
+        <thead class="bg-blue-1000 text-white uppercase text-sm">
+          <tr>
+            <th class="py-3 px-6 text-left">Name</th>
+            <th class="py-3 px-6 text-left">Registration Number</th>
+            <th class="py-3 px-6 text-left">Date Acquired </th>
+            <th class="py-3 px-6 text-left">License Expiry Date</th>
+            <th class="py-3 px-6 text-left">Status </th>
+            <th class="py-3 px-6 text-left">Actions </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let vehicle of vehicles" class="text-gray-700">
+            <td class="py-3 px-6">{{ vehicle.name}}</td>
+            <td class="py-3 px-6">{{ vehicle.registrationNumber}}</td>
+            <td class="py-3 px-6">{{ vehicle.dateAcquired}}</td>
+            <td class="py-3 px-6">{{ vehicle.licenseExpiryDate }}</td>
+            <td class="py-3 px-6">{{ vehicle.status?.name}}</td>
+            <td class="py-3 px-6">
+              <button class="action-button bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+              (click)="editVehicle(vehicle.vehicleID)" >Edit</button>
+              <button class="action-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+              (click)="deleteVehicle(vehicle.vehicleID)">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="vehicles.length === 0" class="text-center mt-4 text-gray-600">
+      No vehicles found.
+    </div>

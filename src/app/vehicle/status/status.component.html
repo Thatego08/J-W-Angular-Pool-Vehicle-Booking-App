@@ -1,0 +1,29 @@
+<div class="header-container">
+    <img src="assets/logo.png" alt="Logo" class="logo">
+  </div>
+  
+ 
+  
+  <div *ngIf="status.length > 0">
+    <br>
+    <br>
+    
+    <button class="btn btn-danger" routerLink="/manage-vehicle"> Back to Manage Vehicles </button>
+    <table class="min-w-full bg-white border border-gray-200 shadow-md rounded-md overflow-hidden mt-6">
+      <thead class="bg-blue-500 text-white uppercase text-sm">
+        <tr>
+          <th class="py-3 px-6 text-left">ID </th>
+          <th class="py-3 px-6 text-left">Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let status of status" class="text-gray-700">
+          <td class="py-3 px-6">{{ status.id }}</td>
+          <td class="py-3 px-6">{{ status.name }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div *ngIf="status.length === 0" class="text-center mt-4 text-gray-600">
+    No status found.
+  </div>

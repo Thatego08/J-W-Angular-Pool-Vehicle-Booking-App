@@ -1,0 +1,31 @@
+.header-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px; /* Adjust height as needed */
+    background-color: #f0f0f0; /* Optional background color */
+  }
+  
+  .logo {
+    max-width: 80%;
+    max-height: 80%;
+    /* Add any additional styling for the logo */
+  }
+  
+  
+  .btn-save {
+      background-color: #007bff;
+      color: white;
+    }
+    
+    .btn-cancel {
+      background-color: #dc3545;
+      color: white;
+    }  
+  
+    .btn-save, .btn-cancel {
+      padding: 5px 10px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }

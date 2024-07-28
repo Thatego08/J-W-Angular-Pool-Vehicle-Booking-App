@@ -30,10 +30,38 @@ import { CreateTripComponent } from './create-trip/create-trip.component';
 import { EditTripComponent } from './edit-trip/edit-trip.component';
 import { GetTripComponent } from './get-trip/get-trip.component';
 import { RefuelVehicleComponent } from './refuel-vehicle/refuel-vehicle.component';
+
 import { AdminComponent } from './Admin/admin/admin.component';
 import { EditAdminComponent } from './Admin/edit-admin/edit-admin.component';
 import { ProjectComponent } from './project/project.component';
 import { RateComponent } from './Rate/rate/rate.component';
+
+import { VehicleComponent } from './vehicle/vehicle/vehicle.component';
+import { AddVehicleComponent } from './vehicle/add-vehicle/add-vehicle.component';
+import { EditVehicleComponent } from './vehicle/edit-vehicle/edit-vehicle.component';
+import { AddColourComponent } from './vehicle/add-colour/add-colour.component';
+import { AddFuelComponent } from './vehicle/add-fuel/add-fuel.component';
+import { AddInsuranceComponent } from './vehicle/add-insurance/add-insurance.component';
+import { AddMakeComponent } from './vehicle/add-make/add-make.component';
+import { AddModelComponent } from './vehicle/add-model/add-model.component';
+import { ChecklistComponent } from './vehicle/checklist/checklist.component';
+import { ColourComponent } from './vehicle/colour/colour.component';
+import { EditColourComponent } from './vehicle/edit-colour/edit-colour.component';
+import { EditFuelComponent } from './vehicle/edit-fuel/edit-fuel.component';
+import { EditInsuranceComponent } from './vehicle/edit-insurance/edit-insurance.component';
+import { EditMakeComponent } from './vehicle/edit-make/edit-make.component';
+import { EditModelComponent } from './vehicle/edit-model/edit-model.component';
+import { FuelTypeComponent } from './vehicle/fuel-type/fuel-type.component';
+import { InsuranceComponent } from './vehicle/insurance/insurance.component';
+import { ManageComponent } from './vehicle/manage/manage.component';
+import { PostChecklistComponent } from './vehicle/post-checklist/post-checklist.component';
+import { ServiceComponent } from './vehicle/service/service.component';
+import { StatusComponent } from './vehicle/status/status.component';
+import { VehicleDetailsComponent } from './vehicle/vehicle-details/vehicle-details.component';
+import { VehicleMakeComponent } from './vehicle/vehicle-make/vehicle-make.component';
+import { VehicleModelComponent } from './vehicle/vehicle-model/vehicle-model.component';
+import { PoolVehicleComponent } from './vehicle/pool-vehicles/pool-vehicles.component';
+import { LicenseDisksComponent } from './vehicle/license-disc/license-disc.component';
 
 
 
@@ -64,6 +92,52 @@ const routes: Routes = [
  { path: 'edit-trip/:id', component: EditTripComponent, canActivate: [AuthGuard] },
  {path: 'refuel-vehicle', component:RefuelVehicleComponent, canActivate: [AuthGuard]},
  {path: 'get-trip', component:GetTripComponent, canActivate: [AuthGuard]},
+ 
+ //Vehicle Routes
+ 
+ //Vehicle routes
+ {path: 'vehicles', component: VehicleComponent},
+ {path: 'add-vehicle', component: AddVehicleComponent},
+ {path: 'edit-vehicle/:id', component: EditVehicleComponent},
+ {path: 'manage-vehicle', component: ManageComponent},
+ {path: 'pool-vehicle', component: PoolVehicleComponent},
+ {path: 'vehicle-details', component: VehicleDetailsComponent},
+
+ //Colours
+ {path: 'colour', component: ColourComponent },
+ {path: 'add-colour', component: AddColourComponent },
+ {path: 'edit-colour/:id', component: EditColourComponent},
+
+ //Fuel Types
+ {path: 'fuel-type', component: FuelTypeComponent },
+ {path: 'add-fuel', component: AddFuelComponent },
+ {path: 'edit-fuel/:id', component: EditFuelComponent},
+
+ //Insurance Cover
+ {path: 'insurance', component: InsuranceComponent },
+ {path: 'add-insurance', component: AddInsuranceComponent },
+ {path: 'edit-insurance/:id', component: EditInsuranceComponent},
+
+ //License Disks
+ 
+ {path: 'license-disks', component: LicenseDisksComponent},
+
+ //Vehicle Makes
+  {path: 'add-make', component: AddMakeComponent},
+ {path: 'vehicle-make', component: VehicleMakeComponent },
+ {path: 'edit-make/:id', component: EditMakeComponent},
+
+ //Vehicle Models
+ {path: 'add-model', component: AddModelComponent },
+ {path: 'vehicle-model', component: VehicleModelComponent },
+ {path: 'edit-model/:id', component: EditModelComponent},
+
+ //Vehicle Extras
+ {path: 'checklist', component: ChecklistComponent, canActivate: [AuthGuard] },
+ {path: 'post-checklist', component: PostChecklistComponent, canActivate: [AuthGuard]},
+ {path: 'service', component: ServiceComponent},
+ {path: 'status', component: StatusComponent },
+
 
  //User routes
  { path: 'app-login', component: LoginComponent },
@@ -77,7 +151,7 @@ const routes: Routes = [
   { path: 'app-notifications', component: NotificationsComponent, canActivate: [AuthGuard]},
   { path: 'app-settings', component: SettingsComponent, canActivate: [AuthGuard] },
 
-  { path: 'app-feedback', component: FeedbackComponent, canActivate: [AuthGuard] }, 
+  { path: 'app-feedback', component: FeedbackComponent, canActivate: [AuthGuard] },
   { path: 'app-feedback-list', component: FeedbackListComponent, canActivate: [AuthGuard] }
 
 ];

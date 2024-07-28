@@ -12,15 +12,15 @@
           <p class="card-text"><strong>Event:</strong> {{ booking.event }}</p>
           <p class="card-text"><strong>StartDate:</strong> {{ booking.startDate | date }}</p>
           <p class="card-text"><strong>EndDate:</strong> {{ booking.endDate | date }}</p>
-<!-- <p class="card-text"><strong>Rate Type:</strong> {{ booking.rateType }}</p> Ensure correct binding -->
         </div>
         <div class="card-footer d-flex justify-content-between">
           <button class="btn btn-edit" (click)="openEditModal(booking)">Edit</button>
-          <button class="btn btn-danger" (click)="deleteBooking(booking.bookingID)">Delete</button>
+          <button (click)="onDelete(booking.bookingID)" class="btn btn-danger">Delete</button>
         </div>
       </div>
     </div>
   </div>
+
 </div>
 
 <!-- Modal for editing booking -->

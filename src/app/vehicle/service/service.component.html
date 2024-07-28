@@ -1,0 +1,47 @@
+<div class="header-container">
+    <img src="assets/logo.png" alt="Logo" class="logo">
+  </div>
+  
+  <div class="container">
+    <button class="btn btn-danger" routerLink="/manage-vehicle">Back</button>
+    <br><br>
+    <h2>Book Vehicle For Service</h2>
+    <br><br>
+    <form (ngSubmit)="submitService()">
+      <div>
+        <label for="vehicle">Select Vehicle:</label>&nbsp;
+        <select id="vehicle" [(ngModel)]="service.vehicleId" name="vehicleId" required>
+          <option *ngFor="let vehicle of vehicles" [value]="vehicle.vehicleID">
+            {{ vehicle.name }} - {{ vehicle.registrationNumber }}
+          </option>
+        </select>
+      </div>
+      <br>
+      <div>
+        <label for="adminName">Admin Name:</label>&nbsp;
+        <input type="text" id="adminName" [(ngModel)]="service.adminName" name="adminName" required />
+      </div>
+      <br>
+      <div>
+        <label for="adminEmail">Admin Email:</label>&nbsp;
+        <input type="email" id="adminEmail" [(ngModel)]="service.adminEmail" name="adminEmail" required />
+      </div>
+      <br>
+      <div>
+        <label for="description">Description:</label><br>
+        <textarea id="description" [(ngModel)]="service.description" name="description" rows="4" cols="50" required></textarea>
+      </div>
+      <br>
+      <div>
+        <label for="serviceDate">Service Date:</label>&nbsp;
+        <input type="date" id="serviceDate" [(ngModel)]="service.serviceDate" name="serviceDate" required />
+      </div>
+      <br>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <p>{{ message }}</p>
+  </div>
+  
+  
+  
+      

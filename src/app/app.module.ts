@@ -52,7 +52,35 @@ import { FeedbackListComponent } from './user/feedback-list/feedback-list.compon
 import { EditAdminComponent } from './Admin/edit-admin/edit-admin.component';
 import { RateComponent } from './Rate/rate/rate.component';
 import { RateFormComponent } from './Rate/rate-form/rate-form.component';
+
 import { ProjectComponent } from './project/project.component';
+import { AddVehicleComponent } from './vehicle/add-vehicle/add-vehicle.component';
+import { EditVehicleComponent } from './vehicle/edit-vehicle/edit-vehicle.component';
+import { VehicleComponent } from './vehicle/vehicle/vehicle.component';
+import { VehicleDetailsComponent } from './vehicle/vehicle-details/vehicle-details.component';
+import { PoolVehicleComponent } from './vehicle/pool-vehicles/pool-vehicles.component';
+import { AddFuelComponent } from './vehicle/add-fuel/add-fuel.component';
+import { AddColourComponent } from './vehicle/add-colour/add-colour.component';
+import { AddInsuranceComponent } from './vehicle/add-insurance/add-insurance.component';
+import { AddMakeComponent } from './vehicle/add-make/add-make.component';
+import { AddModelComponent } from './vehicle/add-model/add-model.component';
+import { ColourComponent } from './vehicle/colour/colour.component';
+import { EditFuelComponent } from './vehicle/edit-fuel/edit-fuel.component';
+import { EditInsuranceComponent } from './vehicle/edit-insurance/edit-insurance.component';
+import { EditMakeComponent } from './vehicle/edit-make/edit-make.component';
+import { EditModelComponent } from './vehicle/edit-model/edit-model.component';
+import { EditServiceComponent } from './vehicle/edit-service/edit-service.component';
+import { ChecklistComponent } from './vehicle/checklist/checklist.component';
+import { PostChecklistComponent } from './vehicle/post-checklist/post-checklist.component';
+import { EditColourComponent } from './vehicle/edit-colour/edit-colour.component';
+import { ServiceComponent } from './vehicle/service/service.component';
+import { FuelTypeComponent } from './vehicle/fuel-type/fuel-type.component';
+import { VehicleMakeComponent } from './vehicle/vehicle-make/vehicle-make.component';
+import { VehicleModelComponent } from './vehicle/vehicle-model/vehicle-model.component';
+import { StatusComponent } from './vehicle/status/status.component';
+import { LicenseDisksComponent } from './vehicle/license-disc/license-disc.component';
+import { ManageComponent } from './vehicle/manage/manage.component';
+
 
 @NgModule({
   declarations: [
@@ -85,15 +113,38 @@ import { ProjectComponent } from './project/project.component';
     BookingListComponent,
     EditBookingComponent,
     BookingHistoryComponent,
-    
 
     FeedbackListComponent,
-            EditAdminComponent,
-            RateComponent,
-            RateFormComponent,
-     
-    
-    
+    EditAdminComponent,
+    RateComponent,
+    RateFormComponent,
+      AddVehicleComponent,
+      EditVehicleComponent,
+      VehicleComponent,
+      VehicleDetailsComponent,
+      PoolVehicleComponent,
+      AddFuelComponent,
+      AddColourComponent,
+      AddInsuranceComponent,
+      AddMakeComponent,
+      AddModelComponent,
+      ColourComponent,
+      EditFuelComponent,
+      EditInsuranceComponent,
+      EditMakeComponent,
+      EditModelComponent,
+      EditServiceComponent,
+      ChecklistComponent,
+      PostChecklistComponent,
+      EditColourComponent,
+      ServiceComponent,
+      FuelTypeComponent,
+      VehicleMakeComponent,
+      VehicleModelComponent,
+      StatusComponent,
+      LicenseDisksComponent,
+      ManageComponent
+      
 
 
   ],

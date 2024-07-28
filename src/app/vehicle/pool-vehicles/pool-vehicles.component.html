@@ -1,0 +1,26 @@
+<div class="header-container">
+    <img src="assets/logo.png" alt="Logo" class="logo">
+  </div>
+  <h1 style="font-family: 'Times New Roman', Times, serif;"> Pool Vehicles </h1>
+  <p> To book a vehicle, please click on the Book button</p>
+  <div class="row" *ngIf="vehicles">
+    <div class="col-md-2" *ngFor="let vehicle of vehicles">
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-header" style="background-color: lightskyblue;">{{ vehicle.name }}</h5>
+          <img src="assets/logo.png" alt="Logo" class="logo">
+          <p class="card-text" > Registration Number: {{ vehicle.registrationNumber}}</p>
+          <p class="card-text"> Vehicle Make: {{ vehicle.vehicleMake?.name}}</p>
+          <p class="card-text"> Vehicle Model: {{ vehicle.vehicleModel?.vehicleModelName }}</p>
+          <p class="card-text"> Colour: {{ vehicle.colour?.name}}</p>
+          
+          <p class="card-text"> Status: {{ vehicle.status?.name}}</p>
+          <p class="card-footer">
+            <!-- <a [routerLink]="['/courses','edit', course.id]"> EDIT </a>  -->
+             <button class="btn btn-warning" style="align-self: center;"  (click)="viewVehicle(vehicle)"> View Vehicle </button>&nbsp;
+            <button class="btn btn-primary" style="align-self: center;" [routerLink]="['/checklist']"> Checklist </button></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  

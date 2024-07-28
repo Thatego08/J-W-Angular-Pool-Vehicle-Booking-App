@@ -1,0 +1,32 @@
+<div class="header-container">
+    <img src="assets/logo.png" alt="Logo" class="logo">
+  </div>
+  
+  <div class="container">
+    <h2>Edit Vehicle Make</h2>
+    <form [formGroup]="makeForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">Vehicle Make</label>
+        <input 
+          id="name" 
+          formControlName="name" 
+          class="form-control" 
+          type="text" 
+        />
+        <div *ngIf="makeForm.get('name')?.invalid && makeForm.get('name')?.touched" class="text-danger">
+          Colour name is required.
+        </div>
+      </div>
+  
+      <button 
+        type="submit" 
+        class="btn btn-primary"
+        [disabled]="makeForm.invalid"
+      >
+        Save Changes
+      </button>
+      <a routerLink="/vehicle-make" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
+  
+  

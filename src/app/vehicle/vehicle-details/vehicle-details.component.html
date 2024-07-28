@@ -1,0 +1,24 @@
+<!-- <div class="header-container">
+    <img src="assets/logo.png" alt="Logo" class="logo">
+  </div>
+  <br> -->
+
+  <h1 mat-dialog-title>Vehicle Details</h1>
+<div mat-dialog-content>
+  <p><strong>Name:</strong> {{ vehicle.name }}</p>
+  <p><strong>Registration Number:</strong> {{ vehicle.registrationNumber }}</p>
+  <p><strong>Description:</strong> {{ vehicle.description }}</p>
+  <p><strong>Registration Number:</strong> {{ vehicle.registrationNumber }}</p>
+  <p><strong>Date Acquired:</strong> {{ vehicle.dateAcquired | date: 'yyyy-MM-dd' }}</p>
+  <p><strong>License Expiry Date :</strong> {{ vehicle.licenseExpiryDate | date: 'yyyy-MM-dd' }}</p>
+  <p><strong>Colour:</strong> {{ vehicle.colour?.name }}</p>
+  <p><strong>Fuel Type :</strong> {{ vehicle.fuelType?.fuelName }}</p>
+  <p><strong>Insurance Cover:</strong> {{ vehicle.insuranceCover?.insuranceCoverName }}</p>
+  <p><strong>Vehicle Make:</strong> {{ vehicle.vehicleMake?.name }}</p>
+  <p><strong>Vehicle Model:</strong> {{ vehicle.vehicleModel?.vehicleModelName }}</p>
+  <p><strong>Status:</strong> {{ vehicle.status?.name }}</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onClose()">Close</button>
+</div>
+
