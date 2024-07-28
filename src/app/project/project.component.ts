@@ -18,7 +18,19 @@ export class ProjectComponent implements OnInit {
   itemsPerPage: number = 10;
   totalPages: number = 1;
 
+  projectToEdit: Project = {
+    projectID: 0,
+    projectNumber: 0,
+    jobNo: 0,
+    taskCode: 0,
+    description: '',
+    activityCode: 0
+  };
+  isEditMode: boolean = false;
+
   @ViewChild('deleteConfirmationModal') deleteConfirmationModal!: TemplateRef<any>;
+
+  @ViewChild('editProjectModal') editProjectModal!: TemplateRef<any>;
 
   constructor(private projectService: ProjectService, private router: Router, private modalService: NgbModal) { }
 
@@ -100,8 +112,36 @@ export class ProjectComponent implements OnInit {
     }
   }
 
-  addProject(): void {
-    this.router.navigate(['/add-project']);
+saveProject(): void {
+    if (this.projectToEdit) {
+      if (this.isEditMode) {
+        this.projectService.updateProject(this.projectToEdit.projectID, this.projectToEdit).subscribe(
+          () => {
+            this.fetchProjects();
+            this.modalService.dismissAll();
+          },
+          error => {
+            console.error('Error updating project', error);
+          }
+        );
+      } else {
+        this.projectService.addProject(this.projectToEdit).subscribe(
+          () => {
+            this.fetchProjects();
+            this.modalService.dismissAll();
+          },
+          error => {
+            console.error('Error creating project', error);
+          }
+        );
+      }
+    }
+  }
+
+  openRateModal(rate: Project | null): void {
+    this.isEditMode = rate !== null;
+    this.projectToEdit = rate ? { ...rate } : { projectID: 0, projectNumber: 0, taskCode: 0, activityCode: 0, jobNo: 0, description: '' };
+    this.modalService.open(this.editProjectModal, { ariaLabelledBy: 'modal-basic-title' });
   }
 
   clearSearch(): void {
