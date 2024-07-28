@@ -73,7 +73,7 @@ const routes: Routes = [
   { path: 'app-notifications', component: NotificationsComponent, canActivate: [AuthGuard]},
   { path: 'app-settings', component: SettingsComponent, canActivate: [AuthGuard] },
 
-  { path: 'app-feedback', component: FeedbackComponent, canActivate: [AuthGuard] }, 
+  { path: 'app-feedback', component: FeedbackComponent, canActivate: [AuthGuard] },
   { path: 'app-feedback-list', component: FeedbackListComponent, canActivate: [AuthGuard] }
 
 ];

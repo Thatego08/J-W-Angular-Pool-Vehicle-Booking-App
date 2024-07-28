@@ -13,7 +13,7 @@ export class BookingService {
   constructor(private http: HttpClient) { }
 
   getBookings(): Observable<BookingModel[]> {
-    return this.http.get<BookingModel[]>(this.baseUrl);
+    return this.http.get<BookingModel[]>(`${this.baseUrl}/GetAllBookings`);
   }
 
   getBooking(id: number): Observable<BookingModel> {
@@ -21,14 +21,11 @@ export class BookingService {
   }
 
   searchBookingHistory(username: string): Observable<BookingModel[]> {
-    return this.http.get<BookingModel[]>(`${this.baseUrl}/history/${username}`);
+    return this.http.get<BookingModel[]>(`${this.baseUrl}/SearchBookingHistory/${username}`);
   }
 
   createBooking(booking: CreateBookingModel): Observable<BookingModel> {
-
-    console.log('Create booking service called with data:', booking); // Add this line
-
-    return this.http.post<BookingModel>(this.baseUrl, booking, {
+    return this.http.post<BookingModel>(`${this.baseUrl}/AddBooking`, booking, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })
@@ -36,12 +33,13 @@ export class BookingService {
   }
 
   updateBooking(booking: BookingModel): Observable<void> {
-    const url = `${this.baseUrl}/${booking.bookingID}`;
+    const url = `${this.baseUrl}/EditBooking/${booking.bookingID}`;
     return this.http.put<void>(url, booking);
   }
 
   deleteBooking(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+    const url = `${this.baseUrl}/DeleteBooking/${id}`;
+    return this.http.delete<void>(url);
   }
 
   getVehicles(): Observable<Vehicle[]> {
