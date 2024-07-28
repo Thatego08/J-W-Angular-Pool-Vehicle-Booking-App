@@ -96,12 +96,12 @@ const routes: Routes = [
  //Vehicle Routes
  
  //Vehicle routes
- {path: 'vehicles', component: VehicleComponent},
- {path: 'add-vehicle', component: AddVehicleComponent},
- {path: 'edit-vehicle/:id', component: EditVehicleComponent},
- {path: 'manage-vehicle', component: ManageComponent},
- {path: 'pool-vehicle', component: PoolVehicleComponent},
- {path: 'vehicle-details', component: VehicleDetailsComponent},
+ {path: 'vehicles', component: VehicleComponent,canActivate: [AuthGuard]},
+ {path: 'add-vehicle', component: AddVehicleComponent,canActivate: [AuthGuard]},
+ {path: 'edit-vehicle/:id', component: EditVehicleComponent,canActivate: [AuthGuard]},
+ {path: 'manage-vehicle', component: ManageComponent,canActivate: [AuthGuard]},
+ {path: 'pool-vehicle', component: PoolVehicleComponent,canActivate: [AuthGuard]},
+ {path: 'vehicle-details', component: VehicleDetailsComponent,canActivate: [AuthGuard]},
 
  //Colours
  {path: 'colour', component: ColourComponent },
@@ -135,8 +135,8 @@ const routes: Routes = [
  //Vehicle Extras
  {path: 'checklist', component: ChecklistComponent, canActivate: [AuthGuard] },
  {path: 'post-checklist', component: PostChecklistComponent, canActivate: [AuthGuard]},
- {path: 'service', component: ServiceComponent},
- {path: 'status', component: StatusComponent },
+ {path: 'service', component: ServiceComponent, canActivate: [AuthGuard]},
+ {path: 'status', component: StatusComponent, canActivate: [AuthGuard] },
 
 
  //User routes
