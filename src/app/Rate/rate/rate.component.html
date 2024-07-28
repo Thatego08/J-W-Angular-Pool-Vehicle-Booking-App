@@ -1,46 +1,75 @@
-<div class="container mx-auto p-6 bg-gray-100 rounded-lg shadow-md">
-    <h1 class="text-2xl font-bold mb-4">Manage Rates</h1>
-    
-    <div class="flex items-center mb-4">
-      <input 
-        [(ngModel)]="searchProjectNumber" 
-        placeholder="Search by Project Number" 
-        class="border border-gray-300 p-2 rounded w-full"
-      />
-      <button (click)="addRate()" class="ml-4 bg-blue-500 text-white p-2 rounded">Add Rate</button>
-    </div>
-    
-    <div class="overflow-x-auto">
-      <table class="min-w-full bg-white border border-gray-300">
-        <thead class="bg-gray-200">
-          <tr>
-            <th class="py-2 px-4 border-b">Rate Type</th>
-            <th class="py-2 px-4 border-b">Rate Value</th>
-            <th class="py-2 px-4 border-b">Project Number</th>
-            <th class="py-2 px-4 border-b">Applicable Time Period</th>
-            <th class="py-2 px-4 border-b">Conditions</th>
-            <th class="py-2 px-4 border-b">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let rate of filteredRates()">
-            <td class="py-2 px-4 border-b">{{ rate.rateTypeName }}</td>
-            <td class="py-2 px-4 border-b">{{ rate.rateValue | currency }}</td>
-            <td class="py-2 px-4 border-b">{{ rate.projectNumber }}</td>
-            <td class="py-2 px-4 border-b">
-              <span *ngIf="rate.rateTypeName !== 'kilometer rate'">
-                {{ rate.applicableTimePeriod }}
-              </span>
-            </td>
-            <td class="py-2 px-4 border-b">{{ rate.conditions }}</td>
-            <td class="py-2 px-4 border-b flex space-x-2">
-              <button (click)="editRate(rate)" class="text-blue-500 hover:text-blue-700">
-                <i class="fas fa-pencil-alt"></i>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+<div class="container bg-transparent p-4">
+  <h2 class="text-darkblue">Manage Rates</h2>
+  <div class="flex justify-between items-center mb-4">
+    <input type="text" [(ngModel)]="searchRateTypeName" placeholder="Search Rate Type" class="border rounded px-2 py-1" />
+    <button (click)="addRate()" class="bg-blue-500 text-white rounded px-4 py-2">Add Rate</button>
   </div>
-  
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead class="bg-darkblue text-white">
+        <tr>
+          <th>Rate Type</th>
+          <th>Project Number</th>
+          <th>Description</th>
+          <th>Rate Value</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let rate of displayedRates">
+          <td>{{ rate.RateTypeName }}</td>
+          <td>{{ rate.ProjectNumber }}</td>
+          <td>{{ rate.Conditions }}</td>
+          <td>{{ rate.RateValue }}</td>
+          <td>
+            <button (click)="editRate(rate)" class="text-blue-500">✎</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination Controls -->
+  <div class="pagination-controls">
+    <button (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
+    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+    <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+  </div>
+
+  <!-- Edit Rate Modal -->
+  <ng-template #editRateModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Edit Rate</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form (ngSubmit)="saveRate()">
+        <div *ngIf="rateToEdit">
+          <div class="form-group">
+            <label for="rateTypeName">Rate Type</label>
+            <select [(ngModel)]="rateToEdit.RateTypeName" name="rateTypeName" class="form-control">
+              <option *ngFor="let rateType of rateTypes" [value]="rateType">{{ rateType }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="projectNumber">Project Number</label>
+            <select [(ngModel)]="rateToEdit.ProjectNumber" name="projectNumber" class="form-control">
+              <option *ngFor="let project of projects" [value]="project.projectNumber">{{ project.projectNumber }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <input type="text" [(ngModel)]="rateToEdit.Conditions" name="description" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label for="rateValue">Rate Value</label>
+            <input type="number" [(ngModel)]="rateToEdit.RateValue" name="rateValue" class="form-control" />
+          </div>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+</div>

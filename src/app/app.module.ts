@@ -52,6 +52,7 @@ import { FeedbackListComponent } from './user/feedback-list/feedback-list.compon
 import { EditAdminComponent } from './Admin/edit-admin/edit-admin.component';
 import { RateComponent } from './Rate/rate/rate.component';
 import { RateFormComponent } from './Rate/rate-form/rate-form.component';
+import { ProjectComponent } from './project/project.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import { RateFormComponent } from './Rate/rate-form/rate-form.component';
     SettingsComponent,
     FeedbackComponent,
     NotificationsComponent,
+    ProjectComponent,
     ProfileComponent,
 
     TripComponent,

@@ -30,6 +30,10 @@ import { CreateTripComponent } from './create-trip/create-trip.component';
 import { EditTripComponent } from './edit-trip/edit-trip.component';
 import { GetTripComponent } from './get-trip/get-trip.component';
 import { RefuelVehicleComponent } from './refuel-vehicle/refuel-vehicle.component';
+import { AdminComponent } from './Admin/admin/admin.component';
+import { EditAdminComponent } from './Admin/edit-admin/edit-admin.component';
+import { ProjectComponent } from './project/project.component';
+import { RateComponent } from './Rate/rate/rate.component';
 
 
 
@@ -37,8 +41,12 @@ import { RefuelVehicleComponent } from './refuel-vehicle/refuel-vehicle.componen
 const routes: Routes = [
  {path:'', pathMatch:'full', redirectTo: 'app-login'} ,
  {path: 'driver', component:DriverComponent, canActivate: [AuthGuard]},
+ {path: 'admin', component:AdminComponent,canActivate:[AuthGuard]},
  {path: 'register-driver', component:RegisterDriverComponent},
+ { path: 'project', component: ProjectComponent ,canActivate:[AuthGuard]},
+ { path: 'rate', component: RateComponent , canActivate:[AuthGuard] },
  {path: 'edit-driver/:userName', component:EditDriverComponent},
+ { path: 'edit-admin/:userName', component: EditAdminComponent, canActivate: [AuthGuard]},
 
 
  //Booking

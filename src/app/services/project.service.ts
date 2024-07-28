@@ -7,35 +7,27 @@ import { Project } from '../models/Project';
   providedIn: 'root'
 })
 export class ProjectService {
-  private apiUrl = 'https://localhost:7167/swagger'; // API URL
+  private baseUrl = 'https://localhost:7167/Project'; // API URL
 
   constructor(private http: HttpClient) { }
 
-  // Get all projects
-  getProjects(): Observable<Project[]> {
-    return this.http.get<Project[]>(this.apiUrl);
+  getAllProjects(): Observable<Project[]> {
+    return this.http.get<Project[]>(`${this.baseUrl}/GetAllProjects`);
   }
 
-  // Get project by ID
-  getProject(id: number): Observable<Project> {
-    const url = `${this.apiUrl}/${id}`;
-    return this.http.get<Project>(url);
+  getProjectById(projectId: number): Observable<Project> {
+    return this.http.get<Project>(`${this.baseUrl}/GetProject/${projectId}`);
   }
 
-  // Add new project
-  addProject(project: Project): Observable<Project> {
-    return this.http.post<Project>(this.apiUrl, project);
+  addProject(project: Project): Observable<any> {
+    return this.http.post(`${this.baseUrl}/AddProject`, project);
   }
 
-  // Update existing project
-  updateProject(project: Project): Observable<Project> {
-    const url = `${this.apiUrl}/${project.ProjectID}`;
-    return this.http.put<Project>(url, project);
+  updateProject(projectID: number, project: Project): Observable<any> {
+    return this.http.put(`${this.baseUrl}/EditProject/${projectID}`, project);
   }
 
-  // Delete project
-  deleteProject(id: number): Observable<void> {
-    const url = `${this.apiUrl}/${id}`;
-    return this.http.delete<void>(url);
+  deleteProject(projectID: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/DeleteProject/${projectID}`);
   }
 }

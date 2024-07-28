@@ -1,1 +1,75 @@
-<p>project works!</p>
+<div class="flex-1 p-10">
+  <div class="bg-gray-200 bg-opacity-75 p-4 rounded">
+    <h1 class="text-3xl font-bold mb-6 text-blue-500">Manage Projects</h1>
+
+    <div class="flex justify-between mb-4">
+      <button 
+        class="bg-blue-500 text-white p-2 rounded hover:bg-blue-700" 
+        (click)="addProject()"
+      >
+        Add Project
+      </button>
+      <input 
+        [(ngModel)]="searchProjectNumber" 
+        type="text" 
+        placeholder="Search Project" 
+        class="p-2 border rounded w-1/3"
+      />
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="min-w-full">
+        <thead class="bg-blue-500 text-white">
+          <tr>
+            <th class="p-2">Project Number</th>
+            <th class="p-2">Description</th>
+            <th class="p-2">Job No</th>
+            <th class="p-2">Task Code</th>
+            <th class="p-2">Activity Code</th>
+            <th class="p-2">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let project of displayedProjects">
+            <td class="p-2">{{ project?.projectNumber }}</td>
+            <td class="p-2">{{ project?.description }}</td>
+            <td class="p-2">{{ project?.jobNo }}</td>
+            <td class="p-2">{{ project?.taskCode }}</td>
+            <td class="p-2">{{ project?.activityCode }}</td>
+            <td class="p-2 flex space-x-2">
+              <i (click)="editProject(project)" class="fa fa-pencil text-green-700 cursor-pointer hover:text-green-900"></i>
+              <i (click)="openDeleteConfirmation(project)" class="fa fa-trash text-red-500 cursor-pointer hover:text-red-700"></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="flex justify-center mt-4">
+      <button class="bg-gray-300 text-gray-700 p-2 rounded-l" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
+      <span class="bg-gray-300 text-gray-700 p-2">{{ currentPage }} / {{ totalPages }}</span>
+      <button class="bg-gray-300 text-gray-700 p-2 rounded-r" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+    </div>
+
+    <ng-template #deleteConfirmationModal let-modal>
+      <div class="modal-header flex justify-between items-center">
+        <h4 class="modal-title">Confirm Delete</h4>
+        <button 
+          type="button" 
+          class="text-red-500 text-lg focus:outline-none"
+          aria-label="Close" 
+          (click)="modal.dismiss()"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete this project?</p>
+      </div>
+      <div class="modal-footer flex justify-end">
+        <button type="button" class="btn btn-secondary mr-2" (click)="modal.dismiss()">Cancel</button>
+        <button type="button" class="btn btn-danger" (click)="deleteProject()">Delete</button>
+      </div>
+    </ng-template>
+  </div>
+</div>
