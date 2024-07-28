@@ -7,7 +7,7 @@ import { Admin } from '../models/admin';
   providedIn: 'root'
 })
 export class AdminService {
-  private baseUrl = 'https://localhost:7041/api/admin'; // Update with your actual API URL
+  private baseUrl = 'https://localhost:7041/api/Admin'; // Update with your actual API URL
 
   constructor(private http: HttpClient) { }
 
@@ -18,6 +18,10 @@ export class AdminService {
     });
     return this.http.get<any[]>(`${this.baseUrl}/getAllAdmins`, { headers })
       .pipe(catchError(this.handleError));
+  }
+
+  registerAdmin(admin: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/RegisterAdmin`, admin);
   }
 
   // Fetch a specific admin by username
