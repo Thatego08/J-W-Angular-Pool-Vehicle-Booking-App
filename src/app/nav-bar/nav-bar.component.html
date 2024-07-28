@@ -1,0 +1,48 @@
+<nav class="navbar"  *ngIf="authService.isLoggedIn | async">
+    <ul class="navbar-list">
+      <li class="navbar-item" >
+        <a routerLink="/driver">Drivers</a>
+      </li>
+      <li class="navbar-item" >
+        <a routerLink="/vehicles">Vehicles</a>
+      </li>
+      <li class="navbar-item dropdown" >
+        <a class="dropdown-toggle">Trips</a>
+        <ul class="dropdown-menu">
+          <li><a routerLink="/trip">All Trips</a></li>
+          <li><a routerLink="/create-trip">Create Trips</a></li>
+          <li><a routerLink="/get-trip">Get Trips</a></li>
+          <li><a routerLink="/refuel-vehicle">Refuel</a></li>
+        </ul>
+      </li>
+
+      <li class="navbar-item dropdown">
+        <a class="dropdown-toggle">Bookings</a>
+        <ul class="dropdown-menu">
+          <li><a routerLink="/booking-list">My Bookings</a></li>
+          <li><a routerLink="/add-booking">Make New Booking</a></li>
+          <li><a routerLink="/booking-history">Booking History</a></li>
+         </ul>
+      </li>
+
+      <li class="navbar-item dropdown" >
+        <a class="dropdown-toggle">Admin Section</a>
+        <ul class="dropdown-menu">
+          <li><a routerLink="/admin">Manage Admins</a></li>
+          <li><a routerLink="/project">Manage Projects</a></li>
+          <li><a routerLink="/rate">Manage Rates</a></li>
+        </ul>
+      </li>
+
+      <li class="navbar-item dropdown"  >
+        <a class="dropdown-toggle">Feedbacks</a>
+        <ul class="dropdown-menu">
+          <li><a routerLink="/app-feedback-list">Feedback List</a></li>
+          <li><a routerLink="/app-feedback">Add Feedback</a></li>
+        </ul>
+      </li>
+
+      <!-- Add more navigation items as needed -->
+    </ul>
+  </nav>
+  

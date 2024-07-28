@@ -80,6 +80,7 @@ import { VehicleModelComponent } from './vehicle/vehicle-model/vehicle-model.com
 import { StatusComponent } from './vehicle/status/status.component';
 import { LicenseDisksComponent } from './vehicle/license-disc/license-disc.component';
 import { ManageComponent } from './vehicle/manage/manage.component';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
 
 
 @NgModule({
@@ -143,7 +144,8 @@ import { ManageComponent } from './vehicle/manage/manage.component';
       VehicleModelComponent,
       StatusComponent,
       LicenseDisksComponent,
-      ManageComponent
+      ManageComponent,
+      NavBarComponent
       
 
 

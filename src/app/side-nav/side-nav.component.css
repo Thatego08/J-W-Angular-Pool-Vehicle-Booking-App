@@ -4,8 +4,11 @@
   }
   
   .sidebar-wrapper {
+    
     min-height: 100vh;
     margin-left: -15rem;
+    
+    background-color: #0c1c2e;
     -webkit-transition: margin 0.25s ease-out;
     -moz-transition: margin 0.25s ease-out;
     transition: margin 0.25s ease-out;

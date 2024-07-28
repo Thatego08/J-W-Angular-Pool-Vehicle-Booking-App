@@ -1,14 +1,12 @@
-<div class="w-64 h-screen bg-gray-800 text-white flex flex-col">
+<div class="w-64 h-screen bg-gray-800 text-white flex flex-col" *ngIf="authService.isLoggedIn | async">
     <!-- Logo -->
-    <div class="h-16 flex items-center justify-center border-b border-gray-700">
+    <!-- <div class="h-16 flex items-center justify-center border-b border-gray-700">
         <span class="text-2xl font-semibold">Logo</span>
-    </div>
+    </div> -->
     <!-- Navigation -->
     <nav class="flex-1 px-4 py-6">
         <ul>
-            <li>
-                <a routerLink="/app-dashboard" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">Dashboard</a>
-            </li>
+            
             <li>
                 <a routerLink="/app-profile" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">Profile</a>
             </li>
@@ -19,51 +17,15 @@
                 <a routerLink="/app-notifications" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">Notifications</a>
             </li>
             <li>
-                <a routerLink="/driver" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">Drivers</a>
+                
+  <a class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700" (click)="logout()">Logout</a>
             </li>
-            <li>
-                <a routerLink="/trip" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">All Trips</a>
-            </li>
-            <li>
-                <a routerLink="/create-trip" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">Create-Trip</a>
-            </li>
-            <li>
-                <a routerLink="/get-trip" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">get-Trip</a>
-            </li>
-            <li>
-                <a routerLink="/refuel-vehicle" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">Refuel </a>
-            </li>
-            <li>
-                <a routerLink="/app-feedback-list" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">Feedback-List(Admin)</a>
-            </li>
-            <li>
-                <a routerLink="/app-feedback" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">Add-Feedback</a>
-            </li>
-            <li>
-              <a routerLink="/booking-list" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">My Bookings</a>
-          </li>
-          <li>
-            <a routerLink="/add-booking" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">Make New Booking</a>
-        </li>
-        <li>
-            <a routerLink="/admin" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">Manage Admins</a>
-        </li>
-        <li>
-            <a routerLink="/project" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">Manage Projects</a>
-        </li>
-        <li>
-            <a routerLink="/rate" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">Manage Rates</a>
-        </li>
-
-        <li>
-          <a routerLink="/booking-history" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">Booking History</a>
-      </li>
-      <li>
-        <a routerLink="/vehicles" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">Vehicles </a>
-    </li> </ul>
+            </ul>
     </nav>
     <!-- Footer -->
     <div class="h-16 flex items-center justify-center border-t border-gray-700">
         <span class="text-sm">&copy; J&W Vehicle System</span>
     </div>
 </div>
+
+

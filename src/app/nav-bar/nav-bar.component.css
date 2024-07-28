@@ -1,0 +1,69 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 250px; /* Same as sidebar width */
+    right: 0;
+    background-color: #102946;
+    padding: 1rem;
+    box-sizing: border-box;
+    z-index: 1000; /* Ensure it stays on top */
+  }
+  
+  .navbar-list {
+    display: flex;
+    justify-content: flex-start; /* Align items to the left */
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  
+  .navbar-item {
+    margin-right: 1.5rem;
+    position: relative;
+  }
+  
+  .navbar-item a {
+    color: #4585e4;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    display: block;
+  }
+  
+  .navbar-item a:hover {
+    background-color: #82857f91;
+  }
+  
+  .dropdown-toggle::after {
+    content: ' ▼';
+  }
+  
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #102946;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    min-width: 150px;
+  }
+  
+  .dropdown-menu li {
+    margin: 0;
+  }
+  
+  .dropdown-menu li a {
+    padding: 0.5rem 1rem;
+    display: block;
+  }
+  
+  .dropdown:hover .dropdown-menu {
+    display: block;
+  }
+  .main-content {
+  margin-top: 80px; /* Increase this value to add more space */
+  margin-left: 250px; /* Adjust based on sidebar width */
+  padding: 1rem;
+}
