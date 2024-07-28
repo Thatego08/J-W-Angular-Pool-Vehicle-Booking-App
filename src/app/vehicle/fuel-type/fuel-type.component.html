@@ -1,0 +1,60 @@
+<div class="header-container">
+    <img src="assets/logo.png" alt="Logo" class="logo">
+  </div>
+
+  <div class="container mx-auto p-6">
+    <button class="btn btn-danger" routerLink="/manage-vehicle"> Back to Manage Vehicles </button>
+    <br>
+    <br>
+    <!-- <div class="search-bar">
+      <input type="text" [(ngModel)]="searchUsername" placeholder="Search by username" class="search-input">
+      <button (click)="searchDriver()" class="search-button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        Search
+      </button>
+    </div> -->
+   
+    <div *ngIf="fuelTypes.length > 0">
+      <table class="min-w-full bg-white border border-gray-200 shadow-md rounded-md overflow-hidden mt-6">
+        <thead class="bg-blue-500 text-white uppercase text-sm">
+          <tr>
+            <th class="py-3 px-6 text-left">ID </th>
+            <th class="py-3 px-6 text-left">Name</th>
+            <th class="py-3 px-6 text-left">Actions </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let fuel of fuelTypes" class="text-gray-700">
+            <td class="py-3 px-6">{{ fuel.id }}</td>
+            <td class="py-3 px-6">{{ fuel.fuelName }}</td>
+            <td class="py-3 px-6">
+              <button class="action-button bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" 
+              (click)="navigateToEditFuel(fuel.id)">Edit</button>
+              <button class="action-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+              (click)="deleteFuel(fuel.id)">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="fuelTypes.length === 0" class="text-center mt-4 text-gray-600">
+      No drivers found.
+    </div>
+  <!-- </div>
+  <button class="btn btn-danger" routerLink="/manage-vehicle"> Back to Manage Vehicles </button>
+  <table style="width:100%">
+    <tr>
+      <th>Fuel ID</th>
+      <th>Fuel Name </th> 
+      <th> Actions </th>
+    </tr>
+    <tr *ngFor="let fuel of fuelTypes">
+      <td>{{fuel.id}}</td>
+      <td>{{fuel.fuelName}}</td>
+      <td>
+        <button class="btn btn-success"> Edit </button>
+        <button class="btn btn-warning"> Delete </button>
+      </td>
+  </tr>
+  </table> -->
