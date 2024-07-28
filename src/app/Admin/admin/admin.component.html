@@ -49,14 +49,26 @@
         </tbody>
       </table>
     </div>
+  
+     <!-- Pagination Controls -->
+ <div class="pagination-controls flex justify-between items-center mt-4">
+  <button 
+    class="bg-gray-300 text-gray-700 p-2 rounded hover:bg-gray-400" 
+    (click)="previousPage()" 
+    [disabled]="currentPage === 1"
+  >
+    Previous
+  </button>
+  <span class="mx-4">Page {{ currentPage }} of {{ totalPages }}</span>
+  <button 
+    class="bg-gray-300 text-gray-700 p-2 rounded hover:bg-gray-400" 
+    (click)="nextPage()" 
+    [disabled]="currentPage === totalPages"
+  >
+    Next
+  </button>
+</div>
   </div>
-
-      <!-- Pagination Controls -->
-      <div class="flex justify-center mt-4">
-        <button class="bg-gray-300 text-gray-700 p-2 rounded-l" (click)="previousPage()" [disabled]="currentPage === 1">Previous</button>
-        <span class="bg-gray-300 text-gray-700 p-2">{{ currentPage }} / {{ totalPages }}</span>
-        <button class="bg-gray-300 text-gray-700 p-2 rounded-r" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
-      </div>
       
 <!-- Delete Confirmation Modal -->
 <ng-template #deleteConfirmationModal let-modal>
