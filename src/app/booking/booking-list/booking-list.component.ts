@@ -22,11 +22,17 @@ export class BookingListComponent implements OnInit{
   }
 
   loadBookings(): void {
-    this.bookingService.getBookings().subscribe((data: BookingModel[]) => {
-      console.log(data); // Add this line to check the received data
-      this.bookings = data;
+    this.bookingService.getBookings().subscribe({
+      next: (data: BookingModel[]) => {
+        console.log('Bookings data:', data); // Check the data received
+        this.bookings = data;
+      },
+      error: (error) => {
+        console.error('Error loading bookings:', error);
+      }
     });
   }
+
 
   openEditModal(booking: BookingModel): void {
     this.selectedBooking = booking;
@@ -47,14 +53,18 @@ export class BookingListComponent implements OnInit{
     this.selectedBooking = null;
   }
 
-  deleteBooking(bookingID: number): void {
-    this.bookingService.deleteBooking(bookingID).subscribe({
-      next: () => {
-        this.bookings = this.bookings.filter(b => b.bookingID !== bookingID);
-      },
-      error: (error) => {
-        console.error('Error deleting booking:', error);
-      }
-    });
+  onDelete(id: number): void {
+    if (confirm('Are you sure you want to delete this booking?')) {
+      this.bookingService.deleteBooking(id).subscribe(
+        () => {
+          alert('Booking has been successfully deleted!');
+          // Refresh the booking list or handle the UI update
+        },
+        (error) => {
+          console.error('Error deleting booking:', error);
+          alert('There was an error deleting the booking. Please try again.');
+        }
+      );
+    }
   }
 }

@@ -31,15 +31,14 @@
             </label>
           </div>
           <div *ngIf="!isEvent" class="form-group">
-            <label for="projectName">Project Number:</label>
+            <label for="projectNumber">Project Number:</label>
             <div class="custom-select-wrapper">
               <select id="projectNumber" formControlName="projectNumber" class="form-control">
-                <option *ngFor="let project of projects" [value]="project">{{ project }}</option>
+                <option *ngFor="let project of projects" [value]="project.number">{{ project.number }}</option>
               </select>
               <i class="fa fa-caret-down dropdown-icon"></i>
             </div>
           </div>
-
           <div *ngIf="isEvent" class="form-group">
             <label for="event">Event:</label>
             <input id="event" formControlName="event" class="form-control" placeholder="Enter event" />

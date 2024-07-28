@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { BookingService } from '../../services/booking.service';
 import { BookingModel } from '../../models/booking.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -10,7 +9,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './edit-booking.component.html',
   styleUrls: ['./edit-booking.component.css']
 })
-export class EditBookingComponent implements OnInit{
+export class EditBookingComponent implements OnInit {
   @Input() booking: BookingModel | null = null;
   @Output() close = new EventEmitter<void>();
   bookingForm: FormGroup;
@@ -23,9 +22,13 @@ export class EditBookingComponent implements OnInit{
     'Toyota 12', 'Toyota 13', 'Toyota 14', 'Toyota 15', 'Toyota S1', 'Toyota S2', 'Toyota S3', 'Isuzu 1'
   ];
 
-  projects: string[] = [
-    'Construction Project', 'Mining Project', 'Bridge Building Project',
-    'City Infrastructure Project', 'Impact Analysis Project'
+  // Updated projects array with numeric values
+  projects: { number: number, name: string }[] = [
+    { number: 120, name: 'Project 1' },
+    { number: 128, name: 'Project 2' },
+    { number: 129, name: 'Project 3' },
+    { number: 130, name: 'Project 4' },
+    { number: 131, name: 'Project 5' }
   ];
 
   constructor(
@@ -36,7 +39,7 @@ export class EditBookingComponent implements OnInit{
     this.bookingForm = this.fb.group({
       userName: ['', Validators.required],
       vehicleName: ['', Validators.required],
-      projectName: [''],
+      projectNumber: [''],
       event: [''],
       startDate: ['', Validators.required],
       endDate: ['', Validators.required],
@@ -59,18 +62,18 @@ export class EditBookingComponent implements OnInit{
 
   toggleEventProject(isEvent: boolean): void {
     this.isEvent = isEvent;
-    const projectNameControl = this.bookingForm.get('projectName');
+    const projectNumberControl = this.bookingForm.get('projectNumber');
     const eventControl = this.bookingForm.get('event');
 
-    if (projectNameControl && eventControl) {
+    if (projectNumberControl && eventControl) {
       if (this.isEvent) {
-        projectNameControl.clearValidators();
+        projectNumberControl.clearValidators();
         eventControl.setValidators([Validators.required]);
       } else {
         eventControl.clearValidators();
-        projectNameControl.setValidators([Validators.required]);
+        projectNumberControl.setValidators([Validators.required]);
       }
-      projectNameControl.updateValueAndValidity();
+      projectNumberControl.updateValueAndValidity();
       eventControl.updateValueAndValidity();
     }
   }
@@ -82,10 +85,16 @@ export class EditBookingComponent implements OnInit{
         bookingID: this.booking.bookingID
       };
 
-      this.bookingService.updateBooking(updatedBooking).subscribe(() => {
-        this.activeModal.close();
-        alert('Booking has been successfully updated!');
-      });
+      this.bookingService.updateBooking(updatedBooking).subscribe(
+        (response) => {
+          this.activeModal.close();
+          alert('Booking has been successfully updated!');
+        },
+        (error) => {
+          console.error('Error updating booking:', error);
+          alert('There was an error updating the booking. Please try again.');
+        }
+      );
     } else {
       alert('Please fill out the form correctly.');
     }

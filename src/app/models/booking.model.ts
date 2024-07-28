@@ -5,7 +5,7 @@ export interface BookingModel {
   startDate: Date;
   endDate: Date;
   vehicleName: string;
-  projectNumber?: string;
+  projectNumber?: number;
   reminderSent: boolean;
 
 }
