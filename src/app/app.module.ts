@@ -53,6 +53,8 @@ import { FeedbackListComponent } from './user/feedback-list/feedback-list.compon
 import { EditAdminComponent } from './Admin/edit-admin/edit-admin.component';
 import { RateComponent } from './Rate/rate/rate.component';
 import { RateFormComponent } from './Rate/rate-form/rate-form.component';
+
+import { ProjectComponent } from './project/project.component';
 import { AddVehicleComponent } from './vehicle/add-vehicle/add-vehicle.component';
 import { EditVehicleComponent } from './vehicle/edit-vehicle/edit-vehicle.component';
 import { VehicleComponent } from './vehicle/vehicle/vehicle.component';
@@ -79,7 +81,12 @@ import { VehicleModelComponent } from './vehicle/vehicle-model/vehicle-model.com
 import { StatusComponent } from './vehicle/status/status.component';
 import { LicenseDisksComponent } from './vehicle/license-disc/license-disc.component';
 import { ManageComponent } from './vehicle/manage/manage.component';
+
 import { InsuranceComponent } from './vehicle/insurance/insurance.component';
+
+import { NavBarComponent } from './nav-bar/nav-bar.component';
+
+
 
 @NgModule({
   declarations: [
@@ -96,6 +103,7 @@ import { InsuranceComponent } from './vehicle/insurance/insurance.component';
     SettingsComponent,
     FeedbackComponent,
     NotificationsComponent,
+    ProjectComponent,
     ProfileComponent,
 
     TripComponent,
@@ -142,7 +150,11 @@ import { InsuranceComponent } from './vehicle/insurance/insurance.component';
       StatusComponent,
       LicenseDisksComponent,
       ManageComponent,
+
       InsuranceComponent
+
+      NavBarComponent
+
       
 
 

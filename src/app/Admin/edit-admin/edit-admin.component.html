@@ -1,91 +1,29 @@
-<div class="container mx-auto p-6">
-    <h1 class="text-3xl font-bold mb-4 text-blue-800">Edit Admin</h1>
-  
-    <div class="bg-gray-200 p-6 rounded-lg shadow-md">
-      <form #form="ngForm" (ngSubmit)="updateAdmin(form)">
-        <div class="mb-4">
-          <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
-          <input 
-            type="text" 
-            id="name" 
-            name="name" 
-            [(ngModel)]="updatedAdmin.name" 
-            required
-            class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm p-2"
-          />
-        </div>
-  
-        <div class="mb-4">
-          <label for="surname" class="block text-sm font-medium text-gray-700">Surname</label>
-          <input 
-            type="text" 
-            id="surname" 
-            name="surname" 
-            [(ngModel)]="updatedAdmin.surname" 
-            required
-            class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm p-2"
-          />
-        </div>
-  
-        <div class="mb-4">
-          <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-          <input 
-            type="email" 
-            id="email" 
-            name="email" 
-            [(ngModel)]="updatedAdmin.email" 
-            required
-            class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm p-2"
-          />
-        </div>
-  
-        <div class="mb-4">
-          <label for="userName" class="block text-sm font-medium text-gray-700">Username</label>
-          <input 
-            type="text" 
-            id="userName" 
-            name="userName" 
-            [(ngModel)]="updatedAdmin.userName" 
-            required
-            class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm p-2"
-          />
-        </div>
-  
-        <div class="mb-4">
-          <label for="phoneNumber" class="block text-sm font-medium text-gray-700">Phone Number</label>
-          <input 
-            type="text" 
-            id="phoneNumber" 
-            name="phoneNumber" 
-            [(ngModel)]="updatedAdmin.phoneNumber" 
-            required
-            class="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm p-2"
-          />
-        </div>
-  
-        <div class="flex gap-4">
-          <button 
-            type="submit" 
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          >
-            Save
-          </button>
-          <button 
-            type="button" 
-            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-            (click)="cancel()"
-          >
-            Cancel
-          </button>
-        </div>
-      </form>
+<div *ngIf="admin">
+  <h2>Edit Admin</h2>
+  <form #form="ngForm" (ngSubmit)="updateAdmin(form)">
+    <div>
+      <label>Username:</label>
+      <input [(ngModel)]="admin.userName" name="userName" disabled />
     </div>
-  
-    <div *ngIf="successMessage" class="mt-4 text-green-600">
-      {{ successMessage }}
+    <div>
+      <label>Name:</label>
+      <input [(ngModel)]="admin.name" name="name" required />
     </div>
-    <div *ngIf="errorMessage" class="mt-4 text-red-600">
-      {{ errorMessage }}
+    <div>
+      <label>Surname:</label>
+      <input [(ngModel)]="admin.surname" name="surname" required />
     </div>
-  </div>
-  
+    <div>
+      <label>Email:</label>
+      <input [(ngModel)]="admin.email" name="email" type="email" required />
+    </div>
+    <div>
+      <label>Phone Number:</label>
+      <input [(ngModel)]="admin.phoneNumber" name="phoneNumber" type="text" required />
+    </div>
+    <div>
+      <button type="submit" [disabled]="form.invalid">Update Admin</button>
+    </div>
+  </form>
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+</div>

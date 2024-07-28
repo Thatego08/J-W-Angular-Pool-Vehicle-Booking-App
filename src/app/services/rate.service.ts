@@ -1,25 +1,30 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Rate } from '../models/rate';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RateService {
 
-  private apiUrl = `https://localhost:7041/api/Rate`;
+  private baseUrl = `https://localhost:7041/api/Rate`;
 
   constructor(private http: HttpClient) { }
 
-  getAllRates(): Observable<any> {
-    return this.http.get(`${this.apiUrl}`);
+  getAllRates(): Observable<Rate[]> {
+    return this.http.get<Rate[]>(`${this.baseUrl}`);
   }
 
-  createRate(rate: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}`, rate);
+  createRate(rate: Rate): Observable<any> {
+    return this.http.post(`${this.baseUrl}`, rate);
   }
 
-  updateRate(id: number, rate: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}`, rate);
+  updateRate(RateID: number, rate: Rate): Observable<any> {
+    return this.http.put(`${this.baseUrl}/${RateID}`, rate);
+  }
+
+  deleteRate(RateID: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${RateID}`);
   }
 }

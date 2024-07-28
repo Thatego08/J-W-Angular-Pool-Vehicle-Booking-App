@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { AdminService } from '../../services/admin.service';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-admin',
@@ -9,10 +10,17 @@ import { Router } from '@angular/router';
 })
 export class AdminComponent  implements OnInit {
   admins: any[] = [];
+  displayedAdmins: any[] = [];
   searchUsername: string = '';
   searchedAdmin: any = null; // Variable to hold the searched admin
+  adminToDelete: any = null;
+  currentPage: number = 1;
+  itemsPerPage: number = 10;
+  totalPages: number = 1;
 
-  constructor(private adminService: AdminService, private router: Router) { }
+  @ViewChild('deleteConfirmationModal') deleteConfirmationModal!: TemplateRef<any>;
+
+  constructor(private adminService: AdminService, private router: Router,private modalService: NgbModal) { }
 
   ngOnInit() {
     this.fetchAdmins();
@@ -22,6 +30,7 @@ export class AdminComponent  implements OnInit {
     this.adminService.getAllAdmins().subscribe(
       (data: any[]) => {
         this.admins = data;
+        this.updateDisplayedAdmins(); // Update the displayed admins list
       },
       error => {
         console.error('Error fetching admins', error);
@@ -29,16 +38,16 @@ export class AdminComponent  implements OnInit {
     );
   }
 
-  deleteAdmin(userName: string) {
-    if (confirm('Are you sure you want to delete this admin?')) {
-      this.adminService.deleteAdmin(userName).subscribe(
+  deleteAdmin() {
+    if (this.adminToDelete) {
+      this.adminService.deleteAdmin(this.adminToDelete.userName).subscribe(
         () => {
+          console.log('Admin deleted:', this.adminToDelete.userName);
           // Remove deleted admin from local list
-          this.admins = this.admins.filter(a => a.userName !== userName);
-          // Clear searched admin when deleted
-          if (this.searchedAdmin && this.searchedAdmin.userName === userName) {
-            this.searchedAdmin = null;
-          }
+          this.admins = this.admins.filter(a => a.userName !== this.adminToDelete.userName);
+          this.updateDisplayedAdmins(); // Update the displayed admins list
+          this.adminToDelete = null;
+          this.modalService.dismissAll();
         },
         error => {
           console.error('Error deleting admin', error);
@@ -46,9 +55,39 @@ export class AdminComponent  implements OnInit {
       );
     }
   }
-  updateAdmin(userName: string): void {
-    this.router.navigate([`/edit-admin/${userName}`]); // Navigate to edit admin component
+//pagination
+calculateTotalPages() {
+  this.totalPages = Math.ceil(this.admins.length / this.itemsPerPage);
+}
+updateDisplayedAdmins() {
+  const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+  const endIndex = startIndex + this.itemsPerPage;
+  this.displayedAdmins = this.admins.slice(startIndex, endIndex);
+}
+
+nextPage() {
+  if (this.currentPage < this.totalPages) {
+    this.currentPage++;
+    this.updateDisplayedAdmins();
   }
+}
+
+previousPage() {
+  if (this.currentPage > 1) {
+    this.currentPage--;
+    this.updateDisplayedAdmins();
+  }
+}
+//
+  editAdmin(userName: string) {
+    this.router.navigate([`/edit-admin/${userName}`]);
+  }
+
+  openDeleteConfirmation(admin: any) {
+    this.adminToDelete = admin;
+    this.modalService.open(this.deleteConfirmationModal, { ariaLabelledBy: 'modal-basic-title' });
+  }
+
   searchAdmin() {
     if (this.searchUsername.trim() === '') {
       // If search input is empty, fetch all admins

@@ -30,6 +30,12 @@ import { CreateTripComponent } from './create-trip/create-trip.component';
 import { EditTripComponent } from './edit-trip/edit-trip.component';
 import { GetTripComponent } from './get-trip/get-trip.component';
 import { RefuelVehicleComponent } from './refuel-vehicle/refuel-vehicle.component';
+
+import { AdminComponent } from './Admin/admin/admin.component';
+import { EditAdminComponent } from './Admin/edit-admin/edit-admin.component';
+import { ProjectComponent } from './project/project.component';
+import { RateComponent } from './Rate/rate/rate.component';
+
 import { VehicleComponent } from './vehicle/vehicle/vehicle.component';
 import { AddVehicleComponent } from './vehicle/add-vehicle/add-vehicle.component';
 import { EditVehicleComponent } from './vehicle/edit-vehicle/edit-vehicle.component';
@@ -63,8 +69,12 @@ import { LicenseDisksComponent } from './vehicle/license-disc/license-disc.compo
 const routes: Routes = [
  {path:'', pathMatch:'full', redirectTo: 'app-login'} ,
  {path: 'driver', component:DriverComponent, canActivate: [AuthGuard]},
+ {path: 'admin', component:AdminComponent,canActivate:[AuthGuard]},
  {path: 'register-driver', component:RegisterDriverComponent},
+ { path: 'project', component: ProjectComponent ,canActivate:[AuthGuard]},
+ { path: 'rate', component: RateComponent , canActivate:[AuthGuard] },
  {path: 'edit-driver/:userName', component:EditDriverComponent},
+ { path: 'edit-admin/:userName', component: EditAdminComponent, canActivate: [AuthGuard]},
 
 
  //Booking
@@ -86,12 +96,12 @@ const routes: Routes = [
  //Vehicle Routes
  
  //Vehicle routes
- {path: 'vehicles', component: VehicleComponent},
- {path: 'add-vehicle', component: AddVehicleComponent},
- {path: 'edit-vehicle/:id', component: EditVehicleComponent},
- {path: 'manage-vehicle', component: ManageComponent},
- {path: 'pool-vehicle', component: PoolVehicleComponent},
- {path: 'vehicle-details', component: VehicleDetailsComponent},
+ {path: 'vehicles', component: VehicleComponent,canActivate: [AuthGuard]},
+ {path: 'add-vehicle', component: AddVehicleComponent,canActivate: [AuthGuard]},
+ {path: 'edit-vehicle/:id', component: EditVehicleComponent,canActivate: [AuthGuard]},
+ {path: 'manage-vehicle', component: ManageComponent,canActivate: [AuthGuard]},
+ {path: 'pool-vehicle', component: PoolVehicleComponent,canActivate: [AuthGuard]},
+ {path: 'vehicle-details', component: VehicleDetailsComponent,canActivate: [AuthGuard]},
 
  //Colours
  {path: 'colour', component: ColourComponent },
@@ -127,6 +137,9 @@ const routes: Routes = [
  {path: 'post-checklist', component: PostChecklistComponent},
  {path: 'service', component: ServiceComponent},
  {path: 'status', component: StatusComponent },
+
+ 
+
 
 
  //User routes

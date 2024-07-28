@@ -6,12 +6,43 @@
 
 /*Additional styling*/
 
+/*Navbar and Sidebar styling*/ 
+.app-nav-bar {
+  @apply fixed top-0 left-64 right-0 bg-gray-800 text-white p-4 z-50;
+}
+
+.app-nav-bar-item {
+  @apply hover:bg-gray-700 px-3 py-2 rounded-md;
+}
+
+.app-sidebar {
+  @apply fixed top-0 left-0 w-64 h-full bg-gray-800 text-white p-4 z-40;
+}
+
+.main-content {
+  @apply ml-64 mt-20 p-4;
+}
+
+.dropdown-menu {
+  @apply absolute left-0 hidden group-hover:block bg-gray-800 mt-2;
+}
+
+.dropdown-item {
+  @apply block px-4 py-2 hover:bg-gray-700;
+}
+
 /* Global styles */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     margin: 0;
     padding: 0;
+  }
+
+  main, .main-content .dynamic-content {
+    margin-top: 80px; /* Increase this value to add more space */
+    margin-left: 250px; /* Adjust based on sidebar width */
+    padding: 1rem;
   }
   
   /* Container styles */

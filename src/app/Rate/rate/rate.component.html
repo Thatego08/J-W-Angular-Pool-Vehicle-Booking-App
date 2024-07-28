@@ -1,46 +1,113 @@
-<div class="container mx-auto p-6 bg-gray-100 rounded-lg shadow-md">
-    <h1 class="text-2xl font-bold mb-4">Manage Rates</h1>
-    
-    <div class="flex items-center mb-4">
+<div class="flex-1 p-10">
+  <div class="bg-gray-200 bg-opacity-75 p-4 rounded">
+    <h1 class="text-3xl font-bold mb-6 text-blue-500">Manage Rates</h1>
+
+    <div class="flex justify-between mb-4">
+      <button 
+        class="bg-blue-500 text-white p-2 rounded hover:bg-blue-700" 
+        (click)="openRateModal(null)"
+      >
+        Add Rate
+      </button>
       <input 
-        [(ngModel)]="searchProjectNumber" 
-        placeholder="Search by Project Number" 
-        class="border border-gray-300 p-2 rounded w-full"
+        [(ngModel)]="searchRateTypeName" 
+        type="text" 
+        placeholder="Search Rate Type" 
+        class="p-2 border rounded w-1/3"
       />
-      <button (click)="addRate()" class="ml-4 bg-blue-500 text-white p-2 rounded">Add Rate</button>
     </div>
-    
+
     <div class="overflow-x-auto">
-      <table class="min-w-full bg-white border border-gray-300">
-        <thead class="bg-gray-200">
+      <table class="min-w-full">
+        <thead class="bg-blue-500 text-white">
           <tr>
-            <th class="py-2 px-4 border-b">Rate Type</th>
-            <th class="py-2 px-4 border-b">Rate Value</th>
-            <th class="py-2 px-4 border-b">Project Number</th>
-            <th class="py-2 px-4 border-b">Applicable Time Period</th>
-            <th class="py-2 px-4 border-b">Conditions</th>
-            <th class="py-2 px-4 border-b">Actions</th>
+            <th class="p-2">Rate Type</th>
+            <th class="p-2">Project Number</th>
+            <th class="p-2">Description</th>
+            <th class="p-2">Rate Value</th>
+            <th class="p-2">Applicable Time Period</th>
+            <th class="p-2">Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let rate of filteredRates()">
-            <td class="py-2 px-4 border-b">{{ rate.rateTypeName }}</td>
-            <td class="py-2 px-4 border-b">{{ rate.rateValue | currency }}</td>
-            <td class="py-2 px-4 border-b">{{ rate.projectNumber }}</td>
-            <td class="py-2 px-4 border-b">
-              <span *ngIf="rate.rateTypeName !== 'kilometer rate'">
-                {{ rate.applicableTimePeriod }}
-              </span>
-            </td>
-            <td class="py-2 px-4 border-b">{{ rate.conditions }}</td>
-            <td class="py-2 px-4 border-b flex space-x-2">
-              <button (click)="editRate(rate)" class="text-blue-500 hover:text-blue-700">
-                <i class="fas fa-pencil-alt"></i>
-              </button>
+          <tr *ngFor="let rate of displayedRates">
+            <td class="p-2">{{ rate?.RateTypeName }}</td>
+            <td class="p-2">{{ rate?.ProjectNumber }}</td>
+            <td class="p-2">{{ rate?.Conditions }}</td>
+            <td class="p-2">{{ rate?.RateValue }}</td>
+            <td class="p-2">{{ rate?.ApplicableTimePeriod }}</td>
+            <td class="p-2 flex space-x-2">
+              <i (click)="openRateModal(rate)" class="fa fa-pencil text-green-700 cursor-pointer hover:text-green-900"></i>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
+
+    <!-- Pagination Controls -->
+    <div class="pagination-controls flex justify-between items-center mt-4">
+      <button 
+        class="bg-gray-300 text-gray-700 p-2 rounded hover:bg-gray-400" 
+        (click)="previousPage()" 
+        [disabled]="currentPage === 1"
+      >
+        Previous
+      </button>
+      <span class="mx-4">Page {{ currentPage }} of {{ totalPages }}</span>
+      <button 
+        class="bg-gray-300 text-gray-700 p-2 rounded hover:bg-gray-400" 
+        (click)="nextPage()" 
+        [disabled]="currentPage === totalPages"
+      >
+        Next
+      </button>
+    </div>
   </div>
-  
+
+  <!-- Add/Edit Rate Modal -->
+  <ng-template #editRateModal let-modal>
+    <div class="modal-header flex justify-between items-center">
+      <h4 class="modal-title">{{ isEditMode ? 'Edit Rate' : 'Add Rate' }}</h4>
+      <button 
+        type="button" 
+        class="text-red-500 text-lg focus:outline-none"
+        aria-label="Close" 
+        (click)="modal.dismiss()"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form (ngSubmit)="saveRate()">
+        <div>
+          <div class="form-group">
+            <label for="rateTypeName">Rate Type</label>
+            <select [(ngModel)]="rateToEdit.RateTypeName" name="rateTypeName" class="form-control">
+              <option *ngFor="let rateType of rateTypes" [value]="rateType">{{ rateType }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="projectNumber">Project Number</label>
+            <select [(ngModel)]="rateToEdit.ProjectNumber" name="projectNumber" class="form-control">
+              <option *ngFor="let project of projects" [value]="project.projectNumber">{{ project.projectNumber }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <input type="text" [(ngModel)]="rateToEdit.Conditions" name="description" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label for="rateValue">Rate Value</label>
+            <input type="number" [(ngModel)]="rateToEdit.RateValue" name="rateValue" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label for="applicableTimePeriod">Applicable Time Period</label>
+            <input type="text" [(ngModel)]="rateToEdit.ApplicableTimePeriod" name="applicableTimePeriod" class="form-control" />
+          </div>
+          
+          <button type="submit" class="btn btn-primary">{{ isEditMode ? 'Save' : 'Add' }}</button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+</div>

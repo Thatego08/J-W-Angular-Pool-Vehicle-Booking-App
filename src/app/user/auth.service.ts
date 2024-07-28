@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap, catchError, throwError } from 'rxjs';
+import { Observable, tap, catchError, throwError, BehaviorSubject } from 'rxjs';
 import { Feedback } from '../models/feedback.model';
-
+import { jwtDecode } from 'jwt-decode';
 
 // Define the interface for the response from the login API
 
@@ -16,9 +16,17 @@ interface LoginResponse {
 export class AuthService {
 
 
+  private loggedIn = new BehaviorSubject<boolean>(false);
+  private userRole = new BehaviorSubject<string>('');
+  
   private apiUrl = 'https://localhost:7041/api/User';
   private FapiUrl = 'https://localhost:7041/api/Feedback';
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) 
+  {
+
+    this.userRole.next(this.getUserRole());
+    this.loggedIn.next(this.isAuthenticated());
+  }
 
   login(credentials: { userName: string; password: string }): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, credentials).pipe(
@@ -33,6 +41,9 @@ export class AuthService {
         return throwError(error);
       })
     );
+
+//Login tracker
+    this.loggedIn.next(true);
   }
 
   register(registerData: any): Observable<any> {
@@ -43,6 +54,8 @@ export class AuthService {
   }
 
   logout(): Observable<any> {
+
+    this.loggedIn.next(false);
     return this.http.post(`${this.apiUrl}/logout`, {});
   }
 
@@ -86,8 +99,22 @@ export class AuthService {
     console.error('An error occurred:', error);
     return throwError(error);
   }
+  get isLoggedIn(): Observable<boolean> {
+    return this.loggedIn.asObservable();
+  }
 
-
+  getUserRole(): string {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decodedToken: any = jwtDecode(token);
+      console.log('Decoded token:', decodedToken);
+      return decodedToken.role; // Adjust this based on the structure of your token
+    }
+    return '';
+  }
+  get currentUserRole(): Observable<string> {
+    return this.userRole.asObservable();
+  }
   //Feedback uses FapiUrl
 
   submitFeedback(feedback: Feedback): Observable<any> {
