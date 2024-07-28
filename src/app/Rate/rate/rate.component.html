@@ -1,0 +1,46 @@
+<div class="container mx-auto p-6 bg-gray-100 rounded-lg shadow-md">
+    <h1 class="text-2xl font-bold mb-4">Manage Rates</h1>
+    
+    <div class="flex items-center mb-4">
+      <input 
+        [(ngModel)]="searchProjectNumber" 
+        placeholder="Search by Project Number" 
+        class="border border-gray-300 p-2 rounded w-full"
+      />
+      <button (click)="addRate()" class="ml-4 bg-blue-500 text-white p-2 rounded">Add Rate</button>
+    </div>
+    
+    <div class="overflow-x-auto">
+      <table class="min-w-full bg-white border border-gray-300">
+        <thead class="bg-gray-200">
+          <tr>
+            <th class="py-2 px-4 border-b">Rate Type</th>
+            <th class="py-2 px-4 border-b">Rate Value</th>
+            <th class="py-2 px-4 border-b">Project Number</th>
+            <th class="py-2 px-4 border-b">Applicable Time Period</th>
+            <th class="py-2 px-4 border-b">Conditions</th>
+            <th class="py-2 px-4 border-b">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let rate of filteredRates()">
+            <td class="py-2 px-4 border-b">{{ rate.rateTypeName }}</td>
+            <td class="py-2 px-4 border-b">{{ rate.rateValue | currency }}</td>
+            <td class="py-2 px-4 border-b">{{ rate.projectNumber }}</td>
+            <td class="py-2 px-4 border-b">
+              <span *ngIf="rate.rateTypeName !== 'kilometer rate'">
+                {{ rate.applicableTimePeriod }}
+              </span>
+            </td>
+            <td class="py-2 px-4 border-b">{{ rate.conditions }}</td>
+            <td class="py-2 px-4 border-b flex space-x-2">
+              <button (click)="editRate(rate)" class="text-blue-500 hover:text-blue-700">
+                <i class="fas fa-pencil-alt"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

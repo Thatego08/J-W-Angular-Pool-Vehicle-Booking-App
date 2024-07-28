@@ -14,10 +14,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SideNavComponent } from './side-nav/side-nav.component';
-import { AdminListComponent } from './Admin/admin-list/admin-list.component';
-import { AdminAddComponent } from './Admin/admin-add/admin-add.component';
-import { AdminEditComponent } from './Admin/admin-edit/admin-edit.component';
-import { AdminHomeComponent } from './Admin/admin-home/admin-home.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { DriverComponent } from './driver/driver.component';
@@ -43,7 +39,7 @@ import { GetTripComponent } from './get-trip/get-trip.component';
 import { RefuelVehicleComponent } from './refuel-vehicle/refuel-vehicle.component';
 import { ForgotPasswordComponent } from './user/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './user/reset-password/reset-password.component';
-
+import { AdminComponent } from './Admin/admin/admin.component';
 import { BookingComponent } from './booking/booking.component';
 import { AddBookingComponent } from './booking/add-booking/add-booking.component';
 import { BookingListComponent } from './booking/booking-list/booking-list.component';
@@ -53,17 +49,16 @@ import { ToastrModule } from 'ngx-toastr';
 import { BookingHistoryComponent } from './booking/booking-history/booking-history.component';
 
 import { FeedbackListComponent } from './user/feedback-list/feedback-list.component';
-
+import { EditAdminComponent } from './Admin/edit-admin/edit-admin.component';
+import { RateComponent } from './Rate/rate/rate.component';
+import { RateFormComponent } from './Rate/rate-form/rate-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SideNavComponent,
-    AdminListComponent,
-    AdminAddComponent,
-    AdminEditComponent,
-    AdminHomeComponent,
     DriverComponent,
+    AdminComponent,
     NavigationComponent,
     RegisterDriverComponent,
     EditDriverComponent,
@@ -88,8 +83,15 @@ import { FeedbackListComponent } from './user/feedback-list/feedback-list.compon
     BookingListComponent,
     EditBookingComponent,
     BookingHistoryComponent,
+    
 
-    FeedbackListComponent
+    FeedbackListComponent,
+            EditAdminComponent,
+            RateComponent,
+            RateFormComponent,
+     
+    
+    
 
 
   ],
