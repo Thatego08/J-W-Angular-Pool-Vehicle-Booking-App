@@ -123,8 +123,8 @@ const routes: Routes = [
  {path: 'edit-model/:id', component: EditModelComponent},
 
  //Vehicle Extras
- {path: 'checklist', component: ChecklistComponent, canActivate: [AuthGuard] },
- {path: 'post-checklist', component: PostChecklistComponent, canActivate: [AuthGuard]},
+ {path: 'checklist', component: ChecklistComponent},
+ {path: 'post-checklist', component: PostChecklistComponent},
  {path: 'service', component: ServiceComponent},
  {path: 'status', component: StatusComponent },
 

@@ -1,3 +1,26 @@
+<div class="menu-bar" style="background-color: #1a365d;">
+  <ul>
+    <li><a routerLink="/vehicles" class="text-white uppercase text-sm" >VEHICLES</a></li>
+    <li><a routerLink="/pool-vehicle" class="text-white uppercase text-sm">Pool Vehicles</a></li>
+    <li><a routerLink="/manage-vehicle" class="text-white uppercase text-sm">Manage Vehicles <i class="fas fa-caret-down"></i></a>
+        <div class="dropdown-menu">
+            <ul>
+              <li><a routerLink="/colour">Colours</a></li>
+              <li><a routerLink="/fuel-type">Fuel Types</a></li>
+              <li><a routerLink="/insurance">Insurance Covers</a></li>
+              <li><a routerLink="/vehicle-make">Vehicle Makes</a></li>
+              <li><a routerLink="/vehicle-model">Vehicle Models</a></li>
+              <li><a routerLink="/status">Status</a></li>
+            </ul>
+          </div>
+    </li>
+    <li><a routerLink="/license-disks" class="text-white uppercase text-sm">License Discs</a>
+    </li>
+    <li><a routerLink="/service" class="text-white uppercase text-sm">Service</a></li>
+  </ul>
+</div>
+<br>
+<br><br>
 <h1> Manage Vehicles</h1>
 
 <!-- src/app/colour-list/colour-list.component.html -->
@@ -9,7 +32,7 @@
         <div class="card-body">
           <a href="/add-colour" class="btn btn-primary">Add Colour</a><br>
           <a href="/colour" class="btn btn-success">View Colours</a><br>
-          <a href="/colour" class="btn btn-danger">Manage Colours</a>
+          <a href="/colour" class="btn btn-dark">Manage Colours</a>
         </div>
       </div>
     </div>
@@ -19,7 +42,7 @@
         <div class="card-body">
           <a href="/add-fuel" class="btn btn-primary">Add Fuel Type</a><br>
           <a href="/fuel-type" class="btn btn-success">View Fuel Types</a><br>
-          <a href="/fuel-type" class="btn btn-danger">Manage Fuel Types</a>
+          <a href="/fuel-type" class="btn btn-dark">Manage Fuel Types</a>
         </div>
       </div>
     </div>
@@ -29,7 +52,7 @@
         <div class="card-body">
           <a href="/add-insurance" class="btn btn-primary">Add Insurance Cover</a><br>
           <a href="/insurance" class="btn btn-success">View Insurance Covers</a><br>
-          <a href="/insurance" class="btn btn-danger">Manage Insurance Covers</a>
+          <a href="/insurance" class="btn btn-dark">Manage Insurance Covers</a>
         </div>
       </div>
     </div>
@@ -42,7 +65,7 @@
         <div class="card-body">
           <a href="/add-make" class="btn btn-primary">Add Vehicle Make</a><br>
           <a href="/vehicle-make" class="btn btn-success">View Vehicle Makes</a><br>
-          <a href="/vehicle-make" class="btn btn-danger">Manage Vehicle Makes</a>
+          <a href="/vehicle-make" class="btn btn-dark">Manage Vehicle Makes</a>
         </div>
       </div>
     </div>
@@ -52,7 +75,7 @@
         <div class="card-body">
           <a href="/add-model" class="btn btn-primary">Add Vehicle Model</a><br>
           <a href="/vehicle-model" class="btn btn-success">View Vehicle Models</a><br>
-          <a href="/vehicle-model" class="btn btn-danger">Manage Vehicle Models</a>
+          <a href="/vehicle-model" class="btn btn-dark">Manage Vehicle Models</a>
         </div>
       </div>
     </div>
