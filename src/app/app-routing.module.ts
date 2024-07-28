@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdminListComponent } from './Admin/admin-list/admin-list.component';
-import { AdminHomeComponent } from './Admin/admin-home/admin-home.component';
-import { AdminAddComponent } from './Admin/admin-add/admin-add.component';
+
 import { DriverComponent } from './driver/driver.component';
 import { RegisterDriverComponent } from './driver/register-driver/register-driver.component';
 import { EditDriverComponent } from './driver/edit-driver/edit-driver.component';
@@ -38,8 +36,6 @@ import { RefuelVehicleComponent } from './refuel-vehicle/refuel-vehicle.componen
 
 const routes: Routes = [
  {path:'', pathMatch:'full', redirectTo: 'app-login'} ,
- {path:'admin-home', component:AdminListComponent, canActivate: [AuthGuard]} ,
- {path:'add-admin',component:AdminAddComponent, canActivate: [AuthGuard]},
  {path: 'driver', component:DriverComponent, canActivate: [AuthGuard]},
  {path: 'register-driver', component:RegisterDriverComponent},
  {path: 'edit-driver/:userName', component:EditDriverComponent},

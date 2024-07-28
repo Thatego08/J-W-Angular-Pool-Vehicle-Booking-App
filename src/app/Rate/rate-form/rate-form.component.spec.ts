@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdminEditComponent } from './admin-edit.component';
+import { RateFormComponent } from './rate-form.component';
 
-describe('AdminEditComponent', () => {
-  let component: AdminEditComponent;
-  let fixture: ComponentFixture<AdminEditComponent>;
+describe('RateFormComponent', () => {
+  let component: RateFormComponent;
+  let fixture: ComponentFixture<RateFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AdminEditComponent]
+      declarations: [RateFormComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(AdminEditComponent);
+    fixture = TestBed.createComponent(RateFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
