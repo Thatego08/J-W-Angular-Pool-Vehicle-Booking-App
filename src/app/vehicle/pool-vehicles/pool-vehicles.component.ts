@@ -54,4 +54,8 @@ export class PoolVehicleComponent implements OnInit {
     });
   }
 
+  completeChecklist(vehicle: any) {
+    this.router.navigate(['/checklist'], { queryParams: { name: vehicle.name, registrationNumber: vehicle.registrationNumber } });
+  }
+
 }

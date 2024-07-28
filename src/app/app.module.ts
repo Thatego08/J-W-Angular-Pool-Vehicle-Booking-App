@@ -10,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -80,7 +81,11 @@ import { VehicleModelComponent } from './vehicle/vehicle-model/vehicle-model.com
 import { StatusComponent } from './vehicle/status/status.component';
 import { LicenseDisksComponent } from './vehicle/license-disc/license-disc.component';
 import { ManageComponent } from './vehicle/manage/manage.component';
+
+import { InsuranceComponent } from './vehicle/insurance/insurance.component';
+
 import { NavBarComponent } from './nav-bar/nav-bar.component';
+
 
 
 @NgModule({
@@ -145,7 +150,11 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
       StatusComponent,
       LicenseDisksComponent,
       ManageComponent,
+
+      InsuranceComponent
+
       NavBarComponent
+
       
 
 
@@ -177,6 +186,7 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 
     BookingService,
     HttpClient,
+    DatePipe
 
   ],
   bootstrap: [AppComponent]
