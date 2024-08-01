@@ -33,14 +33,15 @@ export class BookingService {
   }
 
   updateBooking(booking: BookingModel): Observable<void> {
-    const url = `${this.baseUrl}/EditBooking/${booking.bookingID}`;
+    const url = `${this.baseUrl}/EditBooking?id=${booking.bookingID}`;
     return this.http.put<void>(url, booking);
   }
 
   deleteBooking(id: number): Observable<void> {
-    const url = `${this.baseUrl}/DeleteBooking/${id}`;
+    const url = `${this.baseUrl}/DeleteBooking${id}`;
     return this.http.delete<void>(url);
   }
+
 
   getVehicles(): Observable<Vehicle[]> {
     return this.http.get<Vehicle[]>('https://localhost:7041/api/Vehicle/GetAllVehicles');
