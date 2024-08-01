@@ -138,3 +138,20 @@
   top: 0;
   background-color: var(--color-black);
 }
+
+.container {
+  margin: 20px auto;
+  max-width: 600px;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.btn {
+  margin-top: 10px;
+}

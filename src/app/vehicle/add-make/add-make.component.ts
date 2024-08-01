@@ -38,6 +38,7 @@ export class AddMakeComponent implements OnInit {
       };
 
       this.vs.addVehicleMake(makeData).subscribe(() => {
+        alert('Vehicle Make:  ' + makeData.name + ' added successfully')
         this.clearForm();
         this.router.navigateByUrl('vehicle-make');
       });

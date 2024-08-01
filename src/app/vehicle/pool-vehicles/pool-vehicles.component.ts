@@ -27,7 +27,7 @@ export class PoolVehicleComponent implements OnInit {
 
   
   getAllVehicles(): void {
-    this.vehicleService.getAllVehicles().subscribe(vehicles => {
+    this.vehicleService.getAvailableVehicles().subscribe(vehicles => {
       this.vehicles = vehicles;
     });
   }

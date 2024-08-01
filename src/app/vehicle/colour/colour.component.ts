@@ -35,7 +35,8 @@ export class ColourComponent implements OnInit {
     if (confirm('Are you sure you want to delete this colour?')) {
       this.vehicleService.deleteColour(colourId).subscribe(
         () => {
-          alert('Coolour deleted successfully.');
+          alert('Colour deleted successfully.');
+          window.location.reload;
           // Optionally, refresh the list or handle the UI update here
         },
         error => {

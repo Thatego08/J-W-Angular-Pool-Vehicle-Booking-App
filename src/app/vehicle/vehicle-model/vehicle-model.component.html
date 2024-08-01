@@ -47,9 +47,9 @@
             <td class="py-3 px-6">{{ model.vehicleModelName }}</td>
             <td class="py-3 px-6">{{ model.vehicleMake?.name }}</td>
             <td class="py-3 px-6">
-              <button class="action-button bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+              <button class="btn btn-success"
               (click)="navigateToEditModel(model.vehicleModelId)" >Edit</button>
-              <button class="action-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+              <button class="btn btn-danger"
               (click)="deleteModel(model.vehicleModelId)">
                 Delete
               </button>

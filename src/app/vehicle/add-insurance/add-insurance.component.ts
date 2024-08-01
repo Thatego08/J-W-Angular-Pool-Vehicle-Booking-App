@@ -48,4 +48,3 @@ export class AddInsuranceComponent implements OnInit {
     this.coverForm.reset();
   }
 }
-
