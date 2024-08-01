@@ -22,6 +22,10 @@
       background-color: #dc3545;
       color: white;
     }  
+
+    btn-success{
+      background-color: green;
+    }
   
     .btn-save, .btn-cancel {
       padding: 5px 10px;

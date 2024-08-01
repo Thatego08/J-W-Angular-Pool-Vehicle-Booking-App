@@ -116,7 +116,7 @@ const routes: Routes = [
  //Insurance Cover
  {path: 'insurance', component: InsuranceComponent },
  {path: 'add-insurance', component: AddInsuranceComponent },
- {path: 'edit-insurance/:id', component: EditInsuranceComponent},
+ {path: 'edit-insurance/:insuranceCoverId', component: EditInsuranceComponent},
 
  //License Disks
  
@@ -125,12 +125,12 @@ const routes: Routes = [
  //Vehicle Makes
   {path: 'add-make', component: AddMakeComponent},
  {path: 'vehicle-make', component: VehicleMakeComponent },
- {path: 'edit-make/:id', component: EditMakeComponent},
+ {path: 'edit-make/:vehicleMakeID', component: EditMakeComponent},
 
  //Vehicle Models
  {path: 'add-model', component: AddModelComponent },
  {path: 'vehicle-model', component: VehicleModelComponent },
- {path: 'edit-model/:id', component: EditModelComponent},
+ {path: 'edit-model/:vehicleModelID', component: EditModelComponent},
 
  //Vehicle Extras
  {path: 'checklist', component: ChecklistComponent},

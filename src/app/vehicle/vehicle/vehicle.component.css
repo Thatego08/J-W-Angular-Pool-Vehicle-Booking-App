@@ -320,3 +320,61 @@ tbody tr:hover {
 .btn-delete:hover {
   background-color: #da190b;
 }
+
+.search-filter-container {
+  margin: 20px;
+}
+
+.search-bar {
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  width: 100%;
+  max-width: 400px;
+}
+
+.filter-group {
+  margin: 10px 0;
+}
+
+.filter-group label {
+  margin-right: 10px;
+}
+
+.filter-group select {
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+/* Form styling */
+.search-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.search-form label {
+  font-weight: bold;
+  color: #333;
+}
+
+.search-form input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.add-vehicle-button {
+  background-color: #1a365d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-vehicle-button:hover {
+  background-color: #0e2a3d;
+}

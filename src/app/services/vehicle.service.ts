@@ -151,6 +151,10 @@ export class VehicleService {
     return this.http.put(`${this.apiUrl}/EditInsurance/${insuranceId}`, insurance);
   }
 
+  updateInsurance(formData: FormData, insuranceCoverId: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/EditInsurance/${insuranceCoverId}`, formData);
+  }
+
   deleteInsuranceCover(insuranceId: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/DeleteInsurance/${insuranceId}`);
   }

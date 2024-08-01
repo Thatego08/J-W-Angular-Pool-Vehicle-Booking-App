@@ -85,6 +85,7 @@ import { ManageComponent } from './vehicle/manage/manage.component';
 import { InsuranceComponent } from './vehicle/insurance/insurance.component';
 
 import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 
 
@@ -105,7 +106,6 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
     NotificationsComponent,
     ProjectComponent,
     ProfileComponent,
-
     TripComponent,
     CreateTripComponent,
     EditTripComponent,
@@ -113,62 +113,53 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
     RefuelVehicleComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
-
     BookingComponent,
     AddBookingComponent,
     BookingListComponent,
     EditBookingComponent,
     BookingHistoryComponent,
-
     FeedbackListComponent,
     EditAdminComponent,
     RateComponent,
     RateFormComponent,
-      AddVehicleComponent,
-      EditVehicleComponent,
-      VehicleComponent,
-      VehicleDetailsComponent,
-      PoolVehicleComponent,
-      AddFuelComponent,
-      AddColourComponent,
-      AddInsuranceComponent,
-      AddMakeComponent,
-      AddModelComponent,
-      ColourComponent,
-      EditFuelComponent,
-      EditInsuranceComponent,
-      EditMakeComponent,
-      EditModelComponent,
-      EditServiceComponent,
-      ChecklistComponent,
-      PostChecklistComponent,
-      EditColourComponent,
-      ServiceComponent,
-      FuelTypeComponent,
-      VehicleMakeComponent,
-      VehicleModelComponent,
-      StatusComponent,
-      LicenseDisksComponent,
-      ManageComponent,
-
-      InsuranceComponent
-
-      NavBarComponent
-
-      
-
-
+    AddVehicleComponent,
+    EditVehicleComponent,
+    VehicleComponent,
+    VehicleDetailsComponent,
+    PoolVehicleComponent,
+    AddFuelComponent,
+    AddColourComponent,
+    AddInsuranceComponent,
+    AddMakeComponent,
+    AddModelComponent,
+    ColourComponent,
+    EditFuelComponent,
+    EditInsuranceComponent,
+    EditMakeComponent,
+    EditModelComponent,
+    EditServiceComponent,
+    ChecklistComponent,
+    PostChecklistComponent,
+    EditColourComponent,
+    ServiceComponent,
+    FuelTypeComponent,
+    VehicleMakeComponent,
+    VehicleModelComponent,
+    StatusComponent,
+    LicenseDisksComponent,
+    ManageComponent,
+    InsuranceComponent,
+    NavBarComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     NgbModule,
+    NgxChartsModule,
     FormsModule,
     ReactiveFormsModule,
-
     ToastrModule.forRoot(),
-
     BrowserAnimationsModule,
     MatInputModule,
     MatButtonModule,
@@ -176,18 +167,15 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
     MatNativeDateModule,
     MatFormFieldModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
-
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     AuthService,
     AuthGuard,
     UserService,
-
     BookingService,
     HttpClient,
     DatePipe
-
   ],
   bootstrap: [AppComponent]
 })

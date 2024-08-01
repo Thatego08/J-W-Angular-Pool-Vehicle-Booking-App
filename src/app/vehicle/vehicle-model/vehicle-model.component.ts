@@ -33,7 +33,7 @@ deleteModel(modelId: number): void {
   if (confirm('Are you sure you want to delete this vehicle model?')) {
     this.vs.deleteVehicleModel(modelId).subscribe(
       () => {
-        alert('Vehicle model deleted successfully.');
+        alert('Vehicle Model deleted added successfully');
         // Optionally, refresh the list or handle the UI update here
       },
       error => {

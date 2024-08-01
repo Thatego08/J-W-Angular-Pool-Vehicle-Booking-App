@@ -1,6 +1,6 @@
 <div class="menu-bar" style="background-color: #1a365d;">
   <ul>
-    <li><a routerLink="/pool-vehicles" class="text-white uppercase text-sm" >VEHICLES</a></li>
+    <li><a routerLink="/vehicles" class="text-white uppercase text-sm" >VEHICLES</a></li>
     <li><a routerLink="/pool-vehicle" class="text-white uppercase text-sm">Pool Vehicles</a></li>
     <li><a routerLink="/manage-vehicle" class="text-white uppercase text-sm">Manage Vehicles <i class="fas fa-caret-down"></i></a>
         <div class="dropdown-menu">
@@ -25,93 +25,149 @@
     <img src="assets/logo.png" alt="Logo" class="logo">
   </div>
   
-  
-  
-  
-  
-  <!-- <div class="container">
-    <h1>Edit Vehicle</h1>
-  
-    <div class="row">
-      <div class="col-6">
-        <form #form="ngForm" (ngSubmit)="updateVehicle()">
-  
-          <div class="row mb-3">
-            <label for="name" class="col-sm-2 col-form-label">Name</label>
-            <input style="border-color: darkgray;" type="text" class="form-control" id="name" name="name" [(ngModel)]="vehicle.name">
-          </div>
-  
-          <div class="row mb-3">
-            <label for="registration" class="col-sm-2 col-form-label">Registration</label>
-            <input style="border-color: darkgray;" type="text" class="form-control" id="registration" name="registration" [(ngModel)]="vehicle.registrationNumber">
-          </div>
-  
-          <div class="row mb-3">
-            <label for="vin" class="col-sm-2 col-form-label">VIN</label>
-            <input style="border-color: darkgray;" type="text" class="form-control" id="vin" name="vin" [(ngModel)]="vehicle.vin">
-          </div>
-  
-          <div class="row mb-3">
-            <label for="engineNo" class="col-sm-2 col-form-label">Engine No</label>
-            <input style="border-color: darkgray;" type="text" class="form-control" id="engineNo" name="engineNo" [(ngModel)]="vehicle.engineNo">
-          </div>
-  
-          <div class="row mb-3">
-            <label for="licenseExpiryDate" class="col-sm-2 col-form-label">License Expiry Date</label>
-            <input style="border-color: darkgray;" type="datetime-local" class="form-control" id="licenseExpiryDate" name="licenseExpiryDate" [(ngModel)]="vehicle.licenseExpiryDate">
-          </div>
-  
-          <div class="row mb-3">
-            <label for="dateAcquired" class="col-sm-2 col-form-label">Date Acquired</label>
-            <input style="border-color: darkgray;" type="datetime-local" class="form-control" id="dateAcquired" name="dateAcquired" [(ngModel)]="vehicle.dateAcquired">
-          </div>
-          <div class="row mb-3">
-            <label for="colour" class="col-sm-2 col-form-label">Colour</label>
-            <select class="form-control" id="colour" name="colour" [(ngModel)]="vehicle.colourID">
-              <option *ngFor="let colour of colours" [value]="colour.id">{{ colour.name }}</option>
-            </select>
-          </div>
-          
-          <div class="row mb-3">
-            <label for="insurance" class="col-sm-2 col-form-label">Insurance</label>
-            <select class="form-control" id="insurance" name="insurance" [(ngModel)]="vehicle.insuranceCoverID">
-              <option *ngFor="let insurance of insurances" [value]="insurance.insuranceCoverId">{{ insurance.insuranceCoverName }}</option>
-            </select>
-          </div>
-          
-          <div class="row mb-3">
-            <label for="fuelType" class="col-sm-2 col-form-label">Fuel Type</label>
-            <select class="form-control" id="fuelType" name="fuelType" [(ngModel)]="vehicle.fuelTypeID">
-              <option *ngFor="let fuel of fuels" [value]="fuel.id">{{ fuel.fuelName }}</option>
-            </select>
-          </div>
-          
-          <div class="row mb-3">
-            <label for="vehicleMake" class="col-sm-2 col-form-label">Vehicle Make</label>
-            <select class="form-control" id="vehicleMake" name="vehicleMake" [(ngModel)]="vehicle.vehicleMakeID">
-              <option *ngFor="let make of makes" [value]="make.vehicleMakeID">{{ make.name }}</option>
-            </select>
-          </div>
-          
-          <div class="row mb-3">
-            <label for="vehicleModel" class="col-sm-2 col-form-label">Vehicle Model</label>
-            <select class="form-control" id="vehicleModel" name="vehicleModel" [(ngModel)]="vehicle.vehicleModelID">
-              <option *ngFor="let model of models" [value]="model.vehicleModelId">{{ model.vehicleModelName }}</option>
-            </select>
-          </div>
-          
-          <div class="row mb-3">
-            <label for="status" class="col-sm-2 col-form-label">Status</label>
-            <select class="form-control" id="status" name="status" [(ngModel)]="vehicle.statusID">
-              <option *ngFor="let status of status" [value]="status.id">{{ status.name }}</option>
-            </select>
-          </div>
-          
-            <button type="button" (click)="updateVehicle()" routerLink="/vehicles">Update Vehicle</button>
-            <button type="button" (click)="cancel()">Cancel</button>
-          </form>
-          
+  <div class="container">
+    <h2>Edit Vehicle</h2>
+    <!-- <form [formGroup]="editVehicleForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label for="name">Name:</label>
+        <input id="name" formControlName="name" type="text" />
       </div>
-    </div>
-  </div> -->
+      <div>
+        <label for="description">Description:</label>
+        <input id="description" formControlName="description" type="text" />
+      </div>
+      <div>
+        <label for="dateAcquired">Date Acquired:</label>
+        <input id="dateAcquired" formControlName="dateAcquired" type="date" />
+      </div>
+      <div>
+        <label for="licenseExpiryDate">License Expiry Date:</label>
+        <input id="licenseExpiryDate" formControlName="licenseExpiryDate" type="date" />
+      </div>
+      <div>
+        <label for="registrationNumber">Registration Number:</label>
+        <input id="registrationNumber" formControlName="registrationNumber" type="text" />
+      </div>
+      <div>
+        <label for="vin">VIN:</label>
+        <input id="vin" formControlName="vin" type="text" />
+      </div>
+      <div>
+        <label for="engineNo">Engine No:</label>
+        <input id="engineNo" formControlName="engineNo" type="text" />
+      </div>
+      <div>
+        <label for="insuranceCoverID">Insurance Cover:</label>
+        <select id="insuranceCoverID" formControlName="insuranceCoverID">
+          <option *ngFor="let cover of insuranceCovers" [value]="cover.insuranceCoverId">{{ cover.insuranceCoverName }}</option>
+        </select>
+      </div>
+      <div>
+        <label for="colourID">Colour:</label>
+        <select id="colourID" formControlName="colourID">
+          <option *ngFor="let colour of colours" [value]="colour.id">{{ colour.name }}</option>
+        </select>
+      </div>
+      <div>
+        <label for="fuelTypeID">Fuel Type:</label>
+        <select id="fuelTypeID" formControlName="fuelTypeID">
+          <option *ngFor="let fuelType of fuelTypes" [value]="fuelType.id">{{ fuelType.fuelName }}</option>
+        </select>
+      </div>
+      <div>
+        <label for="statusID">Status:</label>
+        <select id="statusID" formControlName="statusID">
+          <option *ngFor="let status of statuses" [value]="status.id">{{ status.name }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="vehicleMakeID">Vehicle Make</label>
+        <select id="vehicleMakeID" formControlName="vehicleMakeID" class="form-control">
+          <option *ngFor="let make of vehicleMakes" [value]="make.vehicleMakeID">{{ make.name }}</option>
+        </select>
+      </div>
+    
+      <div class="form-group">
+        <label for="vehicleModelID">Vehicle Model</label>
+        <select id="vehicleModelID" formControlName="vehicleModelID" class="form-control">
+          <option *ngFor="let model of filteredVehicleModels" [value]="model.vehicleModelId">{{ model.vehicleModelName }}</option>
+        </select>
+      </div>
+      <button type="submit">Save</button>
+    </form> -->
+    
+    <form [formGroup]="editVehicleForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input id="name" formControlName="name" class="form-control" type="text">
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <input id="description" formControlName="description" class="form-control" type="text">
+      </div>
+      <div class="form-group">
+        <label for="dateAcquired">Date Acquired</label>
+        <input id="dateAcquired" formControlName="dateAcquired" class="form-control" type="date">
+      </div>
+      <div class="form-group">
+        <label for="licenseExpiryDate">License Expiry Date</label>
+        <input id="licenseExpiryDate" formControlName="licenseExpiryDate" class="form-control" type="date">
+      </div>
+      <div class="form-group">
+        <label for="registrationNumber">Registration Number</label>
+        <input id="registrationNumber" formControlName="registrationNumber" class="form-control" type="text">
+      </div>
+      <div class="form-group">
+        <label for="vin">VIN</label>
+        <input id="vin" formControlName="vin" class="form-control" type="text">
+      </div>
+      <div class="form-group">
+        <label for="engineNo">Engine No</label>
+        <input id="engineNo" formControlName="engineNo" class="form-control" type="text">
+      </div>
+      <div class="form-group">
+        <label for="insuranceCoverID">Insurance Cover</label>
+        <select id="insuranceCoverID" formControlName="insuranceCoverID" class="form-control">
+          <option *ngFor="let cover of insuranceCovers" [value]="cover.insuranceCoverId">{{ cover.insuranceCoverName }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="colourID">Colour</label>
+        <select id="colourID" formControlName="colourID" class="form-control">
+          <option *ngFor="let colour of colours" [value]="colour.id">{{ colour.name }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="fuelTypeID">Fuel Type</label>
+        <select id="fuelTypeID" formControlName="fuelTypeID" class="form-control">
+          <option *ngFor="let fuel of fuelTypes" [value]="fuel.id">{{ fuel.fuelName }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="statusID">Status</label>
+        <select id="statusID" formControlName="statusID" class="form-control">
+          <option *ngFor="let status of statuses" [value]="status.id">{{ status.name }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="vehicleMakeID">Vehicle Make</label>
+        <select id="vehicleMakeID" formControlName="vehicleMakeID" class="form-control">
+          <option *ngFor="let make of vehicleMakes" [value]="make.vehicleMakeID">{{ make.name }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="vehicleModelID">Vehicle Model</label>
+        <select id="vehicleModelID" formControlName="vehicleModelID" class="form-control">
+          <option *ngFor="let model of filteredVehicleModels" [value]="model.vehicleModelId">{{ model.vehicleModelName }}</option>
+        </select>
+      </div>
+      <button type="submit" routerLink="/vehicles" class="btn btn-primary">Save</button>
+    </form>
+  </div>
+  
+  
+  
+  
+ 
+  
   
