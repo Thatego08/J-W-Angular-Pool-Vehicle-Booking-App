@@ -62,6 +62,7 @@ import { VehicleMakeComponent } from './vehicle/vehicle-make/vehicle-make.compon
 import { VehicleModelComponent } from './vehicle/vehicle-model/vehicle-model.component';
 import { PoolVehicleComponent } from './vehicle/pool-vehicles/pool-vehicles.component';
 import { LicenseDisksComponent } from './vehicle/license-disc/license-disc.component';
+import { ReportComponent } from './report-central/report/report.component';
 
 
 
@@ -155,8 +156,9 @@ const routes: Routes = [
   { path: 'app-settings', component: SettingsComponent, canActivate: [AuthGuard] },
 
   { path: 'app-feedback', component: FeedbackComponent, canActivate: [AuthGuard] },
-  { path: 'app-feedback-list', component: FeedbackListComponent, canActivate: [AuthGuard] }
+  { path: 'app-feedback-list', component: FeedbackListComponent, canActivate: [AuthGuard] },
 
+  {path: 'app-report', component:ReportComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

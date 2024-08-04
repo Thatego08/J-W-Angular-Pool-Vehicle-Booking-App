@@ -1,0 +1,50 @@
+<div class="report-container">
+   
+  <p>Janky Report Page :)</p>
+  
+    <div class="report-card">
+      <h2>Booking Type Report</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Count</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let report of bookingTypeReport">
+            <td>{{ report.type }}</td>
+            <td>{{ report.count }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+<p>New Report Start</p>
+<div>
+  <h2>Vehicle Status Report</h2>
+  <canvas id="vehicleStatusChart"></canvas>
+</div>
+
+<div>
+  <h2>Booking Type Report</h2>
+  <canvas id="bookingTypeChart"></canvas>
+</div>
+
+<div>
+  <h2>Trip Report</h2>
+  <canvas id="tripChart"></canvas>
+</div>
+
+<div>
+  <h2>Booking Status Report</h2>
+  <canvas id="bookingStatusChart"></canvas>
+</div>
+
+<div>
+  <h2>Project Status Report</h2>
+  <canvas id="projectStatusChart"></canvas>
+</div>
+
+    <!-- Repeat similar structure for other reports -->
+  </div>
+  
