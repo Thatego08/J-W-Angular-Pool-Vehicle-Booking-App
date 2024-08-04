@@ -86,6 +86,8 @@ import { InsuranceComponent } from './vehicle/insurance/insurance.component';
 
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { ReportComponent } from './report-central/report/report.component';
+import { ReportService } from './services/report.service';
 
 
 
@@ -149,7 +151,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     LicenseDisksComponent,
     ManageComponent,
     InsuranceComponent,
-    NavBarComponent
+    NavBarComponent,
+    ReportComponent
   ],
   imports: [
     BrowserModule,
@@ -174,6 +177,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     AuthGuard,
     UserService,
     BookingService,
+    ReportService,
     HttpClient,
     DatePipe
   ],
