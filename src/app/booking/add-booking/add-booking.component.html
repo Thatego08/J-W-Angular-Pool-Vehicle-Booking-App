@@ -1,5 +1,3 @@
-
-<img src="assets/logo.png" alt="Logo" class="logo-image">
 <div class="container mt-4">
   <h4 class="text-center"><strong>Make New Booking</strong></h4>
   <form [formGroup]="bookingForm" (ngSubmit)="saveBooking()">
@@ -18,27 +16,23 @@
     </div>
     <div class="form-group radio-group">
       <label>
-        <input type="radio" name="type" (change)="toggleEventProject(true)" /> Event
+        <input type="radio" name="type" (change)="toggleEventProject(true)" [value]="'event'" formControlName="type" /> Event
       </label>
       <label>
-        <input type="radio" name="type" (change)="toggleEventProject(false)" /> Project
+        <input type="radio" name="type" (change)="toggleEventProject(false)" [value]="'project'" formControlName="type" /> Project
       </label>
     </div>
     <div *ngIf="!isEvent" class="form-group">
-      <label for="projectName">Project Number:</label>
+      <label for="projectNumber">Project Number</label>
       <div class="custom-select-wrapper">
         <select id="projectNumber" formControlName="projectNumber" class="form-control">
-          <option value="Project1">120</option>
-          <option value="Project2">128</option>
-          <option value="Project3">129</option>
-          <option value="Project4">130</option>
-          <option value="Project5">131</option>
+          <option *ngFor="let project of projects" [value]="project">{{ project }}</option>
         </select>
         <i class="fa fa-caret-down dropdown-icon"></i>
       </div>
     </div>
     <div *ngIf="isEvent" class="form-group">
-      <label for="event">Event:</label>
+      <label for="event">Event</label>
       <input id="event" formControlName="event" class="form-control" placeholder="Enter event" />
     </div>
     <div class="form-group">

@@ -4,6 +4,8 @@ import { BookingService } from '../../services/booking.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CreateBookingModel, BookingModel, Vehicle } from '../../models/booking.model';
+import { ProjectService } from '../../services/project.service';
+import { Project } from '../../models/Project';
 
 @Component({
   selector: 'app-add-booking',
@@ -14,27 +16,30 @@ export class AddBookingComponent implements OnInit {
   bookingForm: FormGroup;
   isEvent: boolean = false;
   vehicles: Vehicle[] = [];
+  projects: number[] = [];
 
   constructor(
     private fb: FormBuilder,
     private bookingService: BookingService,
+    private projectService: ProjectService,
     private toastr: ToastrService,
     public router: Router
   ) {
     this.bookingForm = this.fb.group({
       userName: ['', Validators.required],
-      vehicleName: ['', Validators.required],
-      projectNumber: ['', Validators.required],
       event: [''],
       startDate: ['', [Validators.required, this.dateValidator]],
-      endDate: ['', [Validators.required, this.dateValidator]]
-    }, {
-      validators: this.dateComparisonValidator
-    });
+      type: ['', Validators.required],
+      endDate: ['', [Validators.required, this.dateValidator]],
+      vehicleName: ['', Validators.required],
+      projectNumber: [''],
+      reminderSent: [false]
+    }, { validators: this.dateComparisonValidator });
   }
 
   ngOnInit(): void {
     this.fetchVehicles();
+    this.loadProjects();    
   }
 
   fetchVehicles(): void {
@@ -48,7 +53,17 @@ export class AddBookingComponent implements OnInit {
     });
   }
 
-  toggleEventProject(isEvent: boolean): void {
+  loadProjects(): void {
+    this.projectService.getProjectNumbers().subscribe(
+      (projects) => {
+        this.projects = projects;
+      },
+      (error) => {
+        console.error('Error loading projects', error);
+      }
+    );
+  }
+  btoggleEventProject(isEvent: boolean): void {
     this.isEvent = isEvent;
     const projectNumberControl = this.bookingForm.get('projectNumber');
     const eventControl = this.bookingForm.get('event');
@@ -68,11 +83,13 @@ export class AddBookingComponent implements OnInit {
     if (this.bookingForm.valid) {
       const booking: CreateBookingModel = {
         userName: this.bookingForm.value.userName,
-        event: this.bookingForm.value.event,
+        event: this.isEvent ? this.bookingForm.value.event : null, 
         startDate: this.bookingForm.value.startDate,
+        type: this.bookingForm.value.type,
         endDate: this.bookingForm.value.endDate,
         vehicleName: this.bookingForm.value.vehicleName,
-        projectNumber: this.bookingForm.value.projectNumber,
+        statusId: 2,//Initialize as booked
+        projectNumber:!this.isEvent ?  this.bookingForm.value.projectNumber: null,
         reminderSent: false // Initialize as false
       };
 
@@ -117,5 +134,15 @@ export class AddBookingComponent implements OnInit {
     }
 
     return null;
+  }
+
+  //Event/Project additions
+  toggleEventProject(isEvent: boolean): void {
+    this.isEvent = isEvent;
+    if (isEvent) {
+      this.bookingForm.get('projectNumber')?.reset();
+    } else {
+      this.bookingForm.get('event')?.reset();
+    }
   }
 }

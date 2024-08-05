@@ -88,6 +88,7 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ReportComponent } from './report-central/report/report.component';
 import { ReportService } from './services/report.service';
+import { ProjectService } from './services/project.service';
 
 
 
@@ -178,6 +179,7 @@ import { ReportService } from './services/report.service';
     UserService,
     BookingService,
     ReportService,
+    ProjectService,
     HttpClient,
     DatePipe
   ],
