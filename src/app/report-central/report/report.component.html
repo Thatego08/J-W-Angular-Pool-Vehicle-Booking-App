@@ -1,7 +1,12 @@
 <div class="report-container">
-   
   <p>Janky Report Page :)</p>
-  
+
+  <div id="report-page" class="report-container">
+    <h1>Report</h1>
+    
+    <!-- Export PDF Button (temporarily hidden during export) -->
+    <button id="export-button" (click)="exportToPdf()">Export to PDF</button>
+
     <div class="report-card">
       <h2>Booking Type Report</h2>
       <table>
@@ -19,32 +24,31 @@
         </tbody>
       </table>
     </div>
-<p>New Report Start</p>
-<div>
-  <h2>Vehicle Status Report</h2>
-  <canvas id="vehicleStatusChart"></canvas>
-</div>
 
-<div>
-  <h2>Booking Type Report</h2>
-  <canvas id="bookingTypeChart"></canvas>
-</div>
+    <p>New Report Start</p>
+    <div>
+      <h2>Vehicle Status Report</h2>
+      <canvas id="vehicleStatusChart"></canvas>
+    </div>
 
-<div>
-  <h2>Trip Report</h2>
-  <canvas id="tripChart"></canvas>
-</div>
+    <div>
+      <h2>Booking Type Report</h2>
+      <canvas id="bookingTypeChart"></canvas>
+    </div>
 
-<div>
-  <h2>Booking Status Report</h2>
-  <canvas id="bookingStatusChart"></canvas>
-</div>
+    <div>
+      <h2>Trip Report</h2>
+      <canvas id="tripChart"></canvas>
+    </div>
 
-<div>
-  <h2>Project Status Report</h2>
-  <canvas id="projectStatusChart"></canvas>
-</div>
+    <div>
+      <h2>Booking Status Report</h2>
+      <canvas id="bookingStatusChart"></canvas>
+    </div>
 
-    <!-- Repeat similar structure for other reports -->
+    <div>
+      <h2>Project Status Report</h2>
+      <canvas id="projectStatusChart"></canvas>
+    </div>
   </div>
-  
+</div>
