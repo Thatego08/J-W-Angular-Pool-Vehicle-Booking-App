@@ -1,11 +1,14 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { VehicleReport, BookingTypeReport, TripReport, BookingStatusReport, ProjectReport, ReportService } from '../../services/report.service';
-import { Chart,ChartType,ChartData, ChartOptions, ChartConfiguration, registerables } from 'chart.js';
+import { TripService } from '../../services/trip.service'; // Import TripService
+import { Chart, ChartType, ChartData, ChartOptions, ChartConfiguration, registerables } from 'chart.js';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',
-  styleUrl: './report.component.css'
+  styleUrls: ['./report.component.css'] // Corrected property name to styleUrls
 })
 export class ReportComponent implements OnInit {
   vehicleStatusReport: any;
@@ -16,11 +19,10 @@ export class ReportComponent implements OnInit {
 
   private charts: { [key: string]: Chart } = {};
 
-  constructor(private reportService: ReportService) {}
+  constructor(private reportService: ReportService, private tripService: TripService) {}
 
   ngOnInit(): void {
     this.loadReports();
-
 
     Chart.register(...registerables);
 
@@ -38,10 +40,7 @@ export class ReportComponent implements OnInit {
       this.bookingTypeReport = data;
       this.createBookingTypeChart();
     });
-    this.reportService.getTripReport().subscribe(data => {
-      this.tripReport = data;
-      this.createTripChart();
-    });
+    this.fetchTrips(); // Fetch trips using the tripService
     this.reportService.getBookingStatusReport().subscribe(data => {
       this.bookingStatusReport = data;
       this.createBookingStatusChart();
@@ -50,6 +49,18 @@ export class ReportComponent implements OnInit {
       this.projectStatusReport = data;
       this.createProjectStatusChart();
     });
+  }
+
+  fetchTrips(): void {
+    this.tripService.getAllTrips().subscribe(
+      (data: any[]) => {
+        this.tripReport = data;
+        this.createTripChart(); // Call createTripChart after fetching trips
+      },
+      error => {
+        console.error('Error fetching trips', error);
+      }
+    );
   }
 
   //Initializing charts
@@ -68,20 +79,18 @@ export class ReportComponent implements OnInit {
     });
   }
 
-
-  // createVehicleStatusChart(): void {
-  //   const ctx = document.getElementById('vehicleStatusChart') as HTMLCanvasElement;
-  //   new Chart(ctx, {
-  //     type: 'pie',
-  //     data: {
-  //       labels: this.vehicleStatusReport.map((item: { Status: any; }) => item.Status),
-  //       datasets: [{
-  //         data: this.vehicleStatusReport.map((item: { Count: any; }) => item.Count),
-  //         backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
-  //       }]
-  //     }
-  //   });
-  // }
+  createVehicleStatusChart() {
+    new Chart('vehicleStatusChart', {
+      type: 'pie',
+      data: {
+        labels: ['Available', 'Booked', 'In Service'],
+        datasets: [{
+          data: [10, 5, 2],
+          backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+        }]
+      }
+    });
+  }
 
   createBookingTypeChart(): void {
     const ctx = document.getElementById('bookingTypeChart') as HTMLCanvasElement;
@@ -97,22 +106,38 @@ export class ReportComponent implements OnInit {
     });
   }
 
-  // createTripChart(): void {
-  //   const ctx = document.getElementById('tripChart') as HTMLCanvasElement;
-  //   new Chart(ctx, {
-  //     type: 'line',
-  //     data: {
-  //       labels: this.tripReport.map((item: { TripType: any; }) => item.TripType),
-  //       datasets: [{
-  //         label: 'Number of Trips',
-  //         data: this.tripReport.map((item: { Count: any; }) => item.Count),
-  //         backgroundColor: '#FFCE56',
-  //         borderColor: '#FFCE56',
-  //         fill: false
-  //       }]
-  //     }
-  //   });
-  // }
+  createTripChart() {
+    if (this.tripReport) {
+      const tripDates = this.tripReport.map((trip: any) => new Date(trip.travelStart).toLocaleDateString());
+      const tripCountByDate = tripDates.reduce((acc: any, date: string) => {
+        acc[date] = (acc[date] || 0) + 1;
+        return acc;
+      }, {});
+
+      const chartData = {
+        labels: Object.keys(tripCountByDate),
+        datasets: [{
+          label: 'Trips',
+          data: Object.values(tripCountByDate),
+          backgroundColor: 'rgba(54, 162, 235, 0.2)',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1
+        }]
+      };
+
+      new Chart('tripChart', {
+        type: 'line', // Change the chart type if needed
+        data: chartData,
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    }
+  }
 
   createBookingStatusChart(): void {
     const ctx = document.getElementById('bookingStatusChart') as HTMLCanvasElement;
@@ -123,48 +148,6 @@ export class ReportComponent implements OnInit {
         datasets: [{
           data: this.bookingStatusReport.map((item: { Count: any; }) => item.Count),
           backgroundColor: '#FF6384'
-        }]
-      }
-    });
-  }
-
-  // createProjectStatusChart(): void {
-  //   const ctx = document.getElementById('projectStatusChart') as HTMLCanvasElement;
-  //   new Chart(ctx, {
-  //     type: 'doughnut',
-  //     data: {
-  //       labels: this.projectStatusReport.map((item: { Status: any; }) => item.Status),
-  //       datasets: [{
-  //         data: this.projectStatusReport.map((item: { Count: any; }) => item.Count),
-  //         backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
-  //       }]
-  //     }
-  //   });
-  // }
-
-  createVehicleStatusChart() {
-    new Chart('vehicleStatusChart', {
-      type: 'pie',
-      data: {
-        labels: ['Available', 'Booked', 'In Service'],
-        datasets: [{
-          data: [10, 5, 2],
-          backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
-        }]
-      }
-    });
-  }
-
-  createTripChart() {
-    new Chart('tripChart', {
-      type: 'line',
-      data: {
-        labels: ['Jan', 'Feb', 'Mar'],
-        datasets: [{
-          label: 'Number of Trips',
-          data: [10, 20, 30],
-          borderColor: '#FF6384',
-          fill: false
         }]
       }
     });
@@ -182,4 +165,47 @@ export class ReportComponent implements OnInit {
       }
     });
   }
-}
+
+  exportToPdf() {
+    // Temporarily hide the export button
+    const exportButton = document.getElementById('export-button');
+    if (exportButton) exportButton.style.display = 'none';
+  
+    // Create a new jsPDF instance
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    const pageElement = document.getElementById('report-page') as HTMLElement;
+  
+    if (pageElement) {
+      html2canvas(pageElement).then(canvas => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = pdf.internal.pageSize.getHeight();
+        const imgProps = pdf.getImageProperties(imgData);
+        const imgHeight = (imgProps.height * pdfWidth) / imgProps.width;
+  
+        let position = 0;
+        let heightLeft = imgHeight;
+        
+        // Add the first page
+        pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, imgHeight);
+        heightLeft -= pdfHeight;
+  
+        // Add additional pages if needed
+        while (heightLeft > 0) {
+          position = heightLeft - imgHeight;
+          pdf.addPage();
+          pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, imgHeight);
+          heightLeft -= pdfHeight;
+        }
+  
+        pdf.save('report.pdf');
+  
+        // Show the export button again
+        if (exportButton) exportButton.style.display = 'block';
+      });
+    } else {
+      console.error('The page element with id "report-page" was not found.');
+      if (exportButton) exportButton.style.display = 'block';
+    }
+  }
+}  

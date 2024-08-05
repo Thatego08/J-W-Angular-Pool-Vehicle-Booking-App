@@ -56,3 +56,38 @@
     }
   }
   
+  /* Ensure the report container fits the PDF page */
+.report-container {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+/* Hide the export button during PDF export */
+@media print {
+  #export-button {
+    display: none;
+  }
+}
+
+/* Style for tables and charts to ensure they fit well */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th, table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+canvas {
+  width: 100% !important; /* Ensure the canvas scales properly */
+  height: auto !important;
+}
+
+/* Ensure headings are styled correctly */
+h1, h2 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
