@@ -3,8 +3,7 @@
 
   <div id="report-page" class="report-container">
     <h1>Report</h1>
-    
-    <!-- Export PDF Button (temporarily hidden during export) -->
+
     <button id="export-button" (click)="exportToPdf()">Export to PDF</button>
 
     <div class="report-card">
@@ -44,26 +43,6 @@
     </div>
 
     <div class="report-card">
-      <h2>Trip Report</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Vehicle</th>
-        
-            <th>Number of Trips</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let report of tripReport">
-            <td>{{ report.tripType }}</td>
-            
-            <td>{{ report.count }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="report-card">
       <h2>Vehicle Status Report</h2>
       <table>
         <thead>
@@ -80,8 +59,33 @@
         </tbody>
       </table>
     </div>
+
+    <div class="report-card">
+      <h2>Trip Report</h2>
+      <table>
+        <thead>
+          <tr>
+         
+            <th>Vehicle</th>
+            <th>Number of Trips</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let report of tripReport">
+           
+            <td>{{ report.tripType }}</td>
+            <td>{{ report.count }}</td>
+          </tr>
+          <tr *ngIf="totalTrips !== undefined">
+            <td colspan="2"><strong>Total Trips</strong></td>
+            <td><strong>{{ totalTrips }}</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
     <div>
-      <h2>Vehicle Status Report</h2>
+      <h2>Vehicle Status Report Chart</h2>
       <canvas id="vehicleStatusChart"></canvas>
     </div>
 
@@ -96,13 +100,17 @@
     </div>
 
     <div>
-      <h2>Booking Status Report</h2>
+      <h2>Booking Status Report Chart</h2>
       <canvas id="bookingStatusChart"></canvas>
     </div>
 
     <div>
-      <h2>Project Status Report</h2>
+      <h2>Project Status Report Chart</h2>
       <canvas id="projectStatusChart"></canvas>
+    </div>
+
+    <div>
+   
     </div>
   </div>
 </div>
