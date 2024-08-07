@@ -19,11 +19,14 @@ export interface BookingTypeReport {
 }
 
 export interface TripReport {
+ 
   map(arg0: (trip: { date: any; }) => any): unknown;
   totalTrips: number;
   accidents?: number;
   tripType: string;
   count: number;
+  date: string;
+  travelStart?: Date;
 }
 
 export interface BookingStatusReport {
