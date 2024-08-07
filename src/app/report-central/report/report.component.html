@@ -25,26 +25,41 @@
       </table>
     </div>
 
-    <!-- In report.component.html -->
-<div class="report-card">
-  <h2>Vehicle Make Report</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Make</th>
-        <th>Count</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let report of vehicleMakeReport">
-        <td>{{ report.make }}</td>
-        <td>{{ report.count }}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+    <div class="report-card">
+      <h2>Vehicle Make Report</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Make</th>
+            <th>Count</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let report of vehicleMakeReport">
+            <td>{{ report.make }}</td>
+            <td>{{ report.count }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-<!-- End Of List Reports Transaction reports to follow -->
+    <div class="report-card">
+      <h2>Trip Report</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Vehicle</th>
+            <th>Number of Trips</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let report of tripReport">
+            <td>{{ report.tripType }}</td>
+            <td>{{ report.count }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <div>
       <h2>Vehicle Status Report</h2>
@@ -57,7 +72,7 @@
     </div>
 
     <div>
-      <h2>Trip Report</h2>
+      <h2>Trip Chart</h2>
       <canvas id="tripChart"></canvas>
     </div>
 
