@@ -18,7 +18,7 @@ export class ReportComponent implements OnInit {
   tripReport: TripReport[] = [];
   bookingStatusReport: BookingStatusReport[] = [];
   projectStatusReport: ProjectReport[] = [];
-
+  totalTrips: number | undefined; // Add this line to hold the total trips
 
   private charts: { [key: string]: Chart } = {};
 
@@ -30,10 +30,7 @@ export class ReportComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadReports();
-
     Chart.register(...registerables);
-
-
   }
 
   loadReports(): void {
@@ -45,6 +42,7 @@ export class ReportComponent implements OnInit {
     this.reportService.getVehicleMakeReport().subscribe(data => {
       this.vehicleMakeReport = data;
     });
+
     this.reportService.getBookingTypeReport().subscribe(data => {
       this.bookingTypeReport = data;
       console.log('Booking Type Report:', data); // Log the received data
@@ -53,6 +51,7 @@ export class ReportComponent implements OnInit {
 
     this.reportService.getTripReport().subscribe(data => {
       this.tripReport = data;
+      this.totalTrips = this.calculateTotalTrips(); // Calculate the total trips
       this.createTripChart();
     });
 
@@ -67,6 +66,10 @@ export class ReportComponent implements OnInit {
     });
   }
 
+  // Calculate the total number of trips
+  private calculateTotalTrips(): number {
+    return this.tripReport.reduce((total, report) => total + report.count, 0);
+  }
 
   // Chart creation methods
   private createChart(chartId: string, chartData: any, chartOptions: any) {
@@ -100,7 +103,6 @@ export class ReportComponent implements OnInit {
 
     this.createChart('vehicleStatusChart', data, options);
   }
-
 
   private createBookingTypeChart() {
     const data = {
@@ -142,8 +144,6 @@ export class ReportComponent implements OnInit {
         scales: {
           y: {
             beginAtZero: true
-
-
           }
         }
       }
@@ -163,7 +163,6 @@ export class ReportComponent implements OnInit {
 
     const options = {
       type: 'bar',
-
       options: {
         scales: {
           y: {
@@ -175,8 +174,6 @@ export class ReportComponent implements OnInit {
 
     this.createChart('bookingStatusChart', data, options);
   }
-
-
 
   private createProjectStatusChart() {
     const data = {
