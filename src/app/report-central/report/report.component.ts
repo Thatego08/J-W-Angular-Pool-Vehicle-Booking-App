@@ -18,14 +18,19 @@ export class ReportComponent implements OnInit {
   tripReport: TripReport[] = [];
   bookingStatusReport: BookingStatusReport[] = [];
   projectStatusReport: ProjectReport[] = [];
-  totalTrips: number | undefined; // Add this line to hold the total trips
+  totalTrips: number = 0; 
+  totalVehicleStatus: number = 0;
+  totalBookingType: number = 0;
+  totalBookingStatus: number = 0;
+  totalProjectStatus: number = 0;
+  totalVehicleMake: number = 0; // Added this property
 
   private charts: { [key: string]: Chart } = {};
 
   constructor(
     private reportService: ReportService,
     private tripService: TripService,
-    private bookingService: BookingService // Inject BookingService
+    private bookingService: BookingService 
   ) {}
 
   ngOnInit(): void {
@@ -36,52 +41,53 @@ export class ReportComponent implements OnInit {
   loadReports(): void {
     this.reportService.getVehicleStatusReport().subscribe(data => {
       this.vehicleStatusReport = data;
+      this.totalVehicleStatus = this.calculateTotal(this.vehicleStatusReport, 'count');
       this.createVehicleStatusChart();
     });
 
     this.reportService.getVehicleMakeReport().subscribe(data => {
       this.vehicleMakeReport = data;
+      this.totalVehicleMake = this.calculateTotal(this.vehicleMakeReport, 'count'); // Updated here
+      this.createVehicleMakeChart();
     });
 
     this.reportService.getBookingTypeReport().subscribe(data => {
       this.bookingTypeReport = data;
-      console.log('Booking Type Report:', data); // Log the received data
+      this.totalBookingType = this.calculateTotal(this.bookingTypeReport, 'count');
       this.createBookingTypeChart();
     });
 
     this.reportService.getTripReport().subscribe(data => {
       this.tripReport = data;
-      this.totalTrips = this.calculateTotalTrips(); // Calculate the total trips
+      this.totalTrips = this.calculateTotal(this.tripReport, 'count');
       this.createTripChart();
     });
 
     this.reportService.getBookingStatusReport().subscribe(data => {
       this.bookingStatusReport = data;
+      this.totalBookingStatus = this.calculateTotal(this.bookingStatusReport, 'count');
       this.createBookingStatusChart();
     });
 
     this.reportService.getProjectStatusReport().subscribe(data => {
       this.projectStatusReport = data;
+      this.totalProjectStatus = this.calculateTotal(this.projectStatusReport, 'count');
       this.createProjectStatusChart();
     });
   }
 
-  // Calculate the total number of trips
-  private calculateTotalTrips(): number {
-    return this.tripReport.reduce((total, report) => total + report.count, 0);
+  private calculateTotal(data: any[], key: string): number {
+    return data.reduce((total, item) => total + (item[key] || 0), 0);
   }
 
-  // Chart creation methods
   private createChart(chartId: string, chartData: any, chartOptions: any) {
-    // Check if a chart with this ID already exists
     if (this.charts[chartId]) {
       this.charts[chartId].destroy();
     }
 
-    // Create the new chart
     const ctx = document.getElementById(chartId) as HTMLCanvasElement;
     this.charts[chartId] = new Chart(ctx, {
-      type: chartOptions.type, // Change this based on your chart type
+      type: chartOptions.type,
       data: chartData,
       options: chartOptions.options
     });
@@ -102,6 +108,29 @@ export class ReportComponent implements OnInit {
     };
 
     this.createChart('vehicleStatusChart', data, options);
+  }
+
+  private createVehicleMakeChart() {
+    const data = {
+      labels: this.vehicleMakeReport.map(item => item.make),
+      datasets: [{
+        data: this.vehicleMakeReport.map(item => item.count),
+        backgroundColor: '#36A2EB'
+      }]
+    };
+
+    const options = {
+      type: 'bar',
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    };
+
+    this.createChart('vehicleMakeChart', data, options);
   }
 
   private createBookingTypeChart() {
@@ -214,9 +243,9 @@ export class ReportComponent implements OnInit {
         heightLeft -= pdfHeight;
 
         while (heightLeft > 0) {
-          position = heightLeft - imgHeight;
+          position = heightLeft - pdfHeight;
           pdf.addPage();
-          pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, imgHeight);
+          pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, pdfHeight);
           heightLeft -= pdfHeight;
         }
 
