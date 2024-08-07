@@ -7,6 +7,11 @@ export interface VehicleReport {
   status: string;
   count: number;
 }
+export interface VehicleMakeReport {
+  make: string;
+  count: number;
+}
+
 
 export interface BookingTypeReport {
   type: string;
@@ -49,7 +54,9 @@ export class ReportService {
         catchError(this.handleError)
       );
   }
-
+  getVehicleMakeReport(): Observable<VehicleMakeReport[]> {
+    return this.http.get<VehicleMakeReport[]>(`${this.baseUrl}/vehicle-make`);
+  }
  
   getProjectReport(): Observable<ProjectReport[]> {
     return this.http.get<ProjectReport[]>(`${this.baseUrl}/projects`).pipe(

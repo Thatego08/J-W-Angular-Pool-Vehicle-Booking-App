@@ -25,13 +25,34 @@
       </table>
     </div>
 
+    <!-- In report.component.html -->
+<div class="report-card">
+  <h2>Vehicle Make Report</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Make</th>
+        <th>Count</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let report of vehicleMakeReport">
+        <td>{{ report.make }}</td>
+        <td>{{ report.count }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- End Of List Reports Transaction reports to follow -->
+
     <div>
       <h2>Vehicle Status Report</h2>
       <canvas id="vehicleStatusChart"></canvas>
     </div>
 
     <div>
-      <h2>Booking Type Report</h2>
+      <h2>Booking Type Chart</h2>
       <canvas id="bookingTypeChart"></canvas>
     </div>
 

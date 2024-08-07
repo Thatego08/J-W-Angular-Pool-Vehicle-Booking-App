@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { VehicleReport, BookingTypeReport, TripReport, BookingStatusReport, ProjectReport, ReportService } from '../../services/report.service';
+import { VehicleReport, BookingTypeReport, TripReport, BookingStatusReport, ProjectReport, ReportService, VehicleMakeReport } from '../../services/report.service';
 import { TripService } from '../../services/trip.service';
-import { BookingService } from '../../services/booking.service'; // Import BookingService
+import { BookingService } from '../../services/booking.service'; 
 import { Chart, ChartType, ChartData, ChartOptions, ChartConfiguration, registerables } from 'chart.js';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -12,7 +12,7 @@ import html2canvas from 'html2canvas';
   styleUrls: ['./report.component.css']
 })
 export class ReportComponent implements OnInit {
-
+  vehicleMakeReport: VehicleMakeReport[] = [];
   vehicleStatusReport: VehicleReport[] = [];
   bookingTypeReport: BookingTypeReport[] = [];
   tripReport: TripReport[] = [];
@@ -42,6 +42,9 @@ export class ReportComponent implements OnInit {
       this.createVehicleStatusChart();
     });
 
+    this.reportService.getVehicleMakeReport().subscribe(data => {
+      this.vehicleMakeReport = data;
+    });
     this.reportService.getBookingTypeReport().subscribe(data => {
       this.bookingTypeReport = data;
       console.log('Booking Type Report:', data); // Log the received data
