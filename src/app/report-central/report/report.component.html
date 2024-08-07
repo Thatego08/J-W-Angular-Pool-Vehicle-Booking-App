@@ -20,6 +20,10 @@
             <td>{{ report.type }}</td>
             <td>{{ report.count }}</td>
           </tr>
+          <tr *ngIf="totalBookingType !== undefined">
+            <td colspan="2"><strong>Total Booking Types</strong></td>
+            <td><strong>{{ totalBookingType }}</strong></td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -37,6 +41,10 @@
           <tr *ngFor="let report of vehicleMakeReport">
             <td>{{ report.make }}</td>
             <td>{{ report.count }}</td>
+          </tr>
+          <tr *ngIf="totalVehicleMake !== undefined">
+            <td colspan="2"><strong>Total Vehicle Makes</strong></td>
+            <td><strong>{{ totalVehicleMake }}</strong></td>
           </tr>
         </tbody>
       </table>
@@ -56,6 +64,10 @@
             <td>{{ report.status }}</td>
             <td>{{ report.count }}</td>
           </tr>
+          <tr *ngIf="totalVehicleStatus !== undefined">
+            <td colspan="2"><strong>Total Vehicle Statuses</strong></td>
+            <td><strong>{{ totalVehicleStatus }}</strong></td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -65,14 +77,12 @@
       <table>
         <thead>
           <tr>
-         
             <th>Vehicle</th>
             <th>Number of Trips</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let report of tripReport">
-           
             <td>{{ report.tripType }}</td>
             <td>{{ report.count }}</td>
           </tr>
@@ -107,10 +117,6 @@
     <div>
       <h2>Project Status Report Chart</h2>
       <canvas id="projectStatusChart"></canvas>
-    </div>
-
-    <div>
-   
     </div>
   </div>
 </div>
