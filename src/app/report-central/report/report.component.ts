@@ -243,9 +243,9 @@ export class ReportComponent implements OnInit {
         heightLeft -= pdfHeight;
 
         while (heightLeft > 0) {
-          position = heightLeft - pdfHeight;
+          position = heightLeft - imgHeight;
           pdf.addPage();
-          pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, pdfHeight);
+          pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, imgHeight);
           heightLeft -= pdfHeight;
         }
 
