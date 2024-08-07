@@ -19,6 +19,7 @@ export class ReportComponent implements OnInit {
   bookingStatusReport: BookingStatusReport[] = [];
   projectStatusReport: ProjectReport[] = [];
 
+
   private charts: { [key: string]: Chart } = {};
 
   constructor(
@@ -31,6 +32,8 @@ export class ReportComponent implements OnInit {
     this.loadReports();
 
     Chart.register(...registerables);
+
+
   }
 
   loadReports(): void {
@@ -42,16 +45,15 @@ export class ReportComponent implements OnInit {
     this.reportService.getVehicleMakeReport().subscribe(data => {
       this.vehicleMakeReport = data;
     });
-
     this.reportService.getBookingTypeReport().subscribe(data => {
       this.bookingTypeReport = data;
+      console.log('Booking Type Report:', data); // Log the received data
       this.createBookingTypeChart();
     });
 
     this.reportService.getTripReport().subscribe(data => {
       this.tripReport = data;
       this.createTripChart();
-      this.createTripTable();
     });
 
     this.reportService.getBookingStatusReport().subscribe(data => {
@@ -64,6 +66,7 @@ export class ReportComponent implements OnInit {
       this.createProjectStatusChart();
     });
   }
+
 
   // Chart creation methods
   private createChart(chartId: string, chartData: any, chartOptions: any) {
@@ -97,6 +100,7 @@ export class ReportComponent implements OnInit {
 
     this.createChart('vehicleStatusChart', data, options);
   }
+
 
   private createBookingTypeChart() {
     const data = {
@@ -138,6 +142,8 @@ export class ReportComponent implements OnInit {
         scales: {
           y: {
             beginAtZero: true
+
+
           }
         }
       }
@@ -157,6 +163,7 @@ export class ReportComponent implements OnInit {
 
     const options = {
       type: 'bar',
+
       options: {
         scales: {
           y: {
@@ -168,6 +175,8 @@ export class ReportComponent implements OnInit {
 
     this.createChart('bookingStatusChart', data, options);
   }
+
+
 
   private createProjectStatusChart() {
     const data = {
@@ -184,20 +193,6 @@ export class ReportComponent implements OnInit {
     };
 
     this.createChart('projectStatusChart', data, options);
-  }
-
-  // New method to create the trip table
-  private createTripTable() {
-    const table = document.getElementById('tripTable') as HTMLTableElement;
-    if (table) {
-      this.tripReport.forEach(item => {
-        const row = table.insertRow();
-        const tripTypeCell = row.insertCell(0);
-        const countCell = row.insertCell(1);
-        tripTypeCell.textContent = item.tripType;
-        countCell.textContent = item.count.toString();
-      });
-    }
   }
 
   exportToPdf() {
