@@ -14,8 +14,11 @@ export interface BookingTypeReport {
 }
 
 export interface TripReport {
+  map(arg0: (trip: { date: any; }) => any): unknown;
   totalTrips: number;
-  tripsWithAccidents: number;
+  accidents?: number;
+  tripType: string;
+  count: number;
 }
 
 export interface BookingStatusReport {
@@ -47,28 +50,7 @@ export class ReportService {
       );
   }
 
-  // getBookingTypeReport(): Observable<BookingTypeReport[]> {
-  //   return this.http.get<BookingTypeReport[]>(`${this.baseUrl}/booking-types`).pipe(
-  //     map((response: any) => response || []),
-  //     catchError(this.handleError)
-  //   )
-  //   ;
-  // }
-
-  // getTripReport(): Observable<TripReport> {
-  //   return this.http.get<TripReport>(`${this.baseUrl}/trips`).pipe(
-  //     map((response: any) => response || []),
-  //     catchError(this.handleError)
-  //   );
-  // }
-
-  // getBookingStatusReport(): Observable<BookingStatusReport[]> {
-  //   return this.http.get<BookingStatusReport[]>(`${this.baseUrl}/booking-status`).pipe(
-  //     map((response: any) => response || []),
-  //     catchError(this.handleError)
-  //   );
-  // }
-
+ 
   getProjectReport(): Observable<ProjectReport[]> {
     return this.http.get<ProjectReport[]>(`${this.baseUrl}/projects`).pipe(
       map((response: any) => response || []),
@@ -80,24 +62,67 @@ export class ReportService {
   //New Additions
 
 
-  getVehicleStatusReport(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/VehicleStatusReport`);
+  // getVehicleStatusReport(): Observable<any> {
+  //   return this.http.get<any>(`${this.baseUrl}/VehicleStatusReport`);
+  // }
+
+  // getBookingTypeReport(): Observable<any> {
+  //   return this.http.get<any>(`${this.baseUrl}/BookingTypeReport`);
+  // }
+
+  // getTripReport(): Observable<any> {
+  //   return this.http.get<any>(`${this.baseUrl}/TripReport`);
+  // }
+
+  // getBookingStatusReport(): Observable<any> {
+  //   return this.http.get<any>(`${this.baseUrl}/BookingStatusReport`);
+  // }
+
+  // getProjectStatusReport(): Observable<any> {
+  //   return this.http.get<any>(`${this.baseUrl}/ProjectStatusReport`);
+  // }
+
+  // private handleError(error: any): Observable<never> {
+  //   console.error('An error occurred', error);
+  //   return throwError('Something went wrong; please try again later.');
+  // }
+
+  //Patched list
+
+
+  getVehicleStatusReport(): Observable<VehicleReport[]> {
+    return this.http.get<VehicleReport[]>(`${this.baseUrl}/VehicleStatusReport`).pipe(
+      map(response => response || []),
+      catchError(this.handleError)
+    );
   }
 
-  getBookingTypeReport(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/BookingTypeReport`);
+  getBookingTypeReport(): Observable<BookingTypeReport[]> {
+    return this.http.get<BookingTypeReport[]>(`${this.baseUrl}/BookingTypeReport`).pipe(
+      map(response => response || []),
+      catchError(this.handleError)
+    );
   }
 
-  getTripReport(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/TripReport`);
+  getTripReport(): Observable<TripReport[]> {
+    return this.http.get<TripReport[]>(`${this.baseUrl}/TripReport`).pipe(
+      map(response => response || []),
+      catchError(this.handleError)
+    );
   }
 
-  getBookingStatusReport(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/BookingStatusReport`);
+  getBookingStatusReport(): Observable<BookingStatusReport[]> {
+    return this.http.get<BookingStatusReport[]>(`${this.baseUrl}/BookingStatusReport`).pipe(
+      map(response => response || []),
+      catchError(this.handleError)
+    );
   }
 
-  getProjectStatusReport(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/ProjectStatusReport`);
+  getProjectStatusReport(): Observable<ProjectReport[]> {
+    return this.http.get<ProjectReport[]>(`${this.baseUrl}/ProjectStatusReport`).pipe(
+      map(response => response || []),
+      catchError(this.handleError)
+    );
   }
 
   private handleError(error: any): Observable<never> {
