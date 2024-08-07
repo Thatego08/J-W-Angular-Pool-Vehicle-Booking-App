@@ -1,6 +1,7 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { VehicleReport, BookingTypeReport, TripReport, BookingStatusReport, ProjectReport, ReportService } from '../../services/report.service';
-import { TripService } from '../../services/trip.service'; // Import TripService
+import { TripService } from '../../services/trip.service';
+import { BookingService } from '../../services/booking.service'; // Import BookingService
 import { Chart, ChartType, ChartData, ChartOptions, ChartConfiguration, registerables } from 'chart.js';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -8,22 +9,31 @@ import html2canvas from 'html2canvas';
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',
-  styleUrls: ['./report.component.css'] // Corrected property name to styleUrls
+  styleUrls: ['./report.component.css']
 })
 export class ReportComponent implements OnInit {
+
   vehicleStatusReport: VehicleReport[] = [];
   bookingTypeReport: BookingTypeReport[] = [];
   tripReport: TripReport[] = [];
   bookingStatusReport: BookingStatusReport[] = [];
   projectStatusReport: ProjectReport[] = [];
 
+
   private charts: { [key: string]: Chart } = {};
 
-  constructor(private reportService: ReportService, private tripService: TripService) {}
+  constructor(
+    private reportService: ReportService,
+    private tripService: TripService,
+    private bookingService: BookingService // Inject BookingService
+  ) {}
 
   ngOnInit(): void {
     this.loadReports();
+
     Chart.register(...registerables);
+
+
   }
 
   loadReports(): void {
@@ -34,6 +44,7 @@ export class ReportComponent implements OnInit {
 
     this.reportService.getBookingTypeReport().subscribe(data => {
       this.bookingTypeReport = data;
+      console.log('Booking Type Report:', data); // Log the received data
       this.createBookingTypeChart();
     });
 
@@ -52,6 +63,7 @@ export class ReportComponent implements OnInit {
       this.createProjectStatusChart();
     });
   }
+
 
   // Chart creation methods
   private createChart(chartId: string, chartData: any, chartOptions: any) {
@@ -85,6 +97,7 @@ export class ReportComponent implements OnInit {
 
     this.createChart('vehicleStatusChart', data, options);
   }
+
 
   private createBookingTypeChart() {
     const data = {
@@ -126,6 +139,8 @@ export class ReportComponent implements OnInit {
         scales: {
           y: {
             beginAtZero: true
+
+
           }
         }
       }
@@ -145,6 +160,7 @@ export class ReportComponent implements OnInit {
 
     const options = {
       type: 'bar',
+
       options: {
         scales: {
           y: {
@@ -156,6 +172,8 @@ export class ReportComponent implements OnInit {
 
     this.createChart('bookingStatusChart', data, options);
   }
+
+
 
   private createProjectStatusChart() {
     const data = {
@@ -175,14 +193,12 @@ export class ReportComponent implements OnInit {
   }
 
   exportToPdf() {
-    // Temporarily hide the export button
     const exportButton = document.getElementById('export-button');
     if (exportButton) exportButton.style.display = 'none';
-  
-    // Create a new jsPDF instance
+
     const pdf = new jsPDF('p', 'mm', 'a4');
     const pageElement = document.getElementById('report-page') as HTMLElement;
-  
+
     if (pageElement) {
       html2canvas(pageElement).then(canvas => {
         const imgData = canvas.toDataURL('image/png');
@@ -190,30 +206,24 @@ export class ReportComponent implements OnInit {
         const pdfHeight = pdf.internal.pageSize.getHeight();
         const imgProps = pdf.getImageProperties(imgData);
         const imgHeight = (imgProps.height * pdfWidth) / imgProps.width;
-  
+
         let position = 0;
         let heightLeft = imgHeight;
-        
-        // Add the first page
+
         pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, imgHeight);
         heightLeft -= pdfHeight;
-  
-        // Add additional pages if needed
+
         while (heightLeft > 0) {
           position = heightLeft - imgHeight;
           pdf.addPage();
           pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, imgHeight);
           heightLeft -= pdfHeight;
         }
-  
+
         pdf.save('report.pdf');
-  
-        // Show the export button again
+
         if (exportButton) exportButton.style.display = 'block';
       });
-    } else {
-      console.error('The page element with id "report-page" was not found.');
-      if (exportButton) exportButton.style.display = 'block';
     }
   }
-}  
+}
