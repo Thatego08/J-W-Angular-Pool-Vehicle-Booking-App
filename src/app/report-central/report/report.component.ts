@@ -24,6 +24,9 @@ export class ReportComponent implements OnInit {
   totalBookingStatus: number = 0;
   totalProjectStatus: number = 0;
   totalVehicleMake: number = 0; // Added this property
+  fuelExpenditureReport: any[] = [];
+  totalFuelExpenditure: number = 0;
+
 
   private charts: { [key: string]: Chart } = {};
 
@@ -73,6 +76,13 @@ export class ReportComponent implements OnInit {
       this.projectStatusReport = data;
       this.totalProjectStatus = this.calculateTotal(this.projectStatusReport, 'count');
       this.createProjectStatusChart();
+    });
+
+   
+    this.reportService.getFuelExpenditureReportAsync().subscribe(data => {
+      console.log(data); 
+      this.fuelExpenditureReport = data;
+      this.totalFuelExpenditure = this.calculateTotal(this.fuelExpenditureReport, 'fuelCost');
     });
   }
 
