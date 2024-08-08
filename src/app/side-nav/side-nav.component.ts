@@ -14,7 +14,7 @@ export class SideNavComponent {
   logout() {
     this.authService.logout().subscribe(() => {
       localStorage.removeItem('token');
-      this.router.navigate(['/app-login']);
+      this.router.navigate(['/auth']);
     }, error => {
       console.error('Logout error:', error);
     });

@@ -30,7 +30,7 @@ export class ProfileComponent implements OnInit{
         this.errorMessage = error.error.message;
         if (error.status === 401 || error.status === 404) {
           // Handle unauthorized errors
-          this.router.navigate(['/app-login']);
+          this.router.navigate(['/auth']);
         }}
     );
   }
@@ -38,7 +38,7 @@ export class ProfileComponent implements OnInit{
   logout() {
     this.authService.logout().subscribe(() => {
       localStorage.removeItem('token');
-      this.router.navigate(['/app-login']);
+      this.router.navigate(['/auth']);
     }, error => {
       console.error('Logout error:', error);
     });
