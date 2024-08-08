@@ -51,6 +51,31 @@
     </div>
 
     <div class="report-card">
+      <h2>Fuel Expenditure Report</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Vehicle</th>
+            <th>Number of Trips</th>
+            <th>Fuel Amount(VAT incl.)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let report of fuelExpenditureReport">
+            <td>{{ report.vehicle }}</td>
+            <td>{{ report.tripCount }}</td>
+            <td>R{{ report.fuelCost }}</td>
+          </tr>
+          <tr *ngIf="totalFuelExpenditure !== undefined">
+            <td colspan="2"><strong>Total Fuel Amount</strong></td>
+            <td><strong>R{{ totalFuelExpenditure }}</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+
+    <div class="report-card">
       <h2>Vehicle Status Report</h2>
       <table>
         <thead>
