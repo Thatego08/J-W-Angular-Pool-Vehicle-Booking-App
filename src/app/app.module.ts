@@ -89,6 +89,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ReportComponent } from './report-central/report/report.component';
 import { ReportService } from './services/report.service';
 import { ProjectService } from './services/project.service';
+import { AuthComponent } from './user/auth/auth.component';
 
 
 
@@ -153,7 +154,8 @@ import { ProjectService } from './services/project.service';
     ManageComponent,
     InsuranceComponent,
     NavBarComponent,
-    ReportComponent
+    ReportComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,

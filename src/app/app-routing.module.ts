@@ -63,12 +63,13 @@ import { VehicleModelComponent } from './vehicle/vehicle-model/vehicle-model.com
 import { PoolVehicleComponent } from './vehicle/pool-vehicles/pool-vehicles.component';
 import { LicenseDisksComponent } from './vehicle/license-disc/license-disc.component';
 import { ReportComponent } from './report-central/report/report.component';
+import { AuthComponent } from './user/auth/auth.component';
 
 
 
 
 const routes: Routes = [
- {path:'', pathMatch:'full', redirectTo: 'app-login'} ,
+ {path:'', pathMatch:'full', redirectTo: '/auth'} ,
  {path: 'driver', component:DriverComponent, canActivate: [AuthGuard]},
  {path: 'admin', component:AdminComponent,canActivate:[AuthGuard]},
  {path: 'register-driver', component:RegisterDriverComponent},
@@ -144,8 +145,9 @@ const routes: Routes = [
 
 
  //User routes
- { path: 'app-login', component: LoginComponent },
-  { path: 'app-register', component: RegisterComponent },
+  {path: 'auth', component: AuthComponent},
+//  { path: 'app-login', component: LoginComponent },
+//   { path: 'app-register', component: RegisterComponent },
   { path: 'app-forgot-password', component: ForgotPasswordComponent },
   { path: 'app-reset-password', component: ResetPasswordComponent },
 
