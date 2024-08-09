@@ -1,93 +1,135 @@
 .report-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 20px;
-  }
-  
-  .report-card {
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-  }
-  
-  .report-card h2 {
-    margin-top: 0;
-    font-size: 1.5em;
-    color: #333;
-  }
-  
-  canvas {
-    max-width: 100%;
-  }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-  }
-  
-  th, td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  th {
-    background-color: #f2f2f2;
-  }
-  
-  tr:hover {
-    background-color: #f1f1f1;
-  }
-
-  
-  @media (max-width: 768px) {
-    .report-container {
-      padding: 10px;
-    }
-  
-    .report-card {
-      padding: 15px;
-    }
-  
-    th, td {
-      padding: 10px 12px;
-    }
-  }
-  
-  /* Ensure the report container fits the PDF page */
-.report-container {
-  width: 100%;
-  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
   box-sizing: border-box;
 }
 
-/* Hide the export button during PDF export */
-@media print {
-  #export-button {
-    display: none;
-  }
+.report-card {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 30px;
 }
 
-/* Style for tables and charts to ensure they fit well */
+.report-card h2 {
+  margin-top: 0;
+  font-size: 1.5em;
+  color: #333;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+button {
+  padding: 10px 15px;
+  font-size: 1em;
+  border: none;
+  border-radius: 4px;
+  background-color: #072341; /* Blue theme */
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #05356a; /* Darker blue on hover */
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 10px;
 }
 
-table th, table td {
+th, td {
+  padding: 12px 15px;
+  text-align: left;
   border: 1px solid #ddd;
-  padding: 8px;
 }
 
+th {
+  background-color: #072341; /* Blue theme */
+  color: white;
+}
+
+tr:hover {
+  background-color: #f1f1f1;
+}
+
+.total-row {
+  font-weight: bold;
+  background-color: #f2f2f2;
+}
+
+.total-row td {
+  border-top: 2px solid #072341;
+  padding: 10px;
+}
+
+/* Ensure totals are within the table boundaries */
+.table-with-total {
+  border: 1px solid #ddd;
+  margin-top: 10px;
+}
+
+.table-with-total .total-row {
+  border-top: 2px solid #072341;
+}
+
+/* Style for charts */
 canvas {
   width: 100% !important; /* Ensure the canvas scales properly */
   height: auto !important;
 }
 
-/* Ensure headings are styled correctly */
 h1, h2 {
   margin-top: 20px;
   margin-bottom: 10px;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Print styles */
+@media print {
+  .button-container,
+  #export-button {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .report-container {
+    padding: 10px;
+  }
+
+  .report-card {
+    padding: 15px;
+  }
+
+  th, td {
+    padding: 10px 12px;
+  }
+}
+
+/* In your global stylesheet or component-specific stylesheet */
+#export-button {
+  background-color: #007bff; /* Change to your desired background color */
+  color: #ffffff; /* Change to your desired text color */
+  border: none; /* Remove border */
+  border-radius: 4px; /* Add border radius for rounded corners */
+  padding: 10px 20px; /* Adjust padding */
+  font-size: 16px; /* Adjust font size */
+  cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+#export-button:hover {
+  background-color: #0056b3; /* Change to a darker shade on hover */
 }

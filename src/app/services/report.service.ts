@@ -42,6 +42,7 @@ export interface FuelExpenditureReport {
   vehicle: string;
   numberOfTrips: number;
   fuelAmount: number;
+  fuelCost: number;
 }
 
 @Injectable({

@@ -1,14 +1,14 @@
-<div class="report-container">
-  <p>Janky Report Page :)</p>
+<div id="report-page" class="report-container">
+  <h1>Report</h1>
 
-  <div id="report-page" class="report-container">
-    <h1>Report</h1>
-
-    <button id="export-button" (click)="exportToPdf()">Export to PDF</button>
-
-    <div class="report-card">
-      <h2>Booking Type Report</h2>
-      <table>
+  <div class="button-container">
+    <button (click)="exportToPdf()" id="export-button">Export Reports</button>
+    
+    <!-- Booking Type Report -->
+    <button (click)="toggleReport('booking-type-report')">Generate Booking Type Report</button>
+    <div *ngIf="visibleReports.includes('booking-type-report')">
+      <p>Date Generated: {{ currentDate | date: 'yyyy-MM-dd' }}</p>
+      <table class="report-table table-with-total">
         <thead>
           <tr>
             <th>Type</th>
@@ -20,17 +20,18 @@
             <td>{{ report.type }}</td>
             <td>{{ report.count }}</td>
           </tr>
-          <tr *ngIf="totalBookingType !== undefined">
-            <td colspan="2"><strong>Total Booking Types</strong></td>
-            <td><strong>{{ totalBookingType }}</strong></td>
+          <tr *ngIf="totalBookingType !== undefined" class="total-row">
+            <td colspan="2"><strong>Total Booking Types: {{ totalBookingType }}</strong></td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <div class="report-card">
-      <h2>Vehicle Make Report</h2>
-      <table>
+    <!-- Vehicle Make Report -->
+    <button (click)="toggleReport('vehicle-make-report')">Generate Vehicle Make Report</button>
+    <div *ngIf="visibleReports.includes('vehicle-make-report')">
+      <p>Date Generated: {{ currentDate | date: 'yyyy-MM-dd' }}</p>
+      <table class="report-table table-with-total">
         <thead>
           <tr>
             <th>Make</th>
@@ -42,22 +43,23 @@
             <td>{{ report.make }}</td>
             <td>{{ report.count }}</td>
           </tr>
-          <tr *ngIf="totalVehicleMake !== undefined">
-            <td colspan="2"><strong>Total Vehicle Makes</strong></td>
-            <td><strong>{{ totalVehicleMake }}</strong></td>
+          <tr *ngIf="totalVehicleMake !== undefined" class="total-row">
+            <td colspan="2"><strong>Total Vehicle Makes: {{ totalVehicleMake }}</strong></td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <div class="report-card">
-      <h2>Fuel Expenditure Report</h2>
-      <table>
+    <!-- Fuel Expenditure Report -->
+    <button (click)="toggleReport('fuel-expenditure-report')">Generate Fuel Expenditure Report</button>
+    <div *ngIf="visibleReports.includes('fuel-expenditure-report')">
+      <p>Date Generated: {{ currentDate | date: 'yyyy-MM-dd' }}</p>
+      <table class="report-table table-with-total">
         <thead>
           <tr>
             <th>Vehicle</th>
             <th>Number of Trips</th>
-            <th>Fuel Amount(VAT incl.)</th>
+            <th>Fuel Amount (VAT incl.)</th>
           </tr>
         </thead>
         <tbody>
@@ -66,18 +68,19 @@
             <td>{{ report.tripCount }}</td>
             <td>R{{ report.fuelCost }}</td>
           </tr>
-          <tr *ngIf="totalFuelExpenditure !== undefined">
-            <td colspan="2"><strong>Total Fuel Amount</strong></td>
+          <tr *ngIf="totalFuelExpenditure !== undefined" class="total-row">
+            <td colspan="2"><strong>Total Fuel Amount:</strong></td>
             <td><strong>R{{ totalFuelExpenditure }}</strong></td>
           </tr>
         </tbody>
       </table>
     </div>
-    
 
-    <div class="report-card">
-      <h2>Vehicle Status Report</h2>
-      <table>
+    <!-- Vehicle Status Report -->
+    <button (click)="toggleReport('vehicle-status-report')">Generate Vehicle Status Report</button>
+    <div *ngIf="visibleReports.includes('vehicle-status-report')">
+      <p>Date Generated: {{ currentDate | date: 'yyyy-MM-dd' }}</p>
+      <table class="report-table table-with-total">
         <thead>
           <tr>
             <th>Status</th>
@@ -89,17 +92,18 @@
             <td>{{ report.status }}</td>
             <td>{{ report.count }}</td>
           </tr>
-          <tr *ngIf="totalVehicleStatus !== undefined">
-            <td colspan="2"><strong>Total Vehicle Statuses</strong></td>
-            <td><strong>{{ totalVehicleStatus }}</strong></td>
+          <tr *ngIf="totalVehicleStatus !== undefined" class="total-row">
+            <td colspan="2"><strong>Total Vehicle Statuses: {{ totalVehicleStatus }}</strong></td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <div class="report-card">
-      <h2>Trip Report</h2>
-      <table>
+    <!-- Total Trips Report -->
+    <button (click)="toggleReport('trip-report')">Generate Total Trips Report</button>
+    <div *ngIf="visibleReports.includes('trip-report')">
+      <p>Date Generated: {{ currentDate | date: 'yyyy-MM-dd' }}</p>
+      <table class="report-table table-with-total">
         <thead>
           <tr>
             <th>Vehicle</th>
@@ -111,13 +115,14 @@
             <td>{{ report.tripType }}</td>
             <td>{{ report.count }}</td>
           </tr>
-          <tr *ngIf="totalTrips !== undefined">
-            <td colspan="2"><strong>Total Trips</strong></td>
-            <td><strong>{{ totalTrips }}</strong></td>
+          <tr *ngIf="totalTrips !== undefined" class="total-row">
+            <td colspan="2"><strong>Total Trips: {{ totalTrips }}</strong></td>
           </tr>
         </tbody>
       </table>
     </div>
+ 
+
 
     <div>
       <h2>Vehicle Status Report Chart</h2>
