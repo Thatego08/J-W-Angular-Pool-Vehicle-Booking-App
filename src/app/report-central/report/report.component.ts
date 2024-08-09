@@ -5,6 +5,7 @@ import { BookingService } from '../../services/booking.service';
 import { Chart, ChartType, ChartData, ChartOptions, ChartConfiguration, registerables } from 'chart.js';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { format, formatDate } from 'date-fns';
 
 @Component({
   selector: 'app-report',
@@ -26,6 +27,9 @@ export class ReportComponent implements OnInit {
   totalVehicleMake: number = 0; // Added this property
   fuelExpenditureReport: any[] = [];
   totalFuelExpenditure: number = 0;
+  currentDate: string = format(new Date(), 'yyyy-MM-dd');
+
+  visibleReports: string[] = [];
 
 
   private charts: { [key: string]: Chart } = {};
@@ -41,6 +45,8 @@ export class ReportComponent implements OnInit {
     Chart.register(...registerables);
   }
 
+
+  
   loadReports(): void {
     this.reportService.getVehicleStatusReport().subscribe(data => {
       this.vehicleStatusReport = data;
@@ -231,38 +237,51 @@ export class ReportComponent implements OnInit {
     this.createChart('projectStatusChart', data, options);
   }
 
-  exportToPdf() {
-    const exportButton = document.getElementById('export-button');
-    if (exportButton) exportButton.style.display = 'none';
+  
 
-    const pdf = new jsPDF('p', 'mm', 'a4');
-    const pageElement = document.getElementById('report-page') as HTMLElement;
+  toggleReport(reportId: string): void {
+  const index = this.visibleReports.indexOf(reportId);
+  if (index === -1) {
+    this.visibleReports.push(reportId); // Show the report
+  } else {
+    this.visibleReports.splice(index, 1); // Hide the report
+  }
+}
 
-    if (pageElement) {
-      html2canvas(pageElement).then(canvas => {
-        const imgData = canvas.toDataURL('image/png');
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = pdf.internal.pageSize.getHeight();
-        const imgProps = pdf.getImageProperties(imgData);
-        const imgHeight = (imgProps.height * pdfWidth) / imgProps.width;
+exportToPdf(): void {
+  // Hide all buttons
+  const buttons = document.querySelectorAll('.button-container button');
+  buttons.forEach(button => (button as HTMLElement).style.display = 'none');
 
-        let position = 0;
-        let heightLeft = imgHeight;
+  const pdf = new jsPDF('p', 'mm', 'a4');
+  const pageElement = document.getElementById('report-page') as HTMLElement;
 
+  if (pageElement) {
+    html2canvas(pageElement).then(canvas => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
+      const imgProps = pdf.getImageProperties(imgData);
+      const imgHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+      let position = 0;
+      let heightLeft = imgHeight;
+
+      pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, imgHeight);
+      heightLeft -= pdfHeight;
+
+      while (heightLeft > 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
         pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, imgHeight);
         heightLeft -= pdfHeight;
+      }
 
-        while (heightLeft > 0) {
-          position = heightLeft - imgHeight;
-          pdf.addPage();
-          pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, imgHeight);
-          heightLeft -= pdfHeight;
-        }
+      pdf.save('report.pdf');
 
-        pdf.save('report.pdf');
-
-        if (exportButton) exportButton.style.display = 'block';
-      });
-    }
+      // Show all buttons again
+      buttons.forEach(button => (button as HTMLElement).style.display = 'block');
+    });
   }
+}
 }
