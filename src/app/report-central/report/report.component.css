@@ -133,3 +133,10 @@ h1, h2 {
 #export-button:hover {
   background-color: #0056b3; /* Change to a darker shade on hover */
 }
+
+.report-logo {
+  display: block;
+  margin: 10px auto;
+  width: 350px; /* Adjust width as needed */
+  height: auto;
+}
