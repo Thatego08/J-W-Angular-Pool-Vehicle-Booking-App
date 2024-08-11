@@ -30,9 +30,9 @@
             <td>{{ report.type }}</td>
             <td>{{ report.count }}</td>
           </tr>
-          <tr *ngIf="totalBookingType !== undefined" class="total-row">
+          <!-- <tr *ngIf="totalBookingType !== undefined" class="total-row">
             <td colspan="2"><strong>Total Booking Types: {{ totalBookingType }}</strong></td>
-          </tr>
+          </tr> -->
         </tbody>
       </table>
     </div>
@@ -122,15 +122,15 @@
             <td>{{ report.status }}</td>
             <td>{{ report.count }}</td>
           </tr>
-          <tr *ngIf="totalVehicleStatus !== undefined" class="total-row">
+          <!-- <tr *ngIf="totalVehicleStatus !== undefined" class="total-row">
             <td colspan="2"><strong>Total Vehicle Statuses: {{ totalVehicleStatus }}</strong></td>
-          </tr>
+          </tr> -->
         </tbody>
       </table>
     </div>
 
     <!-- Total Trips Report -->
-    <button (click)="toggleReport('trip-report')">Generate Total Trips Report</button>
+    <button (click)="toggleReport('trip-report')">Generate Trips Report</button>
     <div *ngIf="visibleReports.includes('trip-report')">
       <p>Date Generated: {{ currentDate | date: 'yyyy-MM-dd' }}</p>
       <div *ngIf="user">
@@ -153,9 +153,9 @@
             <td>{{ report.tripType }}</td>
             <td>{{ report.count }}</td>
           </tr>
-          <tr *ngIf="totalTrips !== undefined" class="total-row">
+          <!-- <tr *ngIf="totalTrips !== undefined" class="total-row">
             <td colspan="2"><strong>Total Trips: {{ totalTrips }}</strong></td>
-          </tr>
+          </tr> -->
         </tbody>
       </table>
     </div>
@@ -183,7 +183,7 @@
         <td>{{ report.count }}</td>
       </tr>
       <tr *ngIf="totalProjectStatus !== undefined" class="total-row">
-        <td><strong>Total Project Statuses:</strong></td>
+        <td><strong>Grand Total Project Statuses:</strong></td>
         <td><strong>{{ totalProjectStatus }}</strong></td>
       </tr>
     </tbody>
