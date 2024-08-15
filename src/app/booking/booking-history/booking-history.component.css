@@ -44,3 +44,65 @@
   background-color: #ffcc00; /* Yellow on hover */
   color: #042446; /* Dark blue text on hover */
 }
+
+/* src/app/components/booking-history/booking-history.component.css */
+
+.container {
+  margin-top: 20px;
+}
+
+.logo-image {
+  display: block;
+  margin: 0 auto 20px;
+  max-width: 200px;
+}
+
+.table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+.table-bordered th, .table-bordered td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #f9f9f9;
+}
+
+.table th {
+  background-color: #343a40;
+  color: #fff;
+  text-align: left;
+}
+
+.table td {
+  text-align: left;
+}
+
+.btn {
+  margin-top: 10px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-success {
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+h3 {
+  margin-top: 30px;
+  margin-bottom: 15px;
+  color: #555;
+}
