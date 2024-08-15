@@ -13,40 +13,43 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './rate.component.html',
   styleUrl: './rate.component.css'
 })
-export class RateComponent implements OnInit {
+export class RateComponent implements OnInit { 
   rates: Rate[] = [];
   displayedRates: Rate[] = [];
-  projects: Project[] = [];
-  searchRateTypeName: string = '';
-  rateToEdit: Rate = {
-    RateTypeName: '', ProjectNumber: 0, Conditions: '', RateValue: 0,
-    RateID: 0,
-    ApplicableTimePeriod: ''
-  };
-  isEditMode: boolean = false;
+  searchRateID: string = '';
+  rateToDelete: Rate | null = null;
   currentPage: number = 1;
   itemsPerPage: number = 10;
   totalPages: number = 1;
-  rateTypes: string[] = ['half-day rate', 'full-day rate', 'kilometre rate'];
+  rateTypes: string[] = ['Type1', 'Type2', 'Type3']; // Replace with actual rate types
+  projects: Project[] = []; // Replace with actual projects
+  
+  rateToEdit: Rate =  {
+    RateID: 0,
+    conditions: 'Standard',
+    rateValue: 200,
+    projectNumber: 0,
+    ProjectID: 1,
+    RateTypeID: 1,
+    rateTypeName: 'Standard',
+    applicableTimePeriod: ''
+  };
+  isEditMode: boolean = false;
 
+  @ViewChild('deleteConfirmationModal') deleteConfirmationModal!: TemplateRef<any>;
   @ViewChild('editRateModal') editRateModal!: TemplateRef<any>;
 
-  constructor(
-    private rateService: RateService,
-    private projectService: ProjectService,
-    private router: Router,
-    private modalService: NgbModal
-  ) { }
+  constructor(private rateService: RateService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.fetchRates();
-    this.fetchProjects();
   }
 
   fetchRates(): void {
     this.rateService.getAllRates().subscribe(
       (data: Rate[]) => {
         this.rates = data;
+        console.log("Rates:", data);
         this.updateDisplayedRates();
       },
       error => {
@@ -54,16 +57,27 @@ export class RateComponent implements OnInit {
       }
     );
   }
+  
+  openAddRateModal(): void {
+    this.isEditMode = false;
+    //this.rateToEdit = new Rate(); // Reset the form
+    this.modalService.open(this.editRateModal);
+  }
 
-  fetchProjects(): void {
-    this.projectService.getAllProjects().subscribe(
-      (data: Project[]) => {
-        this.projects = data;
-      },
-      error => {
-        console.error('Error fetching projects', error);
-      }
-    );
+  deleteRate(): void {
+    if (this.rateToDelete) {
+      this.rateService.deleteRate(this.rateToDelete.RateID).subscribe(
+        () => {
+          this.rates = this.rates.filter(r => r.RateID !== this.rateToDelete!.RateID);
+          this.updateDisplayedRates();
+          this.rateToDelete = null;
+          this.modalService.dismissAll();
+        },
+        error => {
+          console.error('Error deleting rate', error);
+        }
+      );
+    }
   }
 
   calculateTotalPages(): void {
@@ -91,52 +105,54 @@ export class RateComponent implements OnInit {
     }
   }
 
-  openRateModal(rate: Rate | null): void {
-    this.isEditMode = rate !== null;
-    this.rateToEdit = rate ? { ...rate } : { RateID: 0, RateTypeName: '', RateValue: 0, ProjectNumber: 0, ApplicableTimePeriod: '', Conditions: '' };
+  editRate(rate: Rate): void {
+    this.isEditMode = true;
+    this.rateToEdit = { ...rate };
     this.modalService.open(this.editRateModal, { ariaLabelledBy: 'modal-basic-title' });
   }
 
   saveRate(): void {
-    if (this.rateToEdit) {
-      if (this.isEditMode) {
-        this.rateService.updateRate(this.rateToEdit.RateID, this.rateToEdit).subscribe(
-          () => {
-            this.fetchRates();
-            this.modalService.dismissAll();
-          },
-          error => {
-            console.error('Error updating rate', error);
-          }
-        );
-      } else {
-        this.rateService.createRate(this.rateToEdit).subscribe(
-          () => {
-            this.fetchRates();
-            this.modalService.dismissAll();
-          },
-          error => {
-            console.error('Error creating rate', error);
-          }
-        );
-      }
+    if (this.isEditMode) {
+      this.rateService.updateRate(this.rateToEdit.RateID, this.rateToEdit).subscribe(
+        () => {
+          this.fetchRates();
+          this.modalService.dismissAll();
+        },
+        error => {
+          console.error('Error updating rate', error);
+        }
+      );
+    } else {
+      this.rateService.createRate(this.rateToEdit).subscribe(
+        () => {
+          this.fetchRates();
+          this.modalService.dismissAll();
+        },
+        error => {
+          console.error('Error creating rate', error);
+        }
+      );
     }
   }
 
-  searchRates(): void {
-    if (this.searchRateTypeName.trim() === '') {
+  openDeleteConfirmation(rate: Rate): void {
+    this.rateToDelete = rate;
+    this.modalService.open(this.deleteConfirmationModal, { ariaLabelledBy: 'modal-basic-title' });
+  }
+
+  searchRate(): void {
+    if (this.searchRateID.trim() === '') {
       this.fetchRates();
     } else {
       this.rates = this.rates.filter(rate =>
-        rate.RateTypeName?.toLowerCase().includes(this.searchRateTypeName.toLowerCase())
+        rate.RateID.toString().includes(this.searchRateID)
       );
       this.updateDisplayedRates();
     }
   }
 
- 
   clearSearch(): void {
-    this.searchRateTypeName = '';
+    this.searchRateID = '';
     this.fetchRates();
   }
 }

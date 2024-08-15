@@ -1,11 +1,10 @@
 export interface Rate {
-    RateID: number;
-    RateTypeName: string; // Assuming this is fetched from RateType
-    RateValue: number;
-    ProjectNumber: number; // Assuming this is fetched from Project
-    ApplicableTimePeriod: string;
-    Conditions: string;
-  
-   
-  }
-  
+  RateID: number;
+  RateTypeID: number; // Foreign key to RateType
+  rateTypeName: string; // Name from RateType
+  rateValue: number;
+  ProjectID: number; // Foreign key to Project
+  projectNumber: number; // Project Number from Project
+  applicableTimePeriod: string;
+  conditions: string;
+}
