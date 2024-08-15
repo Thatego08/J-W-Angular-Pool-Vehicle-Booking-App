@@ -10,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -80,7 +81,16 @@ import { VehicleModelComponent } from './vehicle/vehicle-model/vehicle-model.com
 import { StatusComponent } from './vehicle/status/status.component';
 import { LicenseDisksComponent } from './vehicle/license-disc/license-disc.component';
 import { ManageComponent } from './vehicle/manage/manage.component';
+
+import { InsuranceComponent } from './vehicle/insurance/insurance.component';
+
 import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { ReportComponent } from './report-central/report/report.component';
+import { ReportService } from './services/report.service';
+import { ProjectService } from './services/project.service';
+import { AuthComponent } from './user/auth/auth.component';
+
 
 
 @NgModule({
@@ -100,7 +110,6 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
     NotificationsComponent,
     ProjectComponent,
     ProfileComponent,
-
     TripComponent,
     CreateTripComponent,
     EditTripComponent,
@@ -108,58 +117,55 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
     RefuelVehicleComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
-
     BookingComponent,
     AddBookingComponent,
     BookingListComponent,
     EditBookingComponent,
     BookingHistoryComponent,
-
     FeedbackListComponent,
     EditAdminComponent,
     RateComponent,
     RateFormComponent,
-      AddVehicleComponent,
-      EditVehicleComponent,
-      VehicleComponent,
-      VehicleDetailsComponent,
-      PoolVehicleComponent,
-      AddFuelComponent,
-      AddColourComponent,
-      AddInsuranceComponent,
-      AddMakeComponent,
-      AddModelComponent,
-      ColourComponent,
-      EditFuelComponent,
-      EditInsuranceComponent,
-      EditMakeComponent,
-      EditModelComponent,
-      EditServiceComponent,
-      ChecklistComponent,
-      PostChecklistComponent,
-      EditColourComponent,
-      ServiceComponent,
-      FuelTypeComponent,
-      VehicleMakeComponent,
-      VehicleModelComponent,
-      StatusComponent,
-      LicenseDisksComponent,
-      ManageComponent,
-      NavBarComponent
-      
-
-
+    AddVehicleComponent,
+    EditVehicleComponent,
+    VehicleComponent,
+    VehicleDetailsComponent,
+    PoolVehicleComponent,
+    AddFuelComponent,
+    AddColourComponent,
+    AddInsuranceComponent,
+    AddMakeComponent,
+    AddModelComponent,
+    ColourComponent,
+    EditFuelComponent,
+    EditInsuranceComponent,
+    EditMakeComponent,
+    EditModelComponent,
+    EditServiceComponent,
+    ChecklistComponent,
+    PostChecklistComponent,
+    EditColourComponent,
+    ServiceComponent,
+    FuelTypeComponent,
+    VehicleMakeComponent,
+    VehicleModelComponent,
+    StatusComponent,
+    LicenseDisksComponent,
+    ManageComponent,
+    InsuranceComponent,
+    NavBarComponent,
+    ReportComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     NgbModule,
+    NgxChartsModule,
     FormsModule,
     ReactiveFormsModule,
-
     ToastrModule.forRoot(),
-
     BrowserAnimationsModule,
     MatInputModule,
     MatButtonModule,
@@ -167,17 +173,17 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
     MatNativeDateModule,
     MatFormFieldModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
-
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     AuthService,
     AuthGuard,
     UserService,
-
     BookingService,
+    ReportService,
+    ProjectService,
     HttpClient,
-
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

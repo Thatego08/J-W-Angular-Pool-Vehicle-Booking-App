@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { VehicleService } from '../../services/vehicle.service';
 import { Vehicle } from '../../models/vehicle.model';
 import { Colour } from '../../models/colour.model';
-import { Status } from '../../models/status.model';
 import { InsuranceCover } from '../../models/insurance.model';
+import { VehicleFuelType } from '../../models/fuel.model';
+import { Status } from '../../models/status.model';
 import { VehicleMake } from '../../models/vehicle-make.model';
 import { VehicleModel } from '../../models/vehicle-model.model';
-import { VehicleFuelType } from '../../models/fuel.model';
 
 @Component({
   selector: 'app-edit-vehicle',
@@ -15,129 +16,119 @@ import { VehicleFuelType } from '../../models/fuel.model';
   styleUrls: ['./edit-vehicle.component.css']
 })
 export class EditVehicleComponent implements OnInit {
-
-  vehicle: Vehicle | undefined;
-  vehicleId: number | null = null;
+  editVehicleForm!: FormGroup;
+  vehicle: Vehicle = {
+    vehicleID: 0,
+    name: '',
+    description: '',
+    dateAcquired: new Date(),
+    licenseExpiryDate: new Date(),
+    registrationNumber: '',
+    insuranceCoverID: 0,
+    vin: '',
+    engineNo: '',
+    colourID: 0,
+    fuelTypeID: 0,
+    statusID: 0,
+    vehicleMakeID: 0,
+    vehicleModelID: 0
+  };
+  colours: Colour[] = [];
+  insuranceCovers: InsuranceCover[] = [];
+  fuelTypes: VehicleFuelType[] = [];
+  statuses: Status[] = [];
+  vehicleMakes: VehicleMake[] = [];
+  vehicleModels: VehicleModel[] = [];
+  filteredVehicleModels: VehicleModel[] = [];
 
   constructor(
+    private fb: FormBuilder,
+    private vehicleService: VehicleService,
     private route: ActivatedRoute,
-    private vehicleService: VehicleService
+    private router: Router
   ) { }
 
   ngOnInit(): void {
+    this.editVehicleForm = this.fb.group({
+      vehicleID: [{ value: '', disabled: true }],
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      dateAcquired: ['', Validators.required],
+      licenseExpiryDate: ['', Validators.required],
+      registrationNumber: ['', Validators.required],
+      vin: ['', Validators.required],
+      engineNo: ['', Validators.required],
+      insuranceCoverID: ['', Validators.required],
+      colourID: ['', Validators.required],
+      fuelTypeID: ['', Validators.required],
+      statusID: ['', Validators.required],
+      vehicleMakeID: ['', Validators.required],
+      vehicleModelID: ['', Validators.required]
+    });
+
     this.route.paramMap.subscribe(params => {
-      this.vehicleId = Number(params.get('id'));
-      if (this.vehicleId) {
-        this.loadVehicleDetails(this.vehicleId);
+      const id = params.get('id');
+      if (id) {
+        this.vehicleService.getVehicleId(id).subscribe(data => {
+          this.vehicle = data;
+          this.editVehicleForm.patchValue({
+            ...this.vehicle,
+            dateAcquired: new Date(this.vehicle.dateAcquired).toISOString().substring(0, 10),
+            licenseExpiryDate: new Date(this.vehicle.licenseExpiryDate).toISOString().substring(0, 10)
+          });
+
+          // Load vehicle models after vehicle data is fetched
+          this.loadVehicleData();
+        });
       }
+    });
+
+    // Subscribe to changes in the Vehicle Make field to update the Vehicle Model dropdown
+    this.editVehicleForm.get('vehicleMakeID')?.valueChanges.subscribe(makeID => {
+      this.filterVehicleModels(makeID);
     });
   }
 
-  loadVehicleDetails(id: number): void {
-    this.vehicleService.getVehicle(id).subscribe(
-      (vehicle: Vehicle) => {
-        this.vehicle = vehicle;
-      },
-      error => {
-        console.error('Error loading vehicle details:', error);
-      }
-    );
+  loadVehicleData(): void {
+    // Load all dropdown data
+    this.vehicleService.getAllColours().subscribe(data => this.colours = data);
+    this.vehicleService.getAllInsuranceCovers().subscribe(data => this.insuranceCovers = data);
+    this.vehicleService.getAllFuelTypes().subscribe(data => this.fuelTypes = data);
+    this.vehicleService.getAllStatus().subscribe(data => this.statuses = data);
+    this.vehicleService.getAllVehicleMakes().subscribe(data => {
+      this.vehicleMakes = data;
+      this.loadVehicleModels();
+    });
   }
 
-  submitEdit(): void {
-    if (this.vehicle) {
-      this.vehicleService.updateVehicle(this.vehicle.vehicleID, this.vehicle).subscribe(
-        () => {
-          console.log('Vehicle updated successfully');
-        },
-        error => {
-          console.error('Error updating vehicle:', error);
-        }
-      );
+  loadVehicleModels(): void {
+    this.vehicleService.getAllVehicleModels().subscribe(models => {
+      this.vehicleModels = models;
+      this.filterVehicleModels(this.editVehicleForm.get('vehicleMakeID')?.value);
+    });
+  }
+
+  filterVehicleModels(vehicleMakeID: number | null): void {
+    if (vehicleMakeID !== null && this.vehicleModels) {
+      this.filteredVehicleModels = this.vehicleModels.filter(model => model.vehicleMakeID === vehicleMakeID);
+    } else {
+      this.filteredVehicleModels = [];
     }
   }
 
-  // colours: Colour[] = [];
-  // fuels: VehicleFuelType[] = [];
-  // insurances: InsuranceCover[] = [];
-  // makes: VehicleMake[] = [];
-  // models: VehicleModel[] = [];
-  // status: Status[] = [];
+  onSubmit(): void {
+    if (this.editVehicleForm.valid) {
+      const updatedVehicle: Vehicle = { ...this.editVehicleForm.value, vehicleID: this.vehicle.vehicleID };
+      this.vehicleService.updateVehicle(this.vehicle.vehicleID, updatedVehicle).subscribe({
+        next: () => this.router.navigate(['/vehicles']),
+        error: (err) => console.error('Error updating vehicle', err)
+      });
+    } else {
+      console.warn('Form is not valid');
+    }
+  }
 
-  // vehicle: Vehicle = {
-  //   vehicleID: 0,
-  //   name: '',
-  //   registrationNumber: '',
-  //   dateAcquired: new Date(),
-  //   licenseExpiryDate: new Date(),
-  //   vin: '',
-  //   engineNo: '',
-  //   colourID: 0,
-  //   fuelTypeID: 0,
-  //   insuranceCoverID: 0,
-  //   statusID: 0,
-  //   vehicleMakeID: 0,
-  //   vehicleModelID: 0,
-  //   description: '',
-  //   insuranceCover: { insuranceCoverId: 0, insuranceCoverName: '' },
-  //   colour: { id: 0, name: '' },
-  //   fuelType: { id: 0, fuelName: '' },
-  //   vehicleMake: { vehicleMakeID: 0, name: '' },
-  //   vehicleModel: { vehicleModelId: 0, vehicleModelName: '', vehicleMakeID: 0 },
-  //   status: { id: 0, name: '' }
-  // };
-
-  // constructor(private route: ActivatedRoute, private vs: VehicleService, private router: Router) { }
-
-  // ngOnInit(): void {
-  //   this.route.paramMap.subscribe(params => {
-  //     const vehicleID = params.get('vehicleID');
-  //     if (vehicleID) {
-  //       this.vs.getVehicleId(vehicleID).subscribe(response => {
-  //         this.vehicle = response;
-  //         console.log('Vehicle data:', this.vehicle);
-  //       });
-  //     }
-  //   });
-
-  //   this.vs.getAllColours().subscribe(data => {
-  //     this.colours = data;
-  //     console.log('Colours:', this.colours);
-  //   });
-
-  //   this.vs.getAllFuelTypes().subscribe(data => {
-  //     this.fuels = data;
-  //     console.log('Fuels:', this.fuels);
-  //   });
-
-  //   this.vs.getAllInsuranceCovers().subscribe(data => {
-  //     this.insurances = data;
-  //     console.log('Insurances:', this.insurances);
-  //   });
-
-  //   this.vs.getAllVehicleMakes().subscribe(data => {
-  //     this.makes = data;
-  //     console.log('Makes:', this.makes);
-  //   });
-
-  //   this.vs.getAllVehicleModels().subscribe(data => {
-  //     this.models = data;
-  //     console.log('Models:', this.models);
-  //   });
-
-  //   this.vs.getAllStatus().subscribe(data => {
-  //     this.status = data;
-  //     console.log('Status:', this.status);
-  //   });
-  // }
-
-  // updateVehicle(): void {
-  //   this.vs.updateVehicle(this.vehicle.vehicleID, this.vehicle).subscribe(() => {
-  //     this.router.navigate(['vehicles']);
-  //   });
-  // }
-
-  // cancel(): void {
-  //   this.router.navigate(['vehicles']);
-  // }
+  cancel(): void {
+    this.router.navigate(['/vehicles']);
+  }
 }

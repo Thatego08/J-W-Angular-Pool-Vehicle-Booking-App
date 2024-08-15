@@ -27,7 +27,7 @@ export class PoolVehicleComponent implements OnInit {
 
   
   getAllVehicles(): void {
-    this.vehicleService.getAllVehicles().subscribe(vehicles => {
+    this.vehicleService.getAvailableVehicles().subscribe(vehicles => {
       this.vehicles = vehicles;
     });
   }
@@ -52,6 +52,10 @@ export class PoolVehicleComponent implements OnInit {
       width: '500px',
       data: vehicle
     });
+  }
+
+  completeChecklist(vehicle: any) {
+    this.router.navigate(['/checklist'], { queryParams: { name: vehicle.name, registrationNumber: vehicle.registrationNumber } });
   }
 
 }

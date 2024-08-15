@@ -91,11 +91,17 @@ body {
   
   /* Link styles */
   a {
-    color: #4585e4;
+    color: #ffffff;
     text-align: center;
     display: block;
   }
   
+  canvas {
+    
+    max-width: 100%;
+    width: 400px;
+    height: 400px;
+  }
   a:hover {
     text-decoration: underline;
   }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
 import { VehicleMake } from '../../models/vehicle-make.model';
 import { VehicleService } from '../../services/vehicle.service';
 
@@ -10,52 +11,42 @@ import { VehicleService } from '../../services/vehicle.service';
   styleUrls: ['./edit-make.component.css']
 })
 export class EditMakeComponent implements OnInit {
+  
+   
+  make: VehicleMake = {
+    vehicleMakeID: 0,
+    name: ''
+  };
 
-  makeForm: FormGroup;
-  makeId!: number;
-
-  constructor(
-    private vs: VehicleService,
-    private fb: FormBuilder,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {
-    this.makeForm = this.fb.group({
-      name: ['', Validators.required]
-    });
-  }
+  constructor(private route: ActivatedRoute, private vs: VehicleService, private router: Router ) { }
 
   ngOnInit(): void {
-    // Get the make ID from the route parameters
-    this.makeId = +this.route.snapshot.paramMap.get('id')!;
-    this.loadmake();
+    this.route.paramMap.subscribe({
+      next: (params) => {
+        const vehicleMakeID = params.get('vehicleMakeID');
+
+        //Call the API
+        if(vehicleMakeID){
+          this.vs.getMakeId(vehicleMakeID).subscribe({
+            next: (response) => {
+              this.make = response;
+            }
+          });
+        }
+      }
+    })
   }
 
-  loadmake(): void {
-    this.vs.getMake(this.makeId).subscribe(data => {
-      if (data) {
-        this.makeForm.setValue({
-          name: data.name
-        });
+  updateMake(){
+    this.vs.editVehicleMake(this.make.vehicleMakeID, this.make).subscribe({
+      next: (response) =>{
+        this.router.navigate(['vehicle-make'])
       }
     });
+ 
   }
 
-
-  onSubmit(): void {
-    if (this.makeForm.valid) {
-      const updatedMake: VehicleMake = {
-        vehicleMakeID: this.makeId,
-        name: this.makeForm.get('name')!.value
-      };
-
-      this.vs.editVehicleMake(this.makeId, updatedMake).subscribe(() => {
-        this.router.navigateByUrl('vehicle-make');
-      });
-    }
-  }
-
-  cancel(): void{
-    this.router.navigateByUrl('vehicle-make');
-  }
+  cancel(){
+    this.router.navigate(["vehicle-make"]);
+  };
 }

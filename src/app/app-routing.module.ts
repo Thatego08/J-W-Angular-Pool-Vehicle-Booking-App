@@ -62,12 +62,14 @@ import { VehicleMakeComponent } from './vehicle/vehicle-make/vehicle-make.compon
 import { VehicleModelComponent } from './vehicle/vehicle-model/vehicle-model.component';
 import { PoolVehicleComponent } from './vehicle/pool-vehicles/pool-vehicles.component';
 import { LicenseDisksComponent } from './vehicle/license-disc/license-disc.component';
+import { ReportComponent } from './report-central/report/report.component';
+import { AuthComponent } from './user/auth/auth.component';
 
 
 
 
 const routes: Routes = [
- {path:'', pathMatch:'full', redirectTo: 'app-login'} ,
+ {path:'', pathMatch:'full', redirectTo: '/auth'} ,
  {path: 'driver', component:DriverComponent, canActivate: [AuthGuard]},
  {path: 'admin', component:AdminComponent,canActivate:[AuthGuard]},
  {path: 'register-driver', component:RegisterDriverComponent},
@@ -116,7 +118,7 @@ const routes: Routes = [
  //Insurance Cover
  {path: 'insurance', component: InsuranceComponent },
  {path: 'add-insurance', component: AddInsuranceComponent },
- {path: 'edit-insurance/:id', component: EditInsuranceComponent},
+ {path: 'edit-insurance/:insuranceCoverId', component: EditInsuranceComponent},
 
  //License Disks
  
@@ -125,23 +127,27 @@ const routes: Routes = [
  //Vehicle Makes
   {path: 'add-make', component: AddMakeComponent},
  {path: 'vehicle-make', component: VehicleMakeComponent },
- {path: 'edit-make/:id', component: EditMakeComponent},
+ {path: 'edit-make/:vehicleMakeID', component: EditMakeComponent},
 
  //Vehicle Models
  {path: 'add-model', component: AddModelComponent },
  {path: 'vehicle-model', component: VehicleModelComponent },
- {path: 'edit-model/:id', component: EditModelComponent},
+ {path: 'edit-model/:vehicleModelID', component: EditModelComponent},
 
  //Vehicle Extras
- {path: 'checklist', component: ChecklistComponent, canActivate: [AuthGuard] },
- {path: 'post-checklist', component: PostChecklistComponent, canActivate: [AuthGuard]},
- {path: 'service', component: ServiceComponent, canActivate: [AuthGuard]},
- {path: 'status', component: StatusComponent, canActivate: [AuthGuard] },
+ {path: 'checklist', component: ChecklistComponent},
+ {path: 'post-checklist', component: PostChecklistComponent},
+ {path: 'service', component: ServiceComponent},
+ {path: 'status', component: StatusComponent },
+
+ 
+
 
 
  //User routes
- { path: 'app-login', component: LoginComponent },
-  { path: 'app-register', component: RegisterComponent },
+  {path: 'auth', component: AuthComponent},
+//  { path: 'app-login', component: LoginComponent },
+//   { path: 'app-register', component: RegisterComponent },
   { path: 'app-forgot-password', component: ForgotPasswordComponent },
   { path: 'app-reset-password', component: ResetPasswordComponent },
 
@@ -152,8 +158,9 @@ const routes: Routes = [
   { path: 'app-settings', component: SettingsComponent, canActivate: [AuthGuard] },
 
   { path: 'app-feedback', component: FeedbackComponent, canActivate: [AuthGuard] },
-  { path: 'app-feedback-list', component: FeedbackListComponent, canActivate: [AuthGuard] }
+  { path: 'app-feedback-list', component: FeedbackListComponent, canActivate: [AuthGuard] },
 
+  {path: 'app-report', component:ReportComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

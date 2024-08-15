@@ -3,9 +3,17 @@
       <li class="navbar-item" >
         <a routerLink="/driver">Drivers</a>
       </li>
-      <li class="navbar-item" >
-        <a routerLink="/vehicles">Vehicles</a>
+      <li class="navbar-item dropdown">
+        <a class="dropdown-toggle" routerLink="/vehicles">Vehicles </a>
+        <ul class="dropdown-menu">
+          <li><a routerLink="/add-vehicle">Add-Vehicle</a></li>
+          <li><a routerLink="/pool-vehicle">Pool Vehicles</a></li>
+          <li><a routerLink="/manage-vehicle">Manage Vehicles</a></li>
+          <li><a routerLink="/license-disks">License Discs</a></li>
+          <li><a routerLink="/service">Book Vehicle for Service</a></li>
+         </ul>
       </li>
+
       <li class="navbar-item dropdown" >
         <a class="dropdown-toggle">Trips</a>
         <ul class="dropdown-menu">
@@ -42,6 +50,9 @@
         </ul>
       </li>
 
+      <li class="navbar-item" >
+        <a routerLink="/app-report">Reports</a>
+      </li>
       <!-- Add more navigation items as needed -->
     </ul>
   </nav>

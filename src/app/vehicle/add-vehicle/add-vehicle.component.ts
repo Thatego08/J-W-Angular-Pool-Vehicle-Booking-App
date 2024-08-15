@@ -1,58 +1,98 @@
 import { Component, OnInit } from '@angular/core';
-import { VehicleService } from '../../services/vehicle.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { VehicleService } from '../../services/vehicle.service';
+import { Vehicle } from '../../models/vehicle.model';
 import { Colour } from '../../models/colour.model';
-import { Status } from '../../models/status.model';
 import { VehicleFuelType } from '../../models/fuel.model';
+import { InsuranceCover } from '../../models/insurance.model';
+import { Status } from '../../models/status.model';
 import { VehicleMake } from '../../models/vehicle-make.model';
 import { VehicleModel } from '../../models/vehicle-model.model';
-import { Vehicle } from '../../models/vehicle.model';
-import { InsuranceCover } from '../../models/insurance.model';
-
 
 @Component({
   selector: 'app-add-vehicle',
   templateUrl: './add-vehicle.component.html',
-  styleUrls: ['./add-vehicle.component.scss']
+  styleUrls: ['./add-vehicle.component.css']
 })
 export class AddVehicleComponent implements OnInit {
+  vehicleForm!: FormGroup;
   colours: Colour[] = [];
-  colourForm: FormGroup;
+  fuelTypes: VehicleFuelType[] = [];
+  insuranceCovers: InsuranceCover[] = [];
+  statuses: Status[] = [];
+  vehicleMakes: VehicleMake[] = [];
+  vehicleModels: VehicleModel[] = [];
 
-  constructor(private vs: VehicleService, private fb: FormBuilder, private router: Router) {
-    this.colourForm = this.fb.group({
-      name: ['', Validators.required]
-    });
-  }
+  constructor(private fb: FormBuilder, private vehicleService: VehicleService) { }
 
   ngOnInit(): void {
-    // Optionally, you can load existing colours if needed
-    this.loadColours();
+    this.initializeForm();
+    this.loadDropdownData();
   }
 
-  loadColours(): void {
-    this.vs.getAllColours().subscribe(data => {
-      this.colours = data;
+  initializeForm(): void {
+    this.vehicleForm = this.fb.group({
+      name: ['', Validators.required],
+      description: [''],
+      dateAcquired: ['', Validators.required],
+      licenseExpiryDate: ['', Validators.required],
+      registrationNumber: ['', Validators.required],
+      vin: ['', [Validators.required, Validators.minLength(17), Validators.maxLength(17)]],
+      engineNo: ['', [Validators.required, Validators.minLength(17), Validators.maxLength(17)]],
+      colourID: ['', Validators.required],
+      fuelTypeID: ['', Validators.required],
+      statusID: ['', Validators.required],
+      vehicleMakeID: ['', Validators.required],
+      vehicleModelID: ['', Validators.required],
+      insuranceCoverID: ['', Validators.required]
     });
+  }
+
+  loadDropdownData(): void {
+    this.vehicleService.getAllColours().subscribe(
+      data => this.colours = data,
+      error => console.error('Error loading colours:', error)
+    );
+    this.vehicleService.getAllFuelTypes().subscribe(
+      data => this.fuelTypes = data,
+      error => console.error('Error loading fuel types:', error)
+    );
+    this.vehicleService.getAllInsuranceCovers().subscribe(
+      data => this.insuranceCovers = data,
+      error => console.error('Error loading insurance covers:', error)
+    );
+    this.vehicleService.getAllStatus().subscribe(
+      data => this.statuses = data,
+      error => console.error('Error loading statuses:', error)
+    );
+    this.vehicleService.getAllVehicleMakes().subscribe(
+      data => this.vehicleMakes = data,
+      error => console.error('Error loading vehicle makes:', error)
+    );
+    this.vehicleService.getAllVehicleModels().subscribe(
+      data => this.vehicleModels = data,
+      error => console.error('Error loading vehicle models:', error)
+    );
   }
 
   onSubmit(): void {
-    if (this.colourForm.valid) {
-      const colourData: Colour = {
-        name: this.colourForm.get('name')!.value,
-        id: 0
-      };
 
-      this.vs.addColour(colourData).subscribe(() => {
-        this.clearForm();
-        this.router.navigateByUrl('colours');
-      });
+    console.log(this.vehicleForm);
+    if (this.vehicleForm.valid) {
+      const newVehicle: Vehicle = this.vehicleForm.value;
+      console.log('Submitting vehicle data:', newVehicle);
+      this.vehicleService.addVehicle(newVehicle).subscribe(
+        response => {
+          alert(`Vehicle ${newVehicle.name} added successfully`);
+          this.vehicleForm.reset();
+        },
+        error => {
+          //alert('Error adding vehicle: ' + error.message);
+          console.error('Error details:', error);
+        }
+      );
+    } else {
+      alert('Please fill in all required fields.');
     }
-  }
-
-  clearForm(): void {
-    this.colourForm.reset();
   }
 }

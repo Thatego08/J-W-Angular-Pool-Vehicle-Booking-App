@@ -23,7 +23,7 @@
   }
   
   .navbar-item a {
-    color: #4585e4;
+    color: #ffffff;
     text-decoration: none;
     font-weight: bold;
     padding: 0.5rem 1rem;
@@ -31,7 +31,7 @@
   }
   
   .navbar-item a:hover {
-    background-color: #82857f91;
+    background-color: #5f7a8b65;
   }
   
   .dropdown-toggle::after {

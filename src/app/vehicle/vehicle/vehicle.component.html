@@ -9,47 +9,248 @@
       <li class="submenu-item"><a routerLink="/pool-vehicles" class="text-white uppercase text-sm" >VEHICLES</a></li>
       <li class="submenu-item"><a routerLink="/pool-vehicle" class="text-white uppercase text-sm">Pool Vehicles</a></li>
       <li class="submenu-item"><a routerLink="/manage-vehicle" class="text-white uppercase text-sm">Manage Vehicles <i class="fas fa-caret-down"></i></a>
+
+
+<!-- <div class="menu-bar" style="background-color: #1a365d;">
+    <ul>
+      <li><a routerLink="/pool-vehicles" class="text-white uppercase text-sm" >VEHICLES</a></li>
+      <li><a routerLink="/pool-vehicle" class="text-white uppercase text-sm">Pool Vehicles</a></li>
+      <li><a routerLink="/manage-vehicle" class="text-white uppercase text-sm">Manage Vehicles <i class="fas fa-caret-down"></i></a>
+          <div class="dropdown-menu">
+              <ul>
+                <li><a routerLink="/colour">Colours</a></li>
+                <li><a routerLink="/fuel-type">Fuel Types</a></li>
+                <li><a routerLink="/insurance">Insurance Covers</a></li>
+                <li><a routerLink="/vehicle-make">Vehicle Makes</a></li>
+                <li><a routerLink="/vehicle-model">Vehicle Models</a></li>
+                <li><a routerLink="/status">Status</a></li>
+              </ul>
+            </div>
+
       </li>
       <li class="submenu-item"><a routerLink="/license-disks" class="text-white uppercase text-sm">License Discs</a>
       </li>
       <li class="submenu-item"><a routerLink="/service" class="text-white uppercase text-sm">Service</a></li>
     </ul>
   </li>
+
+      <li><a routerLink="/service" class="text-white uppercase text-sm">Service</a></li>
+     
+    </ul>
+  </div> -->
   
-  
-  <div class="container mx-auto p-6">
-    <button class="btn btn-danger add-vehicle-button" routerLink="/add-vehicle">Add Vehicle</button>
+  <div class="header-container">
+    <img src="assets/logo.png" alt="Logo" class="logo">
+  </div>
+<!-- 
+  <div>
+    <input type="text" [(ngModel)]="searchQuery" (ngModelChange)="onSearchQueryChange()" placeholder="Search vehicles">
     
-    <div *ngFor="let group of groupedVehicles">
-      <h2 class="group-title">{{ group.status }}</h2>
-      <table class="vehicle-table mt-6">
-        <thead>
+    <div>
+      <label for="make">Vehicle Make:</label>
+      <select id="make" [(ngModel)]="selectedMakeId" (change)="onFilterChange()">
+        <option [ngValue]="null">All Makes</option>
+        <option *ngFor="let make of vehicleMakes" [value]="make.vehicleMakeID">{{ make.name }}</option>
+      </select>
+    </div>
+  
+    <div>
+      <label for="colour">Colour:</label>
+      <select id="colour" [(ngModel)]="selectedColourId" (change)="onFilterChange()">
+        <option [ngValue]="null">All Colours</option>
+        <option *ngFor="let colour of colours" [value]="colour.id">{{ colour.name }}</option>
+      </select>
+    </div>
+  
+    <div>
+      <label for="fuel-type">Fuel Type:</label>
+      <select id="fuel-type" [(ngModel)]="selectedFuelTypeId" (change)="onFilterChange()">
+        <option [ngValue]="null">All Fuel Types</option>
+        <option *ngFor="let fuelType of fuelTypes" [value]="fuelType.id">{{ fuelType.fuelName }}</option>
+      </select>
+    </div>
+  
+    <div>
+      <label for="insurance-cover">Insurance Cover:</label>
+      <select id="insurance-cover" [(ngModel)]="selectedInsuranceCoverId" (change)="onFilterChange()">
+        <option [ngValue]="null">All Insurance Covers</option>
+        <option *ngFor="let cover of insuranceCovers" [value]="cover.insuranceCoverId">{{ cover.insuranceCoverName }}</option>
+      </select>
+    </div>
+  
+<button routerLink="/add-vehicle">Add Vehicle </button>
+
+  <div class="trips-list">
+    <h2>All Vehicles</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Vehicle ID</th>
+          <th>Name</th>
+          <th>Registration Number</th>
+          <th>Date Acquired</th>
+          <th>License Expiry Date</th>
+          <th>VIN</th>
+          <th>Engine No</th>
+          <th>Status</th>
+          <th>Actions</th> 
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let vehicle of vehicles">
+          <td>{{ vehicle.vehicleID }}</td>
+          <td>{{ vehicle.name }}</td>
+          <td>{{ vehicle.registrationNumber }}</td>
+          <td>{{ vehicle.dateAcquired | date: 'yyyy-MMM-dd' }}</td>
+          <td>{{ vehicle.licenseExpiryDate | date: 'yyyy-MMM-dd' }}</td>
+          <td>{{ vehicle.vin }}</td>
+          <td>{{ vehicle.engineNo }}</td>
+          <td>{{ vehicle.status?.name }}</td>
+          <td>
+            <button (click)="editVehicle(vehicle.vehicleID)" class="action-button bg-green-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+            Edit 
+          </button>
+            <button (click)="deleteVehicle(vehicle.vehicleID)" class="action-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+   -->
+  
+   <div class="search-filter-container">
+    <input 
+      type="text" 
+      [(ngModel)]="searchQuery" 
+      (ngModelChange)="onSearchQueryChange()" 
+      placeholder="Search vehicles by name, registration number, VIN, or engine number" 
+      class="search-bar"
+
+      
+    >
+    
+    <!-- <div class="filter-group">
+      <label for="make">Vehicle Make:</label>
+      <select id="make" [(ngModel)]="selectedMakeId" (change)="onFilterChange()">
+        <option [ngValue]="null">All Makes</option>
+        <option *ngFor="let make of vehicleMakes" [value]="make.vehicleMakeID">{{ make.name }}</option>
+      </select>
+    </div>
+  
+    <div class="filter-group">
+      <label for="colour">Colour:</label>
+      <select id="colour" [(ngModel)]="selectedColourId" (change)="onFilterChange()">
+        <option [ngValue]="null">All Colours</option>
+        <option *ngFor="let colour of colours" [value]="colour.id">{{ colour.name }}</option>
+      </select>
+    </div>
+  
+    <div class="filter-group">
+      <label for="fuel-type">Fuel Type:</label>
+      <select id="fuel-type" [(ngModel)]="selectedFuelTypeId" (change)="onFilterChange()">
+        <option [ngValue]="null">All Fuel Types</option>
+        <option *ngFor="let fuelType of fuelTypes" [value]="fuelType.id">{{ fuelType.fuelName }}</option>
+      </select>
+    </div>
+  
+    <div class="filter-group">
+      <label for="insurance-cover">Insurance Cover:</label>
+      <select id="insurance-cover" [(ngModel)]="selectedInsuranceCoverId" (change)="onFilterChange()">
+        <option [ngValue]="null">All Insurance Covers</option>
+        <option *ngFor="let cover of insuranceCovers" [value]="cover.insuranceCoverId">{{ cover.insuranceCoverName }}</option>
+      </select>
+    </div> -->
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   
+    <button routerLink="/add-vehicle" class="add-vehicle-button">Add Vehicle</button>
+  </div>
+  
+
+  <!-- Vehicles List -->
+  <div class="trips-list">
+    <h2>All Vehicles</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Vehicle ID</th>
+          <th>Name</th>
+          <th>Registration Number</th>
+          <th>VIN</th>
+          <th>Engine No</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let vehicle of filteredVehicles">
+          <td>{{ vehicle.vehicleID }}</td>
+          <td>{{ vehicle.name }}</td>
+          <td>{{ vehicle.registrationNumber }}</td>
+          <td>{{ vehicle.vin }}</td>
+          <td>{{ vehicle.engineNo }}</td>
+          <td>{{ vehicle.status?.name }}</td>
+          <td>
+            <button (click)="editVehicle(vehicle.vehicleID)" class="btn btn-success">
+              Edit 
+            </button>
+            <button (click)="deleteVehicle(vehicle.vehicleID)" class="btn btn-danger">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  
+  <!-- <div class="container mx-auto p-6" style="width: 100%;">
+    <button class="btn btn-danger" routerLink="/add-vehicle"> Add Vehicle </button>
+    <br>
+    <br>
+   
+    <div *ngIf="vehicles.length > 0">
+      <table class="min-w-full bg-white border border-gray-1000 shadow-md rounded-md overflow-hidden mt-6">
+        <thead class="bg-blue-1000 text-white uppercase text-sm">
           <tr>
-            <th>Name</th>
-            <th>Registration Number</th>
-            <th>Date Acquired</th>
-            <th>License Expiry Date</th>
-            <th>Actions</th>
+            <th class="py-3 px-6 text-left">Name</th>
+            <th class="py-3 px-6 text-left">Description</th>
+            <th class="py-3 px-6 text-left">Registration Number</th>
+            <th class="py-3 px-6 text-left">Date Acquired </th>
+            <th class="py-3 px-6 text-left">License Expiry Date</th>
+            <th class="py-3 px-6 text-left">VIN</th>
+            <th class="py-3 px-6 text-left">Engine Number</th>
+            <th class="py-3 px-6 text-left">Status </th>
+            <th class="py-3 px-6 text-left">Actions </th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let vehicle of group.vehicles">
-            <td>{{ vehicle.name }}</td>
-            <td>{{ vehicle.registrationNumber }}</td>
-            <td>{{ vehicle.dateAcquired }}</td>
-            <td>{{ vehicle.licenseExpiryDate }}</td>
-            <td>
-              <button class="action-button edit-button" (click)="editVehicle(vehicle.vehicleID)">Edit</button>
-              <button class="action-button delete-button" (click)="deleteVehicle(vehicle.vehicleID)">Delete</button>
+          <tr *ngFor="let vehicle of vehicles" class="text-gray-700">
+            <td class="py-3 px-6">{{ vehicle.name}}</td>
+            <td class="py-3 px-6">{{ vehicle.description}}</td>
+            <td class="py-3 px-6">{{ vehicle.registrationNumber}}</td>
+            <td class="py-3 px-6">{{ vehicle.dateAcquired}}</td>
+            <td class="py-3 px-6">{{ vehicle.licenseExpiryDate }}</td>
+            <td class="py-3 px-6">{{ vehicle.vin }}</td>
+            <td class="py-3 px-6">{{ vehicle.engineNo }}</td>
+            <td class="py-3 px-6">{{ vehicle.status?.name}}</td>
+            <td class="py-3 px-6">
+              <button class="action-button bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+              (click)="editVehicle(vehicle.vehicleID)" >Edit</button>
+              <button class="action-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+              (click)="deleteVehicle(vehicle.vehicleID)">
+                Delete
+              </button>
             </td>
           </tr>
         </tbody>
-      </table>
-    </div>
-  
-    <div *ngIf="vehicles.length === 0" class="no-vehicles-found">
+      </table> -->
+    <!-- </div>
+    <div *ngIf="vehicles.length === 0" class="text-center mt-4 text-gray-600">
       No vehicles found.
-    </div>
-  </div>
-  
-  
+    </div> -->

@@ -1,13 +1,42 @@
+<!-- <div class="menu-bar" style="background-color: #1a365d;">
+  <ul>
+    <li><a routerLink="/pool-vehicles" class="text-white uppercase text-sm" >VEHICLES</a></li>
+    <li><a routerLink="/pool-vehicle" class="text-white uppercase text-sm">Pool Vehicles</a></li>
+    <li><a routerLink="/manage-vehicle" class="text-white uppercase text-sm">Manage Vehicles <i class="fas fa-caret-down"></i></a>
+        <div class="dropdown-menu">
+            <ul>
+              <li><a routerLink="/colour">Colours</a></li>
+              <li><a routerLink="/fuel-type">Fuel Types</a></li>
+              <li><a routerLink="/insurance">Insurance Covers</a></li>
+              <li><a routerLink="/vehicle-make">Vehicle Makes</a></li>
+              <li><a routerLink="/vehicle-model">Vehicle Models</a></li>
+              <li><a routerLink="/status">Status</a></li>
+            </ul>
+          </div>
+    </li>
+    <li><a routerLink="/license-disks" class="text-white uppercase text-sm">License Discs</a>
+    </li>
+    <li><a routerLink="/service" class="text-white uppercase text-sm">Service</a></li>
+  </ul>
+</div> -->
+
+
+
+
 <div class="header-container">
     <img src="assets/logo.png" alt="Logo" class="logo">
   </div>
   <h1 style="font-family: 'Times New Roman', Times, serif;"> Pool Vehicles </h1>
-  <p> To book a vehicle, please click on the Book button</p>
+  <button mat-raised-button
+      matTooltip="To book a vehicle, please click on the Complete checklist button "
+      aria-label="Button that displays a tooltip when focused or hovered over">
+      Hint
+    </button>
   <div class="row" *ngIf="vehicles">
-    <div class="col-md-2" *ngFor="let vehicle of vehicles">
+    <div class="col-md-4" *ngFor="let vehicle of vehicles">
       <div class="card mb-3">
         <div class="card-body">
-          <h5 class="card-header" style="background-color: lightskyblue;">{{ vehicle.name }}</h5>
+          <h5 class="card-header text-white uppercase" style="background-color: #1a365d; color: white;">{{ vehicle.name }}</h5>
           <img src="assets/logo.png" alt="Logo" class="logo">
           <p class="card-text" > Registration Number: {{ vehicle.registrationNumber}}</p>
           <p class="card-text"> Vehicle Make: {{ vehicle.vehicleMake?.name}}</p>
@@ -17,8 +46,9 @@
           <p class="card-text"> Status: {{ vehicle.status?.name}}</p>
           <p class="card-footer">
             <!-- <a [routerLink]="['/courses','edit', course.id]"> EDIT </a>  -->
-             <button class="btn btn-warning" style="align-self: center;"  (click)="viewVehicle(vehicle)"> View Vehicle </button>&nbsp;
-            <button class="btn btn-primary" style="align-self: center;" [routerLink]="['/checklist']"> Checklist </button></p>
+             <button style="align-self: center; background-color:  #1a365d;"   (click)="viewVehicle(vehicle)"> VIEW VEHICLES </button>&nbsp;
+            <button class="btn btn-primary" style="align-self: center;" (click)="completeChecklist(vehicle)"> COMPLETE CHECKLIST </button></p>
+           
         </div>
       </div>
     </div>

@@ -39,6 +39,7 @@ export class AddFuelComponent implements OnInit{
 
       this.vs.addFuelType(fuelData).subscribe(() => {
         this.clearForm();
+        alert('Fuel Type ' + fuelData.fuelName + ' added successfully')
         this.router.navigateByUrl('fuel-type');
       });
     }

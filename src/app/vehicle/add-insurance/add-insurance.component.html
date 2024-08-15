@@ -1,14 +1,15 @@
 <div class="header-container">
     <img src="assets/logo.png" alt="Logo" class="logo">
   </div>
+  
+  <div class="header-container">
+    <img src="assets/logo.png" alt="Logo" class="logo">
+  </div>
   <div class="container">
     <button class="btn btn-danger" routerLink="/manage-vehicle"> Back </button>
       <h2>Add Insurance Cover</h2>
       <form [formGroup]="coverForm" (ngSubmit)="onSubmit()">
-        <!-- <div class="form-group">
-          <label for="id">Colour ID:</label>
-          <input type="number" formControlName="Id" class="form-control" id="id" placeholder="Enter Colour ID">
-        </div> -->
+        
         <div class="form-group">
           <label for="name">Name:</label>
           <input type="text" formControlName="name" class="form-control" id="name" placeholder="Enter Insurance Cover Name">
@@ -16,3 +17,4 @@
         <button type="submit" class="btn btn-primary" [disabled]="!coverForm.valid">Submit</button>
       </form>
     </div>
+    

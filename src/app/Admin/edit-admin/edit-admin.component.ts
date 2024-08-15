@@ -13,53 +13,41 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class EditAdminComponent implements OnInit {
   admins: Admin[] = [];
   admin: Admin | null = null; 
-  successMessage: string | null = null;
   errorMessage: string | null = null;
-  adminToEdit: Admin = { userName: '', name: '', surname: '', email: '', phoneNumber: '' };
-
-  @ViewChild('editAdminModal') editAdminModal!: TemplateRef<any>;
 
   constructor(
     private route: ActivatedRoute,
     private adminService: AdminService,
-    private router: Router,
-    private modalService: NgbModal
-  ) { }
+    private router: Router
+  ) {}
 
- 
-  ngOnInit() {
+  ngOnInit(): void {
     const userName = this.route.snapshot.paramMap.get('userName');
     if (userName) {
       this.adminService.getAdmin(userName).subscribe(
-        (data: Admin) => this.admin = data,
-        error => console.error('Error fetching admin details', error)
-      );
-    }
-  }
-
-
-
-  openEditAdminModal(admin: Admin) {
-    this.adminToEdit = { ...admin }; // Clone the admin object to avoid direct mutation
-    this.modalService.open(this.editAdminModal);
-  }
-
-  updateAdmin() {
-    if (this.adminToEdit) {
-      this.adminService.updateAdmin(this.adminToEdit.userName, this.adminToEdit).subscribe(
-        updatedAdmin => {
-          const index = this.admins.findIndex(a => a.userName === updatedAdmin.userName);
-          if (index !== -1) {
-            this.admins[index] = updatedAdmin;
-          }
-          this.modalService.dismissAll();
-          this.successMessage = "Admin updated successfully!";
+        (data: Admin) => {
+          this.admin = data;
         },
         error => {
-          this.errorMessage = 'Error updating admin';
-          console.error('Error updating admin', error);
+          console.error('Error fetching admin details', error);
+          this.errorMessage = 'Error fetching admin details';
         }
       );
     }
   }
-}
+
+  updateAdmin(form: NgForm): void {
+    if (this.admin) {
+      this.adminService.updateAdmin(this.admin.userName, this.admin).subscribe(
+        () => {
+          this.router.navigate(['/manage-admins']); // Navigate back to the admin list after updating
+        },
+        error => {
+          console.error('Error updating admin', error);
+          this.errorMessage = 'Error updating admin';
+        }
+      );
+    }
+  }
+    }
+  

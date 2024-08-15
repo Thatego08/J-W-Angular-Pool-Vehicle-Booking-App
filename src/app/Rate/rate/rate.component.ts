@@ -18,7 +18,12 @@ export class RateComponent implements OnInit {
   displayedRates: Rate[] = [];
   projects: Project[] = [];
   searchRateTypeName: string = '';
-  rateToEdit: Rate | null = null;
+  rateToEdit: Rate = {
+    RateTypeName: '', ProjectNumber: 0, Conditions: '', RateValue: 0,
+    RateID: 0,
+    ApplicableTimePeriod: ''
+  };
+  isEditMode: boolean = false;
   currentPage: number = 1;
   itemsPerPage: number = 10;
   totalPages: number = 1;
@@ -86,30 +91,36 @@ export class RateComponent implements OnInit {
     }
   }
 
-  editRate(rate: Rate): void {
-    this.rateToEdit = { ...rate }; // Make a copy of the rate to edit
+  openRateModal(rate: Rate | null): void {
+    this.isEditMode = rate !== null;
+    this.rateToEdit = rate ? { ...rate } : { RateID: 0, RateTypeName: '', RateValue: 0, ProjectNumber: 0, ApplicableTimePeriod: '', Conditions: '' };
     this.modalService.open(this.editRateModal, { ariaLabelledBy: 'modal-basic-title' });
   }
 
   saveRate(): void {
     if (this.rateToEdit) {
-      // Assuming rateToEdit has an id property that is correctly set
-      const id = this.rateToEdit.RateID;  // Extract the id from the rate to edit
-      this.rateService.updateRate(id, this.rateToEdit).subscribe(
-        () => {
-          this.fetchRates(); // Refresh the list after saving
-          this.modalService.dismissAll();
-        },
-        error => {
-          console.error('Error updating rate', error);
-        }
-      );
+      if (this.isEditMode) {
+        this.rateService.updateRate(this.rateToEdit.RateID, this.rateToEdit).subscribe(
+          () => {
+            this.fetchRates();
+            this.modalService.dismissAll();
+          },
+          error => {
+            console.error('Error updating rate', error);
+          }
+        );
+      } else {
+        this.rateService.createRate(this.rateToEdit).subscribe(
+          () => {
+            this.fetchRates();
+            this.modalService.dismissAll();
+          },
+          error => {
+            console.error('Error creating rate', error);
+          }
+        );
+      }
     }
-  }
-  
-
-  addRate(): void {
-    this.router.navigate(['/add-rate']);
   }
 
   searchRates(): void {
@@ -123,6 +134,7 @@ export class RateComponent implements OnInit {
     }
   }
 
+ 
   clearSearch(): void {
     this.searchRateTypeName = '';
     this.fetchRates();

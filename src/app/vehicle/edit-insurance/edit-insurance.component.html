@@ -3,30 +3,20 @@
   </div>
   
   <div class="container">
-    <h2>Edit Insurance Cover </h2>
-    <form [formGroup]="coverForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="name">Insurance Cover Name</label>
-        <input 
-          id="name" 
-          formControlName="name" 
-          class="form-control" 
-          type="text" 
-        />
-        <div *ngIf="coverForm.get('insuranceCoverName')?.invalid && coverForm.get('insuranceCoverName')?.touched" class="text-danger">
-          Insurance Cover required
-        </div>
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <form #form="ngForm" (ngSubmit)="updateCover()">
+          <h2 class="text-center">Edit Insurance Cover</h2>
+          <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" name="name" [(ngModel)]="insurance.insuranceCoverName" style="border-color: darkgray;">
+          </div>
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="button" class="btn btn-danger ms-2" (click)="cancel()">Cancel</button>
+          </div>
+        </form>
       </div>
-  
-      <button 
-        type="submit" 
-        class="btn btn-primary"
-        [disabled]="coverForm.invalid"
-      >
-        Save Changes
-      </button>
-      <a routerLink="/insurance" class="btn btn-secondary">Cancel</a>
-    </form>
+    </div>
   </div>
-  
   

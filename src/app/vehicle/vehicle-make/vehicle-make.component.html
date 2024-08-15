@@ -1,3 +1,4 @@
+
 <div class="header-container">
     <img src="assets/logo.png" alt="Logo" class="logo">
   </div>
@@ -21,9 +22,9 @@
             <td class="py-3 px-6">{{ make.vehicleMakeID }}</td>
             <td class="py-3 px-6">{{ make.name }}</td>
             <td class="py-3 px-6">
-              <button class="action-button bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+              <button class="btn btn-success"
               (click)="navigateToEditMake(make.vehicleMakeID)" >Edit</button>
-              <button class="action-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+              <button class="btn btn-danger"
               (click)="deleteMake(make.vehicleMakeID)">
                 Delete
               </button>

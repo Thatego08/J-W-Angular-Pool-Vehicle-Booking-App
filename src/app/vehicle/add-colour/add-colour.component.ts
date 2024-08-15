@@ -39,7 +39,8 @@ export class AddColourComponent implements OnInit {
 
       this.vs.addColour(colourData).subscribe(() => {
         this.clearForm();
-        this.router.navigateByUrl('colours');
+        alert('Colour ' + colourData.name + ' added successfully')
+        this.router.navigateByUrl("colours");
       });
     }
   }

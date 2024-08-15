@@ -151,6 +151,10 @@ export class VehicleService {
     return this.http.put(`${this.apiUrl}/EditInsurance/${insuranceId}`, insurance);
   }
 
+  updateInsurance(formData: FormData, insuranceCoverId: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/EditInsurance/${insuranceCoverId}`, formData);
+  }
+
   deleteInsuranceCover(insuranceId: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/DeleteInsurance/${insuranceId}`);
   }
@@ -161,6 +165,10 @@ export class VehicleService {
 
   getCoverId(coverId: string): Observable<InsuranceCover>{
     return this.http.get<InsuranceCover>(`${this.apiUrl}/GetInsurance/` + coverId)
+  }
+
+  updateCover(id: number, cover: InsuranceCover): Observable<InsuranceCover>{
+    return this.http.put<InsuranceCover>(`${this.apiUrl}/EditInsurance/` + id, cover)
   }
   
 
@@ -189,6 +197,10 @@ export class VehicleService {
   getMakeId(makeId: string): Observable<VehicleMake>{
     return this.http.get<VehicleMake>(`${this.apiUrl}/GetVehicleMake/` + makeId)
   }
+
+  updateMake(id: number, make: VehicleMake): Observable<VehicleMake>{
+    return this.http.put<VehicleMake>(`${this.apiUrl}/EditMake/` + id, make)
+  }
   
 
 
@@ -215,6 +227,10 @@ export class VehicleService {
 
   getModelId(modelId: string): Observable<VehicleModel>{
     return this.http.get<VehicleModel>(`${this.apiUrl}/GetVehicleModel/` + modelId)
+  }
+
+  updateModel(id: number, model: VehicleModel): Observable<VehicleModel>{
+    return this.http.put<VehicleModel>(`${this.apiUrl}/EditModel/` + id, model)
   }
   
   //Status
