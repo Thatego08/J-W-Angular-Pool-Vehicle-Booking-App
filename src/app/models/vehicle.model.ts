@@ -31,3 +31,7 @@ export interface Vehicle {
 
 }
 
+export interface GroupedVehicles {
+  status: string;
+  vehicles: Vehicle[];
+}

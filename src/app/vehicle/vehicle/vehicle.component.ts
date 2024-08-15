@@ -22,16 +22,26 @@ export class VehicleComponent implements OnInit {
   selectedFuelTypeId: number | null = null;
   selectedInsuranceCoverId: number | null = null;
 
+
+  groupedVehicles: GroupedVehicles[] = [];
+  vehicle!: Vehicle;
+
   vehicleMakes: VehicleMake[] = [];
   colours: Colour[] = [];
   fuelTypes: VehicleFuelType[] = [];
   insuranceCovers: InsuranceCover[] = [];
 
+
   constructor(private vehicleService: VehicleService, private router: Router) { }
 
   ngOnInit(): void {
     this.loadVehicles();
+
+
+    this.groupVehiclesByStatus();
+
     this.loadFilters();
+
   }
 
   loadVehicles(): void {
@@ -47,11 +57,28 @@ export class VehicleComponent implements OnInit {
     );
   }
 
+
+  groupVehiclesByStatus() {
+    const groups = this.vehicles.reduce((acc, vehicle) => {
+      const status = vehicle.status?.name || 'Unknown';
+      if (!acc[status]) {
+        acc[status] = [];
+      }
+      acc[status].push(vehicle);
+      return acc;
+    }, {});
+
+    this.groupedVehicles = Object.keys(groups).map(status => ({
+      status,
+      vehicles: groups[status]
+    }));
+
   loadFilters(): void {
     this.vehicleService.getAllVehicleMakes().subscribe((data: VehicleMake[]) => this.vehicleMakes = data);
     this.vehicleService.getAllColours().subscribe((data: Colour[]) => this.colours = data);
     this.vehicleService.getAllFuelTypes().subscribe((data: VehicleFuelType[]) => this.fuelTypes = data);
     this.vehicleService.getAllInsuranceCovers().subscribe((data: InsuranceCover[]) => this.insuranceCovers = data);
+
   }
 
   filterVehicles(): void {
