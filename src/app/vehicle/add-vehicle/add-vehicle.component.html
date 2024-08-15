@@ -99,7 +99,7 @@
         <option *ngFor="let model of vehicleModels" [value]="model.vehicleModelID">{{ model.vehicleModelName }}</option>
       </select>
       <div *ngIf="vehicleForm.get('vehicleModelID')?.invalid && vehicleForm.get('vehicleModelID')?.touched">
-        Colour is required.
+        Vehicle Model is required.
       </div>
     </div>
 

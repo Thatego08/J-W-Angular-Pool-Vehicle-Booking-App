@@ -88,7 +88,7 @@
     <div class="form-group">
       <label for="vehicleModelID">Vehicle Model</label>
       <select id="vehicleModelID" formControlName="vehicleModelID" class="form-control">
-        <option *ngFor="let model of filteredVehicleModels" [value]="model.vehicleModelID">{{ model.vehicleModelName }}</option>
+        <option *ngFor="let model of vehicleModels" [value]="model.vehicleModelID">{{ model.vehicleModelName }}</option>
       </select>
     </div>
 
