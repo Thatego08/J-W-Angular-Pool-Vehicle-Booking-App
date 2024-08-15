@@ -76,16 +76,18 @@ export class AddVehicleComponent implements OnInit {
   }
 
   onSubmit(): void {
+
+    console.log(this.vehicleForm);
     if (this.vehicleForm.valid) {
       const newVehicle: Vehicle = this.vehicleForm.value;
       console.log('Submitting vehicle data:', newVehicle);
       this.vehicleService.addVehicle(newVehicle).subscribe(
         response => {
-          alert(`Vehicle ${newVehicle.registrationNumber} added successfully`);
+          alert(`Vehicle ${newVehicle.name} added successfully`);
           this.vehicleForm.reset();
         },
         error => {
-          alert('Error adding vehicle: ' + error.message);
+          //alert('Error adding vehicle: ' + error.message);
           console.error('Error details:', error);
         }
       );

@@ -50,7 +50,7 @@ export class EditModelComponent implements OnInit {
   onSubmit(): void {
     if (this.modelForm.valid) {
       const updatedModel: VehicleModel = {
-        vehicleModelId: this.vehicleModelId,
+        vehicleModelID: this.vehicleModelId,
         vehicleModelName: this.modelForm.get('vehicleModelName')!.value,
         vehicleMakeID: this.modelForm.get('vehicleMakeId')!.value,
         vehicleMakeName: '',

@@ -1,7 +1,7 @@
 import { VehicleMake } from "./vehicle-make.model";
 
 export interface VehicleModel {
-    vehicleModelId: number;
+    vehicleModelID: number;
     vehicleModelName: string;
     vehicleMakeID: number;
     vehicleMakeName?: string; 
