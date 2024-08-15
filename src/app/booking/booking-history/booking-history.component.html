@@ -1,9 +1,9 @@
-
-<img src="assets/logo.png" alt="Logo" class="logo-image">
-
 <!-- src/app/components/booking-history/booking-history.component.html -->
 <div class="container">
+  <img src="assets/logo.png" alt="Logo" class="logo-image">
+
   <h2>Booking History</h2>
+
   <div class="form-group">
     <label for="username">Enter Username:</label>
     <input type="text" id="username" [(ngModel)]="searchUsername" class="form-control" />
@@ -12,8 +12,8 @@
 
   <div *ngIf="bookings.length > 0">
     <h3>Booking Results</h3>
-    <table class="table">
-      <thead>
+    <table class="table table-bordered table-striped">
+      <thead class="thead-dark">
         <tr>
           <th>Booking ID</th>
           <th>Username</th>
@@ -22,6 +22,7 @@
           <th>End Date</th>
           <th>Vehicle</th>
           <th>Project</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -33,6 +34,9 @@
           <td>{{ booking.endDate | date }}</td>
           <td>{{ booking.vehicleName }}</td>
           <td>{{ booking.projectNumber }}</td>
+          <td>
+            <button (click)="initiateTrip(booking)" class="btn btn-success btn-sm">Initiate Trip</button>
+          </td>
         </tr>
       </tbody>
     </table>
