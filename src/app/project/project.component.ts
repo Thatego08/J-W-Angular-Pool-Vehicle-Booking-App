@@ -93,7 +93,7 @@ export class ProjectComponent implements OnInit {
   }
 
   editProject(project: Project): void {
-    this.router.navigate([`/edit-project/${project.projectID}`]);
+    this.router.navigate([`/edit-project/`]);
   }
 
   openDeleteConfirmation(project: Project): void {
