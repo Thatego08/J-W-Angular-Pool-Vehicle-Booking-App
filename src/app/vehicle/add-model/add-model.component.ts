@@ -51,7 +51,7 @@ export class AddModelComponent implements OnInit {
       const modelData: VehicleModel = {
         vehicleModelName: this.modelForm.get('vehicleModelName')!.value,
         vehicleMakeID: this.modelForm.get('vehicleMakeId')!.value,
-        vehicleModelId: 0
+        vehicleModelID: 0
       };
 
       this.vehicleService.addVehicleModel(modelData).subscribe(() => {

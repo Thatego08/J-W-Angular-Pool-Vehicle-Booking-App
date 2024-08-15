@@ -56,9 +56,9 @@ export class EditVehicleComponent implements OnInit {
       dateAcquired: ['', Validators.required],
       licenseExpiryDate: ['', Validators.required],
       registrationNumber: ['', Validators.required],
-      insuranceCoverID: ['', Validators.required],
       vin: ['', Validators.required],
       engineNo: ['', Validators.required],
+      insuranceCoverID: ['', Validators.required],
       colourID: ['', Validators.required],
       fuelTypeID: ['', Validators.required],
       statusID: ['', Validators.required],
@@ -82,6 +82,11 @@ export class EditVehicleComponent implements OnInit {
         });
       }
     });
+
+    // Subscribe to changes in the Vehicle Make field to update the Vehicle Model dropdown
+    this.editVehicleForm.get('vehicleMakeID')?.valueChanges.subscribe(makeID => {
+      this.filterVehicleModels(makeID);
+    });
   }
 
   loadVehicleData(): void {
@@ -100,11 +105,6 @@ export class EditVehicleComponent implements OnInit {
     this.vehicleService.getAllVehicleModels().subscribe(models => {
       this.vehicleModels = models;
       this.filterVehicleModels(this.editVehicleForm.get('vehicleMakeID')?.value);
-
-      // Subscribe to value changes to filter models on make change
-      this.editVehicleForm.get('vehicleMakeID')?.valueChanges.subscribe(makeID => {
-        this.filterVehicleModels(makeID);
-      });
     });
   }
 
