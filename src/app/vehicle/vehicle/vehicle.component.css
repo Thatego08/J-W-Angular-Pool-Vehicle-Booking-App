@@ -154,3 +154,128 @@
     top: 0;
     background-color: var(--color-black);
   }
+
+
+
+
+
+  /* Mini-Bar styling :) */
+
+  .submenu-container {
+    position: relative;
+  }
+  
+  .submenu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #444;
+    display: none;
+    z-index: 1000;
+  }
+  
+  .submenu-item a {
+    color: #fff;
+    padding: 1rem;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .submenu-item a:hover {
+    background-color: #575757;
+  }
+  
+  .submenu-container:hover .submenu {
+    display: block;
+  }
+  
+
+  /* Vehicle styling revamp */
+
+  
+/* General Container Styling */
+.container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+/* Button Styling */
+.add-vehicle-button {
+  background-color: #dc3545; /* Bootstrap danger color */
+  color: white;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.add-vehicle-button:hover {
+  background-color: #c82333; /* Darker shade for hover effect */
+}
+
+/* Table Styling */
+.vehicle-table {
+  width: 100%;
+  background-color: white;
+  border-collapse: collapse;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 0.25rem;
+  overflow: hidden;
+}
+
+.vehicle-table thead {
+  background-color: #007bff; /* Bootstrap primary color */
+  color: white;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+}
+
+.vehicle-table th,
+.vehicle-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.vehicle-table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Action Buttons */
+.action-button {
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.edit-button {
+  background-color: #28a745; /* Bootstrap success color */
+  color: white;
+}
+
+.edit-button:hover {
+  background-color: #218838; /* Darker shade for hover effect */
+}
+
+.delete-button {
+  background-color: #dc3545; /* Bootstrap danger color */
+  color: white;
+}
+
+.delete-button:hover {
+  background-color: #c82333; /* Darker shade for hover effect */
+}
+
+/* No Vehicles Found Message */
+.no-vehicles-found {
+  text-align: center;
+  margin-top: 1rem;
+  color: #6c757d; /* Bootstrap secondary color */
+}

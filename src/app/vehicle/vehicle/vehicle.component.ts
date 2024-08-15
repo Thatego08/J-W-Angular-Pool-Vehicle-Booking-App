@@ -13,12 +13,15 @@ export class VehicleComponent implements OnInit{
 
   vehicles: Vehicle[] = [];
 
+  groupedVehicles: GroupedVehicles[] = [];
   vehicle!: Vehicle;
 
   constructor(private vehicleService: VehicleService, private router: Router) { }
 
   ngOnInit(): void {
     this.loadVehicles();
+
+    this.groupVehiclesByStatus();
   }
 
   loadVehicles(): void {
@@ -32,6 +35,21 @@ export class VehicleComponent implements OnInit{
     );
   }
 
+  groupVehiclesByStatus() {
+    const groups = this.vehicles.reduce((acc, vehicle) => {
+      const status = vehicle.status?.name || 'Unknown';
+      if (!acc[status]) {
+        acc[status] = [];
+      }
+      acc[status].push(vehicle);
+      return acc;
+    }, {});
+
+    this.groupedVehicles = Object.keys(groups).map(status => ({
+      status,
+      vehicles: groups[status]
+    }));
+  }
 
   loadVehicle(vehicle: Vehicle): void {
     this.router.navigate(['/edit-vehicle', vehicle.vehicleID]);
