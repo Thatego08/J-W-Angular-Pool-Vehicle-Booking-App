@@ -90,6 +90,7 @@ import { ReportComponent } from './report-central/report/report.component';
 import { ReportService } from './services/report.service';
 import { ProjectService } from './services/project.service';
 import { AuthComponent } from './user/auth/auth.component';
+import { MatCardModule } from '@angular/material/card'; // Import MatCardModule
 
 
 
@@ -155,7 +156,8 @@ import { AuthComponent } from './user/auth/auth.component';
     InsuranceComponent,
     NavBarComponent,
     ReportComponent,
-    AuthComponent
+    AuthComponent,
+    NotificationsComponent
   ],
   imports: [
     BrowserModule,
@@ -171,6 +173,7 @@ import { AuthComponent } from './user/auth/auth.component';
     MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatCardModule,
     MatFormFieldModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
   ],

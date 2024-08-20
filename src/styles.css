@@ -146,3 +146,16 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+/* Notification Styling */
+
+.success-snackbar {
+  background-color: green;
+  color: white;
+}
+
+.error-snackbar {
+  background-color: red;
+  color: white;
+}

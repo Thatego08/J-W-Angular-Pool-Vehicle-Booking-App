@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { BookingModel, CreateBookingModel, Vehicle } from '../models/booking.model';
-
+import { catchError, Observable, throwError } from 'rxjs';
+import { BookingModel, CreateBookingModel } from '../models/booking.model';
+import { Vehicle } from '../models/vehicle.model';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +24,7 @@ export class BookingService {
     return this.http.get<BookingModel[]>(`${this.baseUrl}/SearchBookingHistory/${username}`);
   }
 
+
   createBooking(booking: CreateBookingModel): Observable<BookingModel> {
     return this.http.post<BookingModel>(`${this.baseUrl}/AddBooking`, booking, {
       headers: new HttpHeaders({
@@ -42,8 +43,34 @@ export class BookingService {
     return this.http.delete<void>(url);
   }
 
+  updateVehicleStatus(vehicleName: string, statusId: number): Observable<any> {
+    const url = `${this.baseUrl}/UpdateVehicleStatus/${vehicleName}`; // Adjust the URL based on your API endpoint
+    return this.http.put(url, { statusId }).pipe(
+      catchError(this.handleError)
+    );
+  }
+  
 
   getVehicles(): Observable<Vehicle[]> {
     return this.http.get<Vehicle[]>('https://localhost:7041/api/Vehicle/GetAllVehicles');
+  }
+
+  private handleError(error: any): Observable<never> {
+    console.error('An error occurred:', error);
+    // Handle different error scenarios here, you can customize the error messages as needed
+    let errorMessage = 'Something went wrong!';
+    if (error.error instanceof ErrorEvent) {
+      // Client-side error
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      // Server-side error
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    return throwError(errorMessage);
+  }
+
+
+  sendConfirmationEmail(bookingID: number): Observable<any> {
+    return this.http.post(`${this.baseUrl}/SendConfirmationEmail/${bookingID}`, {});
   }
 }
