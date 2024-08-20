@@ -3,9 +3,10 @@ import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/fo
 import { BookingService } from '../../services/booking.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { CreateBookingModel, BookingModel, Vehicle } from '../../models/booking.model';
+import { CreateBookingModel } from '../../models/booking.model';
+import { Vehicle } from '../../models/vehicle.model';
 import { ProjectService } from '../../services/project.service';
-import { Project } from '../../models/Project';
+import { AuthService } from '../../user/auth.service';
 
 @Component({
   selector: 'app-add-booking',
@@ -18,125 +19,70 @@ export class AddBookingComponent implements OnInit {
   vehicles: Vehicle[] = [];
   projects: number[] = [];
 
+  notificationMessage: string | null = null;
+  isSuccess: boolean = true;
+
   constructor(
     private fb: FormBuilder,
     private bookingService: BookingService,
     private projectService: ProjectService,
     private toastr: ToastrService,
+    private authService: AuthService,
     public router: Router
   ) {
     this.bookingForm = this.fb.group({
-      userName: ['', Validators.required],
+      userName: [''],
       event: [''],
-      startDate: ['', [Validators.required, this.dateValidator]],
+      startDate: ['', Validators.required],
       type: ['', Validators.required],
-      endDate: ['', [Validators.required, this.dateValidator]],
       vehicleName: ['', Validators.required],
       projectNumber: [''],
       reminderSent: [false]
-    }, { validators: this.dateComparisonValidator });
+    });
   }
 
   ngOnInit(): void {
+    this.prepopulateUserName();
     this.fetchVehicles();
-    this.loadProjects();    
+    this.loadProjects();
+  }
+
+  prepopulateUserName(): void {
+    this.authService.getProfile().subscribe({
+      next: (profile) => {
+        this.bookingForm.patchValue({ userName: profile.userName });
+      },
+      error: (error) => {
+        console.error('Error fetching profile', error);
+        this.toastr.error('Failed to load user profile', 'BookingForm');
+      }
+    });
   }
 
   fetchVehicles(): void {
     this.bookingService.getVehicles().subscribe({
       next: (vehicles) => {
-        this.vehicles = vehicles;
+        this.vehicles = vehicles.filter(vehicle => vehicle.statusID === 1);
       },
       error: (error) => {
         console.error('Error fetching vehicles', error);
+        this.toastr.error('Failed to load vehicles', 'BookingForm');
       }
     });
   }
 
   loadProjects(): void {
-    this.projectService.getProjectNumbers().subscribe(
-      (projects) => {
+    this.projectService.getProjectNumbers().subscribe({
+      next: (projects) => {
         this.projects = projects;
       },
-      (error) => {
+      error: (error) => {
         console.error('Error loading projects', error);
+        this.toastr.error('Failed to load projects', 'BookingForm');
       }
-    );
-  }
-  btoggleEventProject(isEvent: boolean): void {
-    this.isEvent = isEvent;
-    const projectNumberControl = this.bookingForm.get('projectNumber');
-    const eventControl = this.bookingForm.get('event');
-
-    if (projectNumberControl && eventControl) {
-      if (this.isEvent) {
-        projectNumberControl.disable();
-        eventControl.enable();
-      } else {
-        projectNumberControl.enable();
-        eventControl.disable();
-      }
-    }
+    });
   }
 
-  saveBooking(): void {
-    if (this.bookingForm.valid) {
-      const booking: CreateBookingModel = {
-        userName: this.bookingForm.value.userName,
-        event: this.isEvent ? this.bookingForm.value.event : null, 
-        startDate: this.bookingForm.value.startDate,
-        type: this.bookingForm.value.type,
-        endDate: this.bookingForm.value.endDate,
-        vehicleName: this.bookingForm.value.vehicleName,
-        statusId: 2,//Initialize as booked
-        projectNumber:!this.isEvent ?  this.bookingForm.value.projectNumber: null,
-        reminderSent: false // Initialize as false
-      };
-
-
-      console.log('Booking data to be sent:', booking); // Add this line
-
-      this.bookingService.createBooking(booking).subscribe({
-        next: (response) => {
-          console.log('Booking saved successfully', response);
-          this.toastr.success('Your Booking has successfully been made!', 'BookingForm');
-          this.router.navigate(['/booking-list']);
-        },
-        error: (error) => {
-          console.error('Error saving booking', error);
-          this.toastr.error('Failed to create booking. Please try again.', 'BookingForm');
-        }
-      });
-    } else {
-      console.log('Form is invalid');
-    }
-  }
-
-  dateValidator(control: AbstractControl): { [key: string]: any } | null {
-    const date = new Date(control.value);
-    if (date < new Date()) {
-      return { 'invalidDate': true };
-    }
-    return null;
-  }
-
-  dateComparisonValidator(group: FormGroup): { [key: string]: any } | null {
-    const startDate = group.get('startDate');
-    const endDate = group.get('endDate');
-
-    if (startDate && endDate && startDate.value && endDate.value) {
-      const start = new Date(startDate.value);
-      const end = new Date(endDate.value);
-
-      if (end < start) {
-        return { 'invalidRange': true };
-      }
-    }
-
-    return null;
-  }
-
-  //Event/Project additions
   toggleEventProject(isEvent: boolean): void {
     this.isEvent = isEvent;
     if (isEvent) {
@@ -144,5 +90,63 @@ export class AddBookingComponent implements OnInit {
     } else {
       this.bookingForm.get('event')?.reset();
     }
+  }
+
+  saveBooking(): void {
+    if (this.bookingForm.valid) {
+      const booking: CreateBookingModel = {
+        userName: this.bookingForm.value.userName,
+        event: this.isEvent ? this.bookingForm.value.event : null,
+        startDate: this.bookingForm.value.startDate,
+        vehicleName: this.bookingForm.value.vehicleName,
+        projectNumber: !this.isEvent ? this.bookingForm.value.projectNumber : null,
+        reminderSent: false,
+        type: this.bookingForm.value.type,
+      };
+  
+      this.bookingService.createBooking(booking).subscribe({
+        next: (response) => {
+          console.log('API Response:', response);
+          // Assume a successful creation on any 2xx status code
+          this.updateVehicleStatus(this.bookingForm.value.vehicleName, 2);
+          this.notificationMessage = 'Your Booking has successfully been made!';
+          this.isSuccess = true;
+          this.router.navigate(['/booking-list']);
+        },
+        error: (error) => {
+          console.error('Error Response:', error);
+          // Check the specific status code
+          if (error.status === 500) {
+            this.handleError('Failed to create booking. Please try again.');
+          } else {
+            // Handle other error types or consider them successful
+            this.notificationMessage = 'Your Booking has successfully been made, but there were some issues.';
+            this.isSuccess = true;
+            //this.router.navigate(['/booking-list']);
+          }
+        }
+      });
+    } else {
+      this.handleError('Please ensure the form is valid before submitting.');
+    }
+  }
+  
+  
+  handleError(message: string): void {
+    this.notificationMessage = message;
+    this.isSuccess = false;
+  }
+  
+
+  updateVehicleStatus(vehicleName: string, statusId: number): void {
+    this.bookingService.updateVehicleStatus(vehicleName, statusId).subscribe({
+      next: () => {
+        console.log(`Vehicle status updated to ${statusId}`);
+      },
+      error: (error) => {
+        console.error('Error updating vehicle status:', error);
+        this.toastr.error('Failed to update vehicle status.', 'Booking');
+      }
+    });
   }
 }

@@ -250,7 +250,7 @@ body {
   padding: 10px 20px; /* Padding for the button */
   border-radius: 5px; /* Optional: rounded corners */
   cursor: pointer; /* Change cursor to pointer */
-  transition: background-color 0.3s, color 0.3s; /
+  transition: background-color 0.3s, color 0.3s; 
 }
 
 #register:hover {
