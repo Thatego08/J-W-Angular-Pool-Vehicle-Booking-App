@@ -1,59 +1,59 @@
-<nav class="navbar"  *ngIf="authService.isLoggedIn | async">
-    <ul class="navbar-list">
-      <li class="navbar-item" >
-        <a routerLink="/driver">Drivers</a>
-      </li>
-      <li class="navbar-item dropdown">
-        <a class="dropdown-toggle" routerLink="/vehicles">Vehicles </a>
-        <ul class="dropdown-menu">
-          <li><a routerLink="/add-vehicle">Add-Vehicle</a></li>
-          <li><a routerLink="/pool-vehicle">Pool Vehicles</a></li>
-          <li><a routerLink="/manage-vehicle">Manage Vehicles</a></li>
-          <li><a routerLink="/license-disks">License Discs</a></li>
-          <li><a routerLink="/service">Book Vehicle for Service</a></li>
-         </ul>
-      </li>
-
-      <li class="navbar-item dropdown" >
-        <a class="dropdown-toggle">Trips</a>
-        <ul class="dropdown-menu">
-          <li><a routerLink="/trip">All Trips</a></li>
-          <li><a routerLink="/create-trip">Create Trips</a></li>
-          <li><a routerLink="/get-trip">Get Trips</a></li>
-          <li><a routerLink="/refuel-vehicle">Refuel</a></li>
-        </ul>
-      </li>
-
-      <li class="navbar-item dropdown">
-        <a class="dropdown-toggle">Bookings</a>
-        <ul class="dropdown-menu">
-          <li><a routerLink="/booking-list">My Bookings</a></li>
-          <li><a routerLink="/add-booking">Make New Booking</a></li>
-          <li><a routerLink="/booking-history">Booking History</a></li>
-         </ul>
-      </li>
-
-      <li class="navbar-item dropdown" >
-        <a class="dropdown-toggle">Admin Section</a>
-        <ul class="dropdown-menu">
-          <li><a routerLink="/admin">Manage Admins</a></li>
-          <li><a routerLink="/project">Manage Projects</a></li>
-          <li><a routerLink="/rate">Manage Rates</a></li>
-        </ul>
-      </li>
-
-      <li class="navbar-item dropdown"  >
-        <a class="dropdown-toggle">Feedbacks</a>
-        <ul class="dropdown-menu">
-          <li><a routerLink="/app-feedback-list">Feedback List</a></li>
-          <li><a routerLink="/app-feedback">Add Feedback</a></li>
-        </ul>
-      </li>
-
-      <li class="navbar-item" >
-        <a routerLink="/app-report">Reports</a>
-      </li>
-      <!-- Add more navigation items as needed -->
-    </ul>
-  </nav>
+<nav class="navbar bg-gray-800 min-h-20 z-50" *ngIf="authService.isLoggedIn | async">
   
+  <ul class="navbar-list justify-center content-center align-middle flex flex-wrap pb-24">
+    <li class="navbar-item   hover:bg-gray-700">
+      <a routerLink="/driver">Drivers</a>
+    </li>
+    <li class="navbar-item dropdown justify-center content-center align-middle flex hover:bg-gray-700">
+      <a class="dropdown-toggle py-1" routerLink="/vehicles">Vehicles </a>
+      <ul class="dropdown-menu">
+        <li><a class="hover:bg-gray-700" routerLink="/add-vehicle">Add-Vehicle</a></li>
+        <li><a class="hover:bg-gray-700" routerLink="/pool-vehicle">Pool Vehicles</a></li>
+        <li><a class="hover:bg-gray-700" routerLink="/manage-vehicle">Manage Vehicles</a></li>
+        <li><a class="hover:bg-gray-700" routerLink="/license-disks">License Discs</a></li>
+        <li><a class="hover:bg-gray-700" routerLink="/service">Book Vehicle for Service</a></li>
+      </ul>
+    </li>
+
+    <li class="navbar-item dropdown  hover:bg-gray-700">
+      <a class="dropdown-toggle py-1">Trips</a>
+      <ul class="dropdown-menu">
+        <li><a class="hover:bg-gray-700" routerLink="/trip">All Trips</a></li>
+        <li><a class="hover:bg-gray-700" routerLink="/create-trip">Create Trips</a></li>
+        <li><a class="hover:bg-gray-700" routerLink="/get-trip">Get Trips</a></li>
+        <li><a class="hover:bg-gray-700" routerLink="/refuel-vehicle">Refuel</a></li>
+      </ul>
+    </li>
+
+    <li class="navbar-item dropdown  hover:bg-gray-700">
+      <a class="dropdown-toggle py-1">Bookings</a>
+      <ul class="dropdown-menu">
+        <li><a class="hover:bg-gray-700"  routerLink="/booking-list">My Bookings</a></li>
+        <li><a class="hover:bg-gray-700" routerLink="/add-booking">Make New Booking</a></li>
+        <li><a class="hover:bg-gray-700" routerLink="/booking-history">Booking History</a></li>
+      </ul>
+    </li>
+
+    <li class="navbar-item dropdown  hover:bg-gray-700">
+      <a class="dropdown-toggle py-1">Admin Section</a>
+      <ul class="dropdown-menu">
+        <li><a class="hover:bg-gray-700" routerLink="/admin">Manage Admins</a></li>
+        <li><a class="hover:bg-gray-700"routerLink="/project">Manage Projects</a></li>
+        <li><a class="hover:bg-gray-700"routerLink="/rate">Manage Rates</a></li>
+      </ul>
+    </li>
+
+    <li class="navbar-item dropdown  hover:bg-gray-700">
+      <a class="dropdown-toggle py-1">Feedbacks</a>
+      <ul class="dropdown-menu">
+        <li><a class="hover:bg-gray-700" routerLink="/app-feedback-list">Feedback List</a></li>
+        <li><a class="hover:bg-gray-700" routerLink="/app-feedback">Add Feedback</a></li>
+      </ul>
+    </li>
+
+    <li class="navbar-item  hover:bg-gray-700">
+      <a class="hover:bg-gray-700" routerLink="/app-report">Reports</a>
+    </li>
+    <!-- Add more navigation items as needed -->
+  </ul>
+</nav>

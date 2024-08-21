@@ -40,15 +40,22 @@ body {
   }
 
   main, .main-content .dynamic-content {
-    margin-top: 80px; /* Increase this value to add more space */
-    margin-left: 250px; /* Adjust based on sidebar width */
-    padding: 1rem;
+    /* RICO CHANGES */
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* margin-top: 10rem; /* Increase this value to add more space 
+    margin-left: 250px; /* Adjust based on sidebar width  
+    padding: 1rem; */
   }
   
   /* Container styles */
   .container {
     width: 100%;
-    max-width: 400px;
+    /* max-width: 400px; */
+    min-width: 50vw;
     margin: 50px auto;
     padding: 20px;
     background-color: #fff;

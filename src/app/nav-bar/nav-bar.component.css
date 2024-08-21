@@ -3,7 +3,6 @@
     top: 0;
     left: 250px; /* Same as sidebar width */
     right: 0;
-    background-color: #102946;
     padding: 1rem;
     box-sizing: border-box;
     z-index: 1000; /* Ensure it stays on top */
@@ -30,12 +29,9 @@
     display: block;
   }
   
-  .navbar-item a:hover {
-    background-color: #5f7a8b65;
-  }
   
   .dropdown-toggle::after {
-    content: ' ▼';
+    content: '▼';
   }
   
   .dropdown-menu {
@@ -43,7 +39,6 @@
     position: absolute;
     top: 100%;
     left: 0;
-    background-color: #102946;
     list-style: none;
     padding: 0;
     margin: 0;
