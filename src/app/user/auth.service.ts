@@ -67,7 +67,9 @@ export class AuthService {
   resetPassword(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/reset-password`, data);
   }
-
+  verifyOtp(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/verify-otp`, data); // Replace with your actual verify OTP endpoint
+  }
   getAllUsers(): Observable<any> {
     return this.http.get(`${this.apiUrl}/GetAllUsers`);
   }
