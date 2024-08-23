@@ -64,6 +64,9 @@ import { PoolVehicleComponent } from './vehicle/pool-vehicles/pool-vehicles.comp
 import { LicenseDisksComponent } from './vehicle/license-disc/license-disc.component';
 import { ReportComponent } from './report-central/report/report.component';
 import { AuthComponent } from './user/auth/auth.component';
+import { PreChecklistComponent } from './pre-checklist/pre-checklist.component';
+import { ViewPostCheckComponent } from './view-post-check/view-post-check.component';
+import { CreatePostCheckComponent } from './create-post-check/create-post-check.component';
 
 
 
@@ -92,8 +95,11 @@ const routes: Routes = [
  {path: 'trip', component:TripComponent, canActivate: [AuthGuard]},
  {path: 'create-trip', component:CreateTripComponent, canActivate: [AuthGuard]},
  { path: 'edit-trip/:id', component: EditTripComponent, canActivate: [AuthGuard] },
- {path: 'refuel-vehicle', component:RefuelVehicleComponent, canActivate: [AuthGuard]},
+ {path: 'refuel-vehicle/:tripId', component:RefuelVehicleComponent, canActivate: [AuthGuard]},
  {path: 'get-trip', component:GetTripComponent, canActivate: [AuthGuard]},
+ {path: 'pre-checklist', component:PreChecklistComponent, canActivate: [AuthGuard]},
+ {path: 'view-post-check', component:ViewPostCheckComponent, canActivate: [AuthGuard]},
+ {path: 'create-post-check', component:CreatePostCheckComponent, canActivate: [AuthGuard]},
  
  //Vehicle Routes
  

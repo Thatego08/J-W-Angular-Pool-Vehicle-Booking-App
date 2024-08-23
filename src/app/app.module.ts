@@ -90,7 +90,10 @@ import { ReportComponent } from './report-central/report/report.component';
 import { ReportService } from './services/report.service';
 import { ProjectService } from './services/project.service';
 import { AuthComponent } from './user/auth/auth.component';
-import { MatCardModule } from '@angular/material/card'; // Import MatCardModule
+import { MatCardModule } from '@angular/material/card';
+import { PreChecklistComponent } from './pre-checklist/pre-checklist.component';
+import { CreatePostCheckComponent } from './create-post-check/create-post-check.component';
+import { ViewPostCheckComponent } from './view-post-check/view-post-check.component'; // Import MatCardModule
 
 
 
@@ -157,7 +160,10 @@ import { MatCardModule } from '@angular/material/card'; // Import MatCardModule
     NavBarComponent,
     ReportComponent,
     AuthComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    PreChecklistComponent,
+    CreatePostCheckComponent,
+    ViewPostCheckComponent
   ],
   imports: [
     BrowserModule,

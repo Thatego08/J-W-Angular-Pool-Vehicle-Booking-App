@@ -35,14 +35,12 @@
           <td>{{ booking.vehicleName }}</td>
           <td>{{ booking.projectNumber }}</td>
           <td>
-            <button (click)="initiateTrip(booking)" class="btn btn-success btn-sm">Initiate Trip</button>
+            <button (click)="initiatePreChecklist(booking.bookingID)" class="btn btn-success btn-sm">Complete Pre-Checklist</button>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
 
-  <div *ngIf="bookings.length === 0 && searchUsername">
-    <p>No bookings found for this user.</p>
-  </div>
+ 
 </div>

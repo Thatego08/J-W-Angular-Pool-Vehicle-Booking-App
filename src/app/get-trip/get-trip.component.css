@@ -103,3 +103,18 @@
 .font-bold {
     font-weight: bold;
 }
+
+.action-button:disabled {
+    background-color: #d3d3d3; /* Grey color */
+    color: #a9a9a9; /* Light grey text */
+    cursor: not-allowed; /* Change cursor to indicate disabled state */
+  }
+  
+  .action-button {
+    transition: background-color 0.3s;
+  }
+  
+  .action-button:not(:disabled):hover {
+    background-color: #2f855a; /* Darker green for hover */
+  }
+  

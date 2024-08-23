@@ -1,0 +1,91 @@
+<div *ngIf="postChecks.length > 0">
+    <h2>Post Check List</h2>
+    <div class="table-container">
+      <table class="post-check-table">
+        <thead>
+          <tr>
+            <th>Post Check ID</th>
+            <th>Closing Kms</th>
+            <th>Oil Leaks</th>
+            <th>Fuel Level</th>
+            <th>Mirrors</th>
+            <th>Sun Visor</th>
+            <th>Seat Belts</th>
+            <th>Head Lights</th>
+            <th>Indicators</th>
+            <th>Park Lights</th>
+            <th>Brake Lights</th>
+            <th>Strobe Light</th>
+            <th>Reverse Light</th>
+            <th>Reverse Hooter</th>
+            <th>Horn</th>
+            <th>Windscreen Wiper</th>
+            <th>Tyre Condition</th>
+            <th>Spare Wheel Present</th>
+            <th>Jack and Wheel Spanner Present</th>
+            <th>Brakes</th>
+            <th>Handbrake</th>
+            <th>JW Marketing Magnets</th>
+            <th>Checked by JW Security</th>
+            <th>License Disk Valid</th>
+            <th>Comments</th>
+            <th>Additional Comments</th>
+            <th>Media Files</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let postCheck of postChecks">
+            <td>{{ postCheck.postCheckId }}</td>
+            <td>{{ postCheck.closingKms }}</td>
+            <td>{{ postCheck.oilLeaks ? 'Yes' : 'No' }}</td>
+            <td>{{ postCheck.fuelLevel ? 'Yes' : 'No' }}</td>
+            <td>{{ postCheck.mirrors ? 'Yes' : 'No' }}</td>
+            <td>{{ postCheck.sunVisor ? 'Yes' : 'No' }}</td>
+            <td>{{ postCheck.seatBelts ? 'Yes' : 'No' }}</td>
+            <td>{{ postCheck.headLights ? 'Yes' : 'No' }}</td>
+            <td>{{ postCheck.indicators ? 'Yes' : 'No' }}</td>
+            <td>{{ postCheck.parkLights ? 'Yes' : 'No' }}</td>
+            <td>{{ postCheck.brakeLights ? 'Yes' : 'No' }}</td>
+            <td>{{ postCheck.strobeLight ? 'Yes' : 'No' }}</td>
+            <td>{{ postCheck.reverseLight ? 'Yes' : 'No' }}</td>
+            <td>{{ postCheck.reverseHooter ? 'Yes' : 'No' }}</td>
+            <td>{{ postCheck.horn ? 'Yes' : 'No' }}</td>
+            <td>{{ postCheck.windscreenWiper ? 'Yes' : 'No' }}</td>
+            <td>{{ postCheck.tyreCondition ? 'Yes' : 'No' }}</td>
+            <td>{{ postCheck.spareWheelPresent ? 'Yes' : 'No' }}</td>
+            <td>{{ postCheck.jackAndWheelSpannerPresent ? 'Yes' : 'No' }}</td>
+            <td>{{ postCheck.brakes ? 'Yes' : 'No' }}</td>
+            <td>{{ postCheck.handbrake ? 'Yes' : 'No' }}</td>
+            <td>{{ postCheck.jwMarketingMagnets ? 'Yes' : 'No' }}</td>
+            <td>{{ postCheck.checkedByJWSecurity ? 'Yes' : 'No' }}</td>
+            <td>{{ postCheck.licenseDiskValid ? 'Yes' : 'No' }}</td>
+            <td>{{ postCheck.comments }}</td>
+            <td>{{ postCheck.additionalComments }}</td>
+            <td>
+              <!-- Displaying Media Files -->
+              <div *ngIf="postCheck.tripMedia && postCheck.tripMedia.length > 0">
+                <div *ngFor="let media of postCheck.tripMedia">
+                  <p>{{ media.fileName }}</p>
+                  <img *ngIf="media.mediaType?.startsWith('image')" [src]="'data:' + media.mediaType + ';base64,' + media.fileContent" alt="{{ media.fileName }}" class="media-image" (click)="openModal(media)">
+                  <a *ngIf="media.mediaType?.startsWith('image')" [href]="'data:' + media.mediaType + ';base64,' + media.fileContent" download="{{ media.fileName }}">Download</a>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <div *ngIf="postChecks.length === 0">
+    <p>No post checks available.</p>
+  </div>
+  
+  <!-- Modal for Image Viewing -->
+  <div id="imageModal" class="modal" *ngIf="selectedMedia">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <img class="modal-content" [src]="selectedMedia ? 'data:' + selectedMedia.mediaType + ';base64,' + selectedMedia.fileContent : ''">
+    <div id="caption">{{ selectedMedia?.fileName }}</div>
+  </div>
+  
+ 

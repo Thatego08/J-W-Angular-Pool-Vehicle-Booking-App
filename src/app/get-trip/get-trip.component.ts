@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TripService } from '../services/trip.service';
 import { TripModel } from '../trip.model';
-import { Router } from '@angular/router'; // Import Router
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-get-trip',
@@ -33,6 +33,7 @@ export class GetTripComponent implements OnInit {
       }
     );
   }
+
   editTrip(trip: TripModel) {
     this.router.navigate(['/edit-trip', trip.tripId]); // Navigate to edit-trip route with tripId
   }
@@ -50,5 +51,14 @@ export class GetTripComponent implements OnInit {
         }
       );
     }
+  }
+
+  navigateToRefuel(tripId: number) {
+    this.router.navigate(['/refuel-vehicle', tripId]); // Navigate to refuel-vehicle route with tripId
+  }
+
+  isTravelEndPassed(travelEnd: Date): boolean {
+    const currentDate = new Date();
+    return new Date(travelEnd) < currentDate;
   }
 }

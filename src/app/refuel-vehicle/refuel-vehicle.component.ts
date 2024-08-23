@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { RefuelVehicleService } from '../refuelvehicle.service';
+import { RefuelVehicle } from '../refuel-vehicle';
 
 @Component({
   selector: 'app-refuel-vehicle',
@@ -8,54 +11,60 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class RefuelVehicleComponent implements OnInit {
   refuelVehicleForm: FormGroup;
+  successMessage: string | null = null;  // Add successMessage variable
 
   fields = [
-    { label: 'Radiator Water Level', name: 'radiatorWaterLevel', comment: 'radiatorWaterLevelComment' },
-    { label: 'Battery', name: 'battery', comment: 'batteryComment' },
-    { label: 'Oil Level', name: 'oilLevel', comment: 'oilLevelComment' },
-    { label: 'Brake Fluid Level', name: 'brakeFluidLevel', comment: 'brakeFluidLevelComment' },
-    { label: 'Clutch Fluid Level', name: 'clutchFluidLevel', comment: 'clutchFluidLevelComment' },
-    { label: 'Window Washer Fluid Level', name: 'windowWasherFluidLevel', comment: 'windowWasherFluidLevelComment' },
-    { label: 'V-Belt Condition', name: 'vBeltCondition', comment: 'vBeltConditionComment' },
-    { label: 'Tyre Pressure', name: 'tyrePressure', comment: 'tyrePressureComment' },
-    { label: 'Tyre Condition', name: 'tyreCondition', comment: 'tyreConditionComment' },
-    { label: 'Spare Wheel Condition', name: 'spareWheelCondition', comment: 'spareWheelConditionComment' }
+    { label: 'Oil Level', name: 'oilLevel' },
+    { label: 'Tyre Pressure', name: 'tyrePressure' },
+    { label: 'Tyre Condition', name: 'tyreCondition' }
   ];
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private refuelVehicleService: RefuelVehicleService,
+    private route: ActivatedRoute
+  ) {
     this.refuelVehicleForm = this.formBuilder.group({
-      tripId: ['', Validators.required],
-      FuelQuantity: [''],
-      FuelCost: [''],
-      radiatorWaterLevel: [false],
-      radiatorWaterLevelComment: [''],
-      battery: [false],
-      batteryComment: [''],
-      oilLevel: [false],
-      oilLevelComment: [''],
-      brakeFluidLevel: [false],
-      brakeFluidLevelComment: [''],
-      clutchFluidLevel: [false],
-      clutchFluidLevelComment: [''],
-      windowWasherFluidLevel: [false],
-      windowWasherFluidLevelComment: [''],
-      vBeltCondition: [false],
-      vBeltConditionComment: [''],
-      tyrePressure: [false],
-      tyrePressureComment: [''],
-      tyreCondition: [false],
-      tyreConditionComment: [''],
-      spareWheelCondition: [false],
-      spareWheelConditionComment: [''],
+      tripId: [''],
+      oilLevel: [''],
+      tyrePressure: [''],
+      tyreCondition: [''],
+      comments: [''],
+      fuelQuantity: [''],
+      fuelCost: ['']
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // Retrieve tripId from URL and set it to the form
+    this.route.paramMap.subscribe(params => {
+      const tripId = params.get('tripId');
+      if (tripId !== null) {
+        this.refuelVehicleForm.get('tripId')?.setValue(+tripId); // Convert to number if needed
+      }
+    });
+  }
 
   onSubmit(): void {
     if (this.refuelVehicleForm.valid) {
-      // Handle form submission
-      console.log(this.refuelVehicleForm.value);
+      const refuelVehicle: RefuelVehicle = this.refuelVehicleForm.value;
+
+      this.refuelVehicleService.addRefuelVehicle(refuelVehicle).subscribe(
+        (response: RefuelVehicle) => {
+          console.log('Refuel Vehicle submitted successfully:', response);
+          this.successMessage = 'Refuel Vehicle submitted successfully!';  // Set success message
+          this.refuelVehicleForm.reset();  // Reset the form after successful submission
+
+          // Optionally hide the success message after a delay
+          setTimeout(() => {
+            this.successMessage = null;
+          }, 3000);  // Hide after 3 seconds
+        },
+        (error: any) => {
+          console.error('Error submitting refuel vehicle:', error);
+          // Handle error response, e.g., show an error message
+        }
+      );
     }
   }
 }
