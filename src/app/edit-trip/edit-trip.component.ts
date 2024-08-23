@@ -15,11 +15,11 @@ export class EditTripComponent implements OnInit {
     tripId: 0,
     name: '',
     location: '',
-    fuelAmount: 0,
+   
     comment: '',
     travelStart: new Date(),
     travelEnd: new Date(),
-    registrationNumber: '',
+   
 
     userName: '',
     MediaFiles: undefined

@@ -27,6 +27,7 @@ export class TripService {
     );
   }
   
+  
 
   createTrip(trip: FormData): Observable<any> {
     // Retrieve the token from local storage

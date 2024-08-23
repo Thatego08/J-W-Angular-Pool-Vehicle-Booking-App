@@ -1,0 +1,139 @@
+<form [formGroup]="postCheckForm" (ngSubmit)="submitForm()" enctype="multipart/form-data">
+    <div>
+      <label for="ClosingKms">Closing Kms:</label>
+      <input type="number" id="ClosingKms" formControlName="ClosingKms">
+    </div>
+  
+    <div>
+      <label for="OilLeaks">Oil Leaks:</label>
+      <input type="checkbox" id="OilLeaks" formControlName="OilLeaks">
+    </div>
+  
+    <div>
+      <label for="FuelLevel">Fuel Level:</label>
+      <input type="checkbox" id="FuelLevel" formControlName="FuelLevel">
+    </div>
+  
+    <div>
+      <label for="Mirrors">Mirrors:</label>
+      <input type="checkbox" id="Mirrors" formControlName="Mirrors">
+    </div>
+  
+    <div>
+      <label for="SunVisor">Sun Visor:</label>
+      <input type="checkbox" id="SunVisor" formControlName="SunVisor">
+    </div>
+  
+    <div>
+      <label for="SeatBelts">Seat Belts:</label>
+      <input type="checkbox" id="SeatBelts" formControlName="SeatBelts">
+    </div>
+  
+    <div>
+      <label for="HeadLights">Head Lights:</label>
+      <input type="checkbox" id="HeadLights" formControlName="HeadLights">
+    </div>
+  
+    <div>
+      <label for="Indicators">Indicators:</label>
+      <input type="checkbox" id="Indicators" formControlName="Indicators">
+    </div>
+  
+    <div>
+      <label for="ParkLights">Park Lights:</label>
+      <input type="checkbox" id="ParkLights" formControlName="ParkLights">
+    </div>
+  
+    <div>
+      <label for="BrakeLights">Brake Lights:</label>
+      <input type="checkbox" id="BrakeLights" formControlName="BrakeLights">
+    </div>
+  
+    <div>
+      <label for="StrobeLight">Strobe Light:</label>
+      <input type="checkbox" id="StrobeLight" formControlName="StrobeLight">
+    </div>
+  
+    <div>
+      <label for="ReverseLight">Reverse Light:</label>
+      <input type="checkbox" id="ReverseLight" formControlName="ReverseLight">
+    </div>
+  
+    <div>
+      <label for="ReverseHooter">Reverse Hooter:</label>
+      <input type="checkbox" id="ReverseHooter" formControlName="ReverseHooter">
+    </div>
+  
+    <div>
+      <label for="Horn">Horn:</label>
+      <input type="checkbox" id="Horn" formControlName="Horn">
+    </div>
+  
+    <div>
+      <label for="WindscreenWiper">Windscreen Wiper:</label>
+      <input type="checkbox" id="WindscreenWiper" formControlName="WindscreenWiper">
+    </div>
+  
+    <div>
+      <label for="TyreCondition">Tyre Condition:</label>
+      <input type="checkbox" id="TyreCondition" formControlName="TyreCondition">
+    </div>
+  
+    <div>
+      <label for="SpareWheelPresent">Spare Wheel Present:</label>
+      <input type="checkbox" id="SpareWheelPresent" formControlName="SpareWheelPresent">
+    </div>
+  
+    <div>
+      <label for="JackAndWheelSpannerPresent">Jack and Wheel Spanner Present:</label>
+      <input type="checkbox" id="JackAndWheelSpannerPresent" formControlName="JackAndWheelSpannerPresent">
+    </div>
+  
+    <div>
+      <label for="Brakes">Brakes:</label>
+      <input type="checkbox" id="Brakes" formControlName="Brakes">
+    </div>
+  
+    <div>
+      <label for="Handbrake">Handbrake:</label>
+      <input type="checkbox" id="Handbrake" formControlName="Handbrake">
+    </div>
+  
+    <div>
+      <label for="JWMarketingMagnets">JW Marketing Magnets:</label>
+      <input type="checkbox" id="JWMarketingMagnets" formControlName="JWMarketingMagnets">
+    </div>
+  
+    <div>
+      <label for="CheckedByJWSecurity">Checked by JW Security:</label>
+      <input type="checkbox" id="CheckedByJWSecurity" formControlName="CheckedByJWSecurity">
+    </div>
+  
+    <div>
+      <label for="LicenseDiskValid">License Disk Valid:</label>
+      <input type="checkbox" id="LicenseDiskValid" formControlName="LicenseDiskValid">
+    </div>
+  
+    <div>
+      <label for="Comments">Comments:</label>
+      <textarea id="Comments" formControlName="Comments"></textarea>
+    </div>
+  
+    <div>
+      <label for="AdditionalComments">Additional Comments:</label>
+      <textarea id="AdditionalComments" formControlName="AdditionalComments"></textarea>
+    </div>
+  
+    <div>
+      <label for="MediaFiles">Upload Files:</label>
+      <input type="file" id="MediaFiles" (change)="onFileChange($event)" multiple>
+    </div>
+  
+    <div>
+      <label for="MediaDescription">Media Description:</label>
+      <input type="text" id="MediaDescription" formControlName="MediaDescription">
+    </div>
+  
+    <button type="submit">Create Post Check</button>
+  </form>
+  

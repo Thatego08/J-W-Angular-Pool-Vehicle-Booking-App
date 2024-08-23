@@ -1,31 +1,62 @@
 <form [formGroup]="refuelVehicleForm" (ngSubmit)="onSubmit()" class="custom-form">
-    <div class="form-group row align-items-center">
-      <div class="col-sm-4">
-        <label for="tripId">Trip ID</label>
-      </div>
-      <div class="col-sm-1">
-        <!-- Empty div for alignment -->
-      </div>
-      <div class="col-sm-7">
-        <input type="number" id="tripId" formControlName="tripId" class="form-control" required />
-        <div *ngIf="refuelVehicleForm.get('tripId')?.invalid && refuelVehicleForm.get('tripId')?.touched" class="text-danger">
-          Trip ID is required.
-        </div>
+  <!-- Trip ID -->
+  <div class="form-group row align-items-center">
+    <div class="col-sm-4">
+      <label for="tripId">Trip ID</label>
+    </div>
+    <div class="col-sm-7">
+      <input type="number" id="tripId" formControlName="tripId" class="form-control" required />
+      <div *ngIf="refuelVehicleForm.get('tripId')?.invalid && refuelVehicleForm.get('tripId')?.touched" class="text-danger">
+        Trip ID is required.
       </div>
     </div>
-  
-    <div class="form-group row align-items-center" *ngFor="let field of fields">
-      <div class="col-sm-4">
-        <label>{{ field.label }}</label>
-      </div>
-      <div class="col-sm-1 text-center">
-        <input type="checkbox" formControlName="{{ field.name }}" />
-      </div>
-      <div class="col-sm-7">
-        <input type="text" formControlName="{{ field.comment }}" class="form-control" placeholder="Add comments" />
-      </div>
+  </div>
+
+  <!-- Fields for Oil Level, Tyre Pressure, and Tyre Condition -->
+  <div class="form-group row align-items-center" *ngFor="let field of fields">
+    <div class="col-sm-4">
+      <label>{{ field.label }}</label>
     </div>
-  
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
-  
+    <div class="col-sm-7">
+      <input type="text" formControlName="{{ field.name }}" class="form-control" placeholder="{{ field.label }}" />
+    </div>
+  </div>
+
+  <!-- Comments -->
+  <div class="form-group row align-items-center">
+    <div class="col-sm-4">
+      <label for="comments">Comments</label>
+    </div>
+    <div class="col-sm-8">
+      <input type="text" id="comments" formControlName="comments" class="form-control" placeholder="Add comments" />
+    </div>
+  </div>
+
+  <!-- Fuel Quantity -->
+  <div class="form-group row align-items-center">
+    <div class="col-sm-4">
+      <label for="fuelQuantity">Fuel Quantity(Litres)</label>
+    </div>
+    <div class="col-sm-8">
+      <input type="number" id="fuelQuantity" formControlName="fuelQuantity" class="form-control" placeholder="Enter fuel quantity" />
+    </div>
+  </div>
+
+  <!-- Fuel Cost -->
+  <div class="form-group row align-items-center">
+    <div class="col-sm-4">
+      <label for="fuelCost">Fuel Cost(Rands)</label>
+    </div>
+    <div class="col-sm-8">
+      <input type="number" id="fuelCost" formControlName="fuelCost" class="form-control" placeholder="Enter fuel cost" />
+    </div>
+  </div>
+
+  <!-- Submit Button -->
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<!-- Success Message -->
+<div *ngIf="successMessage" class="alert alert-success mt-3">
+  {{ successMessage }}
+</div>

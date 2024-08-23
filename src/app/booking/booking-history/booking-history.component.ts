@@ -26,24 +26,7 @@ export class BookingHistoryComponent {
     }
   }
 
-  initiateTrip(booking: BookingModel) {
-    // Ensure startDate and endDate are valid Date objects
-    const startDate = new Date(booking.startDate);
-    const endDate = new Date(booking.endDate);
-  
-    // Format the dates for datetime-local input or URL
-    const formattedStartDate = startDate.toISOString().slice(0, 16); // Format: yyyy-MM-ddTHH:mm
-    const formattedEndDate = endDate.toISOString().slice(0, 16); // Format: yyyy-MM-ddTHH:mm
-  
-    this.router.navigate(['/create-trip'], {
-      queryParams: {
-        bookingId: booking.bookingID,
-        startDate: formattedStartDate,
-        endDate: formattedEndDate,
-        vehicleName: booking.vehicleName // Pass vehicleName
-      }
-    });
-
- 
+  initiatePreChecklist(bookingID: number) {
+    this.router.navigate(['/pre-checklist'], { queryParams: { bookingId: bookingID } });
   }
 }
