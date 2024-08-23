@@ -42,6 +42,10 @@ export class BookingService {
     const url = `${this.baseUrl}/DeleteBooking${id}`;
     return this.http.delete<void>(url);
   }
+  cancelBooking(id: number): Observable<string> {
+    const url = `${this.baseUrl}/CancelBooking/${id}`;
+    return this.http.put<string>(url, {});
+  }
 
   updateVehicleStatus(vehicleName: string, statusId: number): Observable<any> {
     const url = `${this.baseUrl}/UpdateVehicleStatus/${vehicleName}`; // Adjust the URL based on your API endpoint
