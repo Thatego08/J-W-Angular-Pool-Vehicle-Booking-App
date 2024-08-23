@@ -67,4 +67,19 @@ export class BookingListComponent implements OnInit{
       );
     }
   }
+
+  cancelBooking(booking: BookingModel): void {
+    if (confirm(`Are you sure you want to cancel the booking for ${booking.userName}?`)) {
+      this.bookingService.cancelBooking(booking.bookingID).subscribe({
+        next: (response) => {
+          alert( 'Booking has been successfully canceled!');
+          this.loadBookings(); // Refresh the booking list after cancellation
+        },
+        error: (error) => {
+          console.error('Error canceling booking:', error);
+          alert('There was an error canceling the booking. Please try again.');
+        }
+      });
+    }
+  }
 }

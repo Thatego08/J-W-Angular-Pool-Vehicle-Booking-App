@@ -15,7 +15,8 @@
         </div>
         <div class="card-footer d-flex justify-content-between">
           <button class="btn btn-edit" (click)="openEditModal(booking)">Edit</button>
-          <button (click)="onDelete(booking.bookingID)" class="btn btn-danger">Delete</button>
+          <button class="btn btn-danger" (click)="cancelBooking(booking)">Cancel</button>
+          <!-- <button (click)="onDelete(booking.bookingID)" class="btn btn-danger">Delete</button> -->
         </div>
       </div>
     </div>
