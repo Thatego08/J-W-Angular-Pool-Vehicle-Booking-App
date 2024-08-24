@@ -53,6 +53,12 @@ export class BookingService {
       catchError(this.handleError)
     );
   }
+
+//   updateVehicleStatus(vehicleName: string, statusId: number): Observable<any> {
+//     const payload = { statusId: statusId };
+//     return this.http.put(`http://localhost:7041/api/Booking/UpdateVehicleStatus/${vehicleName}`, payload);
+// }
+
   
 
   getVehicles(): Observable<Vehicle[]> {
