@@ -1,178 +1,37 @@
+<!-- pre-checklist.component.html -->
 <div class="container">
-  <form (ngSubmit)="onSubmit()" #preChecklistForm="ngForm">
+  <form [formGroup]="preChecklistForm" (ngSubmit)="onSubmit()">
     <h3>Pre-Checklist</h3>
-
+    <button type="button" class="btn btn-secondary" (click)="checkAll(true)">Check All</button>
     <div class="form-group">
       <label for="openingKms">Opening Kms:</label>
-      <input type="number" id="openingKms" [(ngModel)]="preChecklist.openingKms" name="openingKms" required class="form-control" />
+      <input type="number" id="openingKms" formControlName="openingKms" required class="form-control" />
     </div>
 
-    <div class="form-group">
-      <label>
-        <input type="checkbox" [(ngModel)]="preChecklist.oilLeaks" name="oilLeaks" />
-        Oil Leaks
-      </label>
-    </div>
-
-    <div class="form-group">
-      <label>
-        <input type="checkbox" [(ngModel)]="preChecklist.fuelLevel" name="fuelLevel" />
-        Fuel Level
-      </label>
-    </div>
-
-    <div class="form-group">
-      <label>
-        <input type="checkbox" [(ngModel)]="preChecklist.mirrors" name="mirrors" />
-        Mirrors
-      </label>
-    </div>
-
-    <div class="form-group">
-      <label>
-        <input type="checkbox" [(ngModel)]="preChecklist.sunVisor" name="sunVisor" />
-        Sun Visor
-      </label>
-    </div>
-
-    <div class="form-group">
-      <label>
-        <input type="checkbox" [(ngModel)]="preChecklist.seatBelts" name="seatBelts" />
-        Seat Belts
-      </label>
-    </div>
-
-    <div class="form-group">
-      <label>
-        <input type="checkbox" [(ngModel)]="preChecklist.headLights" name="headLights" />
-        Head Lights
-      </label>
-    </div>
-
-    <div class="form-group">
-      <label>
-        <input type="checkbox" [(ngModel)]="preChecklist.indicators" name="indicators" />
-        Indicators
-      </label>
-    </div>
-
-    <div class="form-group">
-      <label>
-        <input type="checkbox" [(ngModel)]="preChecklist.parkLights" name="parkLights" />
-        Park Lights
-      </label>
-    </div>
-
-    <div class="form-group">
-      <label>
-        <input type="checkbox" [(ngModel)]="preChecklist.brakeLights" name="brakeLights" />
-        Brake Lights
-      </label>
-    </div>
-
-    <div class="form-group">
-      <label>
-        <input type="checkbox" [(ngModel)]="preChecklist.strobeLight" name="strobeLight" />
-        Strobe Light
-      </label>
-    </div>
-
-    <div class="form-group">
-      <label>
-        <input type="checkbox" [(ngModel)]="preChecklist.reverseLight" name="reverseLight" />
-        Reverse Light
-      </label>
-    </div>
-
-    <div class="form-group">
-      <label>
-        <input type="checkbox" [(ngModel)]="preChecklist.reverseHooter" name="reverseHooter" />
-        Reverse Hooter
-      </label>
-    </div>
-
-    <div class="form-group">
-      <label>
-        <input type="checkbox" [(ngModel)]="preChecklist.horn" name="horn" />
-        Horn
-      </label>
-    </div>
-
-    <div class="form-group">
-      <label>
-        <input type="checkbox" [(ngModel)]="preChecklist.windscreenWiper" name="windscreenWiper" />
-        Windscreen Wiper
-      </label>
-    </div>
-
-    <div class="form-group">
-      <label>
-        <input type="checkbox" [(ngModel)]="preChecklist.tyreCondition" name="tyreCondition" />
-        Tyre Condition
-      </label>
-    </div>
-
-    <div class="form-group">
-      <label>
-        <input type="checkbox" [(ngModel)]="preChecklist.spareWheelPresent" name="spareWheelPresent" />
-        Spare Wheel Present
-      </label>
-    </div>
-
-    <div class="form-group">
-      <label>
-        <input type="checkbox" [(ngModel)]="preChecklist.jackAndWheelSpannerPresent" name="jackAndWheelSpannerPresent" />
-        Jack and Wheel Spanner Present
-      </label>
-    </div>
-
-    <div class="form-group">
-      <label>
-        <input type="checkbox" [(ngModel)]="preChecklist.brakes" name="brakes" />
-        Brakes
-      </label>
-    </div>
-
-    <div class="form-group">
-      <label>
-        <input type="checkbox" [(ngModel)]="preChecklist.handbrake" name="handbrake" />
-        Handbrake
-      </label>
-    </div>
-
-    <div class="form-group">
-      <label>
-        <input type="checkbox" [(ngModel)]="preChecklist.jwMarketingMagnets" name="jwMarketingMagnets" />
-        JW Marketing Magnets
-      </label>
-    </div>
-
-    <div class="form-group">
-      <label>
-        <input type="checkbox" [(ngModel)]="preChecklist.checkedByJWSecurity" name="checkedByJWSecurity" />
-        Checked by JW Security
-      </label>
-    </div>
-
-    <div class="form-group">
-      <label>
-        <input type="checkbox" [(ngModel)]="preChecklist.licenseDiskValid" name="licenseDiskValid" />
-        License Disk Valid
-      </label>
+    <!-- Scrollable container for checkboxes -->
+    <div class="checkbox-container">
+      <div class="form-group" *ngFor="let check of checkboxes">
+        <label>
+          <input type="checkbox" [formControlName]="check.formControlName" />
+          {{ check.label }}
+        </label>
+      </div>
     </div>
 
     <div class="form-group">
       <label for="comments">Comments:</label>
-      <textarea id="comments" [(ngModel)]="preChecklist.comments" name="comments" class="form-control"></textarea>
+      <textarea id="comments" formControlName="comments" class="form-control"></textarea>
     </div>
 
     <div class="form-group">
       <label for="additionalComments">Additional Comments:</label>
-      <textarea id="additionalComments" [(ngModel)]="preChecklist.additionalComments" name="additionalComments" class="form-control"></textarea>
+      <textarea id="additionalComments" formControlName="additionalComments" class="form-control"></textarea>
     </div>
 
     <div class="button-group">
-      <button type="submit" class="btn btn-primary" [disabled]="!preChecklistForm.form.valid">Submit Checklist</button>
+    
+      
+      <button type="submit" class="btn btn-primary" [disabled]="!preChecklistForm.valid">Submit Checklist</button>
     </div>
   </form>
 </div>

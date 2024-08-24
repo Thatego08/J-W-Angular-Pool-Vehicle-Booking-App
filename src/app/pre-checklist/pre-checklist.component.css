@@ -1,23 +1,27 @@
+/* pre-checklist.component.css */
 .container {
-    max-width: 600px;
-    margin: 0 auto;
-  }
-  
-  .form-group {
-    margin-bottom: 1rem;
-  }
-  
-  .form-control {
-    width: 100%;
-    padding: 0.5rem;
-    margin-top: 0.5rem;
-  }
-  
-  .button-group {
-    margin-top: 1rem;
-  }
-  
-  .btn {
-    padding: 0.5rem 1rem;
-  }
-  
+  padding: 20px;
+  max-width: 800px; /* Adjust to your desired width */
+  margin: 0 auto; /* Center the container horizontally */
+  border: 1px solid #ccc; /* Optional: border around the container */
+  border-radius: 8px; /* Optional: rounded corners */
+  background-color: #f9f9f9; /* Optional: background color */
+}
+
+.checkbox-container {
+  max-height: 300px; /* Adjust the height as needed */
+  overflow-y: auto; /* Enables vertical scrolling */
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.button-group {
+  margin-top: 20px;
+}
+
+.btn-secondary {
+  margin-right: 10px;
+}

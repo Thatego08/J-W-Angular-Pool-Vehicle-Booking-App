@@ -15,6 +15,11 @@ export class PostCheckService {
     return this.http.post<any>(`${this.apiUrl}/CreatePostCheck`, postCheckData);
   }
 
+  deletePostCheck(postCheckId: number): Observable<void> {
+    console.log('API call to delete post check with ID:', postCheckId); // Debug log
+    return this.http.delete<void>(`${this.apiUrl}/${postCheckId}`);
+  }
+  
   // Get all Post Checks
   getAllPostChecks(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/GetAllPostChecks`);

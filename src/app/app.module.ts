@@ -93,7 +93,8 @@ import { AuthComponent } from './user/auth/auth.component';
 import { MatCardModule } from '@angular/material/card';
 import { PreChecklistComponent } from './pre-checklist/pre-checklist.component';
 import { CreatePostCheckComponent } from './create-post-check/create-post-check.component';
-import { ViewPostCheckComponent } from './view-post-check/view-post-check.component'; // Import MatCardModule
+import { ViewPostCheckComponent } from './view-post-check/view-post-check.component';
+import { GetRefuelVehicleComponent } from './get-refuel-vehicle/get-refuel-vehicle.component'; // Import MatCardModule
 
 
 
@@ -163,7 +164,8 @@ import { ViewPostCheckComponent } from './view-post-check/view-post-check.compon
     NotificationsComponent,
     PreChecklistComponent,
     CreatePostCheckComponent,
-    ViewPostCheckComponent
+    ViewPostCheckComponent,
+    GetRefuelVehicleComponent
   ],
   imports: [
     BrowserModule,

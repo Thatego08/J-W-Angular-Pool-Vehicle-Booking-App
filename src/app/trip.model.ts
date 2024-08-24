@@ -1,5 +1,5 @@
 export interface TripModel {
-    MediaFiles: any;
+   
     tripId: number;
     name: string;
     location: string;
@@ -8,7 +8,7 @@ export interface TripModel {
     travelStart: Date;
     travelEnd: Date;
     
-    mediaDescription?: string;
+   
     userName: string;
     
 }
