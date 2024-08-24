@@ -27,7 +27,6 @@ export class TripService {
     );
   }
   
-  
 
   createTrip(trip: FormData): Observable<any> {
     // Retrieve the token from local storage
@@ -44,34 +43,39 @@ export class TripService {
 
 
 
-
   updateTrip(tripId: number, updatedTrip: TripModel): Observable<TripModel> {
-    const url = `${this.apiUrl}/${tripId}`;
+    const url = `${this.apiUrl}/UpdateTrip/${tripId}`;
     return this.http.put<TripModel>(url, updatedTrip, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
+        headers: new HttpHeaders({
+            'Content-Type': 'application/json'
+        })
     }).pipe(
-      catchError(this.handleError)
+        catchError(this.handleError)
     );
-  }
+}
+
+  
+  
+  
   deleteTrip(TripId: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/DeleteTrip/${TripId}`);
   }
 
   getPreviousTripsByUserName(userName: string): Observable<TripModel[]> {
     const token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
+    return this.http.get<TripModel[]>(`${this.apiUrl}/GetPreviousTripsByUserName/${userName}`, {
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${token}`
+      })
     });
-
-    return this.http.get<TripModel[]>(`${this.apiUrl}/GetPreviousTripsByUserName/${userName}`, { headers });
   }
 
   createRefuelVehicle(data: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/refuel-vehicle`, data);
   }
-
+  deletePostCheck(postCheckId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${postCheckId}`);
+  }
   private handleError(error: any) {
     console.error('An error occurred:', error);
     return throwError(error);

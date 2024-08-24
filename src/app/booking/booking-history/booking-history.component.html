@@ -1,4 +1,3 @@
-<!-- src/app/components/booking-history/booking-history.component.html -->
 <div class="container">
   <img src="assets/logo.png" alt="Logo" class="logo-image">
 
@@ -35,12 +34,16 @@
           <td>{{ booking.vehicleName }}</td>
           <td>{{ booking.projectNumber }}</td>
           <td>
-            <button (click)="initiatePreChecklist(booking.bookingID)" class="btn btn-success btn-sm">Complete Pre-Checklist</button>
+            <button 
+              (click)="initiatePreChecklist(booking.bookingID)" 
+              class="btn btn-success btn-sm"
+              [ngStyle]="{'background-color': isEndDatePassed(booking.endDate) ? 'grey' : '#28a745', 'cursor': isEndDatePassed(booking.endDate) ? 'not-allowed' : 'pointer'}"
+              [disabled]="isEndDatePassed(booking.endDate)">
+              Complete Pre-Checklist
+            </button>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
-
- 
 </div>

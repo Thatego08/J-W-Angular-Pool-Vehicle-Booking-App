@@ -22,7 +22,7 @@ export class EditTripComponent implements OnInit {
    
 
     userName: '',
-    MediaFiles: undefined
+  
   };
 
   successMessage: string = '';
@@ -56,22 +56,24 @@ export class EditTripComponent implements OnInit {
 
   updateTrip(form: NgForm) {
     if (form.valid) {
-      this.tripService.updateTrip(this.trip.tripId, this.trip).subscribe({
-        next: (response) => {
-          this.successMessage = 'Trip updated successfully';
-          setTimeout(() => {
-            this.router.navigate(['/get-trips']);
-          }, 2000);
-        },
-        error: (error) => {
-          this.errorMessage = `Error updating trip: ${error.error}`;
-          console.error('Error updating trip', error);
-        }
-      });
+        console.log('Trip data being sent:', this.trip); // Log the data
+        this.tripService.updateTrip(this.trip.tripId, this.trip).subscribe({
+            next: (response) => {
+                this.successMessage = 'Trip updated successfully';
+                setTimeout(() => {
+                    this.router.navigate(['/get-trip']);
+                }, 2000);
+            },
+            error: (error) => {
+                console.error('Error updating trip:', error);
+                this.errorMessage = `Error updating trip: ${error.error?.message || error.message}`;
+                if (error.error?.errors) {
+                    this.errorMessage += ': ' + Object.values(error.error.errors).flat().join(', ');
+                }
+            }
+        });
+    } else {
+        this.errorMessage = 'Form is invalid.';
     }
-  }
-
-  cancel() {
-    this.router.navigate(['/get-trips']);
-  }
+}
 }

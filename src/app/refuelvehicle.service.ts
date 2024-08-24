@@ -22,4 +22,9 @@ export class RefuelVehicleService {
       })
     );
   }
+
+  
+  getRefuelVehicles(): Observable<RefuelVehicle[]> {
+    return this.http.get<RefuelVehicle[]>(this.apiUrl);
+  }
 }

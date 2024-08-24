@@ -10,6 +10,31 @@ import { HttpClient } from '@angular/common/http';
 export class CreatePostCheckComponent {
   postCheckForm: FormGroup;
   mediaFiles: File[] = [];
+  successMessage: string | null = null; 
+  checkboxes = [
+    { id: 'OilLeaks', label: 'Oil Leaks', formControlName: 'OilLeaks' },
+    { id: 'FuelLevel', label: 'Fuel Level', formControlName: 'FuelLevel' },
+    { id: 'Mirrors', label: 'Mirrors', formControlName: 'Mirrors' },
+    { id: 'SunVisor', label: 'Sun Visor', formControlName: 'SunVisor' },
+    { id: 'SeatBelts', label: 'Seat Belts', formControlName: 'SeatBelts' },
+    { id: 'HeadLights', label: 'Head Lights', formControlName: 'HeadLights' },
+    { id: 'Indicators', label: 'Indicators', formControlName: 'Indicators' },
+    { id: 'ParkLights', label: 'Park Lights', formControlName: 'ParkLights' },
+    { id: 'BrakeLights', label: 'Brake Lights', formControlName: 'BrakeLights' },
+    { id: 'StrobeLight', label: 'Strobe Light', formControlName: 'StrobeLight' },
+    { id: 'ReverseLight', label: 'Reverse Light', formControlName: 'ReverseLight' },
+    { id: 'ReverseHooter', label: 'Reverse Hooter', formControlName: 'ReverseHooter' },
+    { id: 'Horn', label: 'Horn', formControlName: 'Horn' },
+    { id: 'WindscreenWiper', label: 'Windscreen Wiper', formControlName: 'WindscreenWiper' },
+    { id: 'TyreCondition', label: 'Tyre Condition', formControlName: 'TyreCondition' },
+    { id: 'SpareWheelPresent', label: 'Spare Wheel Present', formControlName: 'SpareWheelPresent' },
+    { id: 'JackAndWheelSpannerPresent', label: 'Jack and Wheel Spanner Present', formControlName: 'JackAndWheelSpannerPresent' },
+    { id: 'Brakes', label: 'Brakes', formControlName: 'Brakes' },
+    { id: 'Handbrake', label: 'Handbrake', formControlName: 'Handbrake' },
+    { id: 'JWMarketingMagnets', label: 'JW Marketing Magnets', formControlName: 'JWMarketingMagnets' },
+    { id: 'CheckedByJWSecurity', label: 'Checked by JW Security', formControlName: 'CheckedByJWSecurity' },
+    { id: 'LicenseDiskValid', label: 'License Disk Valid', formControlName: 'LicenseDiskValid' }
+  ];
 
   constructor(private fb: FormBuilder, private http: HttpClient) {
     this.postCheckForm = this.fb.group({
@@ -67,10 +92,24 @@ export class CreatePostCheckComponent {
     this.http.post('https://localhost:7041/api/PostCheck/CreatePostCheck', formData).subscribe({
       next: (response) => {
         console.log('Post check created successfully', response);
+        this.successMessage = 'Post check created successfully!';
+        // Clear the success message after a few seconds
+        setTimeout(() => this.successMessage = null, 5000);
+        // Optionally, you can reset the form and mediaFiles here if needed
+        this.postCheckForm.reset();
+        this.mediaFiles = [];
       },
       error: (error) => {
         console.error('Error creating post check', error);
+        this.successMessage = null;
       }
+    });
+  }
+
+
+  checkAll(checked: boolean) {
+    this.checkboxes.forEach(check => {
+      this.postCheckForm.controls[check.formControlName].setValue(checked);
     });
   }
 }

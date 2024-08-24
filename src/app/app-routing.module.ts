@@ -101,6 +101,7 @@ const routes: Routes = [
  {path: 'view-post-check', component:ViewPostCheckComponent, canActivate: [AuthGuard]},
  {path: 'create-post-check', component:CreatePostCheckComponent, canActivate: [AuthGuard]},
  
+ {path: 'dashboard', component:DashboardComponent, canActivate: [AuthGuard]},
  //Vehicle Routes
  
  //Vehicle routes
