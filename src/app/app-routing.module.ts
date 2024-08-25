@@ -67,7 +67,12 @@ import { AuthComponent } from './user/auth/auth.component';
 import { PreChecklistComponent } from './pre-checklist/pre-checklist.component';
 import { ViewPostCheckComponent } from './view-post-check/view-post-check.component';
 import { CreatePostCheckComponent } from './create-post-check/create-post-check.component';
+
 import { HomeComponent } from './home/home.component';
+
+import { HelpDocumentComponent } from './help-document/help-document.component';
+
+
 
 
 
@@ -80,6 +85,7 @@ const routes: Routes = [
  { path: 'rate', component: RateComponent , canActivate:[AuthGuard] },
  {path: 'edit-driver/:userName', component:EditDriverComponent},
  { path: 'edit-admin/:userName', component: EditAdminComponent, canActivate: [AuthGuard]},
+ { path: 'help-document', component: HelpDocumentComponent, canActivate: [AuthGuard]},
 
 
  //Booking
