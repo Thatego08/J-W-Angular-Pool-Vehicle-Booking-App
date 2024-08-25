@@ -1,11 +1,12 @@
 <div class="container">
-  <form (ngSubmit)="fetchPreviousTrips()" class="search-form">
-    <label for="userName">Enter Username:</label>
-    <input type="text" id="userName" [(ngModel)]="userName" name="userName" required />
-    <div class="button-group">
-      <button type="submit" class="btn-submit">Get Previous Trips</button>
-    </div>
-  </form>
+  <img src="assets/logo.png" alt="Logo" class="logo-image">
+  <h2>Trip History</h2>
+
+  <div class="form-group">
+    <label for="username">Enter Username:</label>
+    <input type="text" id="username" [(ngModel)]="searchUsername" class="form-control" />
+  </div>
+  <button (click)="fetchPreviousTrips()" class="btn btn-primary">Search</button>
 
   <div *ngIf="previousTrips.length > 0">
     <table class="trip-table">
@@ -37,21 +38,21 @@
                 Delete
               </button>
 
-             <button 
-  (click)="navigateToCreatePostChecklist()" 
-  class="btn-submit text-white font-bold py-2 px-4 rounded"
-  [ngStyle]="{'background-color': isTravelEndPassed(trip.travelEnd) ? 'grey' : '#3b82f6', 'cursor': isTravelEndPassed(trip.travelEnd) ? 'not-allowed' : 'pointer'}"
-  [disabled]="isTravelEndPassed(trip.travelEnd)">
-  Create Post Checklist
-</button>
+              <button 
+                (click)="navigateToCreatePostChecklist()" 
+                class="btn-submit text-white font-bold py-2 px-4 rounded"
+                [ngStyle]="{'background-color': isTravelEndPassed(trip.travelEnd) ? 'grey' : '#3b82f6', 'cursor': isTravelEndPassed(trip.travelEnd) ? 'not-allowed' : 'pointer'}"
+                [disabled]="isTravelEndPassed(trip.travelEnd)">
+                Create Post Checklist
+              </button>
               
-<button 
-(click)="navigateToRefuel(trip.tripId)" 
-class="action-button text-white font-bold py-2 px-4 rounded"
-[ngStyle]="{'background-color': isTravelEndPassed(trip.travelEnd) ? 'grey' : '#10b981', 'cursor': isTravelEndPassed(trip.travelEnd) ? 'not-allowed' : 'pointer'}"
-[disabled]="isTravelEndPassed(trip.travelEnd)">
-Refuel
-</button>
+              <button 
+                (click)="navigateToRefuel(trip.tripId)" 
+                class="action-button text-white font-bold py-2 px-4 rounded"
+                [ngStyle]="{'background-color': isTravelEndPassed(trip.travelEnd) ? 'grey' : '#10b981', 'cursor': isTravelEndPassed(trip.travelEnd) ? 'not-allowed' : 'pointer'}"
+                [disabled]="isTravelEndPassed(trip.travelEnd)">
+                Refuel
+              </button>
             </div>
           </td>
         </tr>
