@@ -7,6 +7,8 @@ export interface BookingModel {
   vehicleName: string;
   projectNumber?: number;
   reminderSent: boolean;
+  
+  statusId: number;
 
 }
 
