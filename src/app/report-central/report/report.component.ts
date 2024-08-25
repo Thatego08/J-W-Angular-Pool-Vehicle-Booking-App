@@ -43,7 +43,6 @@ export class ReportComponent implements OnInit {
     private reportService: ReportService,
     private tripService: TripService,
     private bookingService: BookingService,
-    private Service: BookingService,
     private authService: AuthService 
   ) {}
 

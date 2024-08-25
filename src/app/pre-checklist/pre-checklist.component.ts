@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PreChecklistService } from '../pre-checklist.service';
 
 @Component({
@@ -11,6 +11,7 @@ import { PreChecklistService } from '../pre-checklist.service';
 export class PreChecklistComponent implements OnInit {
   preChecklistForm: FormGroup;
   bookingId: number | null = null;
+  preChecklistId: number | null = null; // Store PreChecklistId
 
   // Checkbox definitions
   checkboxes = [
@@ -45,7 +46,7 @@ export class PreChecklistComponent implements OnInit {
     private router: Router
   ) {
     this.preChecklistForm = this.fb.group({
-      openingKms: [0],
+      openingKms: [0, Validators.required],
       oilLeaks: [false],
       fuelLevel: [false],
       mirrors: [false],
@@ -69,7 +70,8 @@ export class PreChecklistComponent implements OnInit {
       checkedByJWSecurity: [false],
       licenseDiskValid: [false],
       comments: [''],
-      additionalComments: ['']
+      additionalComments: [''],
+      preChecklistId: [null] // Add this field
     });
   }
 
@@ -85,9 +87,11 @@ export class PreChecklistComponent implements OnInit {
     this.preChecklistService.createPreChecklist(this.preChecklistForm.value)
       .subscribe(
         (response: any) => {
-          const preChecklistId = response.preChecklistId; // Adjust based on actual response
+          this.preChecklistId = response.preChecklistId; // Store the returned ID
+          this.preChecklistForm.get('preChecklistId')?.setValue(this.preChecklistId); // Set the hidden field
+
           if (this.bookingId) {
-            this.router.navigate(['/create-trip'], { queryParams: { preChecklistId: preChecklistId, bookingId: this.bookingId } });
+            this.router.navigate(['/create-trip'], { queryParams: { preChecklistId: this.preChecklistId, bookingId: this.bookingId } });
           }
         },
         (error) => {
