@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-create-post-check',
@@ -37,7 +39,7 @@ export class CreatePostCheckComponent {
     { id: 'LicenseDiskValid', label: 'License Disk Valid', formControlName: 'LicenseDiskValid' }
   ];
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router) {
     this.postCheckForm = this.fb.group({
       ClosingKms: [null, Validators.required],
       OilLeaks: [false],
@@ -107,24 +109,26 @@ export class CreatePostCheckComponent {
 
 
     // Make the API call
-    this.http.post('https://localhost:7041/api/PostCheck/CreatePostCheck', formData).subscribe({
-      next: (response) => {
-        console.log('Post check created successfully', response);
-        this.successMessage = 'Post check created successfully!';
-        // Clear the success message after a few seconds
-        setTimeout(() => this.successMessage = null, 5000);
-        // Optionally, you can reset the form and mediaFiles here if needed
-        this.postCheckForm.reset();
-        this.mediaFiles = [];
-      },
-      error: (error) => {
-        console.error('Error creating post check', error);
-        this.successMessage = null;
-      }
-    });
-  }
+  this.http.post('https://localhost:7041/api/PostCheck/CreatePostCheck', formData).subscribe({
+    next: (response) => {
+      console.log('Post check created successfully', response);
+      this.successMessage = 'Post check created successfully!';
+      
+      // Optionally, you can reset the form and mediaFiles here if needed
+      this.postCheckForm.reset();
+      this.mediaFiles = [];
 
-
+      // Redirect to the get-trip page after 2 seconds
+      setTimeout(() => {
+        this.router.navigate(['/get-trip']);
+      }, 2000);
+    },
+    error: (error) => {
+      console.error('Error creating post check', error);
+      this.successMessage = null;
+    }
+  });
+}
   checkAll(checked: boolean) {
     this.checkboxes.forEach(check => {
       this.postCheckForm.controls[check.formControlName].setValue(checked);
