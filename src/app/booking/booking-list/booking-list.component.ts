@@ -10,6 +10,7 @@ import { EditBookingComponent } from '../edit-booking/edit-booking.component';
   styleUrls: ['./booking-list.component.css']
 })
 export class BookingListComponent implements OnInit{
+  page: number = 1; // Default page number
 
   bookings: BookingModel[] = [];
   selectedBooking: BookingModel | null = null;
@@ -25,8 +26,8 @@ export class BookingListComponent implements OnInit{
     this.bookingService.getBookings().subscribe({
       next: (data: BookingModel[]) => {
         console.log('Bookings data:', data); // Check the data received
-        this.bookings = data;
-      },
+        this.bookings = data.sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime());
+     },
       error: (error) => {
         console.error('Error loading bookings:', error);
       }

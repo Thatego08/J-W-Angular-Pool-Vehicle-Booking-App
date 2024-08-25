@@ -7,8 +7,8 @@
 }
 
 .logo-image {
-  max-width: 5000px; /* Adjust maximum width as needed */
-  height: 150px;
+  max-width: 100%; /* Adjust maximum width as needed */
+  height: auto;
   margin: auto; /* Center align the container */
   padding: 20px; /* Add padding to create space inside the container */
   box-sizing: border-box; /* Ensure padding is included in the width calculation */

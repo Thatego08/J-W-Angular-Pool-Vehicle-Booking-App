@@ -81,9 +81,7 @@ import { VehicleModelComponent } from './vehicle/vehicle-model/vehicle-model.com
 import { StatusComponent } from './vehicle/status/status.component';
 import { LicenseDisksComponent } from './vehicle/license-disc/license-disc.component';
 import { ManageComponent } from './vehicle/manage/manage.component';
-
 import { InsuranceComponent } from './vehicle/insurance/insurance.component';
-
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ReportComponent } from './report-central/report/report.component';
@@ -94,8 +92,8 @@ import { MatCardModule } from '@angular/material/card';
 import { PreChecklistComponent } from './pre-checklist/pre-checklist.component';
 import { CreatePostCheckComponent } from './create-post-check/create-post-check.component';
 import { ViewPostCheckComponent } from './view-post-check/view-post-check.component';
-import { GetRefuelVehicleComponent } from './get-refuel-vehicle/get-refuel-vehicle.component'; // Import MatCardModule
-
+import { GetRefuelVehicleComponent } from './get-refuel-vehicle/get-refuel-vehicle.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -183,6 +181,7 @@ import { GetRefuelVehicleComponent } from './get-refuel-vehicle/get-refuel-vehic
     MatNativeDateModule,
     MatCardModule,
     MatFormFieldModule,
+    NgxPaginationModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
   ],
   providers: [

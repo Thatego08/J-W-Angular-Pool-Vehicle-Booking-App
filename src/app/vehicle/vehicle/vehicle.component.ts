@@ -16,6 +16,7 @@ import { VehicleModel } from '../../models/vehicle-model.model';
 })
 export class VehicleComponent implements OnInit {
 
+  page: number = 1; // Default page number
   vehicles: Vehicle[] = [];
   filteredVehicles: Vehicle[] = [];
   searchQuery: string = '';

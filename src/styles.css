@@ -62,7 +62,41 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
   }
-  
+
+  /* Page Styling  */
+/* Example styles for pagination controls */
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.pagination-controls .pagination {
+  display: flex;
+  gap: 5px;
+}
+
+.pagination-controls .page-item {
+  list-style: none;
+}
+
+.pagination-controls .page-link {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #007bff;
+}
+
+.pagination-controls .page-link:hover {
+  background-color: #f1f1f1;
+}
+
+.pagination-controls .active .page-link {
+  background-color: #007bff;
+  color: white;
+}
+
   /* Form styles */
   form {
     display: flex;

@@ -1,19 +1,24 @@
-<!-- Add your chart placeholders here -->
-<div>
-  <canvas id="vehicleStatusChart"></canvas>
-</div>
-<div>
-  <canvas id="vehicleMakeChart"></canvas>
-</div>
-<div>
-  <canvas id="bookingTypeChart"></canvas>
-</div>
-<div>
-  <canvas id="tripChart"></canvas>
-</div>
-<div>
-  <canvas id="bookingStatusChart"></canvas>
-</div>
-<div>
-  <canvas id="projectStatusChart"></canvas>
+<div class="charts-wrapper">
+  <button class="scroll-button left" (click)="scrollLeft()" >&#10094;</button>
+  <div class="charts-container">
+    <div class="chart-item">
+      <canvas id="vehicleStatusChart"></canvas>
+    </div>
+    <div class="chart-item">
+      <canvas id="vehicleMakeChart"></canvas>
+    </div>
+    <div class="chart-item">
+      <canvas id="bookingTypeChart"></canvas>
+    </div>
+    <div class="chart-item">
+      <canvas id="tripChart"></canvas>
+    </div>
+    <div class="chart-item">
+      <canvas id="bookingStatusChart"></canvas>
+    </div>
+    <div class="chart-item">
+      <canvas id="projectStatusChart"></canvas>
+    </div>
+  </div>
+  <button class="scroll-button right" (click)="scrollRight()" >&#10095;</button>
 </div>

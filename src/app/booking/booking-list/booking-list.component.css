@@ -1,35 +1,59 @@
+/* Ensure consistent container styling */
 .container {
   max-width: 1200px;
-  border: 2px solid lightblue; /* Light blue border for the container */
-  background-color: rgba(34, 7, 168, 0.874); /* Light blue background color for the container */
-  padding: 20px; /* Add padding to create space inside the container */
-  border-radius: 8px; /* Optional: Add rounded corners to the container */
+  margin: 20px auto; /* Center the container with margin */
+  padding: 20px; /* Ensure consistent padding */
+  background-color: #fff; /* Use a white background for clarity */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add subtle shadow for elevation */
+  border-radius: 8px; /* Rounded corners */
 
+  margin-top: 0rem; /* Add margin-top to push the container down from the top */
 }
 
+/* Adjust card styling for consistency */
 .card {
-  margin: 0 auto;
-  border: 3px solid #160257;
+  margin: 20px auto; /* Center align the card */
+  padding: 20px; /* Add padding inside the card */
+  border: 2px solid #ddd; /* Light gray border for consistency */
+  border-radius: 8px; /* Rounded corners */
+  background-color: #f9f9f9; /* Background color */
 }
 
+/* Align logo image consistently */
 .logo-image {
-  max-width: 5000px; /* Adjust maximum width as needed */
-  height: 150px;
-  margin: auto; /* Center align the container */
-  padding: 20px; /* Add padding to create space inside the container */
-  box-sizing: border-box; /* Ensure padding is included in the width calculation */
+  max-width: 100%; /* Ensure logo scales with container */
+  height: auto; /* Maintain aspect ratio */
+  margin: 0 auto; /* Center align the logo */
+  padding: 20px; /* Add padding around the logo */
+  display: block; /* Ensure the logo is displayed as a block element */
+  margin-top: 10rem; /* Add margin-top to push the logo down from the top */
 }
 
+/* Consistent card title styling */
 .card-title {
-  font-weight: bold; /* Make the 'Booking' header bold */
+  font-size: 1.5rem; /* Adjust font size */
+  font-weight: bold; /* Bold text for title */
+  margin-bottom: 10px; /* Space below title */
 }
 
+/* Adjust card text styling for consistency */
 .card-text strong {
-  font-weight: semi-bold; /* Make the labels less bold than the 'Booking' header */
+  font-weight: 600; /* Use a consistent weight */
+  display: block; /* Ensure labels are block elements */
+  margin-bottom: 5px; /* Space below labels */
 }
 
+/* Consistent button styling */
 .btn-edit {
-  background-color: rgb(7, 185, 7); /* Green background color */
-  border-color: green; /* Green border */
+  background-color: #28a745; /* Green background color */
+  border: none; /* Remove border */
   color: white; /* White text */
+  padding: 10px 15px; /* Add padding */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor */
+  font-size: 16px; /* Font size */
+}
+
+.btn-edit:hover {
+  background-color: #218838; /* Darker green on hover */
 }
