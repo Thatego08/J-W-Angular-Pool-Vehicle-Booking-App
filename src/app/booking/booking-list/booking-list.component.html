@@ -1,8 +1,7 @@
-
 <img src="assets/logo.png" alt="Logo" class="logo-image">
-<div class="container mt-4">
+<div class="container ">
   <div class="row">
-    <div class="col-lg-4 col-md-6 mb-4" *ngFor="let booking of bookings">
+    <div class="col-lg-4 col-md-6 mb-4" *ngFor="let booking of bookings | paginate: { itemsPerPage: 3, currentPage: page }">
       <div class="card h-100">
         <div class="card-body">
           <h4 class="card-title">Booking</h4>
@@ -11,17 +10,17 @@
           <p class="card-text"><strong>Project:</strong> {{ booking.projectNumber }}</p>
           <p class="card-text"><strong>Event:</strong> {{ booking.event }}</p>
           <p class="card-text"><strong>StartDate:</strong> {{ booking.startDate | date }}</p>
-          <!-- <p class="card-text"><strong>EndDate:</strong> {{ booking.endDate | date }}</p> -->
         </div>
         <div class="card-footer d-flex justify-content-between">
           <button class="btn btn-edit" (click)="openEditModal(booking)">Edit</button>
           <button class="btn btn-danger" (click)="cancelBooking(booking)">Cancel</button>
-          <!-- <button (click)="onDelete(booking.bookingID)" class="btn btn-danger">Delete</button> -->
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Pagination Controls -->
+  <pagination-controls (pageChange)="page = $event"></pagination-controls>
 </div>
 
 <!-- Modal for editing booking -->

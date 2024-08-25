@@ -25,6 +25,7 @@ export class DashboardComponent implements OnInit {
   currentDate: string = new Date().toISOString().split('T')[0];
 
   private charts: { [key: string]: Chart } = {};
+  private scrollAmount: number = 0;
 
   constructor(
     private reportService: ReportService
@@ -33,6 +34,40 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.loadReports();
     Chart.register(...registerables);
+    this.updateScrollAmount();
+    this.updateScrollButtons();
+  }
+
+  scrollLeft(): void {
+    const container = document.querySelector('.charts-container') as HTMLElement;
+    const scrollAmount = container.offsetWidth / 3;
+    container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    this.updateScrollButtons();
+  }
+
+  scrollRight(): void {
+    const container = document.querySelector('.charts-container') as HTMLElement;
+    const scrollAmount = container.offsetWidth / 3;
+    container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    this.updateScrollButtons();
+  }
+
+  private updateScrollButtons() {
+    const container = document.querySelector('.charts-container') as HTMLElement;
+    const maxScrollLeft = container.scrollWidth - container.clientWidth;
+    const isAtStart = this.isAtStart(container);
+    const isAtEnd = this.isAtEnd(container, maxScrollLeft);
+
+    document.querySelector('.scroll-button.left')!.setAttribute('disabled', isAtStart ? 'true' : 'false');
+    document.querySelector('.scroll-button.right')!.setAttribute('disabled', isAtEnd ? 'true' : 'false');
+  }
+
+  private isAtStart(container: HTMLElement): boolean {
+    return container.scrollLeft === 0;
+  }
+
+  private isAtEnd(container: HTMLElement, maxScrollLeft: number): boolean {
+    return container.scrollLeft >= maxScrollLeft;
   }
 
   loadReports(): void {
@@ -221,5 +256,10 @@ export class DashboardComponent implements OnInit {
     };
 
     this.createChart('projectStatusChart', data, options);
+  }
+
+  private updateScrollAmount() {
+    const container = document.querySelector('.charts-container') as HTMLElement;
+    this.scrollAmount = container.offsetWidth / 3;
   }
 }

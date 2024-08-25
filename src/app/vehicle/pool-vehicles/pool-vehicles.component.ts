@@ -16,6 +16,8 @@ export class PoolVehicleComponent implements OnInit {
   apiUrl = 'https://localhost:7041/api/Vehicle/GetAllVehicles';
   vehicles: Vehicle[] = [];
 
+  page: number = 1; // Default page number
+
   constructor(private vehicleService: VehicleService,
     private router: Router, private http: HttpClient,
     private dialog: MatDialog

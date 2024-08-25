@@ -12,6 +12,7 @@ export class BookingHistoryComponent implements OnInit {
   searchUsername: string = '';
   bookings: BookingModel[] = [];
   user: any; // Variable to store the logged-in user data
+  page: number = 1; // Default page number
 
   constructor(
     private bookingService: BookingService,
@@ -41,7 +42,7 @@ export class BookingHistoryComponent implements OnInit {
     if (this.searchUsername) {
       this.bookingService.searchBookingHistory(this.searchUsername)
         .subscribe(response => {
-          this.bookings = response.length > 0 ? response : [];
+          this.bookings = response.sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime());
         }, error => {
           console.error('Error fetching booking history', error);
           this.bookings = [];

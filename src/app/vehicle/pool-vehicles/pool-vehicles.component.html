@@ -28,13 +28,14 @@
   </div>
   <h1 style="font-family: 'Times New Roman', Times, serif;"> Pool Vehicles </h1>
   <button mat-raised-button
+  class="ml-44"
       matTooltip="To book a vehicle, please click on the Complete checklist button "
       aria-label="Button that displays a tooltip when focused or hovered over">
       Hint
     </button>
-  <div class="row" *ngIf="vehicles">
-    <div class="col-md-4" *ngFor="let vehicle of vehicles">
-      <div class="card mb-3">
+  <div class="row ml-16" *ngIf="vehicles">
+    <div class="col-md-4" *ngFor="let vehicle of vehicles | paginate: { itemsPerPage: 3, currentPage: page }">
+      <div class="card  mb-3">
         <div class="card-body">
           <h5 class="card-header text-white uppercase" style="background-color: #1a365d; color: white;">{{ vehicle.name }}</h5>
           <img src="assets/logo.png" alt="Logo" class="logo">
@@ -52,5 +53,9 @@
         </div>
       </div>
     </div>
+
+    
+  <!-- Pagination Controls -->
+  <pagination-controls (pageChange)="page = $event"></pagination-controls>
   </div>
   

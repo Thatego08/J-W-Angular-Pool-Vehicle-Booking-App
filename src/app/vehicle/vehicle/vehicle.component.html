@@ -177,7 +177,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let vehicle of filteredVehicles">
+        <tr *ngFor="let vehicle of filteredVehicles | paginate: { itemsPerPage: 6, currentPage: page }">
           <td>{{ vehicle.vehicleID }}</td>
           <td>{{ vehicle.name }}</td>
           <td>{{ vehicle.registrationNumber }}</td>
@@ -195,6 +195,10 @@
         </tr>
       </tbody>
     </table>
+
+    
+  <!-- Pagination Controls -->
+  <pagination-controls (pageChange)="page = $event"></pagination-controls>
   </div>
 
 
