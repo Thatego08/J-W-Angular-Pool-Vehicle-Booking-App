@@ -111,7 +111,14 @@ export class AddBookingComponent implements OnInit {
           this.updateVehicleStatus(this.bookingForm.value.vehicleName, 2);
           this.notificationMessage = 'Your Booking has successfully been made!';
           this.isSuccess = true;
-          this.router.navigate(['/booking-list']);
+
+          //Delay for notification purposes
+          //this.router.navigate(['/booking-history']);
+          setTimeout(() => {
+            this.router.navigate(['/booking-history']);
+          }, 3000); // 3 seconds delay
+
+
         },
         error: (error) => {
           console.error('Error Response:', error);
@@ -122,6 +129,9 @@ export class AddBookingComponent implements OnInit {
             // Handle other error types or consider them successful
             this.notificationMessage = 'Your Booking has successfully been made, but there were some issues.';
             this.isSuccess = true;
+            setTimeout(() => {
+              this.router.navigate(['/booking-history']);
+            }, 3000);
             //this.router.navigate(['/booking-list']);
           }
         }
