@@ -7,30 +7,40 @@
         <div class="row mb-3">
           <label for="name" class="col-sm-2 col-form-label">Name</label>
           <input style="border-color: darkgray;" type="text" class="form-control" id="name" name="name" [(ngModel)]="updatedDriver.name" required>
+          <div *ngIf="form.submitted && !getControl(form, 'name')?.valid" class="text-danger">Name is required</div>
         </div>
 
         <div class="row mb-3">
           <label for="surname" class="col-sm-2 col-form-label">Surname</label>
           <input style="border-color: darkgray;" type="text" class="form-control" id="surname" name="surname" [(ngModel)]="updatedDriver.surname" required>
+          <div *ngIf="form.submitted && !getControl(form, 'surname')?.valid" class="text-danger">Surname is required</div>
         </div>
 
         <div class="row mb-3">
           <label for="email" class="col-sm-2 col-form-label">Email</label>
-          <input style="border-color: darkgray;" type="text" class="form-control" id="email" name="email" [(ngModel)]="updatedDriver.email" required>
+          <input style="border-color: darkgray;" type="email" class="form-control" id="email" name="email" [(ngModel)]="updatedDriver.email" required>
+          <div *ngIf="form.submitted && !getControl(form, 'email')?.valid" class="text-danger">Valid email is required</div>
         </div>
 
         <div class="row mb-3">
           <label for="userName" class="col-sm-2 col-form-label">User Name</label>
           <input style="border-color: darkgray;" type="text" class="form-control" id="userName" name="userName" [(ngModel)]="updatedDriver.userName" required>
+          <div *ngIf="form.submitted && !getControl(form, 'userName')?.valid" class="text-danger">User name is required</div>
         </div>
 
         <div class="row mb-3">
           <label for="phoneNumber" class="col-sm-2 col-form-label">Phone Number</label>
           <input style="border-color: darkgray;" type="text" class="form-control" id="phoneNumber" name="phoneNumber" [(ngModel)]="updatedDriver.phoneNumber" required>
+          <div *ngIf="form.submitted && !getControl(form, 'phoneNumber')?.valid" class="text-danger">Phone number is required</div>
         </div>
 
-        <button type="submit" class="btn-save action-button bg-blue-500 hover:bg-blue-700">Save</button>
+        <button type="submit" class="btn-save action-button bg-blue-500 hover:bg-blue-700" [disabled]="form.invalid || loading">Save</button>
         <button type="button" class="btn-cancel action-button bg-red-500 hover:bg-red-700" (click)="cancel()">Cancel</button>
+        
+        <!-- Loading Spinner -->
+        <div *ngIf="loading" class="spinner-border text-primary mt-3" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
       </form>
     </div>
   </div>

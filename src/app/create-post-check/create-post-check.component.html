@@ -31,7 +31,9 @@
         <label for="MediaFiles">Upload Files:</label>
         <input type="file" id="MediaFiles" (change)="onFileChange($event)" multiple>
       </div>
-      
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
       <div class="form-group">
         <label for="MediaDescription">Media Description:</label>
         <input type="text" id="MediaDescription" formControlName="MediaDescription">
