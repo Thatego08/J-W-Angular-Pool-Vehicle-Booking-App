@@ -4,22 +4,22 @@
     <form [formGroup]="tripForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label for="vehicleName">Vehicle Name</label>
-        <input id="vehicleName" formControlName="vehicleName" class="form-control" />
+        <input id="vehicleName" formControlName="vehicleName" class="form-control" placeholder="Enter Vehicle Name" />
       </div>
   
       <div class="form-group">
         <label for="location">Location</label>
-        <input id="location" formControlName="location" class="form-control" />
+        <input id="location" formControlName="location" class="form-control"  placeholder="Enter Trip Location" />
       </div>
   
       <div class="form-group">
         <label for="comment">Comment</label>
-        <textarea id="comment" formControlName="comment" class="form-control"></textarea>
+        <textarea id="comment" formControlName="comment" class="form-control"  placeholder="Enter Trip Comments"></textarea>
       </div>
   
       <div class="form-group">
         <label for="travelStart">Travel Start</label>
-        <input id="travelStart" type="datetime-local" formControlName="travelStart" class="form-control" />
+        <input id="travelStart" type="datetime-local" formControlName="travelStart" class="form-control"  />
       </div>
   
       <div class="form-group">
