@@ -11,6 +11,7 @@ export class CreatePostCheckComponent {
   postCheckForm: FormGroup;
   mediaFiles: File[] = [];
   successMessage: string | null = null; 
+  errorMessage: string | null = null;
   checkboxes = [
     { id: 'OilLeaks', label: 'Oil Leaks', formControlName: 'OilLeaks' },
     { id: 'FuelLevel', label: 'Fuel Level', formControlName: 'FuelLevel' },
@@ -68,12 +69,28 @@ export class CreatePostCheckComponent {
   }
 
   onFileChange(event: any) {
-    if (event.target.files.length > 0) {
-      this.mediaFiles = event.target.files;
+    const allowedImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
+    this.errorMessage = null; // Reset error message
+    this.mediaFiles = []; // Reset mediaFiles array
+
+    for (let i = 0; i < event.target.files.length; i++) {
+      const file = event.target.files[i];
+
+      if (allowedImageTypes.includes(file.type)) {
+        this.mediaFiles.push(file);
+      } else {
+        this.errorMessage = `Invalid file type: ${file.name}. Only images are allowed.`;
+        break; // Stop processing if an invalid file is found
+      }
     }
   }
 
   submitForm() {
+    if (this.errorMessage) {
+      // Don't submit if there's an error
+      return;
+    }
+
     const formData = new FormData();
 
     // Append all form fields
@@ -87,6 +104,7 @@ export class CreatePostCheckComponent {
         formData.append('MediaFiles', this.mediaFiles[i], this.mediaFiles[i].name);
       }
     }
+
 
     // Make the API call
     this.http.post('https://localhost:7041/api/PostCheck/CreatePostCheck', formData).subscribe({

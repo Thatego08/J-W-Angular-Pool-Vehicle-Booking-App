@@ -28,16 +28,11 @@ export class DriverService {
     return this.http.post(`${this.baseUrl}/RegisterDriver`, driver);
   }
 
-  updateDriver(userName: string, updatedDriver: DriverModel): Observable<DriverModel> {
-    const url = `${this.baseUrl}driver/Edit-Driver-User/${userName}`;
-    return this.http.put<DriverModel>(url, updatedDriver, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    }).pipe(
-      catchError(this.handleError)
-    );
+  updateDriver(userName: string, driver: DriverModel): Observable<any> {
+    return this.http.put(`https://localhost:7041/api/Driver/UpdateDriver/${userName}`, driver);
   }
+  
+  
   deleteDriver(userName: string): Observable<any> {
     return this.http.delete(`${this.baseUrl}/DeleteDriver/${userName}`);
   }
