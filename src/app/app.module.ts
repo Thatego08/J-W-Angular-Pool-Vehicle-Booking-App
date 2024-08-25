@@ -94,7 +94,11 @@ import { CreatePostCheckComponent } from './create-post-check/create-post-check.
 import { ViewPostCheckComponent } from './view-post-check/view-post-check.component';
 import { GetRefuelVehicleComponent } from './get-refuel-vehicle/get-refuel-vehicle.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+
+import { HomeComponent } from './home/home.component';
+
 import { HelpDocumentComponent } from './help-document/help-document.component';
+
 
 
 @NgModule({
@@ -165,7 +169,11 @@ import { HelpDocumentComponent } from './help-document/help-document.component';
     CreatePostCheckComponent,
     ViewPostCheckComponent,
     GetRefuelVehicleComponent,
+
+    HomeComponent,
+
     HelpDocumentComponent
+
   ],
   imports: [
     BrowserModule,
