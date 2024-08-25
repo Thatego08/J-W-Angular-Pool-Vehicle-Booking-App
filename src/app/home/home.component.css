@@ -1,0 +1,44 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    color: #343a40;
+  }
+  
+  .container {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  .jumbotron {
+    background-color: rgba(0, 123, 255, 0.7); /* Adding a semi-transparent overlay */
+    color: white;
+    padding: 4rem 2rem;
+  }
+  
+  .jumbotron h1 {
+    font-size: 3rem;
+    font-weight: bold;
+  }
+  
+  .jumbotron p {
+    font-size: 1.5rem;
+  }
+  
+  section img {
+    max-height: 300px;
+  }
+  
+  section h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  footer {
+    background-color: #343a40;
+    color: white;
+    padding: 1rem 0;
+  }
+  

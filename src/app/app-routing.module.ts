@@ -67,12 +67,12 @@ import { AuthComponent } from './user/auth/auth.component';
 import { PreChecklistComponent } from './pre-checklist/pre-checklist.component';
 import { ViewPostCheckComponent } from './view-post-check/view-post-check.component';
 import { CreatePostCheckComponent } from './create-post-check/create-post-check.component';
-
+import { HomeComponent } from './home/home.component';
 
 
 
 const routes: Routes = [
- {path:'', pathMatch:'full', redirectTo: '/auth'} ,
+ {path:'', pathMatch:'full', redirectTo: '/home'} ,
  {path: 'driver', component:DriverComponent, canActivate: [AuthGuard]},
  {path: 'admin', component:AdminComponent,canActivate:[AuthGuard]},
  {path: 'register-driver', component:RegisterDriverComponent},
@@ -112,6 +112,8 @@ const routes: Routes = [
  {path: 'pool-vehicle', component: PoolVehicleComponent,canActivate: [AuthGuard]},
  {path: 'vehicle-details', component: VehicleDetailsComponent,canActivate: [AuthGuard]},
 
+ {path: 'home', component: HomeComponent},
+ 
  //Colours
  {path: 'colour', component: ColourComponent },
  {path: 'add-colour', component: AddColourComponent },

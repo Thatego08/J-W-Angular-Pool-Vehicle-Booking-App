@@ -1,9 +1,16 @@
 <nav class="navbar bg-gray-800 min-h-20 z-50" *ngIf="authService.isLoggedIn | async">
   
   <ul class="navbar-list justify-center content-center align-middle flex flex-wrap pb-24">
-    <li class="navbar-item   hover:bg-gray-700">
-      <a routerLink="/driver">Drivers</a>
+    
+    <li class="navbar-item dropdown  hover:bg-gray-700">
+      <a class="dropdown-toggle py-1">Bookings</a>
+      <ul class="dropdown-menu">
+        <li><a class="hover:bg-gray-700"  routerLink="/booking-list">My Bookings</a></li>
+        <li><a class="hover:bg-gray-700" routerLink="/add-booking">Make New Booking</a></li>
+        <li><a class="hover:bg-gray-700" routerLink="/booking-history">Booking History</a></li>
+      </ul>
     </li>
+
     <li class="navbar-item dropdown justify-center content-center align-middle flex hover:bg-gray-700">
       <a class="dropdown-toggle py-1" routerLink="/vehicles">Vehicles </a>
       <ul class="dropdown-menu">
@@ -25,22 +32,18 @@
       </ul>
     </li>
 
-    <li class="navbar-item dropdown  hover:bg-gray-700">
-      <a class="dropdown-toggle py-1">Bookings</a>
-      <ul class="dropdown-menu">
-        <li><a class="hover:bg-gray-700"  routerLink="/booking-list">My Bookings</a></li>
-        <li><a class="hover:bg-gray-700" routerLink="/add-booking">Make New Booking</a></li>
-        <li><a class="hover:bg-gray-700" routerLink="/booking-history">Booking History</a></li>
-      </ul>
-    </li>
+    
 
     <li class="navbar-item dropdown  hover:bg-gray-700">
       <a class="dropdown-toggle py-1">Admin Section</a>
       <ul class="dropdown-menu">
         <li><a class="hover:bg-gray-700" routerLink="/admin">Manage Admins</a></li>
+        <li><a class="hover:bg-gray-700"routerLink="/driver">Manage Drivers</a></li>
         <li><a class="hover:bg-gray-700"routerLink="/project">Manage Projects</a></li>
         <li><a class="hover:bg-gray-700"routerLink="/rate">Manage Rates</a></li>
         <li><a class="hover:bg-gray-700"routerLink="/dashboard">Dashboard</a></li>
+        <li><a class="hover:bg-gray-700"routerLink="/app-report">Report</a></li>
+        <li><a class="hover:bg-gray-700"routerLink="/view-post-check">PostChecklists</a></li>
         
       </ul>
     </li>
@@ -53,12 +56,7 @@
       </ul>
     </li>
 
-    <li class="navbar-item  hover:bg-gray-700">
-      <a class="hover:bg-gray-700" routerLink="/app-report">Reports</a>
-    </li>
-    <li class="navbar-item  hover:bg-gray-700">
-      <a class="hover:bg-gray-700" routerLink="/view-post-check">PostCheckLists</a>
-    </li>
+ 
    
     <!-- Add more navigation items as needed -->
   </ul>
