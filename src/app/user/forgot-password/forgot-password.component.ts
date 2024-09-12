@@ -14,6 +14,9 @@ export class ForgotPasswordComponent {
   resetPasswordForm: FormGroup;
   step: number = 1; // Tracks which step the user is on (1: Submit Email, 2: Enter OTP, 3: Reset Password)
   token: string | null=null;
+  notificationMessage: string | null = null;
+  isSuccess: boolean = true;
+
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.emailForm = this.fb.group({
@@ -35,6 +38,8 @@ export class ForgotPasswordComponent {
       this.authService.forgotPassword(this.emailForm.value).subscribe(
         res => {
           console.log('OTP sent successfully', res);
+          
+          this.notificationMessage = 'OTP sent successfully';
           this.step = 2; // Move to step 2 (Enter OTP)
         },
         err => console.error('Error sending OTP', err)
@@ -54,6 +59,8 @@ export class ForgotPasswordComponent {
       this.authService.verifyOtp(data).subscribe(
         res => {
           console.log('OTP verified successfully', res);
+          
+          this.notificationMessage = 'OTP verified successfully';
           this.token = res.token;
           console.log('Token:', this.token);
           this.step = 3; // Move to step 3 (Reset Password)
@@ -76,7 +83,13 @@ export class ForgotPasswordComponent {
       this.authService.resetPassword(data).subscribe(
         res => {
           console.log('Password reset successful', res);
-          this.router.navigate(['/app-login']);
+
+          
+          this.notificationMessage = 'Your Password has been reset!';
+            //Delay for notification purposes
+            setTimeout(() => {
+              this.router.navigate(['/auth']);
+            }, 3000); // 3 seconds delay
         },
         err => console.error('Error resetting password', err)
       );
