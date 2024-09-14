@@ -1,0 +1,25 @@
+::ng-deep button.mat-button {
+    color: white; /* Text color */
+    background-color: #96b9df91; /* Button background */
+  }
+  
+  ::ng-deep button.mat-button:hover {
+    background-color: #8ab4e085; /* Darker background on hover */
+    color: white; /* Ensure text stays white on hover */
+  }
+  
+  ::ng-deep button.mat-button:focus {
+    background-color: #8ab4e085; /* Keep the same hover background for focus state */
+  }
+
+  ::ng-deep button.mat-stroked-button {
+    border-color: #007bff; /* Border color */
+    color: #007bff; /* Text color */
+  }
+  
+  ::ng-deep button.mat-stroked-button:hover {
+    background-color: rgba(0, 123, 255, 0.1); /* Light blue background on hover */
+    border-color: #0056b3; /* Darker border on hover */
+  }
+  
+  

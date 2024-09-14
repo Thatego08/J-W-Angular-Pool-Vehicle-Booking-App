@@ -98,6 +98,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { HomeComponent } from './home/home.component';
 
 import { HelpDocumentComponent } from './help-document/help-document.component';
+import { ProfileEditComponent } from './user/profile-edit/profile-edit.component';
 
 
 
@@ -172,7 +173,8 @@ import { HelpDocumentComponent } from './help-document/help-document.component';
 
     HomeComponent,
 
-    HelpDocumentComponent
+    HelpDocumentComponent,
+      ProfileEditComponent
 
   ],
   imports: [

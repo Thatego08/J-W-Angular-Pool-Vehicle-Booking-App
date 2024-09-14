@@ -53,6 +53,11 @@ export class AuthService {
       );
   }
 
+  // Update user profile
+  updateUserProfile(userName: string, profileData: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/update-user?userName=${userName}`, profileData);
+  }
+  
   logout(): Observable<any> {
 
     this.loggedIn.next(false);

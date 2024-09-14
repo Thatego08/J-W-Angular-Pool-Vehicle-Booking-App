@@ -6,7 +6,20 @@
     <p><strong>Name:</strong> {{user.name}}</p>
     <p><strong>Surname:</strong> {{user.surname}} </p>
     <p><strong>Role:</strong> {{user.role}}</p>
-  </div>
+
+
+     <!-- Edit Button -->
+  <button mat-stroked-button color="primary" (click)="openEditModal()">Update Password</button>
+</div>
+
+<!-- Error message -->
+<div *ngIf="errorMessage">
+  <p>Error: {{errorMessage}}</p>
+</div>
+
+<app-notifications *ngIf="notificationMessage" [message]="notificationMessage" [isSuccess]="isSuccess"></app-notifications>
+
+  
   <!-- <div *ngIf="errorMessage">
     <p>Error: {{errorMessage}}</p>
   </div> -->
