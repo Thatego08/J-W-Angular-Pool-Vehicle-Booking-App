@@ -85,6 +85,15 @@ export class HelpService {
       'As the administrators, you are able to see any issues reported through the use of media by scrolling to the right of the screen and clicking on each picture and downloading it. '
     ]);
 
+    this.helpContents.set('manage-vehicle', [
+      'This page is for administrators.',
+      'You have access to generate various administrative tasks here.',
+      'Administrators can add to the various vehicle attributes except for the Status attribute which are set in stone.',
+      'View ".." allows you to view the list of the elements. ',
+      'Manage "..." allows you to edit or delete.'
+
+    ]);
+
     // Add more help contents for other screens
   }
 
