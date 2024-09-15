@@ -8,6 +8,8 @@ import { Admin } from '../models/admin';
 })
 export class AdminService {
   private baseUrl = 'https://localhost:7041/api/Admin'; // Update with your actual API URL
+  private caseUrl = 'https://localhost:7041/api/Admin'; // Update with your actual API URL
+  
 
   constructor(private http: HttpClient) { }
 
@@ -50,6 +52,9 @@ export class AdminService {
     );
   }
 
+  updateOtpTimer(data: { expirationTimeInMinutes: number }) {
+    return this.http.post(`${this.baseUrl}/update-otp-timer`, data);
+  }
   // Error handling
   private handleError(error: any): Observable<never> {
     console.error(error);

@@ -1,0 +1,10 @@
+<div>
+    <h2>OTP Expiration Settings</h2>
+    <form (ngSubmit)="updateOtpExpiration()">
+      <label for="otpExpiration">OTP Expiration Time (Minutes):</label>
+      <input type="number" id="otpExpiration" [(ngModel)]="otpExpiration" name="otpExpiration" required>
+      <button type="submit">Update Expiration</button>
+    </form>
+    <p>Current Expiration: {{ currentExpiration }} minutes</p>
+  </div>
+  

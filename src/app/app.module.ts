@@ -96,6 +96,14 @@ import { GetRefuelVehicleComponent } from './get-refuel-vehicle/get-refuel-vehic
 import { NgxPaginationModule } from 'ngx-pagination';
 import { HelpComponent } from './app/help/help.component';
 
+import { HomeComponent } from './home/home.component';
+
+import { HelpDocumentComponent } from './help-document/help-document.component';
+import { ProfileEditComponent } from './user/profile-edit/profile-edit.component';
+import { AdminSectionComponent } from './Admin/admin-section/admin-section.component';
+import { OTPComponent } from './Admin/otp/otp.component';
+
+
 
 @NgModule({
   declarations: [
@@ -165,7 +173,15 @@ import { HelpComponent } from './app/help/help.component';
     CreatePostCheckComponent,
     ViewPostCheckComponent,
     GetRefuelVehicleComponent,
-    HelpComponent
+
+    HomeComponent,
+
+    HelpDocumentComponent,
+      ProfileEditComponent,
+      AdminSectionComponent,
+      OTPComponent
+
+
   ],
   imports: [
     BrowserModule,

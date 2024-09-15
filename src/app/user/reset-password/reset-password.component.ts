@@ -17,6 +17,8 @@ export class ResetPasswordComponent implements OnInit {
   token!: string;
   email!: string;
 
+  notificationMessage: string | null = null;
+  isSuccess: boolean = true;
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
@@ -41,9 +43,18 @@ export class ResetPasswordComponent implements OnInit {
       this.authService.resetPassword(this.resetPasswordForm.value).subscribe(
         res => {
           console.log('Password reset successfully', res);
-          this.router.navigate(['/login']);
+          
+          this.notificationMessage = 'Your Password has been reset!';
+         
+          //this.router.navigate(['/auth']);
+
+            //Delay for notification purposes
+          setTimeout(() => {
+            this.router.navigate(['/auth']);
+          }, 3000); // 3 seconds delay
         },
         err => console.error('Error resetting password', err)
+        
       );
     }
   }

@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { UserService } from '../user.service';
 import { User } from '../../models/user';
 import { AuthService } from '../auth.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ProfileEditComponent } from '../profile-edit/profile-edit.component';
 
 @Component({
   selector: 'app-profile',
@@ -13,7 +15,11 @@ export class ProfileComponent implements OnInit{
   profileData: any = {};
   user:any;
   errorMessage: string | null = null;
-  constructor(private authService: AuthService, private router: Router) { }
+  
+  notificationMessage: string | null = null;
+  isSuccess: boolean = true;
+  constructor(private authService: AuthService, private router: Router, 
+    private dialog: MatDialog) { }
 
   ngOnInit(): void {
    this.loadUserProfile();
@@ -33,6 +39,38 @@ export class ProfileComponent implements OnInit{
           this.router.navigate(['/auth']);
         }}
     );
+  }
+
+  openEditModal(): void {
+    const dialogRef = this.dialog.open(ProfileEditComponent, {
+      width: '400px',
+      data: { ...this.user }  // Pass user data to the modal
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        // Call the API to update the user's profile
+        this.authService.updateUserProfile(this.user.userName, result).subscribe(
+          () => {
+            
+          this.notificationMessage = 'Your password has been updated successfully';
+          this.isSuccess= true;
+             // Reload profile data after successful update
+            //Delay for notification purposes
+            setTimeout(() => {
+              //this.router.navigate(['/auth']);
+              this.loadUserProfile(); 
+            }, 3000); // 3 seconds delay
+          },
+          (error) => {
+            this.notificationMessage =  'Your password was not updated, please try again';
+            this.isSuccess = false;
+            
+            console.error('Error updating profile', error);
+          }
+        ),3000;
+      }
+    });
   }
 
   logout() {

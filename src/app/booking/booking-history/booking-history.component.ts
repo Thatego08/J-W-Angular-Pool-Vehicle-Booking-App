@@ -54,8 +54,8 @@ export class BookingHistoryComponent implements OnInit {
     this.router.navigate(['/pre-checklist'], { queryParams: { bookingId: bookingID } });
   }
 
-  isEndDatePassed(endDate: Date): boolean {
+  isEndDatePassed(startDate: Date): boolean {
     const currentDate = new Date();
-    return new Date(endDate) < currentDate;
+    return new Date(startDate) > currentDate;
   }
 }
