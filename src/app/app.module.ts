@@ -99,6 +99,8 @@ import { HomeComponent } from './home/home.component';
 
 import { HelpDocumentComponent } from './help-document/help-document.component';
 import { ProfileEditComponent } from './user/profile-edit/profile-edit.component';
+import { AdminSectionComponent } from './Admin/admin-section/admin-section.component';
+import { OTPComponent } from './Admin/otp/otp.component';
 
 
 
@@ -174,7 +176,9 @@ import { ProfileEditComponent } from './user/profile-edit/profile-edit.component
     HomeComponent,
 
     HelpDocumentComponent,
-      ProfileEditComponent
+      ProfileEditComponent,
+      AdminSectionComponent,
+      OTPComponent
 
   ],
   imports: [
