@@ -77,7 +77,7 @@ export class EditVehicleComponent implements OnInit {
             licenseExpiryDate: new Date(this.vehicle.licenseExpiryDate).toISOString().substring(0, 10)
           });
 
-          // Load vehicle models after vehicle data is fetched
+          // Load dropdown data after vehicle data is fetched
           this.loadVehicleData();
         });
       }
@@ -109,8 +109,14 @@ export class EditVehicleComponent implements OnInit {
   }
 
   filterVehicleModels(vehicleMakeID: number | null): void {
-    if (vehicleMakeID !== null && this.vehicleModels) {
-      this.filteredVehicleModels = this.vehicleModels.filter(model => model.vehicleMakeID === vehicleMakeID);
+    if (vehicleMakeID !== null) {
+      this.vehicleService.getVehicleModelsByMake(vehicleMakeID).subscribe(models => {
+        this.filteredVehicleModels = models;
+        // Set the vehicle model to null if the selected model is not available
+        if (this.editVehicleForm.get('vehicleModelID')?.value && !this.filteredVehicleModels.some(model => model.vehicleModelID === this.editVehicleForm.get('vehicleModelID')?.value)) {
+          this.editVehicleForm.get('vehicleModelID')?.setValue(null);
+        }
+      });
     } else {
       this.filteredVehicleModels = [];
     }

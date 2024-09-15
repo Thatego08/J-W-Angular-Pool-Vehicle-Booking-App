@@ -94,6 +94,7 @@ import { CreatePostCheckComponent } from './create-post-check/create-post-check.
 import { ViewPostCheckComponent } from './view-post-check/view-post-check.component';
 import { GetRefuelVehicleComponent } from './get-refuel-vehicle/get-refuel-vehicle.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { HelpComponent } from './app/help/help.component';
 
 import { HomeComponent } from './home/home.component';
 
@@ -179,6 +180,7 @@ import { OTPComponent } from './Admin/otp/otp.component';
       ProfileEditComponent,
       AdminSectionComponent,
       OTPComponent
+
 
   ],
   imports: [

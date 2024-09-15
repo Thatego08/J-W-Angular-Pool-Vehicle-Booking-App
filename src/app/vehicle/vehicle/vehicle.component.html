@@ -1,115 +1,4 @@
 
-
-<!-- <div class="header-container">
-  <img src="assets/logo.png" alt="Logo" class="logo">
-
-</div> -->
-
-
-
-<!-- <div class="menu-bar" style="background-color: #1a365d;">
-    <ul>
-      <li><a routerLink="/pool-vehicles" class="text-white uppercase text-sm" >VEHICLES</a></li>
-      <li><a routerLink="/pool-vehicle" class="text-white uppercase text-sm">Pool Vehicles</a></li>
-      <li><a routerLink="/manage-vehicle" class="text-white uppercase text-sm">Manage Vehicles <i class="fas fa-caret-down"></i></a>
-          <div class="dropdown-menu">
-              <ul>
-                <li><a routerLink="/colour">Colours</a></li>
-                <li><a routerLink="/fuel-type">Fuel Types</a></li>
-                <li><a routerLink="/insurance">Insurance Covers</a></li>
-                <li><a routerLink="/vehicle-make">Vehicle Makes</a></li>
-                <li><a routerLink="/vehicle-model">Vehicle Models</a></li>
-                <li><a routerLink="/status">Status</a></li>
-              </ul>
-            </div>
-      </li>
-      <li><a routerLink="/license-disks" class="text-white uppercase text-sm">License Discs</a>
-      </li>
-      <li><a routerLink="/service" class="text-white uppercase text-sm">Service</a></li>
-     
-    </ul>
-  </div> -->
-  
-  <div class="header-container">
-    <img src="assets/logo.png" alt="Logo" class="logo">
-  </div>
-<!-- 
-  <div>
-    <input type="text" [(ngModel)]="searchQuery" (ngModelChange)="onSearchQueryChange()" placeholder="Search vehicles">
-    
-    <div>
-      <label for="make">Vehicle Make:</label>
-      <select id="make" [(ngModel)]="selectedMakeId" (change)="onFilterChange()">
-        <option [ngValue]="null">All Makes</option>
-        <option *ngFor="let make of vehicleMakes" [value]="make.vehicleMakeID">{{ make.name }}</option>
-      </select>
-    </div>
-  
-    <div>
-      <label for="colour">Colour:</label>
-      <select id="colour" [(ngModel)]="selectedColourId" (change)="onFilterChange()">
-        <option [ngValue]="null">All Colours</option>
-        <option *ngFor="let colour of colours" [value]="colour.id">{{ colour.name }}</option>
-      </select>
-    </div>
-  
-    <div>
-      <label for="fuel-type">Fuel Type:</label>
-      <select id="fuel-type" [(ngModel)]="selectedFuelTypeId" (change)="onFilterChange()">
-        <option [ngValue]="null">All Fuel Types</option>
-        <option *ngFor="let fuelType of fuelTypes" [value]="fuelType.id">{{ fuelType.fuelName }}</option>
-      </select>
-    </div>
-  
-    <div>
-      <label for="insurance-cover">Insurance Cover:</label>
-      <select id="insurance-cover" [(ngModel)]="selectedInsuranceCoverId" (change)="onFilterChange()">
-        <option [ngValue]="null">All Insurance Covers</option>
-        <option *ngFor="let cover of insuranceCovers" [value]="cover.insuranceCoverId">{{ cover.insuranceCoverName }}</option>
-      </select>
-    </div>
-  
-<button routerLink="/add-vehicle">Add Vehicle </button>
-
-  <div class="trips-list">
-    <h2>All Vehicles</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Vehicle ID</th>
-          <th>Name</th>
-          <th>Registration Number</th>
-          <th>Date Acquired</th>
-          <th>License Expiry Date</th>
-          <th>VIN</th>
-          <th>Engine No</th>
-          <th>Status</th>
-          <th>Actions</th> 
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let vehicle of vehicles">
-          <td>{{ vehicle.vehicleID }}</td>
-          <td>{{ vehicle.name }}</td>
-          <td>{{ vehicle.registrationNumber }}</td>
-          <td>{{ vehicle.dateAcquired | date: 'yyyy-MMM-dd' }}</td>
-          <td>{{ vehicle.licenseExpiryDate | date: 'yyyy-MMM-dd' }}</td>
-          <td>{{ vehicle.vin }}</td>
-          <td>{{ vehicle.engineNo }}</td>
-          <td>{{ vehicle.status?.name }}</td>
-          <td>
-            <button (click)="editVehicle(vehicle.vehicleID)" class="action-button bg-green-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-            Edit 
-          </button>
-            <button (click)="deleteVehicle(vehicle.vehicleID)" class="action-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-              Delete
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-   -->
   
    <div class="search-filter-container">
     <input 
@@ -122,44 +11,17 @@
       
     >
     
-    <!-- <div class="filter-group">
-      <label for="make">Vehicle Make:</label>
-      <select id="make" [(ngModel)]="selectedMakeId" (change)="onFilterChange()">
-        <option [ngValue]="null">All Makes</option>
-        <option *ngFor="let make of vehicleMakes" [value]="make.vehicleMakeID">{{ make.name }}</option>
-      </select>
-    </div>
-  
-    <div class="filter-group">
-      <label for="colour">Colour:</label>
-      <select id="colour" [(ngModel)]="selectedColourId" (change)="onFilterChange()">
-        <option [ngValue]="null">All Colours</option>
-        <option *ngFor="let colour of colours" [value]="colour.id">{{ colour.name }}</option>
-      </select>
-    </div>
-  
-    <div class="filter-group">
-      <label for="fuel-type">Fuel Type:</label>
-      <select id="fuel-type" [(ngModel)]="selectedFuelTypeId" (change)="onFilterChange()">
-        <option [ngValue]="null">All Fuel Types</option>
-        <option *ngFor="let fuelType of fuelTypes" [value]="fuelType.id">{{ fuelType.fuelName }}</option>
-      </select>
-    </div>
-  
-    <div class="filter-group">
-      <label for="insurance-cover">Insurance Cover:</label>
-      <select id="insurance-cover" [(ngModel)]="selectedInsuranceCoverId" (change)="onFilterChange()">
-        <option [ngValue]="null">All Insurance Covers</option>
-        <option *ngFor="let cover of insuranceCovers" [value]="cover.insuranceCoverId">{{ cover.insuranceCoverName }}</option>
-      </select>
-    </div> -->
+    
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
    
-    <button routerLink="/add-vehicle" class="add-vehicle-button">Add Vehicle</button>
+    <button mat-button routerLink="/add-vehicle" style="background-color: blue;">Add Vehicle</button>
+    <button mat-button (click)="exportToExcel()" style="background-color: green;">Export to Excel</button>
+   
   </div>
+ 
   
   <!-- Vehicles List -->
   <div class="trips-list">
