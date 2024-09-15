@@ -1,0 +1,24 @@
+<!-- <div class="help-container">
+  <button class="help-button" (click)="toggleHelp()">?</button>
+  <div *ngIf="showHelp" class="help-content">
+    <input [(ngModel)]="searchQuery" (ngModelChange)="searchHelp()" placeholder="Search help..." />
+    <ul>
+      <li *ngFor="let content of searchResults">{{ content }}</li>
+    </ul>
+  </div>
+</div> -->
+
+<div class="help-container">
+  <button class="help-button" (click)="toggleHelp()">?</button>
+  <div *ngIf="showHelp" class="help-content">
+    <input 
+      [(ngModel)]="searchQuery" 
+      (ngModelChange)="searchHelp()" 
+      placeholder="Search help..." 
+      class="search-input"
+    />
+    <div *ngFor="let item of helpContents">
+      <div [innerHTML]="item.highlighted"></div>
+    </div>
+  </div>
+</div>

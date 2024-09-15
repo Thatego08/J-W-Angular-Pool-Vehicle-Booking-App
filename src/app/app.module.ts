@@ -94,6 +94,7 @@ import { CreatePostCheckComponent } from './create-post-check/create-post-check.
 import { ViewPostCheckComponent } from './view-post-check/view-post-check.component';
 import { GetRefuelVehicleComponent } from './get-refuel-vehicle/get-refuel-vehicle.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { HelpComponent } from './app/help/help.component';
 
 
 @NgModule({
@@ -163,7 +164,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     PreChecklistComponent,
     CreatePostCheckComponent,
     ViewPostCheckComponent,
-    GetRefuelVehicleComponent
+    GetRefuelVehicleComponent,
+    HelpComponent
   ],
   imports: [
     BrowserModule,
