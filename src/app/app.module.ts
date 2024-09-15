@@ -94,7 +94,6 @@ import { CreatePostCheckComponent } from './create-post-check/create-post-check.
 import { ViewPostCheckComponent } from './view-post-check/view-post-check.component';
 import { GetRefuelVehicleComponent } from './get-refuel-vehicle/get-refuel-vehicle.component';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { HelpComponent } from './app/help/help.component';
 
 import { HomeComponent } from './home/home.component';
 
@@ -102,8 +101,7 @@ import { HelpDocumentComponent } from './help-document/help-document.component';
 import { ProfileEditComponent } from './user/profile-edit/profile-edit.component';
 import { AdminSectionComponent } from './Admin/admin-section/admin-section.component';
 import { OTPComponent } from './Admin/otp/otp.component';
-
-
+import { HelpComponent } from './app/help/help.component';
 
 @NgModule({
   declarations: [
@@ -179,9 +177,9 @@ import { OTPComponent } from './Admin/otp/otp.component';
     HelpDocumentComponent,
       ProfileEditComponent,
       AdminSectionComponent,
-      OTPComponent
+      OTPComponent,
 
-
+    HelpComponent
   ],
   imports: [
     BrowserModule,
