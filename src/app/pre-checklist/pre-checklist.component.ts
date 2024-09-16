@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { PreChecklistService } from '../pre-checklist.service';
 
 @Component({
@@ -11,7 +11,7 @@ import { PreChecklistService } from '../pre-checklist.service';
 export class PreChecklistComponent implements OnInit {
   preChecklistForm: FormGroup;
   bookingId: number | null = null;
-  preChecklistId: number | null = null; // Store PreChecklistId
+  preChecklistId: number | null = null;
 
   // Checkbox definitions
   checkboxes = [
@@ -36,7 +36,7 @@ export class PreChecklistComponent implements OnInit {
     { label: 'Handbrake', formControlName: 'handbrake' },
     { label: 'JW Marketing Magnets', formControlName: 'jwMarketingMagnets' },
     { label: 'Checked By JW Security', formControlName: 'checkedByJWSecurity' },
-    { label: 'License Disk Valid', formControlName: 'licenseDiskValid' }
+    { label: 'License Disk Valid', formControlName: 'licenseDiskValid', required: true }
   ];
 
   constructor(
@@ -46,7 +46,7 @@ export class PreChecklistComponent implements OnInit {
     private router: Router
   ) {
     this.preChecklistForm = this.fb.group({
-      openingKms: [0, Validators.required],
+      openingKms: [0, [Validators.required, this.nonNegativeValidator]],
       oilLeaks: [false],
       fuelLevel: [false],
       mirrors: [false],
@@ -68,39 +68,41 @@ export class PreChecklistComponent implements OnInit {
       handbrake: [false],
       jwMarketingMagnets: [false],
       checkedByJWSecurity: [false],
-      licenseDiskValid: [false],
+      licenseDiskValid: [false, Validators.requiredTrue], // Set the licenseDiskValid as required
       comments: [''],
       additionalComments: [''],
-      preChecklistId: [null] // Add this field
+      preChecklistId: [null]
     });
   }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       if (params['bookingId']) {
-        this.bookingId = +params['bookingId']; // Parse bookingId
+        this.bookingId = +params['bookingId'];
       }
     });
   }
 
   onSubmit() {
-    this.preChecklistService.createPreChecklist(this.preChecklistForm.value)
-      .subscribe(
-        (response: any) => {
-          this.preChecklistId = response.preChecklistId; // Store the returned ID
-          this.preChecklistForm.get('preChecklistId')?.setValue(this.preChecklistId); // Set the hidden field
-
-          if (this.bookingId) {
-            this.router.navigate(['/create-trip'], { queryParams: { preChecklistId: this.preChecklistId, bookingId: this.bookingId } });
+    if (this.preChecklistForm.valid) {
+      this.preChecklistService.createPreChecklist(this.preChecklistForm.value)
+        .subscribe(
+          (response: any) => {
+            this.preChecklistId = response.preChecklistId;
+            this.preChecklistForm.get('preChecklistId')?.setValue(this.preChecklistId);
+            if (this.bookingId) {
+              this.router.navigate(['/create-trip'], { queryParams: { preChecklistId: this.preChecklistId, bookingId: this.bookingId } });
+            }
+          },
+          (error) => {
+            console.error('Error submitting checklist', error);
           }
-        },
-        (error) => {
-          console.error('Error submitting checklist', error);
-        }
-      );
+        );
+    } else {
+      console.log('Form is invalid');
+    }
   }
 
-  // Method to check/uncheck all checkboxes
   checkAll(checked: boolean) {
     this.checkboxes.forEach(check => {
       const control = this.preChecklistForm.get(check.formControlName);
@@ -108,5 +110,10 @@ export class PreChecklistComponent implements OnInit {
         control.setValue(checked);
       }
     });
+  }
+
+  nonNegativeValidator(control: AbstractControl) {
+    const value = control.value;
+    return value >= 0 ? null : { nonNegative: true };
   }
 }
