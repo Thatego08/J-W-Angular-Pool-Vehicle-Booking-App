@@ -1,0 +1,22 @@
+/* faqlist.component.css */
+
+.accordion-button {
+    background-color: #1B263B; /* Dark blue for the button background */
+    color: #FFFFFF; /* White text color */
+    border: 1px solid #1B263B; /* Dark blue border */
+}
+
+.accordion-button:not(.collapsed) {
+    color: #000000; /* Black text color when active */
+    background-color: #D1D5DB; /* Light grey background when expanded */
+    border-color: #D1D5DB; /* Light grey border when expanded */
+}
+
+.accordion-body {
+    background-color: #F5F5F5; /* Very light grey for the background */
+    border-top: 1px solid #E1E1E1; /* Light grey border at the top */
+}
+
+.container {
+    max-width: 800px; /* Set max width for better readability */
+}

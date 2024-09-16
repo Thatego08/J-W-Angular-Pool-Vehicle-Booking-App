@@ -57,7 +57,19 @@
     </li>
 
  
-   
+    <!-- FAQ Dropdown -->
+    <li class="navbar-item dropdown hover:bg-gray-700">
+      <a class="dropdown-toggle py-1">FAQs</a>
+      <ul class="dropdown-menu">
+        <!-- Admin can manage FAQs -->
+        <li>
+          <a class="hover:bg-gray-700" routerLink="/faqadmin">Manage FAQs</a>
+        </li>
+        <!-- Everyone can view FAQs -->
+        <li><a class="hover:bg-gray-700" routerLink="/faqlist">View FAQs</a></li>
+      </ul>
+    </li>
+
     <!-- Add more navigation items as needed -->
   </ul>
 </nav>

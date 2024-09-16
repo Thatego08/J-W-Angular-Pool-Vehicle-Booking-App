@@ -53,7 +53,7 @@ import { FeedbackListComponent } from './user/feedback-list/feedback-list.compon
 import { EditAdminComponent } from './Admin/edit-admin/edit-admin.component';
 import { RateComponent } from './Rate/rate/rate.component';
 import { RateFormComponent } from './Rate/rate-form/rate-form.component';
-
+import { FaqadminComponent } from './faqadmin/faqadmin.component';
 import { ProjectComponent } from './project/project.component';
 import { AddVehicleComponent } from './vehicle/add-vehicle/add-vehicle.component';
 import { EditVehicleComponent } from './vehicle/edit-vehicle/edit-vehicle.component';
@@ -98,6 +98,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { HomeComponent } from './home/home.component';
 
 import { HelpDocumentComponent } from './help-document/help-document.component';
+import { FaqlistComponent } from './faqlist/faqlist.component';
 
 
 
@@ -105,6 +106,7 @@ import { HelpDocumentComponent } from './help-document/help-document.component';
   declarations: [
     AppComponent,
     SideNavComponent,
+    
     DriverComponent,
     AdminComponent,
     NavigationComponent,
@@ -153,6 +155,7 @@ import { HelpDocumentComponent } from './help-document/help-document.component';
     ChecklistComponent,
     PostChecklistComponent,
     EditColourComponent,
+    FaqlistComponent,
     ServiceComponent,
     FuelTypeComponent,
     VehicleMakeComponent,
@@ -169,7 +172,7 @@ import { HelpDocumentComponent } from './help-document/help-document.component';
     CreatePostCheckComponent,
     ViewPostCheckComponent,
     GetRefuelVehicleComponent,
-
+    FaqadminComponent,
     HomeComponent,
 
     HelpDocumentComponent

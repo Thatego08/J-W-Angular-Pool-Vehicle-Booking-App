@@ -71,6 +71,8 @@ import { CreatePostCheckComponent } from './create-post-check/create-post-check.
 import { HomeComponent } from './home/home.component';
 
 import { HelpDocumentComponent } from './help-document/help-document.component';
+import { FaqlistComponent } from './faqlist/faqlist.component';
+import { FaqadminComponent } from './faqadmin/faqadmin.component';
 
 
 
@@ -86,6 +88,8 @@ const routes: Routes = [
  {path: 'edit-driver/:userName', component:EditDriverComponent},
  { path: 'edit-admin/:userName', component: EditAdminComponent, canActivate: [AuthGuard]},
  { path: 'help-document', component: HelpDocumentComponent, canActivate: [AuthGuard]},
+ { path: 'faqlist', component:FaqlistComponent,canActivate: [AuthGuard]},
+ { path: 'faqadmin', component: FaqadminComponent,canActivate: [AuthGuard]},
 
 
  //Booking

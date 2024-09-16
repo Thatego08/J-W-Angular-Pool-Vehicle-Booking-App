@@ -1,14 +1,16 @@
-<div class="flex h-screen">
-    <!-- Sidebar Component -->
-    <app-side-nav class="w-64 bg-gray-800 text-white"></app-side-nav>
-  
-  
-    <!-- Navbar Component -->
-   <app-nav-bar class="mb-auto"></app-nav-bar>
+<div *ngIf="isLoggedIn | async; else loginLayout" class="flex h-screen">
+  <!-- Sidebar Component -->
+  <app-side-nav class="w-64 bg-gray-800 text-white"></app-side-nav>
 
-    <!-- Main Content -->
-    <main>
-      <router-outlet class="mt-24 relative z-0"></router-outlet>
-    </main>
-  </div>
-  
+  <!-- Navbar Component -->
+  <app-nav-bar class="mb-auto"></app-nav-bar>
+
+  <!-- Main Content -->
+  <main>
+    <router-outlet class="mt-24 relative z-0"></router-outlet>
+  </main>
+</div>
+
+<ng-template #loginLayout>
+  <router-outlet></router-outlet>
+</ng-template>
