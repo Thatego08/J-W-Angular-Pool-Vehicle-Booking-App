@@ -35,6 +35,7 @@ export class AuthService {
         if (response.token) {
         console.log('Storing token:', response.token);
           localStorage.setItem('token', response.token);  // Store the token in localStorage
+          this.loggedIn.next(true);
         }
       }),
       catchError(error => {

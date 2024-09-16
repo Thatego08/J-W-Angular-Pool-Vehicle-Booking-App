@@ -1,0 +1,60 @@
+<div class="container mx-auto my-5">
+  <h2 class="text-center text-2xl font-bold mb-4">Admin FAQ Management</h2>
+
+  <!-- Add/Edit FAQ -->
+  <div class="mb-5">
+    <!-- Add/Edit Heading -->
+    <h3 class="text-lg font-semibold mb-2" *ngIf="editFaqId === null">Add New FAQ</h3>  
+    <h3 class="text-lg font-semibold mb-2" *ngIf="editFaqId !== null">Edit FAQ</h3>
+  
+    <!-- Add/Edit FAQ -->
+    <div *ngIf="editFaqId === null">  
+      <input type="text" placeholder="Question" [(ngModel)]="newFaq.question"
+          class="border border-gray-300 p-2 w-full mb-2" />
+      <textarea placeholder="Answer" [(ngModel)]="newFaq.answer"
+          class="border border-gray-300 p-2 w-full mb-2"></textarea>
+      <button (click)="addFaq()"
+              class="bg-blue-500 text-white px-4 py-2 rounded">
+        Add FAQ
+      </button>
+      <p *ngIf="showError" class="text-red-500 mt-2">
+        Both question and answer fields are required.
+      </p>
+    </div>
+  </div>
+  
+  <!-- Edit FAQ -->
+  <div *ngIf="editFaqId !== null">
+    <input type="text" placeholder="Question" [(ngModel)]="editedFaq.question"
+      class="border border-gray-300 p-2 w-full mb-2" />
+    <textarea placeholder="Answer" [(ngModel)]="editedFaq.answer"
+      class="border border-gray-300 p-2 w-full mb-2"></textarea>
+    <button (click)="updateFaq()" class="bg-green-500 text-white px-4 py-2 rounded">Update FAQ</button>
+    <button (click)="cancelEdit()" class="bg-gray-500 text-white px-4 py-2 rounded">Cancel</button>
+    <p *ngIf="errorMessage" class="text-red-500">{{ errorMessage }}</p>
+  </div>
+
+  <!-- Display All FAQs in a Table -->
+  <div class="mt-5">
+    <h3 class="text-lg font-semibold mb-3">Existing FAQs</h3>
+    <table class="min-w-full bg-white border border-gray-300">
+      <thead>
+        <tr class="bg-gray-100 border-b">
+          <th class="py-2 px-4 text-left">Question</th>
+          <th class="py-2 px-4 text-left">Answer</th>
+          <th class="py-2 px-4 text-left">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let faq of faqs">
+          <td class="py-2 px-4 border-b">{{ faq.question }}</td>
+          <td class="py-2 px-4 border-b">{{ faq.answer }}</td>
+          <td class="py-2 px-4 border-b">
+            <button (click)="editFaq(faq)" class="bg-yellow-500 text-white px-3 py-1 rounded mr-2">Edit</button>
+            <button (click)="deleteFaq(faq)" class="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
