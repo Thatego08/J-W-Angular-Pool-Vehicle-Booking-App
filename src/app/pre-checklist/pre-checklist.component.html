@@ -1,17 +1,36 @@
 <div class="container">
   <form [formGroup]="preChecklistForm" (ngSubmit)="onSubmit()">
-    <h3>Pre-Checklist</h3>
+    <h3 class="form-title">Pre-Checklist</h3>
+    
     <button type="button" class="btn btn-secondary" (click)="checkAll(true)">Check All</button>
+
     <div class="form-group">
       <label for="openingKms">Opening Kms:</label>
-      <input type="number" id="openingKms" formControlName="openingKms" required class="form-control" />
+      <input
+        type="number"
+        id="openingKms"
+        formControlName="openingKms"
+        required
+        class="form-control"
+      />
+      <div
+        *ngIf="
+          preChecklistForm.get('openingKms')?.hasError('nonNegative') &&
+          preChecklistForm.get('openingKms')?.touched
+        "
+        class="text-danger"
+      >
+        Opening Kms cannot be negative.
+      </div>
     </div>
 
-    <!-- Scrollable container for checkboxes -->
     <div class="checkbox-container">
       <div class="form-group" *ngFor="let check of checkboxes">
-        <label>
-          <input type="checkbox" [formControlName]="check.formControlName" />
+        <label class="checkbox-item">
+          <input
+            type="checkbox"
+            [formControlName]="check.formControlName"
+          />
           {{ check.label }}
         </label>
       </div>
@@ -19,19 +38,34 @@
 
     <div class="form-group">
       <label for="comments">Comments:</label>
-      <textarea id="comments" formControlName="comments" class="form-control" placeholder="Enter Comments"></textarea>
+      <textarea
+        id="comments"
+        formControlName="comments"
+        class="form-control"
+        placeholder="Enter Comments"
+      ></textarea>
     </div>
 
     <div class="form-group">
       <label for="additionalComments">Additional Comments:</label>
-      <textarea id="additionalComments" formControlName="additionalComments" class="form-control" placeholder="Enter Additional Comments"></textarea>
+      <textarea
+        id="additionalComments"
+        formControlName="additionalComments"
+        class="form-control"
+        placeholder="Enter Additional Comments"
+      ></textarea>
     </div>
 
-    <!-- Hidden field for PreChecklistId -->
     <input type="hidden" formControlName="preChecklistId" />
 
     <div class="button-group">
-      <button type="submit" class="btn btn-primary" [disabled]="!preChecklistForm.valid">Submit Checklist</button>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="!preChecklistForm.valid"
+      >
+        Submit Checklist
+      </button>
     </div>
   </form>
 </div>

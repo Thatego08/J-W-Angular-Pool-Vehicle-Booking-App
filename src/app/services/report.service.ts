@@ -44,6 +44,12 @@ export interface FuelExpenditureReport {
   fuelAmount: number;
   fuelCost: number;
 }
+export interface VehicleFuelReport {
+  vehicleName: string;
+  tripDate: Date;
+  fuelAmount: number;
+  fuelCost: number;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -69,6 +75,14 @@ export class ReportService {
 
   getVehicleMakeReport(): Observable<VehicleMakeReport[]> {
     return this.http.get<VehicleMakeReport[]>(`${this.baseUrl}/vehicle-make`);
+  }
+
+  getVehicleFuelReport(): Observable<VehicleFuelReport[]> {
+    return this.http.get<VehicleFuelReport[]>(`${this.baseUrl}/vehicle-fuel-report`)
+      .pipe(
+        map((response: any) => response || []),
+        catchError(this.handleError)
+      );
   }
  
   getProjectReport(): Observable<ProjectReport[]> {
