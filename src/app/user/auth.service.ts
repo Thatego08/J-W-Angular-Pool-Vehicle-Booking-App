@@ -21,6 +21,7 @@ export class AuthService {
   
   private apiUrl = 'https://localhost:7041/api/User';
   private FapiUrl = 'https://localhost:7041/api/Feedback';
+  private bapiUrl = 'https://localhost:7041/api/Admin';
   constructor(private http: HttpClient) 
   {
 
@@ -54,6 +55,11 @@ export class AuthService {
       );
   }
 
+  // Update user profile
+  updateUserProfile(userName: string, profileData: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/update-user?userName=${userName}`, profileData);
+  }
+  
   logout(): Observable<any> {
 
     this.loggedIn.next(false);
@@ -127,4 +133,14 @@ export class AuthService {
   getAllFeedbacks(): Observable<Feedback[]> {
     return this.http.get<Feedback[]>(`${this.FapiUrl}/all`);
   }
+
+  getOtpExpiration(): Observable<any> {
+    return this.http.get(`${this.bapiUrl}/otp-expiration`);
+  }
+  
+  updateOtpExpiration(newExpirationTime: number): Observable<any> {
+    return this.http.post(`${this.bapiUrl}/update-otp-expiration`, newExpirationTime);
+  }
+  
+
 }

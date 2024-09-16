@@ -1,0 +1,28 @@
+<h1 mat-dialog-title>Edit Profile</h1>
+<div mat-dialog-content>
+  <form [formGroup]="editProfileForm">
+    <mat-form-field>
+      <input matInput placeholder="Current Password" formControlName="currentPassword" type="password" />
+      <mat-error *ngIf="editProfileForm.get('currentPassword')?.hasError('required')">
+        Current password is required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="New Password" formControlName="newPassword" type="password" />
+      <mat-error *ngIf="editProfileForm.get('newPassword')?.hasError('required')">
+        New password is required.
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Display the custom error for matching passwords -->
+    <mat-error *ngIf="editProfileForm.hasError('passwordsMatch')">
+      The new password cannot be the same as the current password.
+    </mat-error>
+  </form>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button color="primary" (click)="onSave()" [disabled]="editProfileForm.invalid">Save</button>
+</div>

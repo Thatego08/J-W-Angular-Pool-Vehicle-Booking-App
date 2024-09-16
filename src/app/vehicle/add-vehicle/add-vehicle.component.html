@@ -1,7 +1,9 @@
+
 <div class="container">
-  <h2>Add Vehicle</h2>
   <form [formGroup]="vehicleForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
+      <h1>Add Vehicle</h1>
+      <br>
       <label for="name">Name:</label>
       <input id="name" formControlName="name" class="form-control" required placeholder="Enter vehicle name" />
       <div *ngIf="vehicleForm.get('name')?.invalid && vehicleForm.get('name')?.touched">
@@ -11,7 +13,10 @@
 
     <div class="form-group">
       <label for="description">Description:</label>
-      <input id="description" formControlName="description" class="form-control" required placeholder="Enter vehicle description" />
+
+      <input id="description" formControlName="description" class="form-control" />
+
+      
     </div>
 
     <div class="form-group">
@@ -20,9 +25,9 @@
       <div *ngIf="vehicleForm.get('dateAcquired')?.invalid && vehicleForm.get('dateAcquired')?.touched">
         Date Acquired is required.
       </div>
-    </div>
-
-    <div class="form-group">
+    </div>     
+    
+<div class="form-group">
       <label for="licenseExpiryDate">License Expiry Date:</label>
       <input id="licenseExpiryDate" type="date" formControlName="licenseExpiryDate" class="form-control" placeholder="Select license expiry date" />
       <div *ngIf="vehicleForm.get('licenseExpiryDate')?.invalid && vehicleForm.get('licenseExpiryDate')?.touched">
@@ -81,23 +86,28 @@
     </div>
 
     <div class="form-group">
-      <label for="vehicleMakeID">Vehicle Make:</label>
-      <select id="vehicleMakeID" formControlName="vehicleMakeID" class="form-control" required>
-        <option *ngFor="let make of vehicleMakes" [value]="make.vehicleMakeID">{{ make.name }}</option>
+      <label for="vehicleMake">Vehicle Make:</label>
+      <select id="vehicleMake" formControlName="vehicleMakeID" class="form-control" (change)="onMakeSelected($event)">
+        <option [ngValue]="null">-- Select Make --</option>
+        <option *ngFor="let make of vehicleMakes" [value]="make.vehicleMakeID">
+          {{ make.name }}
+        </option>
       </select>
+
       <div *ngIf="vehicleForm.get('vehicleMakeID')?.invalid && vehicleForm.get('vehicleMakeID')?.touched">
         Vehicle Make is required.
       </div>
+
     </div>
 
     <div class="form-group">
-      <label for="vehicleModelID">Vehicle Model:</label>
-      <select id="vehicleModelID" formControlName="vehicleModelID" class="form-control" required>
-        <option *ngFor="let model of vehicleModels" [value]="model.vehicleModelID">{{ model.vehicleModelName }}</option>
+      <label for="vehicleModel">Vehicle Model:</label>
+      <select id="vehicleModel" formControlName="vehicleModelID" class="form-control">
+        <option [ngValue]="null">-- Select Model --</option>
+        <option *ngFor="let model of vehicleModels" [value]="model.vehicleModelID">
+          {{ model.vehicleModelName }}
+        </option>
       </select>
-      <div *ngIf="vehicleForm.get('vehicleModelID')?.invalid && vehicleForm.get('vehicleModelID')?.touched">
-        Vehicle Model is required.
-      </div>
     </div>
 
     <div class="form-group">
@@ -110,16 +120,17 @@
       </div>
     </div>
 
-    <div class="form-group">
-      <label for="statusID">Status:</label>
-      <select id="statusID" formControlName="statusID" class="form-control" required>
-        <option *ngFor="let status of statuses" [value]="status.id">{{ status.name }}</option>
-      </select>
-      <div *ngIf="vehicleForm.get('statusID')?.invalid && vehicleForm.get('statusID')?.touched">
-        Status is required.
-      </div>
+
+    <div *ngIf="submissionStatus" class="alert alert-info mt-3">
+      {{ submissionStatus }}
     </div>
 
-    <button type="submit" class="btn btn-primary">Add Vehicle</button>
+   
+
+    <button type="submit" class="btn btn-primary" routerLink="/vehicles">Add Vehicle</button>
   </form>
 </div>
+
+
+<app-help></app-help>
+

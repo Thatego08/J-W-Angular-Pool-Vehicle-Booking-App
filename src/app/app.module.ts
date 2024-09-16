@@ -98,8 +98,15 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { HomeComponent } from './home/home.component';
 
 import { HelpDocumentComponent } from './help-document/help-document.component';
+
 import { FaqlistComponent } from './faqlist/faqlist.component';
 
+
+
+import { ProfileEditComponent } from './user/profile-edit/profile-edit.component';
+import { AdminSectionComponent } from './Admin/admin-section/admin-section.component';
+import { OTPComponent } from './Admin/otp/otp.component';
+import { HelpComponent } from './app/help/help.component';
 
 
 @NgModule({
@@ -175,8 +182,12 @@ import { FaqlistComponent } from './faqlist/faqlist.component';
     FaqadminComponent,
     HomeComponent,
 
-    HelpDocumentComponent
+    HelpDocumentComponent,
+      ProfileEditComponent,
+      AdminSectionComponent,
+      OTPComponent,
 
+    HelpComponent
   ],
   imports: [
     BrowserModule,

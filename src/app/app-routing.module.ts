@@ -71,8 +71,12 @@ import { CreatePostCheckComponent } from './create-post-check/create-post-check.
 import { HomeComponent } from './home/home.component';
 
 import { HelpDocumentComponent } from './help-document/help-document.component';
+
 import { FaqlistComponent } from './faqlist/faqlist.component';
 import { FaqadminComponent } from './faqadmin/faqadmin.component';
+
+import { AdminSectionComponent } from './Admin/admin-section/admin-section.component';
+
 
 
 
@@ -179,7 +183,11 @@ const routes: Routes = [
   { path: 'app-feedback', component: FeedbackComponent, canActivate: [AuthGuard] },
   { path: 'app-feedback-list', component: FeedbackListComponent, canActivate: [AuthGuard] },
 
-  {path: 'app-report', component:ReportComponent, canActivate: [AuthGuard]}
+  {path: 'app-report', component:ReportComponent, canActivate: [AuthGuard]},
+
+  {path:'admin-section', component:AdminSectionComponent, canActivate:[AuthGuard]}
+
+
 ];
 
 @NgModule({

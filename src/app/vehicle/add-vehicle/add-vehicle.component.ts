@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router'; // Import Router for navigation
 import { VehicleService } from '../../services/vehicle.service';
 import { Vehicle } from '../../models/vehicle.model';
 import { Colour } from '../../models/colour.model';
@@ -16,14 +17,22 @@ import { VehicleModel } from '../../models/vehicle-model.model';
 })
 export class AddVehicleComponent implements OnInit {
   vehicleForm!: FormGroup;
+  submissionStatus: string | null = null;
+
   colours: Colour[] = [];
   fuelTypes: VehicleFuelType[] = [];
   insuranceCovers: InsuranceCover[] = [];
   statuses: Status[] = [];
   vehicleMakes: VehicleMake[] = [];
   vehicleModels: VehicleModel[] = [];
+  selectedModelID: number | null = null;
+  selectedMakeID: number | null = null;
 
-  constructor(private fb: FormBuilder, private vehicleService: VehicleService) { }
+  constructor(
+    private fb: FormBuilder,
+    private vehicleService: VehicleService,
+    private router: Router // Inject Router for navigation
+  ) { }
 
   ngOnInit(): void {
     this.initializeForm();
@@ -41,7 +50,7 @@ export class AddVehicleComponent implements OnInit {
       engineNo: ['', [Validators.required, Validators.minLength(17), Validators.maxLength(17)]],
       colourID: ['', Validators.required],
       fuelTypeID: ['', Validators.required],
-      statusID: ['', Validators.required],
+      statusID: [1] ,
       vehicleMakeID: ['', Validators.required],
       vehicleModelID: ['', Validators.required],
       insuranceCoverID: ['', Validators.required]
@@ -75,24 +84,55 @@ export class AddVehicleComponent implements OnInit {
     );
   }
 
-  onSubmit(): void {
+  onMakeSelected(event: Event): void {
+    const target = event.target as HTMLSelectElement;
+    const makeId = Number(target.value);
 
-    console.log(this.vehicleForm);
-    if (this.vehicleForm.valid) {
-      const newVehicle: Vehicle = this.vehicleForm.value;
-      console.log('Submitting vehicle data:', newVehicle);
-      this.vehicleService.addVehicle(newVehicle).subscribe(
-        response => {
-          alert(`Vehicle ${newVehicle.name} added successfully`);
-          this.vehicleForm.reset();
+    if (!isNaN(makeId)) {
+      this.vehicleService.getVehicleModelsByMake(makeId).subscribe(
+        (models) => {
+          this.vehicleModels = models;
         },
-        error => {
-          //alert('Error adding vehicle: ' + error.message);
-          console.error('Error details:', error);
+        (error) => {
+          console.error('Error retrieving vehicle models', error);
+          this.vehicleModels = []; // Reset models on error
         }
       );
     } else {
-      alert('Please fill in all required fields.');
+      this.vehicleModels = []; // Reset vehicle models if no make is selected
     }
   }
+
+  onSubmit() {
+    if (this.vehicleForm.valid) {
+      const vehicle: Vehicle = this.vehicleForm.value;
+      this.vehicleService.addVehicle(vehicle).subscribe(
+        () => {
+          this.submissionStatus = 'Vehicle added successfully!';
+          this.vehicleForm.reset(); // Reset form after successful submission
+        },
+        error => {
+          this.submissionStatus = `Error adding vehicle: ${error.message}`;
+        }
+      );
+    }
+  }
+
+  // onSubmit(): void {
+  //   if (this.vehicleForm.valid) {
+  //     const newVehicle = { ...this.vehicleForm.value, statusID: 1 }; // Set statusID to 1 (Available)
+  
+  //     this.vehicleService.addVehicle(newVehicle).subscribe(
+  //       response => {
+  //         alert(`Vehicle ${newVehicle.name} - ${newVehicle.registrationNumber} added successfully`);
+  //         this.router.navigate(['/vehicles']); // Redirect to the vehicles page or any other desired page
+  //       },
+  //       error => {
+  //         console.error('Error adding vehicle:', error);
+  //       }
+  //     );
+  //   } else {
+  //     alert('Please fill in all required fields.');
+  //   }
+  // }
 }

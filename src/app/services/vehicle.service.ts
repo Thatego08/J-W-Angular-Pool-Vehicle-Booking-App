@@ -221,6 +221,11 @@ export class VehicleService {
     return this.http.delete(`${this.apiUrl}/DeleteModel/${modelId}`);
   }
 
+   // Fetch vehicle models by makeId
+   getVehicleModelsByMake(makeId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/GetModelByMake/${makeId}`);
+  }
+
   getModel(id: number): Observable<VehicleModel> {
     return this.http.get<VehicleModel>(`${this.apiUrl}/${id}`);
   }
