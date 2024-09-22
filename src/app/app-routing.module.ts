@@ -76,6 +76,7 @@ import { FaqlistComponent } from './faqlist/faqlist.component';
 import { FaqadminComponent } from './faqadmin/faqadmin.component';
 
 import { AdminSectionComponent } from './Admin/admin-section/admin-section.component';
+import { AuditLogComponent } from './audit-log/audit-log.component';
 
 
 
@@ -174,6 +175,8 @@ const routes: Routes = [
   { path: 'app-forgot-password', component: ForgotPasswordComponent },
   { path: 'app-reset-password', component: ResetPasswordComponent },
 
+{ path: 'audit-log', component: AuditLogComponent, canActivate: [AuthGuard] },
+  
   {path: 'app-dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
   { path: 'app-profile', component: ProfileComponent, canActivate: [AuthGuard]},
 
