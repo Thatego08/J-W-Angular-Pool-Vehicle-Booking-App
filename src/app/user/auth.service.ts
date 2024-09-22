@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, tap, catchError, throwError, BehaviorSubject } from 'rxjs';
 import { Feedback } from '../models/feedback.model';
 import { jwtDecode } from 'jwt-decode';
+import { AuditLog } from '../models/auditlog';
 
 // Define the interface for the response from the login API
 
@@ -66,6 +67,21 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/logout`, {});
   }
 
+
+  getAuditLogs(username: string = ''): Observable<AuditLog[]> {
+    return this.http.get<AuditLog[]>(`${this.apiUrl}?username=${username}`);
+  }
+
+
+  editAuditLogDetails(id: number, newDetails: string): Observable<void> {
+    const body = { newDetails: newDetails };  // Wrap in an object
+    return this.http.put<void>(`${this.apiUrl}/edit/${id}`, body);
+  }
+  
+
+  deleteAuditLog(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/delete/${id}`);
+  }
 
   forgotPassword(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/forgot-password`, data);

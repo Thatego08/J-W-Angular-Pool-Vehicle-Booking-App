@@ -107,6 +107,7 @@ import { ProfileEditComponent } from './user/profile-edit/profile-edit.component
 import { AdminSectionComponent } from './Admin/admin-section/admin-section.component';
 import { OTPComponent } from './Admin/otp/otp.component';
 import { HelpComponent } from './app/help/help.component';
+import { AuditLogComponent } from './audit-log/audit-log.component';
 
 
 @NgModule({
@@ -187,7 +188,8 @@ import { HelpComponent } from './app/help/help.component';
       AdminSectionComponent,
       OTPComponent,
 
-    HelpComponent
+    HelpComponent,
+      AuditLogComponent
   ],
   imports: [
     BrowserModule,

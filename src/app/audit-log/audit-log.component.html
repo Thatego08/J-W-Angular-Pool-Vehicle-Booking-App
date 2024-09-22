@@ -1,0 +1,43 @@
+<div class="audit-log-container">
+    <h2>Audit Logs</h2>
+  
+    <div class="search-bar">
+      <input 
+        type="text" 
+        [(ngModel)]="searchUsername" 
+        placeholder="Search by username">
+      <button (click)="onSearch()">Search</button>
+    </div>
+  
+    <table>
+      <thead>
+        <tr>
+          <th>User</th>
+          <th>Action</th>
+          <th>Details</th>
+          <th>Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let log of auditLogs">
+          <td>{{ log.userName }}</td>
+          <td>{{ log.action }}</td>
+          <td>
+            {{ log.details }}
+            <!-- <span *ngIf="isRecentlyUpdated(log.timestamp.toString())" class="updated-tag">Updated</span> -->
+          </td>
+          <td>{{ log.timestamp | date:'short' }}</td>
+          <td>
+            <button (click)="onEdit(log)">Edit</button>
+            <button (click)="onDelete(log.id)">Delete</button>
+          </td>
+
+          
+        </tr>
+      </tbody>
+
+      
+    </table>
+  </div>
+  
