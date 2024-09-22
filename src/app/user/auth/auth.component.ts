@@ -38,9 +38,9 @@ export class AuthComponent implements OnInit{
       response => {
         console.log('Login successful', response);
         localStorage.setItem('token', response.token);
-        this.successMessage = 'Login successful! Redirecting to booking...';
+        this.successMessage = 'Login successful! Redirecting to welcome page...';
         setTimeout(() => {
-          this.router.navigate(['/add-booking']);
+          this.router.navigate(['/welcome']);
         }, 2000);
       },
       error => {

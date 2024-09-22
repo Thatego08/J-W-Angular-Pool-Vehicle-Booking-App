@@ -77,6 +77,7 @@ import { FaqadminComponent } from './faqadmin/faqadmin.component';
 
 import { AdminSectionComponent } from './Admin/admin-section/admin-section.component';
 import { AuditLogComponent } from './audit-log/audit-log.component';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 
 
@@ -128,6 +129,8 @@ const routes: Routes = [
  {path: 'vehicle-details', component: VehicleDetailsComponent,canActivate: [AuthGuard]},
 
  {path: 'home', component: HomeComponent},
+
+ {path: 'welcome', component: WelcomeComponent},
  
  //Colours
  {path: 'colour', component: ColourComponent },

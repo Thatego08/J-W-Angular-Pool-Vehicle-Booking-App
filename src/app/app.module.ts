@@ -108,6 +108,7 @@ import { AdminSectionComponent } from './Admin/admin-section/admin-section.compo
 import { OTPComponent } from './Admin/otp/otp.component';
 import { HelpComponent } from './app/help/help.component';
 import { AuditLogComponent } from './audit-log/audit-log.component';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 
 @NgModule({
@@ -189,7 +190,8 @@ import { AuditLogComponent } from './audit-log/audit-log.component';
       OTPComponent,
 
     HelpComponent,
-      AuditLogComponent
+      AuditLogComponent,
+      WelcomeComponent
   ],
   imports: [
     BrowserModule,
