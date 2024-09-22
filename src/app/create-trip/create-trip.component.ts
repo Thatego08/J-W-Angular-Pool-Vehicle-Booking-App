@@ -5,6 +5,7 @@ import { TripService } from '../services/trip.service';
 import { BookingService } from '../services/booking.service';
 import { PreChecklistService } from '../pre-checklist.service';
 import { PreCheckList } from '../pre-check-list';
+import { BookingModel } from '../models/booking.model';
 
 @Component({
   selector: 'app-create-trip',
@@ -31,34 +32,44 @@ export class CreateTripComponent implements OnInit {
       travelStart: ['', Validators.required],
       travelEnd: [''],
       bookingID: [''],
-      checklistId: [0], // Default value
+      checklistId: [0],
       mediaFiles: [''],
       mediaDescription: ['']
     });
   }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      const preChecklistId = params['preChecklistId'];
-      const bookingId = params['bookingId'];
-
-      if (preChecklistId) {
-        this.tripForm.patchValue({ checklistId: preChecklistId });
-        this.fetchPreChecklistDetails(preChecklistId);
+    const preChecklistId = this.route.snapshot.queryParamMap.get('preChecklistId');
+    if (preChecklistId) {
+      this.tripForm.patchValue({ checklistId: +preChecklistId });
+      this.fetchPreChecklistDetails(+preChecklistId);
+    }
+  
+    const bookingId = this.route.snapshot.queryParamMap.get('bookingId');
+    if (bookingId) {
+      this.tripForm.patchValue({ bookingID: +bookingId }); // Convert to number
+      this.fetchBookingDetails(+bookingId);
+    }
+  }
+  
+  fetchBookingDetails(bookingId: number): void {
+    this.bookingService.getBooking(bookingId).subscribe(
+      (booking: BookingModel) => {
+        this.tripForm.patchValue({
+          vehicleName: booking.vehicleName, // This should work correctly
+          travelStart: booking.startDate // Pre-populate travelStart with startDate
+        });
+      },
+      error => {
+        console.error('Failed to fetch Booking details', error);
       }
-      if (bookingId) {
-        this.tripForm.patchValue({ bookingID: bookingId });
-        this.fetchBookingDetails(bookingId);
-      }
-    });
+    );
   }
   
   fetchPreChecklistDetails(preChecklistId: number): void {
     this.preChecklistService.getPreChecklist(preChecklistId).subscribe(
       (data: PreCheckList) => {
-        // Use the PreChecklist data as needed
         console.log(data);
-        // Handle the data here
       },
       error => {
         console.error('Failed to fetch PreChecklist details', error);
@@ -66,41 +77,42 @@ export class CreateTripComponent implements OnInit {
     );
   }
 
-  fetchBookingDetails(bookingId: number): void {
-    // Fetch booking details if necessary
-  }
-
   onSubmit(): void {
     if (this.tripForm.valid) {
-        const formData = new FormData();
-        formData.append('Name', this.tripForm.value.vehicleName || '');
-        formData.append('Location', this.tripForm.value.location || '');
-        formData.append('Comment', this.tripForm.value.comment || '');
-        formData.append('TravelStart', this.tripForm.value.travelStart || '');
-        formData.append('TravelEnd', this.tripForm.value.travelEnd || '');
-        formData.append('BookingID', this.tripForm.value.bookingID || '');
-        formData.append('PreChecklistId', this.tripForm.value.checklistId || ''); // Ensure it’s handled as a string or number
-    
-        if (this.tripForm.value.mediaFiles) {
-            const files: FileList = this.tripForm.value.mediaFiles;
-            for (let i = 0; i < files.length; i++) {
-                formData.append('MediaFiles', files[i]);
-            }
+      const formData = new FormData();
+      formData.append('Name', this.tripForm.value.vehicleName || '');
+      formData.append('Location', this.tripForm.value.location || '');
+      formData.append('Comment', this.tripForm.value.comment || '');
+      formData.append('TravelStart', this.tripForm.value.travelStart || '');
+      formData.append('TravelEnd', this.tripForm.value.travelEnd || '');
+      formData.append('BookingID', this.tripForm.value.bookingID || '');
+      formData.append('PreChecklistId', this.tripForm.value.checklistId || '');
+
+      // Append media files if any
+      if (this.tripForm.value.mediaFiles) {
+        const files: FileList = this.tripForm.value.mediaFiles;
+        for (let i = 0; i < files.length; i++) {
+          formData.append('MediaFiles', files[i]);
         }
+      }
 
-        formData.append('MediaDescription', this.tripForm.value.mediaDescription || '');
+      formData.append('MediaDescription', this.tripForm.value.mediaDescription || '');
 
-        this.tripService.createTrip(formData).subscribe(
-            response => {
-                alert('Trip has been successfully created');
-                this.tripForm.reset();
-                this.imagePreview = null;
-                this.router.navigate(['/create-trip']);
-            },
-            error => {
-                this.message = 'Failed to create trip';
-            }
-        );
+      this.tripService.createTrip(formData).subscribe(
+        response => {
+          alert('Trip has been successfully created');
+          this.tripForm.reset();
+          this.imagePreview = null;
+          localStorage.removeItem('currentBookingId'); // Clear if desired
+          this.router.navigate(['/create-trip']);
+        },
+        error => {
+          this.message = 'Failed to create trip';
+          console.error(error);
+        }
+      );
+    } else {
+      console.log('Form is invalid');
     }
-}
+  }
 }

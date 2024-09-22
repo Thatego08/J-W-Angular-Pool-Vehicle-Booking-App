@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+
+.welcome-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 80px); /* Fill screen up to navbar */
+  background-color: transparent; /* Background transparent */
+  margin-left: 250px; /* Sidebar width */
+  margin-top: 0; /* Remove top margin */
+}
+
+.welcome-container {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+    padding: 40px;
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    max-width: 100%; /* Set max width to 80% of the parent */
+    margin: 0 auto; /* Center the container */
+    margin-left: -250px; /* Adjust this for positioning */
+  }
+  
+.welcome-image {
+  height: 500px; /* Increase image height */
+  width: 1050px; /* Maintain aspect ratio */
+  max-width: 100%; /* Responsive image */
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Enhanced shadow for 3D effect */
+  transform: translateY(-20px) scale(1.05); /* Slightly enlarge */
+  transition: transform 0.3s; /* Smooth transition */
+}
+
+.welcome-image:hover {
+  transform: translateY(-10px) scale(1.1); /* Slightly enlarge on hover */
+}
+
+.welcome-text {
+  text-align: center; /* Center text */
+  margin-top: 20px; /* Space between image and text */
+}
+
+.welcome-title {
+  font-size: 3rem;
+  color: #1c1e21;
+  margin: 20px 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+.welcome-message {
+  font-size: 1.5rem;
+  color: #495057;
+  max-width: 600px;
+}
+
+.welcome-instructions {
+  font-size: 1.2rem;
+  color: #6c757d;
+  font-style: italic;
+}
+
+

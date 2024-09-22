@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
 import { PreChecklistService } from '../pre-checklist.service';
 
 @Component({
@@ -10,10 +10,9 @@ import { PreChecklistService } from '../pre-checklist.service';
 })
 export class PreChecklistComponent implements OnInit {
   preChecklistForm: FormGroup;
-  bookingId: number | null = null;
   preChecklistId: number | null = null;
+  bookingId: number | null = null;
 
-  // Checkbox definitions
   checkboxes = [
     { label: 'Oil Leaks', formControlName: 'oilLeaks' },
     { label: 'Fuel Level', formControlName: 'fuelLevel' },
@@ -42,8 +41,8 @@ export class PreChecklistComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private preChecklistService: PreChecklistService,
-    private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.preChecklistForm = this.fb.group({
       openingKms: [0, [Validators.required, this.nonNegativeValidator]],
@@ -68,17 +67,19 @@ export class PreChecklistComponent implements OnInit {
       handbrake: [false],
       jwMarketingMagnets: [false],
       checkedByJWSecurity: [false],
-      licenseDiskValid: [false, Validators.requiredTrue], // Set the licenseDiskValid as required
+      licenseDiskValid: [false, Validators.requiredTrue],
       comments: [''],
       additionalComments: [''],
-      preChecklistId: [null]
+      bookingId: [null],  // Booking ID as FK
+      preChecklistId: [null]  // PreChecklist ID is hidden but automatically set by the backend
     });
   }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      if (params['bookingId']) {
-        this.bookingId = +params['bookingId'];
+      this.bookingId = params['bookingId'];
+      if (this.bookingId) {
+        this.preChecklistForm.patchValue({ bookingId: this.bookingId });
       }
     });
   }
@@ -88,10 +89,14 @@ export class PreChecklistComponent implements OnInit {
       this.preChecklistService.createPreChecklist(this.preChecklistForm.value)
         .subscribe(
           (response: any) => {
-            this.preChecklistId = response.preChecklistId;
-            this.preChecklistForm.get('preChecklistId')?.setValue(this.preChecklistId);
-            if (this.bookingId) {
-              this.router.navigate(['/create-trip'], { queryParams: { preChecklistId: this.preChecklistId, bookingId: this.bookingId } });
+            if (response && response.id) {
+              this.preChecklistId = response.id;
+              // Navigate to create-trip with preChecklistId and bookingId
+              this.router.navigate(['/create-trip'], {
+                queryParams: { preChecklistId: this.preChecklistId, bookingId: this.bookingId }
+              });
+            } else {
+              console.error('Id is missing in the response');
             }
           },
           (error) => {
@@ -102,6 +107,7 @@ export class PreChecklistComponent implements OnInit {
       console.log('Form is invalid');
     }
   }
+  
 
   checkAll(checked: boolean) {
     this.checkboxes.forEach(check => {

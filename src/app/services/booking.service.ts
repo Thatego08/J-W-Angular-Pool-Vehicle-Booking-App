@@ -17,8 +17,9 @@ export class BookingService {
   }
 
   getBooking(id: number): Observable<BookingModel> {
-    return this.http.get<BookingModel>(`${this.baseUrl}/${id}`);
-  }
+    return this.http.get<BookingModel>(`${this.baseUrl}/GetBooking/${id}`);
+}
+
 
   searchBookingHistory(username: string): Observable<BookingModel[]> {
     return this.http.get<BookingModel[]>(`${this.baseUrl}/SearchBookingHistory/${username}`);
