@@ -71,22 +71,22 @@ export class CreatePostCheckComponent {
   }
 
   onFileChange(event: any) {
-    const allowedImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'video/mp4', 'video/ogg', 'video/webm'];
     this.errorMessage = null; // Reset error message
     this.mediaFiles = []; // Reset mediaFiles array
-
+  
     for (let i = 0; i < event.target.files.length; i++) {
       const file = event.target.files[i];
-
-      if (allowedImageTypes.includes(file.type)) {
+  
+      if (allowedTypes.includes(file.type)) {
         this.mediaFiles.push(file);
       } else {
-        this.errorMessage = `Invalid file type: ${file.name}. Only images are allowed.`;
+        this.errorMessage = `Invalid file type: ${file.name}. Only images and videos are allowed.`;
         break; // Stop processing if an invalid file is found
       }
     }
   }
-
+  
   submitForm() {
     if (this.errorMessage) {
       // Don't submit if there's an error
