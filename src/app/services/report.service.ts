@@ -34,6 +34,13 @@ export interface BookingStatusReport {
   count: number;
 }
 
+export interface UserTripReportDto {
+  userName: string;
+  month: string; // Month name
+  year: number;
+  tripCount: number;
+}
+
 export interface ProjectReport {
   status: string;
   count: number;
@@ -92,7 +99,13 @@ export class ReportService {
     );
   }
 
-
+  getTripsPerUserPerMonth(): Observable<UserTripReportDto[]> {
+    return this.http.get<UserTripReportDto[]>(`${this.baseUrl}/trips-per-user-per-month`).pipe(
+      map(response => response || []),
+      catchError(this.handleError)
+    );
+  }
+  
   //New Additions
 
 

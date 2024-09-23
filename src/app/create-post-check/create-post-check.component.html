@@ -28,9 +28,10 @@
       </div>
       
       <div class="form-group">
-        <label for="MediaFiles">Upload Files:</label>
-        <input type="file" id="MediaFiles" (change)="onFileChange($event)" multiple>
+        <label for="MediaFiles">Upload Files (Images & Videos):</label>
+        <input type="file" id="MediaFiles" (change)="onFileChange($event)" multiple accept="image/*,video/*">
       </div>
+      
       <div *ngIf="errorMessage" class="error-message">
         {{ errorMessage }}
       </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DriverService } from '../services/driver.service';
 import { Router } from '@angular/router';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-driver',
@@ -64,4 +65,11 @@ export class DriverComponent implements OnInit {
     this.searchUsername = ''; // Clear the search input
     this.fetchDrivers(); // Fetch all drivers to reset the list
   }
+
+    // New method to export drivers as JSON
+    exportDriversToJson() {
+      const json = JSON.stringify(this.drivers, null, 2); // Convert drivers to JSON string
+      const blob = new Blob([json], { type: 'application/json' }); // Create a blob from the JSON string
+      saveAs(blob, 'drivers.json'); // Use file-saver to save the blob as a file
+    }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { VehicleReport, BookingTypeReport, TripReport, BookingStatusReport, ProjectReport, ReportService, VehicleMakeReport, VehicleFuelReport } from '../../services/report.service';
+import { VehicleReport, BookingTypeReport, TripReport, BookingStatusReport, ProjectReport, ReportService, VehicleMakeReport, VehicleFuelReport, UserTripReportDto } from '../../services/report.service';
 import { TripService } from '../../services/trip.service';
 import { BookingService } from '../../services/booking.service'; 
 import jsPDF from 'jspdf';
@@ -20,6 +20,8 @@ export class ReportComponent implements OnInit {
   bookingStatusReport: BookingStatusReport[] = [];
   projectStatusReport: ProjectReport[] = [];
   fuelExpenditureReport: VehicleFuelReport[] = [];
+  
+  userTripReport: UserTripReportDto[] = []; // New property for user trip report
   
   totalTrips: number = 0; 
   totalVehicleStatus: number = 0;
@@ -92,6 +94,12 @@ export class ReportComponent implements OnInit {
     this.reportService.getVehicleFuelReport().subscribe(data => {
       this.fuelExpenditureReport = data;
       this.totalFuelCost = this.calculateTotal(this.fuelExpenditureReport, 'fuelCost');
+    });
+
+    // Load user trips per month
+    this.reportService.getTripsPerUserPerMonth().subscribe(data => {
+      this.userTripReport = data;
+      // You can add additional calculations or processing here if needed
     });
   }
 
