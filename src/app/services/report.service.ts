@@ -19,7 +19,7 @@ export interface BookingTypeReport {
 }
 
 export interface TripReport {
- 
+
   map(arg0: (trip: { date: any; }) => any): unknown;
   totalTrips: number;
   accidents?: number;
@@ -58,6 +58,20 @@ export interface VehicleFuelReport {
   fuelCost: number;
 }
 
+export interface BookingsPerUserReport {
+  userName: string;
+  month: string; // Month name
+  year: number;
+  bookingCount: number;
+}
+
+export interface CancelledBookingsReport {
+  userName: string;
+  bookingId: number;
+  cancelledDate: string;
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -91,7 +105,7 @@ export class ReportService {
         catchError(this.handleError)
       );
   }
- 
+
   getProjectReport(): Observable<ProjectReport[]> {
     return this.http.get<ProjectReport[]>(`${this.baseUrl}/projects`).pipe(
       map((response: any) => response || []),
@@ -105,7 +119,7 @@ export class ReportService {
       catchError(this.handleError)
     );
   }
-  
+
   //New Additions
 
 
@@ -169,6 +183,22 @@ export class ReportService {
     return this.http.get<ProjectReport[]>(`${this.baseUrl}/ProjectStatusReport`).pipe(
       map(response => response || []),
       catchError(this.handleError)
+    );
+  }
+
+  // Method to fetch bookings per user per month
+  getBookingsPerUserPerMonth(): Observable<BookingsPerUserReport[]> {
+    return this.http.get<BookingsPerUserReport[]>(`${this.baseUrl}/bookings-per-user-per-month`).pipe(
+      map(response => response || []),
+      catchError(this.handleError)
+    );
+  }
+
+  // Method to fetch cancelled bookings per month
+  getCancelledBookingsPerMonth(): Observable<CancelledBookingsReport[]> {
+    return this.http.get<CancelledBookingsReport[]>(`${this.baseUrl}/cancelled-bookings-per-month`).pipe(
+        map(response => response || []),
+        catchError(this.handleError)
     );
   }
 
