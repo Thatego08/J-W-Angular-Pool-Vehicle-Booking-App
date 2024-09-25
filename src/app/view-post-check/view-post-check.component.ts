@@ -17,7 +17,7 @@ export class ViewPostCheckComponent implements OnInit {
     'indicators', 'parkLights', 'brakeLights', 'strobeLight', 'reverseLight', 'reverseHooter', 'horn',
     'windscreenWiper', 'tyreCondition', 'spareWheelPresent', 'jackAndWheelSpannerPresent', 'brakes',
     'handbrake', 'jwMarketingMagnets', 'checkedByJWSecurity', 'licenseDiskValid', 'comments',
-    'additionalComments', 'tripMedia', // Added 'actions' for the delete button
+    'additionalComments', 'tripMedia',
   ];
   pagedPostChecks: any[] = [];
   postChecks: any[] = [];
@@ -32,21 +32,20 @@ export class ViewPostCheckComponent implements OnInit {
     this.postCheckService.getAllPostChecks().subscribe(data => {
       console.log('Data from API:', data);
       this.postChecks = data;
-      this.updatePagedData();
+
+      // Immediately update visible columns and paged data after loading
       this.updateVisibleColumns();
+      this.updatePagedData();
     });
   }
 
   updateVisibleColumns() {
+    // Determine which columns should be visible based on current page
     const startIndex = (this.currentPage - 1) * this.columnsPerPage;
-    const endIndex = startIndex + this.columnsPerPage;
-    this.visibleColumns = this.allColumns.slice(startIndex, endIndex);
+    this.visibleColumns = this.allColumns.slice(startIndex, startIndex + this.columnsPerPage);
   }
 
   updatePagedData() {
-    const startIndex = (this.currentPage - 1) * this.columnsPerPage;
-    const endIndex = startIndex + this.columnsPerPage;
-    
     this.pagedPostChecks = this.postChecks.map((postCheck: any) => {
       const pagedCheck: { [key: string]: any } = {};
       
@@ -58,11 +57,8 @@ export class ViewPostCheckComponent implements OnInit {
     });
   }
 
-  
-  
-
   showNextColumns() {
-    if (this.currentPage * this.columnsPerPage < this.allColumns.length) {
+    if ((this.currentPage * this.columnsPerPage) < this.allColumns.length) {
       this.currentPage++;
       this.updateVisibleColumns();
       this.updatePagedData();

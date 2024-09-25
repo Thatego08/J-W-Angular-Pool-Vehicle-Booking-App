@@ -66,7 +66,7 @@ export class CreatePostCheckComponent {
       LicenseDiskValid: [false, Validators.requiredTrue], // Ensure LicenseDiskValid is checked
       Comments: [''],
       AdditionalComments: [''],
-      MediaDescription: ['']
+      MediaDescription: [''] // Make MediaDescription optional
     });
   }
 
@@ -114,44 +114,43 @@ export class CreatePostCheckComponent {
     this.checkClosingKmsError(); // Check for Closing Kms errors before submitting
 
     if (this.postCheckForm.invalid) {
-        this.errorMessage = 'Please fix the errors in the form.'; // Show error message if the form is invalid
-        this.successMessage = null; // Clear success message
-        return; // Don't submit if the form is invalid
+      this.errorMessage = 'Please fix the errors in the form.'; // Show error message if the form is invalid
+      this.successMessage = null; // Clear success message
+      return; // Don't submit if the form is invalid
     }
 
     const formData = new FormData();
-    
+
     // Append form values to formData
     for (const key of Object.keys(this.postCheckForm.value)) {
-        formData.append(key, this.postCheckForm.value[key]);
+      formData.append(key, this.postCheckForm.value[key]);
     }
 
     // Append media files to formData if any exist
     if (this.mediaFiles.length > 0) {
-        for (let i = 0; i < this.mediaFiles.length; i++) {
-            formData.append('MediaFiles', this.mediaFiles[i], this.mediaFiles[i].name);
-        }
+      for (let i = 0; i < this.mediaFiles.length; i++) {
+        formData.append('MediaFiles', this.mediaFiles[i], this.mediaFiles[i].name);
+      }
     }
 
     // Send the POST request to create a post check
     this.http.post('https://localhost:7041/api/PostCheck/CreatePostCheck', formData).subscribe({
-        next: (response) => {
-            console.log('Post check created successfully', response);
-            this.successMessage = 'Post check submitted successfully!'; // Set success message
-            this.errorMessage = null; // Clear any existing error message
-            
-            // Reset the form and media files
-            this.postCheckForm.reset();
-            this.mediaFiles = [];
-        },
-        error: (error) => {
-            console.error('Error creating post check', error);
-            this.successMessage = null; // Clear success message on error
-            this.errorMessage = 'There was an error submitting the post check.'; // Set error message
-        }
+      next: (response) => {
+        console.log('Post check created successfully', response);
+        this.successMessage = 'Post check submitted successfully!'; // Set success message
+        this.errorMessage = null; // Clear any existing error message
+        
+        // Reset the form and media files
+        this.postCheckForm.reset();
+        this.mediaFiles = [];
+      },
+      error: (error) => {
+        console.error('Error creating post check', error);
+        this.successMessage = null; // Clear success message on error
+        this.errorMessage = 'There was an error submitting the post check.'; // Set error message
+      }
     });
-}
-
+  }
 
   checkAll(checked: boolean) {
     this.checkboxes.forEach(check => {
