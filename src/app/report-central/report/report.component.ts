@@ -1,17 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { VehicleReport, BookingTypeReport, TripReport, BookingStatusReport, ProjectReport, ReportService, VehicleMakeReport, VehicleFuelReport, UserTripReportDto } from '../../services/report.service';
+import { VehicleReport, BookingTypeReport, TripReport, BookingStatusReport, ProjectReport, ReportService, VehicleMakeReport, VehicleFuelReport, UserTripReportDto, BookingsPerUserReport, CancelledBookingsReport } from '../../services/report.service';
 import { TripService } from '../../services/trip.service';
-import { BookingService } from '../../services/booking.service'; 
+import { BookingService } from '../../services/booking.service';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { format } from 'date-fns';
 import { AuthService } from '../../user/auth.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',
-  styleUrls: ['./report.component.css']
+  styleUrls: ['./report.component.css'],
+  providers: [DatePipe] //include DatePipe as a provider
 })
+
 export class ReportComponent implements OnInit {
   vehicleMakeReport: VehicleMakeReport[] = [];
   vehicleStatusReport: VehicleReport[] = [];
@@ -20,10 +23,13 @@ export class ReportComponent implements OnInit {
   bookingStatusReport: BookingStatusReport[] = [];
   projectStatusReport: ProjectReport[] = [];
   fuelExpenditureReport: VehicleFuelReport[] = [];
-  
+
+  bookingPerUserReport: BookingsPerUserReport[] = []; // New property for bookings per user per month
+  cancelledBookingsReport: CancelledBookingsReport[] = []; // New property
+
   userTripReport: UserTripReportDto[] = []; // New property for user trip report
-  
-  totalTrips: number = 0; 
+
+  totalTrips: number = 0;
   totalVehicleStatus: number = 0;
   totalBookingType: number = 0;
   totalBookingStatus: number = 0;
@@ -31,6 +37,7 @@ export class ReportComponent implements OnInit {
   totalVehicleMake: number = 0;
   totalFuelExpenditure: number = 0;
   totalFuelCost: number = 0;
+  totalCancelledBookings: number = 0; // Total cancelled bookings
 
   currentDate: string = format(new Date(), 'yyyy-MM-dd');
   visibleReports: string[] = [];
@@ -41,13 +48,15 @@ export class ReportComponent implements OnInit {
     private reportService: ReportService,
     private tripService: TripService,
     private bookingService: BookingService,
-    private authService: AuthService 
+    private authService: AuthService,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
     this.loadReports();
     this.loadUserProfile();
   }
+
 
   loadUserProfile(): void {
     this.authService.getProfile().subscribe(
@@ -101,7 +110,30 @@ export class ReportComponent implements OnInit {
       this.userTripReport = data;
       // You can add additional calculations or processing here if needed
     });
+
+
+    // Load bookings per user per month report
+    this.reportService.getBookingsPerUserPerMonth().subscribe(data => {
+      this.bookingPerUserReport = data;
+      // You can add additional calculations or processing here if needed
+    });
+
+    // Load cancelled bookings per month
+    this.reportService.getCancelledBookingsPerMonth().subscribe(data => {
+      this.cancelledBookingsReport = data;
+      this.totalCancelledBookings = this.cancelledBookingsReport.length;
+  });
+
   }
+
+// Helper function to format dates as DD/MM/YYYY
+formatDate(dateString: string): string {
+  const date = new Date(dateString);
+  const options = { day: '2-digit', month: 'long', year: 'numeric' } as const;
+  return date.toLocaleDateString('en-GB', options); // Use 'en-GB' for DD/MM/YYYY format
+}
+
+
 
   private calculateTotal(data: any[], key: string): number {
     return data.reduce((total, item) => total + (item[key] || 0), 0);
