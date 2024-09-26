@@ -10,12 +10,16 @@ import { Router } from '@angular/router';
 export class AuthComponent implements OnInit{
   isActive = false;  // Control active state for form toggle
   credentials = { userName: '', password: '' };
-  user = { name: '', surname: '', phoneNumber: '', email: '', password: '', confirmPassword: '', role: '' };
+  user = { name: '', surname: '', phoneNumber: '', email: '', password: '', confirmPassword: '', role: '', profilePhoto: null as File | null };
   errorMessage: string | null = null;
   successMessage: string | null = null;
   passwordFieldType: string = 'password'; // Password field type
 
- 
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    this.user.profilePhoto = file;
+}
+
 
   ngOnInit(): void {}
 
@@ -50,8 +54,19 @@ export class AuthComponent implements OnInit{
     );
   }
 
- register() {
-    this.authService.register(this.user).subscribe(
+  register() {const formData = new FormData();
+    formData.append('name', this.user.name);
+    formData.append('surname', this.user.surname);
+    formData.append('phoneNumber', this.user.phoneNumber);
+    formData.append('email', this.user.email);
+    formData.append('password', this.user.password);
+    formData.append('confirmPassword', this.user.confirmPassword);
+    formData.append('role', this.user.role);
+    if (this.user.profilePhoto) {
+      formData.append('profilePhoto', this.user.profilePhoto);
+    }
+    
+    this.authService.register(formData).subscribe(
       response => {
         console.log('Registration successful', response);
         this.successMessage = 'Registration successful! Redirecting to login...';
@@ -63,6 +78,7 @@ export class AuthComponent implements OnInit{
         console.error('Registration error:', error);
         this.errorMessage = error.error.message || 'Registration failed. Please try again.';
       }
+    
     );
   }
 
