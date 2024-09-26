@@ -11,6 +11,10 @@
         <i class="fa" [ngClass]="passwordFieldType === 'password' ? 'fa-eye' : 'fa-eye-slash'" (click)="togglePasswordVisibility()"></i>
       </div>
       <input type="text" [(ngModel)]="user.role" name="role" placeholder="Role" required />
+      
+
+    <input type="file" (change)="onFileSelected($event)" name="profilePhoto" />
+      
       <button type="submit">Register</button>
       <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
       <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>

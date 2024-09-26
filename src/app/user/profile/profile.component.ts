@@ -12,32 +12,35 @@ import { ProfileEditComponent } from '../profile-edit/profile-edit.component';
   styleUrl: './profile.component.css'
 })
 export class ProfileComponent implements OnInit{
-  profileData: any = {};
-  user:any;
+ 
+  user: any;
   errorMessage: string | null = null;
-  
   notificationMessage: string | null = null;
   isSuccess: boolean = true;
-  constructor(private authService: AuthService, private router: Router, 
-    private dialog: MatDialog) { }
+
+  constructor(
+    private authService: AuthService, 
+    private router: Router, 
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
-   this.loadUserProfile();
+    this.loadUserProfile();
   }
 
-  loadUserProfile(): void{
+  loadUserProfile(): void {
     this.authService.getProfile().subscribe(
-      (data:any) => {
+      (data: any) => {
         console.log('User data:', data); // Log user data
-        this.user = data;
+        this.user = data; // Assign the data from the backend to 'user'
       },
       (error) => {
         console.log('Error fetching profile', error);
         this.errorMessage = error.error.message;
         if (error.status === 401 || error.status === 404) {
-          // Handle unauthorized errors
-          this.router.navigate(['/auth']);
-        }}
+          this.router.navigate(['/auth']); // Handle unauthorized or not found
+        }
+      }
     );
   }
 
@@ -49,26 +52,20 @@ export class ProfileComponent implements OnInit{
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // Call the API to update the user's profile
         this.authService.updateUserProfile(this.user.userName, result).subscribe(
           () => {
-            
-          this.notificationMessage = 'Your password has been updated successfully';
-          this.isSuccess= true;
-             // Reload profile data after successful update
-            //Delay for notification purposes
+            this.notificationMessage = 'Your password has been updated successfully';
+            this.isSuccess = true;
             setTimeout(() => {
-              //this.router.navigate(['/auth']);
-              this.loadUserProfile(); 
-            }, 3000); // 3 seconds delay
+              this.loadUserProfile(); // Reload profile after update
+            }, 3000); 
           },
           (error) => {
-            this.notificationMessage =  'Your password was not updated, please try again';
+            this.notificationMessage = 'Your password was not updated, please try again';
             this.isSuccess = false;
-            
             console.error('Error updating profile', error);
           }
-        ),3000;
+        );
       }
     });
   }

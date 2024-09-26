@@ -12,4 +12,5 @@ export class User {
     jobTitle!: string;
     gender!: string;
     role!: string;
+    profilePhoto!: File;
   }
