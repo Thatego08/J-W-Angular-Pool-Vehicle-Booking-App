@@ -5,6 +5,7 @@ import { User } from '../../models/user';
 import { AuthService } from '../auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ProfileEditComponent } from '../profile-edit/profile-edit.component';
+import { UpdateDetailsComponent } from '../update-details/update-details.component';
 
 @Component({
   selector: 'app-profile',
@@ -62,6 +63,32 @@ export class ProfileComponent implements OnInit{
           },
           (error) => {
             this.notificationMessage = 'Your password was not updated, please try again';
+            this.isSuccess = false;
+            console.error('Error updating profile', error);
+          }
+        );
+      }
+    });
+  }
+
+  openDetailsModal(): void {
+    const dialogRef = this.dialog.open(UpdateDetailsComponent, {
+      width: '400px',
+      data: { ...this.user }  // Pass user data to the modal
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.authService.updateDetails(this.user.userName, result).subscribe(
+          () => {
+            this.notificationMessage = 'Your profile has been updated successfully';
+            this.isSuccess = true;
+            setTimeout(() => {
+              this.loadUserProfile(); // Reload profile after update
+            }, 3000); 
+          },
+          (error) => {
+            this.notificationMessage = 'Your profile was not updated, please try again';
             this.isSuccess = false;
             console.error('Error updating profile', error);
           }

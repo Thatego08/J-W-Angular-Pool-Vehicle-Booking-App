@@ -109,6 +109,7 @@ import { OTPComponent } from './Admin/otp/otp.component';
 import { HelpComponent } from './app/help/help.component';
 import { AuditLogComponent } from './audit-log/audit-log.component';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { UpdateDetailsComponent } from './user/update-details/update-details.component';
 
 
 @NgModule({
@@ -191,7 +192,8 @@ import { WelcomeComponent } from './welcome/welcome.component';
 
     HelpComponent,
       AuditLogComponent,
-      WelcomeComponent
+      WelcomeComponent,
+      UpdateDetailsComponent
   ],
   imports: [
     BrowserModule,
