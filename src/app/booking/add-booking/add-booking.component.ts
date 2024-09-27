@@ -34,6 +34,7 @@ export class AddBookingComponent implements OnInit {
       userName: [''],
       event: [''],
       startDate: ['', Validators.required],
+      endDate: ['', Validators.required],
       type: ['', Validators.required],
       vehicleName: ['', Validators.required],
       projectNumber: [''],
@@ -41,11 +42,49 @@ export class AddBookingComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this.prepopulateUserName();
-    this.fetchVehicles();
-    this.loadProjects();
-  }
+  
+    ngOnInit(): void {
+      this.prepopulateUserName();
+      this.fetchVehicles(); // Can fetch initially for any vehicles if needed
+      this.loadProjects();
+      
+      // Listen to form control changes
+      this.bookingForm.get('startDate')?.valueChanges.subscribe(() => this.onStartDateEndDateChange());
+      this.bookingForm.get('endDate')?.valueChanges.subscribe(() => this.onStartDateEndDateChange());
+    }
+    
+    fetchAvailableVehicles(startDate: Date, endDate: Date): void {
+      this.bookingService.getAvailableVehicles(startDate, endDate).subscribe({
+        next: (vehicles) => {
+          this.vehicles = vehicles; // Update vehicles list
+        },
+        error: (error) => {
+          console.error('Error fetching available vehicles', error);
+          this.toastr.error('Failed to fetch available vehicles.');
+        }
+      });
+    }
+
+
+    onStartDateEndDateChange(): void {
+      const startDateString = this.bookingForm.value.startDate;
+      const endDateString = this.bookingForm.value.endDate;
+    
+      if (startDateString && endDateString) {
+        const startDate = new Date(startDateString); // Convert to Date object
+        const endDate = new Date(endDateString);
+    
+        // Ensure valid date conversion
+        if (!isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
+          this.fetchAvailableVehicles(startDate, endDate);
+        } else {
+          console.error('Invalid date provided');
+          this.toastr.error('Invalid date provided', 'BookingForm');
+        }
+      }
+    }
+    
+  
 
   prepopulateUserName(): void {
     this.authService.getProfile().subscribe({
@@ -94,10 +133,22 @@ export class AddBookingComponent implements OnInit {
 
   saveBooking(): void {
     if (this.bookingForm.valid) {
+      const startDateString = this.bookingForm.value.startDate;
+      const endDateString = this.bookingForm.value.endDate;
+  
+      const startDate = new Date(startDateString); // Convert to Date object
+      const endDate = new Date(endDateString);
+  
+      if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+        this.handleError('Please provide valid start and end dates.');
+        return;
+      }
+  
       const booking: CreateBookingModel = {
         userName: this.bookingForm.value.userName,
         event: this.isEvent ? this.bookingForm.value.event : null,
-        startDate: this.bookingForm.value.startDate,
+        startDate: startDate.toISOString(),  // Convert to ISO string
+        endDate: endDate.toISOString(),      // Convert to ISO string
         vehicleName: this.bookingForm.value.vehicleName,
         projectNumber: !this.isEvent ? this.bookingForm.value.projectNumber : null,
         reminderSent: false,
@@ -107,32 +158,25 @@ export class AddBookingComponent implements OnInit {
       this.bookingService.createBooking(booking).subscribe({
         next: (response) => {
           console.log('API Response:', response);
-          // Assume a successful creation on any 2xx status code
           this.updateVehicleStatus(this.bookingForm.value.vehicleName, 2);
           this.notificationMessage = 'Your Booking has successfully been made!';
           this.isSuccess = true;
-
-          //Delay for notification purposes
-          //this.router.navigate(['/booking-history']);
+  
           setTimeout(() => {
             this.router.navigate(['/booking-history']);
-          }, 3000); // 3 seconds delay
-
-
+          }, 3000); // Delay for 3 seconds
+  
         },
         error: (error) => {
           console.error('Error Response:', error);
-          // Check the specific status code
           if (error.status === 500) {
             this.handleError('Failed to create booking. Please try again.');
           } else {
-            // Handle other error types or consider them successful
             this.notificationMessage = 'Your Booking has successfully been made, but there were some issues.';
             this.isSuccess = true;
             setTimeout(() => {
               this.router.navigate(['/booking-history']);
             }, 3000);
-            //this.router.navigate(['/booking-list']);
           }
         }
       });
@@ -140,6 +184,7 @@ export class AddBookingComponent implements OnInit {
       this.handleError('Please ensure the form is valid before submitting.');
     }
   }
+  
   
   
   handleError(message: string): void {

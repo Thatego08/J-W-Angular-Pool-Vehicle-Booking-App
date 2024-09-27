@@ -20,6 +20,13 @@ export class BookingService {
     return this.http.get<BookingModel>(`${this.baseUrl}/GetBooking/${id}`);
 }
 
+getAvailableVehicles(startDate: Date, endDate: Date): Observable<Vehicle[]> {
+  const url = `${this.baseUrl}/GetAvailableVehicles?startDate=${startDate.toISOString()}&endDate=${endDate.toISOString()}`;
+  return this.http.get<Vehicle[]>(url).pipe(
+    catchError(this.handleError)
+  );
+}
+
 
   searchBookingHistory(username: string): Observable<BookingModel[]> {
     return this.http.get<BookingModel[]>(`${this.baseUrl}/SearchBookingHistory/${username}`);

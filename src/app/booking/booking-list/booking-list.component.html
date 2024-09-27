@@ -10,6 +10,7 @@
           <p class="card-text"><strong>Project:</strong> {{ booking.projectNumber }}</p>
           <p class="card-text"><strong>Event:</strong> {{ booking.event }}</p>
           <p class="card-text"><strong>StartDate:</strong> {{ booking.startDate | date }}</p>
+          <p class="card-text"><strong>EndDate:</strong> {{ booking.endDate | date }}</p>
         </div>
         <div class="card-footer d-flex justify-content-between">
           <button class="btn btn-edit" (click)="openEditModal(booking)">Edit</button>

@@ -15,8 +15,8 @@ export interface BookingModel {
 export interface CreateBookingModel {
   userName: string;
   event?: string;
-  startDate: Date;
-  //endDate: Date;
+  startDate: String;
+  endDate: String;
   vehicleName: string;
   projectNumber?: number;
   reminderSent: boolean;
