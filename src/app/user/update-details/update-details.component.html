@@ -1,0 +1,24 @@
+
+<form (ngSubmit)="onSubmit()" #form="ngForm">
+    <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input matInput [(ngModel)]="data.name" name="name" required>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Surname</mat-label>
+        <input matInput [(ngModel)]="data.surname" name="surname" required>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput [(ngModel)]="data.email" name="email" required>
+    </mat-form-field>
+
+    <div>
+        <label for="profilePhoto">Choose Profile Photo:</label>
+        <input type="file" id="profilePhoto" (change)="onFileSelected($event)" />
+    </div>
+
+    <button mat-raised-button color="primary" type="submit">Update</button>
+</form>

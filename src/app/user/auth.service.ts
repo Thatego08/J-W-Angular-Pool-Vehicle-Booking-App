@@ -60,6 +60,10 @@ export class AuthService {
   updateUserProfile(userName: string, profileData: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/update-user?userName=${userName}`, profileData);
   }
+
+  updateDetails(userName: string, formData: FormData): Observable<any> {
+    return this.http.put(`${this.apiUrl}/update-details?userName=${userName}`, formData);
+  }
   
   logout(): Observable<any> {
 
