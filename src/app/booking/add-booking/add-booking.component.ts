@@ -21,6 +21,7 @@ export class AddBookingComponent implements OnInit {
 
   notificationMessage: string | null = null;
   isSuccess: boolean = true;
+  minDate: string; // Add this to restrict past dates
 
   constructor(
     private fb: FormBuilder,
@@ -39,6 +40,11 @@ export class AddBookingComponent implements OnInit {
       projectNumber: [''],
       reminderSent: [false]
     });
+
+    // Set the minDate to today including time for datetime-local
+  const today = new Date();
+  // Format as YYYY-MM-DDTHH:mm (for the datetime-local input)
+  this.minDate = today.toISOString().slice(0, 16);
   }
 
   ngOnInit(): void {
@@ -103,7 +109,7 @@ export class AddBookingComponent implements OnInit {
         reminderSent: false,
         type: this.bookingForm.value.type,
       };
-  
+
       this.bookingService.createBooking(booking).subscribe({
         next: (response) => {
           console.log('API Response:', response);
@@ -140,13 +146,13 @@ export class AddBookingComponent implements OnInit {
       this.handleError('Please ensure the form is valid before submitting.');
     }
   }
-  
-  
+
+
   handleError(message: string): void {
     this.notificationMessage = message;
     this.isSuccess = false;
   }
-  
+
 
   updateVehicleStatus(vehicleName: string, statusId: number): void {
     this.bookingService.updateVehicleStatus(vehicleName, statusId).subscribe({

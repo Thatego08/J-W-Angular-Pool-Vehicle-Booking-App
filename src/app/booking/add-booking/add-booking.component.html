@@ -37,13 +37,20 @@
     </div>
     <div class="form-group">
       <label for="startDate">Start Date</label>
-      <input id="startDate" formControlName="startDate" class="form-control" type="datetime-local" />
+      <input
+        id="startDate"
+        formControlName="startDate"
+        class="form-control"
+        type="datetime-local"
+        [min]="minDate"
+      />
     </div>
-   
+
+
 
     <!-- <button type="submit" class="btn btn-success" [disabled]="!bookingForm.valid">Save</button> -->
     <button type="submit" class="btn btn-success" >Save</button>
-  
+
     <button type="button" class="btn btn-danger" (click)="router.navigate(['/booking-list'])">Cancel</button>
   </form>
 </div>
