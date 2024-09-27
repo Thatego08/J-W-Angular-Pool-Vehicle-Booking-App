@@ -30,7 +30,7 @@ export class EditBookingComponent implements OnInit {
     { number: 130, name: 'Project 4' },
     { number: 131, name: 'Project 5' }
   ];
-
+  minDate: string; // Add this to restrict past dates
   constructor(
     private bookingService: BookingService,
     private fb: FormBuilder,
@@ -46,6 +46,11 @@ export class EditBookingComponent implements OnInit {
       rateType: ['Half Day Rate'],
       reminderSent: [false]
     });
+
+    // Set the minDate to today including time for datetime-local
+  const today = new Date();
+  // Format as YYYY-MM-DDTHH:mm (for the datetime-local input)
+  this.minDate = today.toISOString().slice(0, 16);
   }
 
   ngOnInit(): void {
