@@ -1,0 +1,42 @@
+<div class="calendar-container">
+    <h2>{{ currentMonthName }} {{ currentYear }}</h2>
+    <div class="navigation">
+      <button (click)="prevMonth()">Previous</button>
+      <button (click)="nextMonth()">Next</button>
+    </div>
+  
+    <div class="calendar">
+      <div class="day-names">
+        <div *ngFor="let day of ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']" class="day-name">
+          {{ day }}
+        </div>
+      </div>
+      <div class="days">
+        <div *ngFor="let day of daysInMonth" class="day">
+          <div (click)="onDateClick(day.date)" class="day-content">
+            <span class="date">{{ day.date }}</span>
+            <div *ngIf="events[day.date] && events[day.date].length > 0" class="events">
+              <div *ngFor="let booking of events[day.date]">
+                <span>{{ booking.userName }} - {{ booking.projectNumber ? 'Project: ' + booking.projectNumber : (booking.event || 'No event') }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div *ngIf="selectedDate" class="booking-details">
+      <h3>Bookings for {{ selectedDate }}</h3>
+      <ul>
+        <li *ngFor="let detail of bookingDetails">
+          <strong>User Name:</strong> {{ detail.userName }}<br>
+          <strong>Event:</strong> {{ detail.event }}<br>
+          <strong>Start Date:</strong> {{ detail.startDate }}<br>
+          <strong>End Date:</strong> {{ detail.endDate }}<br>
+          <strong>Vehicle Name:</strong> {{ detail.vehicleName }}<br>
+          <hr>
+        </li>
+      </ul>
+    </div>
+  </div>
+  

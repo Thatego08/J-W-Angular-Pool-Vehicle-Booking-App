@@ -110,6 +110,7 @@ import { HelpComponent } from './app/help/help.component';
 import { AuditLogComponent } from './audit-log/audit-log.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { UpdateDetailsComponent } from './user/update-details/update-details.component';
+import { CalendarViewComponent } from './calendar-view/calendar-view.component';
 
 
 @NgModule({
@@ -193,7 +194,8 @@ import { UpdateDetailsComponent } from './user/update-details/update-details.com
     HelpComponent,
       AuditLogComponent,
       WelcomeComponent,
-      UpdateDetailsComponent
+      UpdateDetailsComponent,
+      CalendarViewComponent
   ],
   imports: [
     BrowserModule,
