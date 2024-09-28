@@ -24,7 +24,7 @@
 
     <div class="form-group">
       <label for="travelEnd">Travel End</label>
-      <input id="travelEnd" type="datetime-local" formControlName="travelEnd" class="form-control" />
+      <input type="date" id="travelEnd" formControlName="travelEnd" [min]="minDate" />
     </div>
 
    

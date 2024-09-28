@@ -28,6 +28,25 @@ export class ReportComponent implements OnInit {
   cancelledBookingsReport: CancelledBookingsReport[] = []; // New property
 
   userTripReport: UserTripReportDto[] = []; // New property for user trip report
+ 
+  filteredUserTripReport: UserTripReportDto[] = []; // New property for filtered user trip report
+  filteredUserBookingReport: BookingsPerUserReport[] = []; // Update if necessary
+
+  monthFilter: string = ''; // New property for month filter
+months = [
+  { name: 'January', value: 'January' },
+  { name: 'February', value: 'February' },
+  { name: 'March', value: 'March' },
+  { name: 'April', value: 'April' },
+  { name: 'May', value: 'May' },
+  { name: 'June', value: 'June' },
+  { name: 'July', value: 'July' },
+  { name: 'August', value: 'August' },
+  { name: 'September', value: 'September' },
+  { name: 'October', value: 'October' },
+  { name: 'November', value: 'November' },
+  { name: 'December', value: 'December' }
+];
 
   totalTrips: number = 0;
   totalVehicleStatus: number = 0;
@@ -43,6 +62,7 @@ export class ReportComponent implements OnInit {
   visibleReports: string[] = [];
   user: any = {};
   companyLogoUrl = 'assets/logo.png';
+  usernameFilter: string = ''; // New property for username filter
 
   constructor(
     private reportService: ReportService,
@@ -106,17 +126,17 @@ export class ReportComponent implements OnInit {
     });
 
     // Load user trips per month
-    this.reportService.getTripsPerUserPerMonth().subscribe(data => {
+    this.reportService.getTripsPerUserPerMonth().subscribe((data) => {
       this.userTripReport = data;
-      // You can add additional calculations or processing here if needed
+      this.filteredUserTripReport = data; // Initialize filtered trips
     });
 
 
-    // Load bookings per user per month report
-    this.reportService.getBookingsPerUserPerMonth().subscribe(data => {
-      this.bookingPerUserReport = data;
-      // You can add additional calculations or processing here if needed
-    });
+   // Load bookings per user per month report
+  this.reportService.getBookingsPerUserPerMonth().subscribe(data => {
+    this.bookingPerUserReport = data;
+    this.filteredUserBookingReport = data; // Initialize filtered user booking report
+  });
 
     // Load cancelled bookings per month
     this.reportService.getCancelledBookingsPerMonth().subscribe(data => {
@@ -126,6 +146,22 @@ export class ReportComponent implements OnInit {
 
   }
 
+  filterUserBookings(): void {
+    this.filteredUserBookingReport = this.bookingPerUserReport.filter(booking =>
+      booking.userName.toLowerCase().includes(this.usernameFilter.toLowerCase()) &&
+      (!this.monthFilter || booking.month === this.monthFilter)
+    );
+  }
+  
+  
+  
+
+  filterUserTrips(): void {
+    this.filteredUserTripReport = this.userTripReport.filter(trip =>
+      trip.userName.toLowerCase().includes(this.usernameFilter.toLowerCase()) &&
+      (!this.monthFilter || trip.month === this.monthFilter)
+    );
+  }
 // Helper function to format dates as DD/MM/YYYY
 formatDate(dateString: string): string {
   const date = new Date(dateString);
