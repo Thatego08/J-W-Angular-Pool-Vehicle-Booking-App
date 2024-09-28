@@ -60,9 +60,10 @@ export class GetTripComponent implements OnInit {
     this.router.navigate(['/edit-trip', trip.tripId]); // Navigate to edit-trip route with tripId
   }
 
-  navigateToCreatePostChecklist() {
-    this.router.navigate(['/create-post-check']); // Navigate to create-post-checklist route
+  navigateToCreatePostChecklist(tripId: number) {
+    this.router.navigate(['/create-post-check', { tripId }]); // Pass tripId as a route parameter
   }
+  
 
   deleteTrip(tripId: number) {
     const confirmation = confirm('Are you sure you want to delete this trip?');

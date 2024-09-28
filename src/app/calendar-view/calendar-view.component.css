@@ -1,0 +1,69 @@
+/* src/app/calendar-view/calendar-view.component.css */
+
+.calendar-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+  }
+  
+  .day-names {
+    display: contents; /* Allows grid to use the same layout for day names */
+  }
+  
+  .day-name {
+    text-align: center;
+    font-weight: bold;
+    background-color: #f0f0f0;
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .days {
+    display: contents; /* Allows grid to use the same layout for days */
+  }
+  
+  .day {
+    border: 1px solid #e0e0e0;
+    height: 100px;
+    position: relative;
+  }
+  
+  .day-content {
+    padding: 5px;
+    cursor: pointer;
+  }
+  
+  .day-content:hover {
+    background-color: #e9e9e9; /* Highlight on hover */
+  }
+  
+  .date {
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+  
+  .events {
+    margin-top: 5px;
+    font-size: 0.9em;
+  }
+  
+  .booking-details {
+    margin-top: 20px;
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+  }
+  

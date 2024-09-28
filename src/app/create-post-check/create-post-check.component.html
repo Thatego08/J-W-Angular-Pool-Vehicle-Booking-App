@@ -1,60 +1,64 @@
 <div class="form-container">
-  <h2>Create Post Check</h2>
-  <form [formGroup]="postCheckForm" (ngSubmit)="submitForm()" enctype="multipart/form-data" class="post-check-form">
-      <div class="form-header">
-          <button type="button" (click)="checkAll(true)">Check All</button>
-      </div>
-
-      <div class="form-group">
-          <label for="ClosingKms">Closing Kms:</label>
-          <input type="number" id="ClosingKms" formControlName="ClosingKms">
-          <div *ngIf="postCheckForm.get('ClosingKms')?.invalid && (postCheckForm.get('ClosingKms')?.touched || postCheckForm.get('ClosingKms')?.dirty)" class="error-message">
-              <div *ngIf="postCheckForm.get('ClosingKms')?.errors?.['required']">Closing Kms is required.</div>
-              <div *ngIf="postCheckForm.get('ClosingKms')?.errors?.['negativeKms']">Closing Kms must be a positive number.</div>
-          </div>
-      </div>
-
-      <div class="form-group" *ngFor="let check of checkboxes">
-          <label [for]="check.id">{{ check.label }}:</label>
-          <input type="checkbox" [id]="check.id" [formControlName]="check.formControlName">
-      </div>
-
-      <div class="form-group">
-          <label for="Comments">Comments:</label>
-          <textarea id="Comments" formControlName="Comments"></textarea>
-      </div>
-
-      <div class="form-group">
-          <label for="AdditionalComments">Additional Comments:</label>
-          <textarea id="AdditionalComments" formControlName="AdditionalComments"></textarea>
-      </div>
-
-    <div class="form-group">
-  <label for="MediaFiles">Upload Files:</label>
-  <input type="file" id="MediaFiles" (change)="onFileChange($event)" multiple accept="image/*,video/*">
-</div>
-
-      <div *ngIf="errorMessage" class="error-message">
-          {{ errorMessage }}
-      </div>
-
-      <div class="form-group">
-          <label for="MediaDescription">Media Description:</label>
-          <input type="text" id="MediaDescription" formControlName="MediaDescription">
-      </div>
-
-      <div class="form-group">
-          <label for="LicenseDiskValid">License Disk Valid:</label>
-          <input type="checkbox" id="LicenseDiskValid" formControlName="LicenseDiskValid">
-          <div *ngIf="postCheckForm.get('LicenseDiskValid')?.invalid && (postCheckForm.get('LicenseDiskValid')?.touched || postCheckForm.get('LicenseDiskValid')?.dirty)" class="error-message">
-              <div *ngIf="postCheckForm.get('LicenseDiskValid')?.errors?.['requiredTrue']">License Disk must be valid.</div>
-          </div>
-      </div>
-
-      <button type="submit" [disabled]="postCheckForm.invalid">Submit Post Check</button>
-  </form>
-
-  <div *ngIf="successMessage" class="success-message">
-    {{ successMessage }}
-</div>
-</div>
+    <h2>Create Post Check</h2>
+    <form [formGroup]="postCheckForm" (ngSubmit)="submitForm()" enctype="multipart/form-data" class="post-check-form">
+        <div class="form-header">
+            <button type="button" (click)="checkAll(true)">Check All</button>
+        </div>
+  
+        <!-- Hidden input for tripId -->
+        <input type="hidden" formControlName="TripId" [value]="tripId">
+  
+        <div class="form-group">
+            <label for="ClosingKms">Closing Kms:</label>
+            <input type="number" id="ClosingKms" formControlName="ClosingKms">
+            <div *ngIf="postCheckForm.get('ClosingKms')?.invalid && (postCheckForm.get('ClosingKms')?.touched || postCheckForm.get('ClosingKms')?.dirty)" class="error-message">
+                <div *ngIf="postCheckForm.get('ClosingKms')?.errors?.['required']">Closing Kms is required.</div>
+                <div *ngIf="postCheckForm.get('ClosingKms')?.errors?.['negativeKms']">Closing Kms must be a positive number.</div>
+            </div>
+        </div>
+  
+        <div class="form-group" *ngFor="let check of checkboxes">
+            <label [for]="check.id">{{ check.label }}:</label>
+            <input type="checkbox" [id]="check.id" [formControlName]="check.formControlName">
+        </div>
+  
+        <div class="form-group">
+            <label for="Comments">Comments:</label>
+            <textarea id="Comments" formControlName="Comments"></textarea>
+        </div>
+  
+        <div class="form-group">
+            <label for="AdditionalComments">Additional Comments:</label>
+            <textarea id="AdditionalComments" formControlName="AdditionalComments"></textarea>
+        </div>
+  
+        <div class="form-group">
+            <label for="MediaFiles">Upload Files:</label>
+            <input type="file" id="MediaFiles" (change)="onFileChange($event)" multiple accept="image/*,video/*">
+        </div>
+  
+        <div *ngIf="errorMessage" class="error-message">
+            {{ errorMessage }}
+        </div>
+  
+        <div class="form-group">
+            <label for="MediaDescription">Media Description:</label>
+            <input type="text" id="MediaDescription" formControlName="MediaDescription">
+        </div>
+  
+        <div class="form-group">
+            <label for="LicenseDiskValid">License Disk Valid:</label>
+            <input type="checkbox" id="LicenseDiskValid" formControlName="LicenseDiskValid">
+            <div *ngIf="postCheckForm.get('LicenseDiskValid')?.invalid && (postCheckForm.get('LicenseDiskValid')?.touched || postCheckForm.get('LicenseDiskValid')?.dirty)" class="error-message">
+                <div *ngIf="postCheckForm.get('LicenseDiskValid')?.errors?.['requiredTrue']">License Disk must be valid.</div>
+            </div>
+        </div>
+  
+        <button type="submit" [disabled]="postCheckForm.invalid">Submit Post Check</button>
+    </form>
+  
+    <div *ngIf="successMessage" class="success-message">
+      {{ successMessage }}
+    </div>
+  </div>
+  

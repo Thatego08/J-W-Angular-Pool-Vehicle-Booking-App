@@ -1,24 +1,35 @@
 <div class="charts-wrapper">
-  <button class="scroll-button left" (click)="scrollLeft()" >&#10094;</button>
+  <button class="scroll-button left" (click)="scrollLeft()">&#10094;</button>
   <div class="charts-container">
+    <!-- Vehicle Make Chart -->
     <div class="chart-item">
-      <canvas id="vehicleStatusChart"></canvas>
-    </div>
-    <div class="chart-item">
+      <h4>Vehicle Make Chart</h4> <!-- Heading for Vehicle Make Chart -->
       <canvas id="vehicleMakeChart"></canvas>
     </div>
+    
+    <!-- Fuel Expenditure Chart -->
     <div class="chart-item">
+      <h4>Fuel Expenditure Chart</h4> <!-- Heading for Fuel Expenditure Chart -->
+      <canvas id="fuelExpenditureChart"></canvas> <!-- Added fuel expenditure chart -->
+    </div>
+    
+    <!-- Booking Type Chart -->
+    <div class="chart-item">
+      <h4>Booking Type Chart</h4> <!-- Heading for Booking Type Chart -->
       <canvas id="bookingTypeChart"></canvas>
     </div>
+    
+    <!-- Booking Status Chart -->
     <div class="chart-item">
-      <canvas id="tripChart"></canvas>
-    </div>
-    <div class="chart-item">
+      <h4>Booking Status Chart</h4> <!-- Heading for Booking Status Chart -->
       <canvas id="bookingStatusChart"></canvas>
     </div>
+    
+    <!-- Project Status Chart -->
     <div class="chart-item">
+      <h4>Project Status Chart</h4> <!-- Heading for Project Status Chart -->
       <canvas id="projectStatusChart"></canvas>
     </div>
   </div>
-  <button class="scroll-button right" (click)="scrollRight()" >&#10095;</button>
+  <button class="scroll-button right" (click)="scrollRight()">&#10095;</button>
 </div>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { VehicleReport, BookingTypeReport, TripReport, BookingStatusReport, ProjectReport, ReportService, VehicleMakeReport } from '../../services/report.service';
-import { Chart, ChartType, ChartData, ChartOptions, ChartConfiguration, registerables } from 'chart.js';
+import { Chart, registerables } from 'chart.js';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,16 +20,16 @@ export class DashboardComponent implements OnInit {
   totalBookingStatus: number = 0;
   totalProjectStatus: number = 0;
   totalVehicleMake: number = 0;
-  fuelExpenditureReport: any[] = [];
+  fuelExpendituresReport: any[] = [];
   totalFuelExpenditure: number = 0;
   currentDate: string = new Date().toISOString().split('T')[0];
+  fuelExpenditureReport: any[] = [];
+  totalFuelCost: number = 0;
 
   private charts: { [key: string]: Chart } = {};
   private scrollAmount: number = 0;
 
-  constructor(
-    private reportService: ReportService
-  ) {}
+  constructor(private reportService: ReportService) {}
 
   ngOnInit(): void {
     this.loadReports();
@@ -77,6 +77,12 @@ export class DashboardComponent implements OnInit {
       this.createVehicleStatusChart();
     });
 
+    this.reportService.getVehicleFuelReport().subscribe(data => {
+      this.fuelExpenditureReport = data;
+      this.totalFuelCost = this.calculateTotal(this.fuelExpenditureReport, 'fuelCost');
+      this.createFuelExpenditureChart();
+    });
+  
     this.reportService.getVehicleMakeReport().subscribe(data => {
       this.vehicleMakeReport = data;
       this.totalVehicleMake = this.calculateTotal(this.vehicleMakeReport, 'count');
@@ -170,6 +176,76 @@ export class DashboardComponent implements OnInit {
     this.createChart('vehicleMakeChart', data, options);
   }
 
+  private createFuelExpenditureChart() {
+    // Group data by vehicle and month-year
+    const groupedData: { [key: string]: { [key: string]: number } } = {}; // vehicleName -> monthYear -> fuelCost
+  
+    this.fuelExpenditureReport.forEach(report => {
+      const tripDate = new Date(report.tripDate); // Convert tripDate to Date object
+      const monthYear = `${tripDate.getFullYear()}-${('0' + (tripDate.getMonth() + 1)).slice(-2)}`; // Format to YYYY-MM
+      const vehicleName = report.vehicleName;
+  
+      // Initialize the structure for each vehicle
+      if (!groupedData[vehicleName]) {
+        groupedData[vehicleName] = {};
+      }
+  
+      // Initialize the month-year for each vehicle if not exists
+      if (!groupedData[vehicleName][monthYear]) {
+        groupedData[vehicleName][monthYear] = 0; // Initialize if not exists
+      }
+      
+      groupedData[vehicleName][monthYear] += report.fuelCost; // Aggregate fuel costs by vehicle and month-year
+    });
+  
+    // Prepare data for the chart
+    const labels = Array.from(new Set(Object.values(groupedData).flatMap(vehicle => Object.keys(vehicle)))); // Unique month-year labels
+    const datasets = Object.keys(groupedData).map(vehicleName => {
+      const data = labels.map(monthYear => groupedData[vehicleName][monthYear] || 0); // Get data for each month-year
+      return {
+        label: vehicleName,
+        data: data,
+        backgroundColor: this.getRandomColor(), // You can define a function to generate random colors
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1
+      };
+    });
+  
+    const data = {
+      labels: labels,
+      datasets: datasets
+    };
+  
+    const options = {
+      type: 'bar',
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              // Add a callback to prepend "R" to the tick labels for fuel cost
+              callback: (value: number) => {
+                return `R${value}`; // Prepend "R" to the value
+              }
+            }
+          }
+        }
+      }
+    };
+  
+    this.createChart('fuelExpenditureChart', data, options);
+  }
+  
+  // Function to generate random colors for each vehicle
+  private getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+  
   private createBookingTypeChart() {
     const data = {
       labels: this.bookingTypeReport.map(item => item.type),
@@ -260,6 +336,6 @@ export class DashboardComponent implements OnInit {
 
   private updateScrollAmount() {
     const container = document.querySelector('.charts-container') as HTMLElement;
-    this.scrollAmount = container.offsetWidth / 3;
+    this.scrollAmount = container.scrollWidth - container.clientWidth;
   }
 }

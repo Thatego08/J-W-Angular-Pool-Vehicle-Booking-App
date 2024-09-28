@@ -1,18 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-post-check',
   templateUrl: './create-post-check.component.html',
   styleUrls: ['./create-post-check.component.css']
 })
-export class CreatePostCheckComponent {
+export class CreatePostCheckComponent implements OnInit {
   postCheckForm: FormGroup;
   mediaFiles: File[] = [];
   successMessage: string | null = null;
   errorMessage: string | null = null;
+  tripId: number | null = null; // Variable to hold the tripId
 
   checkboxes = [
     { id: 'OilLeaks', label: 'Oil Leaks', formControlName: 'OilLeaks' },
@@ -39,8 +40,9 @@ export class CreatePostCheckComponent {
     { id: 'LicenseDiskValid', label: 'License Disk Valid', formControlName: 'LicenseDiskValid' }
   ];
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private route: ActivatedRoute) {
     this.postCheckForm = this.fb.group({
+      TripId: [null],
       ClosingKms: [null, [Validators.required, this.validatePositiveKms]],
       OilLeaks: [false],
       FuelLevel: [false],
@@ -63,31 +65,30 @@ export class CreatePostCheckComponent {
       Handbrake: [false],
       JWMarketingMagnets: [false],
       CheckedByJWSecurity: [false],
-      LicenseDiskValid: [false, Validators.requiredTrue], // Ensure LicenseDiskValid is checked
+      LicenseDiskValid: [false, Validators.requiredTrue],
       Comments: [''],
       AdditionalComments: [''],
-      MediaDescription: [''] // Make MediaDescription optional
+      MediaDescription: ['']
     });
   }
 
-  // Custom validator for ClosingKms to check if it's positive
-  validatePositiveKms(control: AbstractControl) {
-    const value = control.value;
-    if (value !== null && value < 0) {
-      return { negativeKms: true }; // Return error key if value is negative
-    }
-    return null; // Return null if there's no error
+  ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      this.tripId = +params.get('tripId')!; // Get the tripId from the route parameters
+      console.log('Trip ID:', this.tripId);
+    });
   }
 
-  // Method to check for Closing Kms errors and display message
+  validatePositiveKms(control: AbstractControl) {
+    const value = control.value;
+    return value !== null && value < 0 ? { negativeKms: true } : null;
+  }
+
   checkClosingKmsError() {
     const closingKmsControl = this.postCheckForm.get('ClosingKms');
     if (closingKmsControl?.errors) {
-      if (closingKmsControl.errors['required']) {
-        this.errorMessage = 'Closing Kms is required.';
-      } else if (closingKmsControl.errors['negativeKms']) {
-        this.errorMessage = 'Closing Kms cannot be negative.';
-      }
+      this.errorMessage = closingKmsControl.errors['required'] ? 'Closing Kms is required.' :
+                          closingKmsControl.errors['negativeKms'] ? 'Closing Kms cannot be negative.' : null;
     } else {
       this.errorMessage = null; // No error
     }
@@ -114,40 +115,43 @@ export class CreatePostCheckComponent {
     this.checkClosingKmsError(); // Check for Closing Kms errors before submitting
 
     if (this.postCheckForm.invalid) {
-      this.errorMessage = 'Please fix the errors in the form.'; // Show error message if the form is invalid
-      this.successMessage = null; // Clear success message
+      this.errorMessage = 'Please fix the errors in the form.';
+      this.successMessage = null;
       return; // Don't submit if the form is invalid
     }
 
     const formData = new FormData();
 
-    // Append form values to formData
-    for (const key of Object.keys(this.postCheckForm.value)) {
-      formData.append(key, this.postCheckForm.value[key]);
+    // Append tripId to formData
+    if (this.tripId) {
+      formData.append('TripId', this.tripId.toString());
     }
 
-    // Append media files to formData if any exist
-    if (this.mediaFiles.length > 0) {
-      for (let i = 0; i < this.mediaFiles.length; i++) {
-        formData.append('MediaFiles', this.mediaFiles[i], this.mediaFiles[i].name);
-      }
-    }
+    // Append form values to formData
+    Object.keys(this.postCheckForm.value).forEach(key => {
+      formData.append(key, this.postCheckForm.value[key]);
+    });
+
+    // Append media files to formData
+    this.mediaFiles.forEach(file => {
+      formData.append('MediaFiles', file, file.name);
+    });
 
     // Send the POST request to create a post check
     this.http.post('https://localhost:7041/api/PostCheck/CreatePostCheck', formData).subscribe({
       next: (response) => {
         console.log('Post check created successfully', response);
-        this.successMessage = 'Post check submitted successfully!'; // Set success message
-        this.errorMessage = null; // Clear any existing error message
-        
+        this.successMessage = 'Post check submitted successfully!';
+        this.errorMessage = null;
+
         // Reset the form and media files
         this.postCheckForm.reset();
         this.mediaFiles = [];
       },
       error: (error) => {
         console.error('Error creating post check', error);
-        this.successMessage = null; // Clear success message on error
-        this.errorMessage = 'There was an error submitting the post check.'; // Set error message
+        this.successMessage = null;
+        this.errorMessage = 'There was an error submitting the post check.';
       }
     });
   }

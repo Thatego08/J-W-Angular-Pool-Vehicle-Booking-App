@@ -78,6 +78,8 @@ import { FaqadminComponent } from './faqadmin/faqadmin.component';
 import { AdminSectionComponent } from './Admin/admin-section/admin-section.component';
 import { AuditLogComponent } from './audit-log/audit-log.component';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { CalendarDayViewComponent } from 'angular-calendar';
+import { CalendarViewComponent } from './calendar-view/calendar-view.component';
 
 
 
@@ -96,6 +98,7 @@ const routes: Routes = [
  { path: 'help-document', component: HelpDocumentComponent, canActivate: [AuthGuard]},
  { path: 'faqlist', component:FaqlistComponent,canActivate: [AuthGuard]},
  { path: 'faqadmin', component: FaqadminComponent,canActivate: [AuthGuard]},
+ { path: 'calendar-view', component: CalendarViewComponent,canActivate: [AuthGuard]},
 
 
  //Booking

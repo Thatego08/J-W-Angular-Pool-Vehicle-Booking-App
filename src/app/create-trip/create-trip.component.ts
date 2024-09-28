@@ -16,7 +16,9 @@ export class CreateTripComponent implements OnInit {
   tripForm: FormGroup;
   imagePreview: string | ArrayBuffer | null = null;
   message: string | null = null;
-  minDate: string; 
+  minDate: string;  //This one
+  fuelExpenditureReport: any[] = [];
+  totalFuelCost: number = 0;
 
   constructor(
     private fb: FormBuilder,
@@ -35,7 +37,8 @@ export class CreateTripComponent implements OnInit {
       bookingID: [''],
       checklistId: [0],
       mediaFiles: [''],
-      mediaDescription: ['']
+      mediaDescription: [''],
+      
     });
 
      // Set the minDate to today
