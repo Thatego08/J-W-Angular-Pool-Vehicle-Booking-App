@@ -35,12 +35,11 @@
           <td>{{ booking.projectNumber }}</td>
           <td>
             <button 
-              (click)="initiatePreChecklist(booking.bookingID)" 
-              class="btn btn-success btn-sm"
-              [ngStyle]="{'background-color': isEndDatePassed(booking.endDate) ? 'grey' : '#28a745', 'cursor': isEndDatePassed(booking.endDate) ? 'not-allowed' : 'pointer'}"
-              [disabled]="isEndDatePassed(booking.endDate)">
-              Complete Pre-Checklist
-            </button>
+      (click)="initiatePreChecklist(booking.bookingID)" 
+      [disabled]="isStartDatePassed(booking.startDate)" 
+      [ngClass]="{'disabled-button': isStartDatePassed(booking.startDate)}">
+      Complete Pre-Checklist
+    </button>
           </td>
         </tr>
       </tbody>

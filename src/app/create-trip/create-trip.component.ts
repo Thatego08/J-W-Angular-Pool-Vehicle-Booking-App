@@ -16,6 +16,7 @@ export class CreateTripComponent implements OnInit {
   tripForm: FormGroup;
   imagePreview: string | ArrayBuffer | null = null;
   message: string | null = null;
+  minDate: string; 
 
   constructor(
     private fb: FormBuilder,
@@ -36,6 +37,10 @@ export class CreateTripComponent implements OnInit {
       mediaFiles: [''],
       mediaDescription: ['']
     });
+
+     // Set the minDate to today
+     const today = new Date();
+     this.minDate = today.toISOString().split('T')[0]; // Format the date as YYYY-MM-DD
   }
 
   ngOnInit(): void {
