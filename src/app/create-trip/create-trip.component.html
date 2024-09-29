@@ -1,7 +1,7 @@
-<div class="container">
-  
-  
-  <form [formGroup]="tripForm" (ngSubmit)="onSubmit()">
+<div class="container trip-form-container">
+  <form [formGroup]="tripForm" (ngSubmit)="onSubmit()" class="trip-form">
+    <h2>Create a New Trip</h2>
+
     <div class="form-group">
       <label for="vehicleName">Vehicle Name</label>
       <input id="vehicleName" formControlName="vehicleName" class="form-control" placeholder="Enter Vehicle Name" />
@@ -9,34 +9,30 @@
 
     <div class="form-group">
       <label for="location">Location</label>
-      <input id="location" formControlName="location" class="form-control"  placeholder="Enter Trip Location" />
+      <input id="location" formControlName="location" class="form-control" placeholder="Enter Trip Location" />
     </div>
 
     <div class="form-group">
       <label for="comment">Comment</label>
-      <textarea id="comment" formControlName="comment" class="form-control"  placeholder="Enter Trip Comments"></textarea>
+      <textarea id="comment" formControlName="comment" class="form-control" placeholder="Enter Trip Comments"></textarea>
     </div>
 
-    <div class="form-group">
-      <label for="travelStart">Travel Start</label>
-      <input id="travelStart" type="datetime-local" formControlName="travelStart" class="form-control"  />
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="travelStart">Travel Start</label>
+        <input id="travelStart" type="datetime-local" formControlName="travelStart" class="form-control" />
+      </div>
+      <div class="form-group col-md-6">
+        <label for="travelEnd">Travel End</label>
+        <input type="date" id="travelEnd" formControlName="travelEnd" [min]="minDate" class="form-control" />
+      </div>
     </div>
-
-    <div class="form-group">
-      <label for="travelEnd">Travel End</label>
-      <input type="date" id="travelEnd" formControlName="travelEnd" [min]="minDate" />  <!--This line-->
-    </div>
-
-   
-
-    
 
     <input type="hidden" formControlName="bookingID" />
     <input type="hidden" formControlName="checklistId" />
 
+    <button type="submit" class="btn btn-primary btn-block">Create Trip</button>
 
-    <button type="submit" class="btn btn-primary">Create Trip</button>
+    <div *ngIf="message" class="alert alert-danger">{{ message }}</div>
   </form>
-
-  <div *ngIf="message" class="alert alert-danger">{{ message }}</div>
 </div>

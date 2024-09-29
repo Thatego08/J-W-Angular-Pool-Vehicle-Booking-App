@@ -70,8 +70,8 @@ export class PreChecklistComponent implements OnInit {
       licenseDiskValid: [false, Validators.requiredTrue],
       comments: [''],
       additionalComments: [''],
-      bookingId: [null],  // Booking ID as FK
-      preChecklistId: [null]  // PreChecklist ID is hidden but automatically set by the backend
+      bookingId: [null],
+      preChecklistId: [null]
     });
   }
 
@@ -85,13 +85,25 @@ export class PreChecklistComponent implements OnInit {
   }
 
   onSubmit() {
+    const openingKmsControl = this.preChecklistForm.get('openingKms');
+    const licenseDiskControl = this.preChecklistForm.get('licenseDiskValid');
+
+    if (openingKmsControl?.hasError('nonNegative')) {
+      console.log('Opening Kms cannot be negative.');
+      return; // Prevent submission
+    }
+
+    if (!licenseDiskControl?.value) {
+      console.log('License disk must be valid.');
+      return; // Prevent submission
+    }
+
     if (this.preChecklistForm.valid) {
       this.preChecklistService.createPreChecklist(this.preChecklistForm.value)
         .subscribe(
           (response: any) => {
             if (response && response.id) {
               this.preChecklistId = response.id;
-              // Navigate to create-trip with preChecklistId and bookingId
               this.router.navigate(['/create-trip'], {
                 queryParams: { preChecklistId: this.preChecklistId, bookingId: this.bookingId }
               });
@@ -107,7 +119,6 @@ export class PreChecklistComponent implements OnInit {
       console.log('Form is invalid');
     }
   }
-  
 
   checkAll(checked: boolean) {
     this.checkboxes.forEach(check => {
