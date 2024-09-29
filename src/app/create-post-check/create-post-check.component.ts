@@ -3,6 +3,12 @@ import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/fo
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 
+interface Checkbox {
+  id: string;
+  label: string;
+  formControlName: string;
+}
+
 @Component({
   selector: 'app-create-post-check',
   templateUrl: './create-post-check.component.html',
@@ -13,9 +19,10 @@ export class CreatePostCheckComponent implements OnInit {
   mediaFiles: File[] = [];
   successMessage: string | null = null;
   errorMessage: string | null = null;
-  tripId: number | null = null; // Variable to hold the tripId
+  tripId: number | null = null;
+  mediaPreviews: { file: File, previewUrl: string, type: string }[] = [];
 
-  checkboxes = [
+  checkboxes: Checkbox[] = [
     { id: 'OilLeaks', label: 'Oil Leaks', formControlName: 'OilLeaks' },
     { id: 'FuelLevel', label: 'Fuel Level', formControlName: 'FuelLevel' },
     { id: 'Mirrors', label: 'Mirrors', formControlName: 'Mirrors' },
@@ -98,63 +105,92 @@ export class CreatePostCheckComponent implements OnInit {
     const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'video/mp4', 'video/ogg', 'video/webm'];
     this.errorMessage = null;
     this.mediaFiles = [];
-
+    this.mediaPreviews = []; // Array to store preview URLs
+  
     for (let i = 0; i < event.target.files.length; i++) {
       const file = event.target.files[i];
-
+  
       if (allowedTypes.includes(file.type)) {
         this.mediaFiles.push(file);
+  
+        // Create preview URL for the file
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.mediaPreviews.push({
+            file,
+            previewUrl: e.target.result,
+            type: file.type.startsWith('image/') ? 'image' : 'video'
+          });
+        };
+        reader.readAsDataURL(file); // Read file as data URL for preview
       } else {
         this.errorMessage = `Invalid file type: ${file.name}. Only images and videos are allowed.`;
         break;
       }
     }
   }
-
+  
   submitForm() {
-    this.checkClosingKmsError(); // Check for Closing Kms errors before submitting
-
+    // Clear previous messages
+    this.successMessage = null;
+    this.errorMessage = null;
+  
+    // Check for Closing Kms errors before submitting
+    this.checkClosingKmsError(); 
+  
+    // Don't submit if the form is invalid
     if (this.postCheckForm.invalid) {
       this.errorMessage = 'Please fix the errors in the form.';
-      this.successMessage = null;
-      return; // Don't submit if the form is invalid
+      return;
     }
-
+  
+    // Provide user feedback for long uploads
+    this.successMessage = 'Submitting... please wait.';
+  
     const formData = new FormData();
-
+  
     // Append tripId to formData
     if (this.tripId) {
       formData.append('TripId', this.tripId.toString());
     }
-
+  
     // Append form values to formData
     Object.keys(this.postCheckForm.value).forEach(key => {
       formData.append(key, this.postCheckForm.value[key]);
     });
-
+  
     // Append media files to formData
     this.mediaFiles.forEach(file => {
-      formData.append('MediaFiles', file, file.name);
+      if (file.type.startsWith('image/')) {
+        formData.append('ImageFiles', file, file.name); // Add images under 'ImageFiles'
+      } else if (file.type.startsWith('video/')) {
+        formData.append('VideoFiles', file, file.name); // Add videos under 'VideoFiles'
+      }
     });
-
+  
     // Send the POST request to create a post check
     this.http.post('https://localhost:7041/api/PostCheck/CreatePostCheck', formData).subscribe({
       next: (response) => {
         console.log('Post check created successfully', response);
         this.successMessage = 'Post check submitted successfully!';
         this.errorMessage = null;
-
-        // Reset the form and media files
+  
+        // Reset the form and media files after successful submission
         this.postCheckForm.reset();
         this.mediaFiles = [];
+
+        setTimeout(() => {
+          this.router.navigate(['/get-trip']);
+        }, 3000); // 3-second delay
       },
       error: (error) => {
-        console.error('Error creating post check', error);
+        console.error('Error submitting post-check', error);
         this.successMessage = null;
-        this.errorMessage = 'There was an error submitting the post check.';
+        this.errorMessage = 'Error submitting post-check.';
       }
     });
   }
+  
 
   checkAll(checked: boolean) {
     this.checkboxes.forEach(check => {

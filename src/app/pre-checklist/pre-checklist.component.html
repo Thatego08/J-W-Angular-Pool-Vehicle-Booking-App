@@ -68,3 +68,8 @@
       </button>
     </div>
   </form>
+
+  <div *ngIf="!preChecklistForm.get('licenseDiskValid')?.value && preChecklistForm.touched" class="text-danger">
+    License disk must be valid.
+  </div>
+</div>

@@ -24,31 +24,40 @@ export class CalendarViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.calculateDaysInMonth();
     this.loadBookings(() => {
       const today = new Date().getDate();
       this.onDateClick(today); // Automatically select today's date and show its bookings
     });
-    this.calculateDaysInMonth();
   }
   
   loadBookings(callback?: () => void) {
     this.bookingService.getBookings().subscribe((bookings: BookingModel[]) => {
+      console.log("Fetched Bookings:", bookings); // Debugging log for all bookings
       this.events = {}; // Reset events for the new month
+
       bookings.forEach(booking => {
         const bookingStartDate = new Date(booking.startDate);
         const bookingMonth = bookingStartDate.getMonth();
         const bookingYear = bookingStartDate.getFullYear();
-  
-        // Check if the booking is in the current month and year
-        if (bookingMonth === this.currentMonth && bookingYear === this.currentYear) {
-          const date = bookingStartDate.getDate(); // Get the date from the booking
-          if (!this.events[date]) {
-            this.events[date] = [];
+        const bookingDate = bookingStartDate.getDate(); // Get the date from the booking
+        
+        // Debugging log to show the booking details
+        console.log(`Checking booking: ${booking.bookingID}, Status: ${booking.statusId}, Month: ${bookingMonth}, Year: ${bookingYear}`);
+
+        // Exclude bookings with statusId 4
+        if (booking.statusId !== 4 && bookingMonth === this.currentMonth && bookingYear === this.currentYear) {
+          if (!this.events[bookingDate]) {
+            this.events[bookingDate] = [];
           }
-          this.events[date].push(booking); // Store actual BookingModel in the events
+          this.events[bookingDate].push(booking); // Store actual BookingModel in the events
+          console.log(`Booking added for date ${bookingDate}:`, booking); // Debugging log for added bookings
+        } else {
+          console.log(`Booking with statusId ${booking.statusId} excluded:`, booking); // Debugging log for excluded bookings
         }
       });
   
+      console.log("Events after loading bookings:", this.events); // Log events after loading
       // Invoke the callback function if provided
       if (callback) {
         callback();
