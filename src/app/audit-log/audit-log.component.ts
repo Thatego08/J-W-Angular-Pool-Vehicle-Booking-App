@@ -10,6 +10,8 @@ import { AuthService } from '../user/auth.service';
 export class AuditLogComponent implements OnInit {
 
   auditLogs: AuditLog[] = [];
+  page: number = 1; // Default page number
+
   searchUsername: string = '';
 log!: { details: string|undefined; id: number; };
 

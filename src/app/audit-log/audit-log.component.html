@@ -20,7 +20,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let log of auditLogs">
+        <tr *ngFor="let log of auditLogs | paginate: { itemsPerPage: 5, currentPage: page }">
           <td>{{ log.userName }}</td>
           <td>{{ log.action }}</td>
           <td>
@@ -39,5 +39,8 @@
 
       
     </table>
+    
+  <!-- Pagination Controls -->
+  <pagination-controls (pageChange)="page = $event"></pagination-controls>
   </div>
   
