@@ -159,10 +159,10 @@
             </ul>
         </li>
 
-        <li *ngIf="authService.isAdmin()" class="navbar-item dropdown hover:bg-gray-700">
+        <li  class="navbar-item dropdown hover:bg-gray-700">
             <a class="dropdown-toggle py-1"><i class="fas fa-question-circle mr-1"></i> FAQs</a>
             <ul class="dropdown-menu">
-                <li><a class="hover:bg-gray-700" routerLink="/faqadmin">Manage FAQs</a></li>
+                <li *ngIf="authService.isAdmin()"><a class="hover:bg-gray-700" routerLink="/faqadmin">Manage FAQs</a></li>
                 <li><a class="hover:bg-gray-700" routerLink="/faqlist">View FAQs</a></li>
             </ul>
         </li>
