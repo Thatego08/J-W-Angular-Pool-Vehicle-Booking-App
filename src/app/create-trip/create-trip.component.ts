@@ -17,8 +17,7 @@ export class CreateTripComponent implements OnInit {
   imagePreview: string | ArrayBuffer | null = null;
   message: string | null = null;
   minDate: string;  //This one
-  fuelExpenditureReport: any[] = [];
-  totalFuelCost: number = 0;
+  
 
   constructor(
     private fb: FormBuilder,
