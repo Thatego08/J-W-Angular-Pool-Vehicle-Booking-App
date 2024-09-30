@@ -55,7 +55,7 @@ export class AddModelComponent implements OnInit {
       };
 
       this.vehicleService.addVehicleModel(modelData).subscribe(() => {
-        alert('Vehicle Model:  ' + modelData.vehicleModelName + modelData.vehicleMakeName + ' added successfully')
+        alert('Vehicle Model added successfully')
         this.clearForm();
         this.router.navigateByUrl('/vehicle-model');
       });
