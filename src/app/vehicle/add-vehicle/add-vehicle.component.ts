@@ -27,12 +27,23 @@ export class AddVehicleComponent implements OnInit {
   vehicleModels: VehicleModel[] = [];
   selectedModelID: number | null = null;
   selectedMakeID: number | null = null;
+  minDate: string;
+  maxDate: string;
 
   constructor(
     private fb: FormBuilder,
     private vehicleService: VehicleService,
     private router: Router // Inject Router for navigation
-  ) { }
+  ) {//
+    const today = new Date();
+    const yesterday = new Date();
+    yesterday.setDate(today.getDate() - 1); // Subtract one day
+
+    // Format both dates as YYYY-MM-DD
+    this.maxDate = today.toISOString().slice(0, 10); // Today's date
+    this.minDate = yesterday.toISOString().slice(0, 10); // Yesterday's date
+  
+  } 
 
   ngOnInit(): void {
     this.initializeForm();
@@ -83,6 +94,8 @@ export class AddVehicleComponent implements OnInit {
       error => console.error('Error loading vehicle models:', error)
     );
   }
+
+  
 
   onMakeSelected(event: Event): void {
     const target = event.target as HTMLSelectElement;
