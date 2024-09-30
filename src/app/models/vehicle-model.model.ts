@@ -6,4 +6,4 @@ export interface VehicleModel {
     vehicleMakeID: number;
     vehicleMakeName?: string; 
     vehicleMake?: VehicleMake;
-}
+  }

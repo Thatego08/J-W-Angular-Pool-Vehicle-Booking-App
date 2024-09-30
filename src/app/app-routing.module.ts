@@ -80,7 +80,7 @@ import { AuditLogComponent } from './audit-log/audit-log.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { CalendarDayViewComponent } from 'angular-calendar';
 import { CalendarViewComponent } from './calendar-view/calendar-view.component';
-
+import { EditServiceComponent } from './vehicle/edit-service/edit-service.component';
 
 
 
@@ -168,6 +168,7 @@ const routes: Routes = [
  {path: 'checklist', component: ChecklistComponent},
  {path: 'post-checklist', component: PostChecklistComponent},
  {path: 'service', component: ServiceComponent},
+ { path: 'edit-service/:serviceID', component: EditServiceComponent },
  {path: 'status', component: StatusComponent },
 
  

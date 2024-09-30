@@ -40,6 +40,7 @@ export class EditMakeComponent implements OnInit {
   updateMake(){
     this.vs.editVehicleMake(this.make.vehicleMakeID, this.make).subscribe({
       next: (response) =>{
+        alert('This vehicle make has been updated successfully.');
         this.router.navigate(['vehicle-make'])
       }
     });
