@@ -109,7 +109,7 @@
             </ul>
         </li>
 
-        <li class="navbar-item dropdown hover:bg-gray-700">
+        <li *ngIf="authService.isAdmin()" class="navbar-item dropdown hover:bg-gray-700">
           <a class="dropdown-toggle py-1" routerLink="/vehicles"><i class="fas fa-car mr-1"></i> Vehicles</a>
             <ul class="dropdown-menu">
                 <li><a class="hover:bg-gray-700" routerLink="/add-vehicle"><i class="fas fa-plus mr-1"></i> Add Vehicle</a></li>
@@ -130,7 +130,7 @@
             </ul>
         </li>
 
-        <li class="navbar-item dropdown hover:bg-gray-700">
+        <li *ngIf="authService.isAdmin()" class="navbar-item dropdown hover:bg-gray-700">
             <a class="dropdown-toggle py-1"><i class="fas fa-user-shield mr-1"></i> Admin Section</a>
             <ul class="dropdown-menu">
                 <li><a class="hover:bg-gray-700" routerLink="/admin"><i class="fas fa-users-cog mr-1"></i> Manage Admins</a></li>
@@ -142,18 +142,24 @@
                 <li><a class="hover:bg-gray-700" routerLink="/view-post-check"><i class="fas fa-check-circle mr-1"></i> Post Checklists</a></li>
                 <li><a class="hover:bg-gray-700" routerLink="/admin-section"><i class="fas fa-cogs mr-1"></i> OTP Settings</a></li>
                 <li><a class="hover:bg-gray-700" routerLink="/audit-log"><i class="fas fa-file-alt mr-1"></i> Audit Trails</a></li>
+            
+                <li>
+                    <a routerLink="/calendar-view" class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
+                        <i class="fas fa-cog mr-2"></i> Calendar
+                    </a>
+                </li>
             </ul>
         </li>
 
         <li class="navbar-item dropdown hover:bg-gray-700">
             <a class="dropdown-toggle py-1"><i class="fas fa-comments mr-1"></i> Feedbacks</a>
             <ul class="dropdown-menu">
-                <li><a class="hover:bg-gray-700" routerLink="/app-feedback-list"><i class="fas fa-list mr-1"></i> Feedback List</a></li>
+                <li *ngIf="authService.isAdmin()"><a class="hover:bg-gray-700" routerLink="/app-feedback-list"><i class="fas fa-list mr-1"></i> Feedback List</a></li>
                 <li><a class="hover:bg-gray-700" routerLink="/app-feedback"><i class="fas fa-plus-circle mr-1"></i> Add Feedback</a></li>
             </ul>
         </li>
 
-        <li class="navbar-item dropdown hover:bg-gray-700">
+        <li *ngIf="authService.isAdmin()" class="navbar-item dropdown hover:bg-gray-700">
             <a class="dropdown-toggle py-1"><i class="fas fa-question-circle mr-1"></i> FAQs</a>
             <ul class="dropdown-menu">
                 <li><a class="hover:bg-gray-700" routerLink="/faqadmin">Manage FAQs</a></li>

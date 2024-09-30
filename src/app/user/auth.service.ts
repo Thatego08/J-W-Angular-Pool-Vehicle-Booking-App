@@ -26,7 +26,7 @@ export class AuthService {
   constructor(private http: HttpClient) 
   {
 
-    this.userRole.next(this.getUserRole());
+    this.userRole.next(this.getUserRole() ?? '');
     this.loggedIn.next(this.isAuthenticated());
   }
 
@@ -132,15 +132,15 @@ export class AuthService {
     return this.loggedIn.asObservable();
   }
 
-  getUserRole(): string {
-    const token = localStorage.getItem('token');
-    if (token) {
-      const decodedToken: any = jwtDecode(token);
-      console.log('Decoded token:', decodedToken);
-      return decodedToken.role; // Adjust this based on the structure of your token
-    }
-    return '';
-  }
+  // getUserRole(): string {
+  //   const token = localStorage.getItem('token');
+  //   if (token) {
+  //     const decodedToken: any = jwtDecode(token);
+  //     console.log('Decoded token:', decodedToken);
+  //     return decodedToken; // Adjust this based on the structure of your token
+  //   }
+  //   return '';
+  // }
   get currentUserRole(): Observable<string> {
     return this.userRole.asObservable();
   }
@@ -163,4 +163,33 @@ export class AuthService {
   }
   
 
+
+  //Authentication additions
+
+  getDecodedToken(): any {
+    const token = localStorage.getItem('token');
+    if (token) {
+      return jwtDecode(token);
+    }
+    return null;
+  }
+
+  getUserRole(): string | null {
+    const decodedToken = this.getDecodedToken();
+    if (decodedToken) {
+      // The role is stored in `http://schemas.microsoft.com/ws/2008/06/identity/claims/role`
+      return decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+    }
+    return null;
+  }
+
+  isAdmin(): boolean {
+    const role = this.getUserRole();
+    return role === 'Admin';
+  }
+
+  isDriver(): boolean {
+    const role = this.getUserRole();
+    return role === 'Driver';
+  }
 }

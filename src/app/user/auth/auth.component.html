@@ -1,5 +1,5 @@
 <div class="container" [class.active]="isActive" id="container">
-  <div class="form-container sign-up">
+  <div class="form-container sign-up" style="padding-top: 40px;">
     <form (ngSubmit)="register()">
       <h1>Register Account</h1>
       <input type="text" [(ngModel)]="user.name" name="name" placeholder="Name" required />
@@ -48,7 +48,7 @@
         <button id="login" (click)="toggleForm()">Login</button>
       </div>
       <div class="toggle-panel toggle-right">
-        <h1>Hello, Friend!</h1>
+        <h1>Hello, Driver!</h1>
         <p>Register with your personal details to use all of site features</p>
         <button id="register" (click)="toggleForm()">Register</button>
       </div>
