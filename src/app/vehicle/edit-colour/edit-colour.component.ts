@@ -39,6 +39,7 @@ export class EditColourComponent implements OnInit {
   updateColour(){
     this.vs.updateColour(this.colour.id, this.colour).subscribe({
       next: (response) =>{
+        alert('This colour has been updated successfully.');
         this.router.navigate(['colour'])
       }
     });
@@ -49,52 +50,4 @@ export class EditColourComponent implements OnInit {
     this.router.navigate(["colour"]);
   };
 
-
-  // colourForm: FormGroup;
-  // colourId!: number;
-
-  // constructor(
-  //   private vs: VehicleService,
-  //   private fb: FormBuilder,
-  //   private router: Router,
-  //   private route: ActivatedRoute
-  // ) {
-  //   this.colourForm = this.fb.group({
-  //     name: ['', Validators.required]
-  //   });
-  // }
-
-  // ngOnInit(): void {
-  //   // Get the colour ID from the route parameters
-  //   this.colourId = +this.route.snapshot.paramMap.get('id')!;
-  //   this.loadColour();
-  // }
-
-  // loadColour(): void {
-  //   this.vs.getColour(this.colourId).subscribe(data => {
-  //     if (data) {
-  //       this.colourForm.setValue({
-  //         name: data.name
-  //       });
-  //     }
-  //   });
-  // }
-
-
-  // onSubmit(): void {
-  //   if (this.colourForm.valid) {
-  //     const updatedColour: Colour = {
-  //       id: this.colourId,
-  //       name: this.colourForm.get('name')!.value
-  //     };
-
-  //     this.vs.editColour(this.colourId, updatedColour).subscribe(() => {
-  //       this.router.navigateByUrl('colour');
-  //     });
-  //   }
-  // }
-
-  // cancel(): void{
-  //   this.router.navigateByUrl('colour');
-  // }
 }
