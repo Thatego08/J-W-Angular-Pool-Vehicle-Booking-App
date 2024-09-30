@@ -124,15 +124,26 @@ export class EditVehicleComponent implements OnInit {
 
   onSubmit(): void {
     if (this.editVehicleForm.valid) {
-      const updatedVehicle: Vehicle = { ...this.editVehicleForm.value, vehicleID: this.vehicle.vehicleID };
+      const updatedVehicle: Vehicle = { 
+        ...this.editVehicleForm.value, 
+        vehicleID: this.vehicle.vehicleID 
+      };
+  
       this.vehicleService.updateVehicle(this.vehicle.vehicleID, updatedVehicle).subscribe({
-        next: () => this.router.navigate(['/vehicles']),
-        error: (err) => console.error('Error updating vehicle', err)
+        next: () => {
+          alert('This vehicle has been updated successfully.');
+          this.router.navigate(['/vehicles']);
+        },
+        error: (err) => {
+          console.error('Error updating vehicle', err);
+          alert('An error occurred while updating the vehicle. Please try again.');
+        }
       });
     } else {
       console.warn('Form is not valid');
     }
   }
+  
 
   cancel(): void {
     this.router.navigate(['/vehicles']);

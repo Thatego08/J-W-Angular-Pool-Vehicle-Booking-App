@@ -1,51 +1,48 @@
-
 <div class="container">
   <form [formGroup]="vehicleForm" (ngSubmit)="onSubmit()">
+    <h1>Add Vehicle</h1>
+    <br>
+
     <div class="form-group">
-      <h1>Add Vehicle</h1>
-      <br>
       <label for="name">Name:</label>
-      <input id="name" formControlName="name" class="form-control" required placeholder="Enter vehicle name" />
-      <div *ngIf="vehicleForm.get('name')?.invalid && vehicleForm.get('name')?.touched">
+      <input id="name" formControlName="name" class="form-control" placeholder="Enter vehicle name" required />
+      <div *ngIf="vehicleForm.get('name')?.invalid && vehicleForm.get('name')?.touched" class="text-danger">
         Name is required.
       </div>
     </div>
 
     <div class="form-group">
       <label for="description">Description:</label>
-
       <input id="description" formControlName="description" class="form-control" />
-
-      
     </div>
 
     <div class="form-group">
       <label for="dateAcquired">Date Acquired:</label>
-      <input id="dateAcquired" type="date" formControlName="dateAcquired" class="form-control" placeholder="Select date acquired" />
-      <div *ngIf="vehicleForm.get('dateAcquired')?.invalid && vehicleForm.get('dateAcquired')?.touched">
+      <input id="dateAcquired" type="date" formControlName="dateAcquired" class="form-control" />
+      <div *ngIf="vehicleForm.get('dateAcquired')?.invalid && vehicleForm.get('dateAcquired')?.touched" class="text-danger">
         Date Acquired is required.
       </div>
     </div>     
-    
-<div class="form-group">
+
+    <div class="form-group">
       <label for="licenseExpiryDate">License Expiry Date:</label>
-      <input id="licenseExpiryDate" type="date" formControlName="licenseExpiryDate" class="form-control" placeholder="Select license expiry date" />
-      <div *ngIf="vehicleForm.get('licenseExpiryDate')?.invalid && vehicleForm.get('licenseExpiryDate')?.touched">
+      <input id="licenseExpiryDate" type="date" formControlName="licenseExpiryDate" class="form-control" />
+      <div *ngIf="vehicleForm.get('licenseExpiryDate')?.invalid && vehicleForm.get('licenseExpiryDate')?.touched" class="text-danger">
         License Expiry Date is required.
       </div>
     </div>
 
     <div class="form-group">
       <label for="registrationNumber">Registration Number:</label>
-      <input id="registrationNumber" formControlName="registrationNumber" class="form-control" required placeholder="Enter registration number" />
-      <div *ngIf="vehicleForm.get('registrationNumber')?.invalid && vehicleForm.get('registrationNumber')?.touched">
+      <input id="registrationNumber" formControlName="registrationNumber" class="form-control" placeholder="Enter registration number" required />
+      <div *ngIf="vehicleForm.get('registrationNumber')?.invalid && vehicleForm.get('registrationNumber')?.touched" class="text-danger">
         Registration Number is required.
       </div>
     </div>
 
     <div class="form-group">
       <label for="vin">VIN:</label>
-      <input id="vin" formControlName="vin" class="form-control" required placeholder="Enter 17-character VIN" />
+      <input id="vin" formControlName="vin" class="form-control" placeholder="Enter 17-character VIN" required />
       <div *ngIf="vehicleForm.get('vin')?.hasError('required') && vehicleForm.get('vin')?.touched" class="text-danger">
         VIN is required.
       </div>
@@ -59,8 +56,8 @@
 
     <div class="form-group">
       <label for="engineNo">Engine Number:</label>
-      <input id="engineNo" formControlName="engineNo" class="form-control" required placeholder="Enter engine number" />
-      <div *ngIf="vehicleForm.get('engineNo')?.invalid && vehicleForm.get('engineNo')?.touched">
+      <input id="engineNo" formControlName="engineNo" class="form-control" placeholder="Enter engine number" required />
+      <div *ngIf="vehicleForm.get('engineNo')?.invalid && vehicleForm.get('engineNo')?.touched" class="text-danger">
         Engine Number is required and must be 17 characters long.
       </div>
     </div>
@@ -68,9 +65,10 @@
     <div class="form-group">
       <label for="colourID">Colour:</label>
       <select id="colourID" formControlName="colourID" class="form-control" required>
+        <option [ngValue]="null">-- Select Colour --</option>
         <option *ngFor="let colour of colours" [value]="colour.id">{{ colour.name }}</option>
       </select>
-      <div *ngIf="vehicleForm.get('colourID')?.invalid && vehicleForm.get('colourID')?.touched">
+      <div *ngIf="vehicleForm.get('colourID')?.invalid && vehicleForm.get('colourID')?.touched" class="text-danger">
         Colour is required.
       </div>
     </div>
@@ -78,59 +76,50 @@
     <div class="form-group">
       <label for="fuelTypeID">Fuel Type:</label>
       <select id="fuelTypeID" formControlName="fuelTypeID" class="form-control" required>
+        <option [ngValue]="null">-- Select Fuel Type --</option>
         <option *ngFor="let fuelType of fuelTypes" [value]="fuelType.id">{{ fuelType.fuelName }}</option>
       </select>
-      <div *ngIf="vehicleForm.get('fuelTypeID')?.invalid && vehicleForm.get('fuelTypeID')?.touched">
+      <div *ngIf="vehicleForm.get('fuelTypeID')?.invalid && vehicleForm.get('fuelTypeID')?.touched" class="text-danger">
         Fuel Type is required.
       </div>
     </div>
 
     <div class="form-group">
       <label for="vehicleMake">Vehicle Make:</label>
-      <select id="vehicleMake" formControlName="vehicleMakeID" class="form-control" (change)="onMakeSelected($event)">
+      <select id="vehicleMake" formControlName="vehicleMakeID" class="form-control" (change)="onMakeSelected($event)" required>
         <option [ngValue]="null">-- Select Make --</option>
-        <option *ngFor="let make of vehicleMakes" [value]="make.vehicleMakeID">
-          {{ make.name }}
-        </option>
+        <option *ngFor="let make of vehicleMakes" [value]="make.vehicleMakeID">{{ make.name }}</option>
       </select>
-
-      <div *ngIf="vehicleForm.get('vehicleMakeID')?.invalid && vehicleForm.get('vehicleMakeID')?.touched">
+      <div *ngIf="vehicleForm.get('vehicleMakeID')?.invalid && vehicleForm.get('vehicleMakeID')?.touched" class="text-danger">
         Vehicle Make is required.
       </div>
-
     </div>
 
     <div class="form-group">
       <label for="vehicleModel">Vehicle Model:</label>
       <select id="vehicleModel" formControlName="vehicleModelID" class="form-control">
         <option [ngValue]="null">-- Select Model --</option>
-        <option *ngFor="let model of vehicleModels" [value]="model.vehicleModelID">
-          {{ model.vehicleModelName }}
-        </option>
+        <option *ngFor="let model of vehicleModels" [value]="model.vehicleModelID">{{ model.vehicleModelName }}</option>
       </select>
     </div>
 
     <div class="form-group">
       <label for="insuranceCoverID">Insurance Cover:</label>
       <select id="insuranceCoverID" formControlName="insuranceCoverID" class="form-control" required>
+        <option [ngValue]="null">-- Select Insurance Cover --</option>
         <option *ngFor="let cover of insuranceCovers" [value]="cover.insuranceCoverId">{{ cover.insuranceCoverName }}</option>
       </select>
-      <div *ngIf="vehicleForm.get('insuranceCoverID')?.invalid && vehicleForm.get('insuranceCoverID')?.touched">
+      <div *ngIf="vehicleForm.get('insuranceCoverID')?.invalid && vehicleForm.get('insuranceCoverID')?.touched" class="text-danger">
         Insurance Cover is required.
       </div>
     </div>
-
 
     <div *ngIf="submissionStatus" class="alert alert-info mt-3">
       {{ submissionStatus }}
     </div>
 
-   
-
-    <button type="submit" class="btn btn-primary" routerLink="/vehicles">Add Vehicle</button>
+    <button type="submit" class="btn btn-primary" [disabled]="vehicleForm.invalid">Add Vehicle</button>
   </form>
 </div>
 
-
 <app-help></app-help>
-
