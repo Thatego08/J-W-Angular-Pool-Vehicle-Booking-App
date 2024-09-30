@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { AuthService } from '../user/auth.service';
 @Component({
   selector: 'app-nav-bar',
@@ -7,5 +7,12 @@ import { AuthService } from '../user/auth.service';
 })
 export class NavBarComponent {
 
-  constructor(public authService: AuthService) {}
+  constructor(public authService: AuthService) {
+  }
+
+  NgOnInit(): void {
+  this.authService.isAdmin();
+  
+  this.authService.isDriver();
+  }
 }
