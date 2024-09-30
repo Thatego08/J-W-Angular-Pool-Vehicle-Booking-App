@@ -88,48 +88,48 @@ import { CalendarViewComponent } from './calendar-view/calendar-view.component';
 
 const routes: Routes = [
  {path:'', pathMatch:'full', redirectTo: '/home'} ,
- {path: 'driver', component:DriverComponent, canActivate: [AuthGuard]},
- {path: 'admin', component:AdminComponent,canActivate:[AuthGuard]},
+ {path: 'driver', component:DriverComponent},
+ {path: 'admin', component:AdminComponent},
  {path: 'register-driver', component:RegisterDriverComponent},
- { path: 'project', component: ProjectComponent ,canActivate:[AuthGuard]},
- { path: 'rate', component: RateComponent , canActivate:[AuthGuard] },
+ { path: 'project', component: ProjectComponent},
+ { path: 'rate', component: RateComponent  },
  {path: 'edit-driver/:userName', component:EditDriverComponent},
- { path: 'edit-admin/:userName', component: EditAdminComponent, canActivate: [AuthGuard]},
- { path: 'help-document', component: HelpDocumentComponent, canActivate: [AuthGuard]},
- { path: 'faqlist', component:FaqlistComponent,canActivate: [AuthGuard]},
- { path: 'faqadmin', component: FaqadminComponent,canActivate: [AuthGuard]},
- { path: 'calendar-view', component: CalendarViewComponent,canActivate: [AuthGuard]},
+ { path: 'edit-admin/:userName', component: EditAdminComponent},
+ { path: 'help-document', component: HelpDocumentComponent},
+ { path: 'faqlist', component:FaqlistComponent},
+ { path: 'faqadmin', component: FaqadminComponent},
+ { path: 'calendar-view', component: CalendarViewComponent},
 
 
  //Booking
- {path: 'booking', component:BookingComponent, canActivate: [AuthGuard]},
- {path: 'add-booking', component:AddBookingComponent, canActivate: [AuthGuard]},
- {path: 'edit-booking', component:EditBookingComponent, canActivate: [AuthGuard]},
- {path: 'booking-list', component:BookingListComponent, canActivate: [AuthGuard]},
- {path: 'booking-history', component:BookingHistoryComponent, canActivate: [AuthGuard]},
+ {path: 'booking', component:BookingComponent},
+ {path: 'add-booking', component:AddBookingComponent},
+ {path: 'edit-booking', component:EditBookingComponent},
+ {path: 'booking-list', component:BookingListComponent},
+ {path: 'booking-history', component:BookingHistoryComponent},
  // Fallback route
 
 
  //Trip Routes
- {path: 'trip', component:TripComponent, canActivate: [AuthGuard]},
- {path: 'create-trip', component:CreateTripComponent, canActivate: [AuthGuard]},
- { path: 'edit-trip/:id', component: EditTripComponent, canActivate: [AuthGuard] },
- {path: 'refuel-vehicle/:tripId', component:RefuelVehicleComponent, canActivate: [AuthGuard]},
- {path: 'get-trip', component:GetTripComponent, canActivate: [AuthGuard]},
- {path: 'pre-checklist', component:PreChecklistComponent, canActivate: [AuthGuard]},
- {path: 'view-post-check', component:ViewPostCheckComponent, canActivate: [AuthGuard]},
- {path: 'create-post-check', component:CreatePostCheckComponent, canActivate: [AuthGuard]},
+ {path: 'trip', component:TripComponent},
+ {path: 'create-trip', component:CreateTripComponent},
+ { path: 'edit-trip/:id', component: EditTripComponent },
+ {path: 'refuel-vehicle/:tripId', component:RefuelVehicleComponent},
+ {path: 'get-trip', component:GetTripComponent},
+ {path: 'pre-checklist', component:PreChecklistComponent},
+ {path: 'view-post-check', component:ViewPostCheckComponent},
+ {path: 'create-post-check', component:CreatePostCheckComponent},
  
- {path: 'dashboard', component:DashboardComponent, canActivate: [AuthGuard]},
+ {path: 'dashboard', component:DashboardComponent},
  //Vehicle Routes
  
  //Vehicle routes
- {path: 'vehicles', component: VehicleComponent,canActivate: [AuthGuard]},
- {path: 'add-vehicle', component: AddVehicleComponent,canActivate: [AuthGuard]},
- {path: 'edit-vehicle/:id', component: EditVehicleComponent,canActivate: [AuthGuard]},
- {path: 'manage-vehicle', component: ManageComponent,canActivate: [AuthGuard]},
- {path: 'pool-vehicle', component: PoolVehicleComponent,canActivate: [AuthGuard]},
- {path: 'vehicle-details', component: VehicleDetailsComponent,canActivate: [AuthGuard]},
+ {path: 'vehicles', component: VehicleComponent},
+ {path: 'add-vehicle', component: AddVehicleComponent},
+ {path: 'edit-vehicle/:id', component: EditVehicleComponent},
+ {path: 'manage-vehicle', component: ManageComponent},
+ {path: 'pool-vehicle', component: PoolVehicleComponent},
+ {path: 'vehicle-details', component: VehicleDetailsComponent},
 
  {path: 'home', component: HomeComponent},
 
@@ -181,20 +181,20 @@ const routes: Routes = [
   { path: 'app-forgot-password', component: ForgotPasswordComponent },
   { path: 'app-reset-password', component: ResetPasswordComponent },
 
-{ path: 'audit-log', component: AuditLogComponent, canActivate: [AuthGuard] },
+{ path: 'audit-log', component: AuditLogComponent },
   
-  {path: 'app-dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
-  { path: 'app-profile', component: ProfileComponent, canActivate: [AuthGuard]},
+  {path: 'app-dashboard', component: DashboardComponent},
+  { path: 'app-profile', component: ProfileComponent},
 
   { path: 'app-notifications', component: NotificationsComponent, canActivate: [AuthGuard]},
-  { path: 'app-settings', component: SettingsComponent, canActivate: [AuthGuard] },
+  { path: 'app-settings', component: SettingsComponent },
 
-  { path: 'app-feedback', component: FeedbackComponent, canActivate: [AuthGuard] },
-  { path: 'app-feedback-list', component: FeedbackListComponent, canActivate: [AuthGuard] },
+  { path: 'app-feedback', component: FeedbackComponent },
+  { path: 'app-feedback-list', component: FeedbackListComponent },
 
-  {path: 'app-report', component:ReportComponent, canActivate: [AuthGuard]},
+  {path: 'app-report', component:ReportComponent},
 
-  {path:'admin-section', component:AdminSectionComponent, canActivate:[AuthGuard]}
+  {path:'admin-section', component:AdminSectionComponent}
 
 
 ];
