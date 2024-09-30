@@ -38,6 +38,7 @@ export class AddInsuranceComponent implements OnInit {
       };
 
       this.vs.addInsuranceCover(coverData).subscribe(() => {
+        alert('The insurance cover has been added successfully!');
         this.clearForm();
         this.router.navigateByUrl('insurance');
       });

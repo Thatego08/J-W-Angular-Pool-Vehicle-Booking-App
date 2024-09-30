@@ -39,6 +39,7 @@ export class EditInsuranceComponent implements OnInit {
   updateCover(){
     this.vs.updateCover(this.insurance.insuranceCoverId, this.insurance).subscribe({
       next: (response) =>{
+        alert('This insurance cover has been updated successfully.');
         this.router.navigate(['insurance'])
       }
     });

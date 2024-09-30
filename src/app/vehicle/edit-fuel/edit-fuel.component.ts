@@ -39,6 +39,7 @@ export class EditFuelComponent implements OnInit {
   updateFuel(){
     this.vs.editFuelType(this.fuel.id, this.fuel).subscribe({
       next: (response) =>{
+        alert('This fuel type has been updated successfully.');
         this.router.navigate(['fuel-type'])
       }
     });
