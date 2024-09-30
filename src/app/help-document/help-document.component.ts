@@ -10,7 +10,7 @@ export class HelpDocumentComponent {
   constructor() {}
 
   openWordDocument(): void {
-    window.open('/assets/Help.pdf', '_blank'); // Ensure the .docx extension is included
+    window.open('/assets/NewHelp.pdf', '_blank'); // Ensure the .docx extension is included
   }
   
 }
