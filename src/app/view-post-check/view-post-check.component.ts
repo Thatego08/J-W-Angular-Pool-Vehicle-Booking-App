@@ -13,7 +13,7 @@ export class ViewPostCheckComponent implements OnInit {
   columnsPerPage: number = 10;
   visibleColumns: string[] = [];
   allColumns: string[] = [
-    'postCheckId', 'tripId', 'closingKms', 'oilLeaks', 'fuelLevel', 'mirrors', 'sunVisor', 'seatBelts', 'headLights',
+    'postCheckId',  'closingKms', 'oilLeaks', 'fuelLevel', 'mirrors', 'sunVisor', 'seatBelts', 'headLights',
     'indicators', 'parkLights', 'brakeLights', 'strobeLight', 'reverseLight', 'reverseHooter', 'horn',
     'windscreenWiper', 'tyreCondition', 'spareWheelPresent', 'jackAndWheelSpannerPresent', 'brakes',
     'handbrake', 'jwMarketingMagnets', 'checkedByJWSecurity', 'licenseDiskValid', 'comments',
