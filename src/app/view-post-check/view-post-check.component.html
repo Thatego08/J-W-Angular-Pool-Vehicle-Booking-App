@@ -12,7 +12,7 @@
           <td *ngFor="let column of visibleColumns">
             <ng-container [ngSwitch]="column">
               <ng-container *ngSwitchCase="'postCheckId'">{{ postCheck.postCheckId }}</ng-container>
-              <ng-container *ngSwitchCase="'tripId'">{{ postCheck.tripId }}</ng-container> <!-- Added tripId column -->
+             
               <ng-container *ngSwitchCase="'closingKms'">{{ postCheck.closingKms }}</ng-container>
               <ng-container *ngSwitchCase="'oilLeaks'">{{ postCheck.oilLeaks ? 'Yes' : 'No' }}</ng-container>
               <ng-container *ngSwitchCase="'fuelLevel'">{{ postCheck.fuelLevel ? 'Yes' : 'No' }}</ng-container>
