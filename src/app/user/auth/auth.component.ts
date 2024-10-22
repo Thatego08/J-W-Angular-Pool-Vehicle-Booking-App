@@ -15,6 +15,9 @@ export class AuthComponent implements OnInit{
   successMessage: string | null = null;
   passwordFieldType: string = 'password'; // Password field type
 
+  notificationMessage: string | null = null;
+  isSuccess: boolean = true;
+
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
     this.user.profilePhoto = file;
@@ -22,6 +25,15 @@ export class AuthComponent implements OnInit{
 
 
   ngOnInit(): void {}
+
+
+    // Function to generate username based on first and last name
+    generateUsername(firstName: string, lastName: string): string {
+      const firstPart = firstName.length >= 4 ? firstName.substring(0, 4) : firstName;
+      const lastPart = lastName.length >= 2 ? lastName.substring(0, 2) : lastName;
+      return firstPart + lastPart;
+    }
+
 
   toggleForm() {
     this.isActive = !this.isActive;
@@ -55,6 +67,9 @@ export class AuthComponent implements OnInit{
   }
 
   register() {const formData = new FormData();
+   
+   this.credentials.userName = this.generateUsername(this.user.name, this.user.surname);
+   
     formData.append('name', this.user.name);
     formData.append('surname', this.user.surname);
     formData.append('phoneNumber', this.user.phoneNumber);
@@ -69,15 +84,19 @@ export class AuthComponent implements OnInit{
     this.authService.register(formData).subscribe(
       response => {
         console.log('Registration successful', response);
-        this.successMessage = 'Registration successful! Redirecting to login...';
+        this.notificationMessage = 'Registration successful! Your Username is: ' + this.credentials.userName;
+
+         //this.notificationMessage = 'Your Booking has successfully been made, but there were some issues.';
+            this.isSuccess = true;
         setTimeout(() => {
           this.router.navigate(['/auth']);
         }, 2000);
       },
       error => {
         console.error('Registration error:', error);
-        this.errorMessage = error.error.message || 'Registration failed. Please try again.';
-      }
+        this.notificationMessage = error.error.message || 'Registration failed. Please try again.';
+        this.isSuccess = false;
+            }
     
     );
   }

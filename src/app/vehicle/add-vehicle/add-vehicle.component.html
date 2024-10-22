@@ -123,6 +123,13 @@
 
     <button type="submit" class="btn btn-primary" [disabled]="vehicleForm.invalid">Add Vehicle</button>
   </form>
+
+
 </div>
 
 <app-help></app-help>
+
+
+<app-notifications  *ngIf="notificationMessage" [message]="notificationMessage" [isSuccess]="isSuccess"></app-notifications>
+
+
