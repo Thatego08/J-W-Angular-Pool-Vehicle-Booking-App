@@ -1,29 +1,66 @@
+/* Wrapper for navbar and sidebar */
 .wrapper {
-    display: flex;
-    align-items: stretch;
+  display: flex;
+  align-items: stretch;
+  height: 100vh; /* Ensure both navbar and sidebar take up full height */
+}
+
+/* Sidebar styling */
+.sidebar-wrapper {
+  width: 250px; /* Match this with navbar left offset */
+  background-color: #0c1c2e;
+  transition: all 0.3s ease;
+  z-index: 999; /* Keep it below navbar */
+}
+
+.wrapper.toggled .sidebar-wrapper {
+  margin-left: -250px; /* Move sidebar off-screen when toggled */
+}
+
+/* Navbar styling */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 250px; /* Ensure the navbar starts after the sidebar */
+  right: 0;
+  padding: 1rem;
+  box-sizing: border-box;
+  z-index: 1000; /* Keep it on top */
+  background-color: #1f2937;
+  border-bottom: 2px solid #374151;
+  transition: left 0.3s ease;
+}
+
+.wrapper.toggled .navbar {
+  left: 0; /* Move the navbar to full-width when sidebar is toggled */
+}
+
+/* Main content */
+.main-content {
+  margin-top: 80px; /* Ensure main content is below the navbar */
+  margin-left: 250px; /* Adjust based on sidebar width */
+  padding: 1rem;
+  transition: margin-left 0.3s ease;
+}
+
+.wrapper.toggled .main-content {
+  margin-left: 0; /* Adjust when sidebar is hidden */
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+  .navbar {
+      left: 0; /* Full-width navbar on small screens */
   }
-  
   .sidebar-wrapper {
-    
-    min-height: 100vh;
-    margin-left: -15rem;
-    
-    background-color: #0c1c2e;
-    -webkit-transition: margin 0.25s ease-out;
-    -moz-transition: margin 0.25s ease-out;
-    transition: margin 0.25s ease-out;
+      width: 100%; /* Full-width sidebar on small screens */
+      position: absolute;
+      z-index: 1001; /* Ensure it's on top of everything */
   }
-  
-  .wrapper.toggled #sidebar-wrapper {
-    margin-left: 0;
+  .wrapper.toggled .sidebar-wrapper {
+      margin-left: -100%; /* Hide the sidebar off-screen */
   }
-  
-  .page-content-wrapper {
-    width: 100%;
+  .main-content {
+      margin-left: 0; /* No margin on small screens */
   }
-  
-  @media (min-width: 768px) {
-    #sidebar-wrapper {
-      margin-left: 0;
-    }
-  }
+}

@@ -1,59 +1,80 @@
-/* Ensure consistent container styling */
+/* General Container Styling */
 .container {
   max-width: 1200px;
-  margin: 20px auto; /* Center the container with margin */
-  padding: 20px; /* Ensure consistent padding */
-  background-color: #fff; /* Use a white background for clarity */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Add subtle shadow for elevation */
-  border-radius: 8px; /* Rounded corners */
-
-  margin-top: 0rem; /* Add margin-top to push the container down from the top */
+  margin: 0 auto; /* Remove extra margin around the container */
+  padding: 15px 20px; /* Adjust padding for consistent spacing */
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
 }
 
-/* Adjust card styling for consistency */
+/* Adjust card styling for consistency and reduced margin */
 .card {
-  margin: 20px auto; /* Center align the card */
-  padding: 20px; /* Add padding inside the card */
-  border: 2px solid #ddd; /* Light gray border for consistency */
-  border-radius: 8px; /* Rounded corners */
-  background-color: #f9f9f9; /* Background color */
+  margin: 10px 0; /* Reduce margin between cards */
+  padding: 15px; /* Reduce padding inside the card */
+  border: 1px solid #ddd; /* Lighter border */
+  border-radius: 8px;
+  background-color: #f9f9f9;
 }
 
-/* Align logo image consistently */
+/* Logo Image Styling */
 .logo-image {
-  max-width: 100%; /* Ensure logo scales with container */
-  height: auto; /* Maintain aspect ratio */
-  margin: 0 auto; /* Center align the logo */
-  padding: 20px; /* Add padding around the logo */
-  display: block; /* Ensure the logo is displayed as a block element */
-  margin-top: 10rem; /* Add margin-top to push the logo down from the top */
+  max-width: 200px; /* Adjust width for consistency */
+  height: auto;
+  display: block;
+  margin: 10px auto; /* Reduce top margin */
+  padding: 10px; /* Adjust padding */
 }
 
 /* Consistent card title styling */
 .card-title {
-  font-size: 1.5rem; /* Adjust font size */
-  font-weight: bold; /* Bold text for title */
-  margin-bottom: 10px; /* Space below title */
+  font-size: 1.25rem; /* Slightly smaller for consistency */
+  font-weight: bold;
+  margin-bottom: 8px; /* Slightly reduce spacing below */
 }
 
-/* Adjust card text styling for consistency */
+/* Card text styling */
 .card-text strong {
-  font-weight: 600; /* Use a consistent weight */
-  display: block; /* Ensure labels are block elements */
-  margin-bottom: 5px; /* Space below labels */
+  font-weight: 600;
+  display: block;
+  margin-bottom: 5px;
 }
 
-/* Consistent button styling */
+/* Button Styling */
 .btn-edit {
-  background-color: #28a745; /* Green background color */
-  border: none; /* Remove border */
-  color: white; /* White text */
-  padding: 10px 15px; /* Add padding */
-  border-radius: 4px; /* Rounded corners */
-  cursor: pointer; /* Pointer cursor */
-  font-size: 16px; /* Font size */
+  background-color: #28a745;
+  border: none;
+  color: white;
+  padding: 8px 12px; /* Reduce padding */
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px; /* Slightly smaller font size */
 }
 
 .btn-edit:hover {
-  background-color: #218838; /* Darker green on hover */
+  background-color: #218838;
+}
+
+.btn-danger {
+  padding: 8px 12px; /* Ensure consistency with edit button */
+  font-size: 14px;
+}
+
+/* Adjust pagination controls margin */
+.pagination-controls {
+  margin-top: 20px; /* Ensure space between cards and pagination */
+}
+
+/* Utility Classes */
+.mt-0 {
+  margin-top: 0 !important;
+}
+
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+
+/* Optional: Remove any extra padding added by the framework */
+.row, .col-lg-4, .col-md-6 {
+  padding: 0 !important;
 }

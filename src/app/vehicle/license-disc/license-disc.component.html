@@ -1,11 +1,9 @@
 
-<div class="header-container">
+<div class="header-container" style="padding-top: 4 rem;">
     <img src="assets/logo.png" alt="Logo" class="logo">
   </div>
-  
-  <button class="btn btn-danger" routerLink="/vehicles"> Back to Vehicles  </button>
-  <br>
-  <h1> License Discs </h1><br>
+
+  <h1> License Discs </h1>
   <div *ngIf="disks.length > 0">
     <table class="min-w-full bg-white border border-gray-200 shadow-md rounded-md overflow-hidden mt-6">
       <thead class="bg-blue-500 text-white uppercase text-sm">
@@ -17,7 +15,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let disk of disks" class="text-gray-700">
+        <tr *ngFor="let disk of disks | paginate: { itemsPerPage: 8, currentPage: page }" class="text-gray-700">
           <td class="py-3 px-6">{{ disk.id }}</td>
           <td class="py-3 px-6">{{ disk.vehicleID}}</td>
           <td class="py-3 px-6">{{ disk.licenseExpiryDate| date  }} </td>
@@ -25,9 +23,14 @@
         </tr>
       </tbody>
     </table>
+     <!-- Pagination Controls -->
+
+    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+ 
   </div>
   <div *ngIf="disks.length === 0" class="text-center mt-4 text-gray-600">
     No license discs found.
   </div>
 
+   <button class="btn btn-danger" routerLink="/vehicles"> Back to Vehicles  </button>
   

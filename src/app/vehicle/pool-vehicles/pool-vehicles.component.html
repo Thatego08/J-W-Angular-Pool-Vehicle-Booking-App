@@ -27,13 +27,13 @@
     <img src="assets/logo.png" alt="Logo" class="logo">
   </div>
   <h1 style="font-family: 'Times New Roman', Times, serif;"> Pool Vehicles </h1>
-  <button mat-raised-button
+  <!-- <button mat-raised-button
   class="ml-44"
       matTooltip="To book a vehicle, please click on the Complete checklist button "
       aria-label="Button that displays a tooltip when focused or hovered over">
       Hint
-    </button>
-  <div class="row ml-16" *ngIf="vehicles">
+    </button> -->
+  <div class="row mr-12" *ngIf="vehicles">
     <div class="col-md-4" *ngFor="let vehicle of vehicles | paginate: { itemsPerPage: 3, currentPage: page }">
       <div class="card  mb-3">
         <div class="card-body">
@@ -47,9 +47,15 @@
           <p class="card-text"> Status: {{ vehicle.status?.name}}</p>
           <p class="card-footer">
             <!-- <a [routerLink]="['/courses','edit', course.id]"> EDIT </a>  -->
-             <button style="align-self: center; background-color:  #1a365d;"   (click)="viewVehicle(vehicle)"> VIEW VEHICLES </button>&nbsp;
-            <button class="btn btn-primary" style="align-self: center;" (click)="completeChecklist(vehicle)"> COMPLETE CHECKLIST </button></p>
-           
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <button style="align-self: center; background-color: #1a365d;" (click)="viewVehicle(vehicle)">
+                VIEW VEHICLES
+              </button>
+              <button class="btn btn-primary" style="align-self: center;" (click)="completeChecklist(vehicle)">
+                COMPLETE CHECKLIST
+              </button>
+            </div>
+            
         </div>
       </div>
     </div>

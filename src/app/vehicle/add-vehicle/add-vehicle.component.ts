@@ -30,6 +30,14 @@ export class AddVehicleComponent implements OnInit {
   minDate: string;
   maxDate: string;
 
+
+  errorMessage: string | null = null;
+  successMessage: string | null = null;
+  
+  notificationMessage: string | null = null;
+  isSuccess: boolean = true;
+ 
+
   constructor(
     private fb: FormBuilder,
     private vehicleService: VehicleService,

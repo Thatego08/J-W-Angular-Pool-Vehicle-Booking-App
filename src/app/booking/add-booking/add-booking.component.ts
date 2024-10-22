@@ -177,7 +177,9 @@ export class AddBookingComponent implements OnInit {
           console.error('Error Response:', error);
           if (error.status === 500) {
             this.handleError('Failed to create booking. Please try again.');
-          } else {
+          } 
+          
+          else {
             this.notificationMessage = 'Your Booking has successfully been made, but there were some issues.';
             this.isSuccess = true;
             setTimeout(() => {

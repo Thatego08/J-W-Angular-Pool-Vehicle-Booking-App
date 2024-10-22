@@ -12,6 +12,7 @@ export class LicenseDisksComponent implements OnInit {
   disks: LicenseDisk[] = [];
 
   disk!: LicenseDisk;
+  page: number = 1; // Default page number
 
   constructor(private vehicleService: VehicleService, private router: Router) { }
 
