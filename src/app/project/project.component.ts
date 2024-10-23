@@ -3,6 +3,8 @@ import { ProjectService } from '../services/project.service';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Project } from '../models/Project';
+import { Rate } from '../models/rate';
+import { RateService } from '../services/rate.service';
 
 @Component({
   selector: 'app-project',
@@ -11,142 +13,90 @@ import { Project } from '../models/Project';
 })
 export class ProjectComponent implements OnInit {
   projects: Project[] = [];
-  displayedProjects: Project[] = [];
-  searchProjectNumber: string = '';
-  projectToDelete: Project | null = null;
-  currentPage: number = 1;
-  itemsPerPage: number = 10;
-  totalPages: number = 1;
+  filteredProjects: Project[] = [];
+  selectedProject: Project | null = null;
+  searchQuery = '';
+  currentPage = 1;
+  itemsPerPage = 5;
+Math: any;
+newProject: any;
+rates: Rate[] = []; 
 
-  projectToEdit: Project = {
-    projectID: 0,
-    projectNumber: 0,
-    jobNo: 0,
-    taskCode: 0,
-    description: '',
-    activityCode: 0
-  };
-  isEditMode: boolean = false;
-
-  @ViewChild('deleteConfirmationModal') deleteConfirmationModal!: TemplateRef<any>;
-
-  @ViewChild('editProjectModal') editProjectModal!: TemplateRef<any>;
-
-  constructor(private projectService: ProjectService, private router: Router, private modalService: NgbModal) { }
+  constructor(private projectService: ProjectService,private rateService: RateService, private modalService: NgbModal) {}
 
   ngOnInit(): void {
     this.fetchProjects();
+    this.fetchRates();
   }
 
   fetchProjects(): void {
-    this.projectService.getAllProjects().subscribe(
-      (data: Project[]) => {
-        this.projects = data;
-        console.log(data);
-        this.updateDisplayedProjects();
-      },
-      error => {
-        console.error('Error fetching projects', error);
-      }
-    );
+    this.projectService.getAllProjects().subscribe((projects: Project[]) => {
+      this.projects = projects;
+      this.filteredProjects = [...this.projects];  // Initialize filtered projects
+      this.updateDisplayedProjects();
+    });
   }
-
-  deleteProject(): void {
-    if (this.projectToDelete) {
-      this.projectService.deleteProject(this.projectToDelete.projectID).subscribe(
-        () => {
-          console.log('Project deleted:', this.projectToDelete!.projectID);
-          this.projects = this.projects.filter(p => p.projectID !== this.projectToDelete!.projectID);
-          this.updateDisplayedProjects();
-          this.projectToDelete = null;
-          this.modalService.dismissAll();
-        },
-        error => {
-          console.error('Error deleting project', error);
-        }
-      );
-    }
-  }
-
-  calculateTotalPages(): void {
-    this.totalPages = Math.ceil(this.projects.length / this.itemsPerPage);
+  fetchRates(): void {
+    this.rateService.getAllRates().subscribe((rates) => {
+      this.rates = rates;
+    });
   }
 
   updateDisplayedProjects(): void {
-    this.calculateTotalPages();
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
-    this.displayedProjects = this.projects.slice(startIndex, endIndex);
+    this.filteredProjects = this.projects.slice(startIndex, endIndex);
   }
 
-  nextPage(): void {
-    if (this.currentPage < this.totalPages) {
-      this.currentPage++;
-      this.updateDisplayedProjects();
-    }
-  }
-
-  previousPage(): void {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.updateDisplayedProjects();
-    }
-  }
-
-  editProject(project: Project): void {
-    this.router.navigate([`/edit-project/`]);
-  }
-
-  openDeleteConfirmation(project: Project): void {
-    this.projectToDelete = project;
-    this.modalService.open(this.deleteConfirmationModal, { ariaLabelledBy: 'modal-basic-title' });
-  }
-
-  searchProject(): void {
-    if (this.searchProjectNumber.trim() === '') {
-      this.fetchProjects();
+  searchProjects(): void {
+    if (this.searchQuery.trim() === '') {
+      this.filteredProjects = [...this.projects];
     } else {
-      this.projects = this.projects.filter(project =>
-        project.projectNumber.toString().includes(this.searchProjectNumber)
+      this.filteredProjects = this.projects.filter(project =>
+        project.projectNumber.toFixed().includes(this.searchQuery.toLowerCase()) ||
+        project.description.toLowerCase().includes(this.searchQuery.toLowerCase())
       );
-      this.updateDisplayedProjects();
+    }
+    this.updateDisplayedProjects();
+  }
+  
+  // Pagination handling
+  changePage(pageNumber: number): void {
+    this.currentPage = pageNumber;
+    this.updateDisplayedProjects();
+  }
+  
+  // Handle opening the modal for adding or editing
+  openProjectModal(content: any, project?: Project): void {
+    this.selectedProject = project ? { ...project } : null; // Clone the project to avoid direct mutations
+    this.modalService.open(content);
+  }
+  
+  // Handle adding a new project
+  addProject(newProject: Project): void {
+    this.projectService.addProject(newProject).subscribe(() => {
+      this.fetchProjects(); // Refresh the list after adding
+      this.modalService.dismissAll();
+    });
+  }
+  
+  // Handle updating a project
+  updateProject(updatedProject: Project): void {
+    if (this.selectedProject) {
+      this.projectService.updateProject(this.selectedProject.projectID, updatedProject).subscribe(() => {
+        this.fetchProjects(); // Refresh the list after updating
+        this.modalService.dismissAll();
+      });
     }
   }
-
-saveProject(): void {
-    if (this.projectToEdit) {
-      if (this.isEditMode) {
-        this.projectService.updateProject(this.projectToEdit.projectID, this.projectToEdit).subscribe(
-          () => {
-            this.fetchProjects();
-            this.modalService.dismissAll();
-          },
-          error => {
-            console.error('Error updating project', error);
-          }
-        );
-      } else {
-        this.projectService.addProject(this.projectToEdit).subscribe(
-          () => {
-            this.fetchProjects();
-            this.modalService.dismissAll();
-          },
-          error => {
-            console.error('Error creating project', error);
-          }
-        );
-      }
+  
+  // Handle deleting a project
+  deleteProject(projectId: number): void {
+    if (confirm('Are you sure you want to delete this project?')) {
+      this.projectService.deleteProject(projectId).subscribe(() => {
+        this.fetchProjects(); // Refresh the list after deleting
+      });
     }
   }
-
-  openRateModal(rate: Project | null): void {
-    this.isEditMode = rate !== null;
-    this.projectToEdit = rate ? { ...rate } : { projectID: 0, projectNumber: 0, taskCode: 0, activityCode: 0, jobNo: 0, description: '' };
-    this.modalService.open(this.editProjectModal, { ariaLabelledBy: 'modal-basic-title' });
-  }
-
-  clearSearch(): void {
-    this.searchProjectNumber = '';
-    this.fetchProjects();
-  }
+  
 }

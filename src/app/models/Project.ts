@@ -5,6 +5,7 @@ export interface Project{
   taskCode: number;
   description: string;
   activityCode: number;
-
+  status: string;
+  rateID: number;
   
 }
