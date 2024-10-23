@@ -23,22 +23,17 @@
       <table class="min-w-full bg-white rounded-lg shadow-md">
         <thead class="bg-blue-600 text-white">
           <tr>
-            <th class="p-4 text-left">Rate Type</th>
-            <th class="p-4 text-left">Conditions</th>
+         <th class="p-4 text-left">Conditions</th>
             <th class="p-4 text-left">Rate Value</th>
             <th class="p-4 text-left">Application Time Period</th>
-            
-            <th class="p-4 text-left">Project Number</th>
             <th class="p-4 text-left">Actions</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let rate of displayedRates" class="border-b">
-            <td class="p-4">{{ rate?.rateTypeName }}</td>
-            <td class="p-4">{{ rate?.conditions }}</td>
+           <td class="p-4">{{ rate?.conditions }}</td>
             <td class="p-4">{{ rate?.rateValue | currency }}</td>
             <td class="p-4">{{ rate?.applicableTimePeriod }}</td>
-            <td class="p-4">{{ rate?.projectNumber }}</td>
             <td class="p-4 flex space-x-4">
               <i 
                 (click)="editRate(rate)" 
@@ -95,64 +90,69 @@
       </div>
     </ng-template>
 
-    <!-- Add/Edit Rate Modal -->
-    <ng-template #editRateModal let-modal>
-      <div class="modal-body">
-        <form #rateForm="ngForm">
-          <div class="form-group mb-4">
-            <label for="rateType" class="block">Rate Type:</label>
-            <select
-              [(ngModel)]="rateToEdit.rateTypeName"
-              name="rateType"
-              required
-              class="form-control"
-              placeholder="Select rate type"
-            >
-              <option *ngFor="let rateType of rateTypes" [value]="rateType">{{ rateType }}</option>
-            </select>
-          </div>
-          <div class="form-group mb-4">
-            <label for="project" class="block">Project:</label>
-            <select
-              [(ngModel)]="rateToEdit.projectNumber"
-              name="project"
-              required
-              class="form-control"
-              placeholder="Select project"
-            >
-              <option *ngFor="let project of projects" [value]="project">{{ project }}</option>
-            </select>
-          </div>
-          <div class="form-group mb-4">
-            <label for="description" class="block">Description:</label>
-            <input
-              [(ngModel)]="rateToEdit.conditions"
-              name="description"
-              required
-              class="form-control"
-              placeholder="Enter description"
-            />
-          </div>
-          <div class="form-group mb-4">
-            <label for="amount" class="block">Amount:</label>
-            <input
-              [(ngModel)]="rateToEdit.rateValue"
-              name="amount"
-              required
-              type="number"
-              class="form-control"
-              placeholder="Enter amount"
-            />
-          </div>
-        </form>
+   <!-- Edit/Add Rate Modal -->
+<ng-template #editRateModal let-modal>
+  <div class="modal-body">
+    <form #rateForm="ngForm">
+      <!-- Conditions Input -->
+      <div class="form-group mb-4">
+        <label for="conditions" class="block">Conditions:</label>
+        <input
+          [(ngModel)]="rateToEdit.conditions"
+          name="conditions"
+          required
+          class="form-control"
+          placeholder="Enter rate conditions"
+        />
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Cancel</button>
-        <button type="button" class="btn btn-primary" (click)="saveRate()">
-          {{ isEditMode ? 'Update' : 'Create' }}
-        </button>
+
+      <!-- Rate Value Input -->
+      <div class="form-group mb-4">
+        <label for="rateValue" class="block">Rate Value:</label>
+        <input
+          [(ngModel)]="rateToEdit.rateValue"
+          name="rateValue"
+          required
+          type="number"
+          class="form-control"
+          placeholder="Enter rate value"
+          min="0"
+        />
       </div>
-      
-    </ng-template>
+
+      <!-- Project Selection -->
+      <div class="form-group mb-4">
+        <label for="projectID" class="block">Project:</label>
+        <select
+          [(ngModel)]="rateToEdit.ProjectID"
+          name="projectID"
+          required
+          class="form-control"
+        >
+          <option *ngFor="let project of projects" [value]="project.ProjectID">
+            {{ project.ProjectID }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Applicable Time Period -->
+      <div class="form-group mb-4">
+        <label for="applicableTimePeriod" class="block">Applicable Time Period:</label>
+        <input
+          [(ngModel)]="rateToEdit.applicableTimePeriod"
+          name="applicableTimePeriod"
+          class="form-control"
+          placeholder="Enter time period"
+        />
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="saveRate()">
+      {{ isEditMode ? 'Update' : 'Create' }}
+    </button>
+  </div>
+</ng-template>
   </div>
 </div>
