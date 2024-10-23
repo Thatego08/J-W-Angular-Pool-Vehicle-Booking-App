@@ -1,257 +1,259 @@
-.form-container {
-    max-height: 600px; /* Set a fixed height for the container */
-    overflow-y: auto;  /* Enable vertical scrolling */
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    margin: 0 auto;
-    width: 100%;                /* Full width */
-    max-width: 1200px; 
-  }
-  
-  .post-check-form {
-    
-    margin: 0 auto;
-    max-width: 1000px;  
-  }
-  
-  .form-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .form-header button {
-    padding: 10px 15px;
-    font-size: 16px;
-    color: #fff;
-    background-color: #007bff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .form-header button:hover {
-    background-color: #0056b3;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  .form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  .form-group input[type="text"],
-  .form-group input[type="number"],
-  .form-group textarea {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .form-group input[type="file"] {
-    border: none;
-  }
-  
-  .form-group textarea {
-    height: 100px;
-    resize: vertical;
-  }
-  
-  button[type="submit"] {
-    padding: 10px 15px;
-    font-size: 16px;
-    color: #fff;
-    background-color: #28a745;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  button[type="submit"]:hover {
-    background-color: #218838;
-  }
-  .success-message {
-    background-color: #d4edda;
-    color: #155724;
-    padding: 10px;
-    margin-top: 10px;
-    border-radius: 5px;
-    border: 1px solid #c3e6cb;
-  }
-    
-  .check-link {
-    color: #007bff;
-    text-decoration: none;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  
-  .check-link:hover {
-    text-decoration: underline;
-  }
-  
-  .form-container {
-    width: 100%;
-    max-width: 1200px;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    margin: 20px auto;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .post-check-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    width: 100%;
-  }
-  
-  .form-header {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 20px;
-  }
-  
-  .form-header button {
-    padding: 10px 15px;
-    font-size: 16px;
-    color: #fff;
-    background-color: #007bff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .form-header button:hover {
-    background-color: #0056b3;
-  }
-  
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    margin-bottom: 15px;
-    width: 100%;
-  }
-  
-  .form-group label {
-    font-weight: bold;
-  }
-  
-  .form-group input[type="text"],
-  .form-group input[type="number"],
-  .form-group textarea {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .form-group input[type="file"] {
-    border: none;
-  }
-  
-  .form-group textarea {
-    height: 100px;
-    resize: vertical;
-  }
-  
-  button[type="submit"] {
-    padding: 10px 15px;
-    font-size: 16px;
-    color: #fff;
-    background-color: #28a745;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    align-self: center;
-    width: 100%;
-  }
-  
-  button[type="submit"]:hover {
-    background-color: #218838;
-  }
-  
-  .success-message {
-    background-color: #d4edda;
-    color: #155724;
-    padding: 10px;
-    margin-top: 10px;
-    border-radius: 5px;
-    border: 1px solid #c3e6cb;
-    text-align: center;
-  }
-  
-  .error-message {
-    background-color: #f8d7da;
-    color: #721c24;
-    padding: 10px;
-    margin-top: 10px;
-    border-radius: 5px;
-    border: 1px solid #f5c6cb;
-    text-align: center;
-  }
-  
-  @media (min-width: 768px) {
-    .form-group {
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-    }
-  
-    .form-group label {
-      flex: 1;
-    }
-  
-    .form-group input,
-    .form-group textarea {
-      flex: 2;
-    }
-  }
-  
-  @media (max-width: 767px) {
-    .form-container {
-      padding: 15px;
-    }
-  
-    .post-check-form {
-      gap: 10px;
-    }
-  
-    button[type="submit"] {
-      width: 100%;
-    }
-  }
-  
+/* Container with blue background */
+.container {
+  background-color: #040e1a; /* Blue background */
+  padding: 30px; /* Padding around the content */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  margin: 20px auto; /* Centering the container */
+  max-width: 1600px; /* Maximum width for the entire container */
+  width: 100%; /* Full width */
+}
 
-  .success-message {
-    color: green;
-    font-weight: bold;
-    margin-top: 10px;
+/* Form container with white background */
+.form-container {
+  background-color: #ffffff; /* White background */
+  padding: 30px; /* Padding for the form container */
+  border: 1px solid #ddd; /* Light border */
+  border-radius: 10px; /* Rounded corners */
+  max-width: 1500px; /* Increased maximum width for a wider form */
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  margin: 0 auto; /* Center the form container */
+}
+
+.post-check-form {
+  margin: 0 auto;
+  max-width: 1200px; /* Increased maximum width for form elements */
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Spacing between form elements */
+}
+
+
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.form-header button {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px; /* Rounded button */
+  cursor: pointer;
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.form-header button:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+}
+
+.form-group {
+  margin-bottom: 20px; /* Increased spacing between groups */
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group textarea {
+  width: 100%;
+  padding: 10px; /* Increased padding for inputs */
+  border: 1px solid #ccc;
+  border-radius: 4px; /* Rounded corners */
+}
+
+.form-group input[type="file"] {
+  border: 1px solid #ccc; /* Added border for file input */
+  border-radius: 4px; /* Rounded corners */
+}
+
+.form-group textarea {
+  height: 100px; /* Default height */
+  resize: vertical; /* Allow vertical resizing */
+}
+
+
+
+/* Ensure the button container centers its content */
+.button {
+  display: flex; /* Enable flexbox layout */
+  justify-content: flex-end; /* Move the button to the right */
+  align-items: center; /* Center the button vertically */
+  width: 100%; /* Make sure the container spans the full width */
+  margin-top: 20px; /* Add spacing at the top */
+}
+
+/* Styling for the submit button */
+button[type="submit"] {
+  padding: 12px 25px; /* Adjusted padding for better sizing */
+  font-size: 16px;
+  color: #fff;
+  background-color: #060424;
+  border: none;
+  border-radius: 25px; /* Increased border-radius for more curve */
+  cursor: pointer;
+  width: auto; /* Allow button to size itself based on content */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Added shadow for realism */
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s; /* Smooth transitions */
+}
+
+/* On hover, add some depth and change background color */
+button[type="submit"]:hover {
+  background-color: #060424; /* Darker shade of green */
+  transform: translateY(-2px); /* Slight lift effect */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+}
+
+
+
+.success-message {
+  background-color: #d4edda; /* Success message background */
+  color: #155724; /* Success message text color */
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+  border: 1px solid #c3e6cb;
+  text-align: center; /* Center align the text */
 }
 
 .error-message {
-    color: red;
-    font-weight: bold;
-    margin-top: 10px;
+  background-color: #f8d7da; /* Error message background */
+  color: #721c24; /* Error message text color */
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+  border: 1px solid #f5c6cb;
+  text-align: center; /* Center align the text */
 }
 
-.media-previews {
-  margin-top: 20px;
+.checkbox-group {
+  margin-bottom: 15px; /* Spacing below the checklist */
 }
 
-.preview-image, .preview-video {
-  max-width: 100%;
-  height: auto;
+.scrollable-checklist {
+  max-height: 200px; /* Set maximum height for checklist */
+  overflow-y: auto; /* Enable scrolling */
+  border: 1px solid #ccc; /* Border for the checklist */
+  border-radius: 4px; /* Rounded corners */
+  padding: 10px; /* Padding inside the checklist */
+  background-color: #f9f9f9; /* Light background for contrast */
+}
+
+.checkbox-item {
+  margin-bottom: 10px; /* Spacing between checkbox items */
+}
+
+.preview-image,
+.preview-video {
+  max-width: 100%; /* Make sure previews fit within container */
+  height: auto; /* Maintain aspect ratio */
   margin-bottom: 10px;
 }
+
+/* Styles for the small checkbox */
+.small-checkbox {
+  width: 20px; /* Adjust the width to your liking */
+  height: 20px; /* Adjust the height to your liking */
+  transform: scale(1.2); /* Scale it up a bit for visibility */
+  appearance: none; /* Remove default styling */
+  border: 2px solid #007bff; /* Set border color */
+  border-radius: 2px; /* Add slight rounding */
+  background-color: white; /* Background color */
+  cursor: pointer; /* Cursor change on hover */
+  outline: none; /* Remove outline */
+}
+
+/* Checkmark style */
+.small-checkbox:checked {
+  background-color: #007bff; /* Change background color when checked */
+  border: 2px solid #007bff; /* Keep border consistent */
+}
+
+.small-checkbox:checked::after {
+  content: ""; /* Create a pseudo-element for the checkmark */
+  display: block;
+  width: 10px; /* Adjust checkmark width */
+  height: 10px; /* Adjust checkmark height */
+  background: white; /* Checkmark color */
+  position: relative;
+  left: 5px; /* Position checkmark */
+  top: 3px; /* Position checkmark */
+}
+
+/* File Upload Container */
+.form-group {
+  margin-bottom: 1rem; /* Spacing below each form group */
+}
+
+/* File Input Style */
+.form-control-file {
+  display: block; /* Ensure it takes up the full width */
+  width: 100%; /* Full width */
+  padding: 0.5rem; /* Optional: Add padding for better touch targets */
+  border: 1px solid #ced4da; /* Standard border */
+  border-radius: 0.25rem; /* Slight rounding of corners */
+  background-color: #fff; /* White background */
+}
+
+/* Adjust label styles if needed */
+label {
+  font-weight: bold; /* Optional: Make label bold for visibility */
+  display: block; /* Ensure the label takes the full width */
+  margin-bottom: 0.5rem; /* Space between label and input */
+}
+
+.form-header .check-all-btn {
+  padding: 10px 20px;
+  font-size: 14px;
+  color: #fff;
+  background-color: #45484b;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, transform 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 123, 255, 0.2);
+}
+
+.form-header .check-all-btn:hover {
+  background-color: #45484b; /* Darker shade of blue on hover */
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.form-header .check-all-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 2px rgba(0, 123, 255, 0.2);
+}
+
+
+/* Keep the form container styles */
+.container {
+  background-color: #040e1a; /* Blue background */
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  max-width: 1600px;
+  width: 100%;
+}
+
+/* Form container with white background */
+.form-container {
+  background-color: #ffffff;
+  padding: 30px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  max-width: 1500px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+}
+
+/* More form styling... */

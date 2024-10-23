@@ -1,14 +1,20 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM6PeR0xG8P2sH9Y1U8Z0s0uDp1he4zLy0t25" crossorigin="anonymous">
+
 <div class="container">
-  <img src="assets/logo.png" alt="Logo" class="logo-image">
-  <h2>Trip History</h2>
-
-  <div class="form-group">
-    <label for="username">Enter Username:</label>
-    <input type="text" id="username" [(ngModel)]="searchUsername" class="form-control" />
+ 
+  
+  <h2 class="title">
+    <i class="fas fa-history"></i>
+    Trip History
+  </h2>
+  
+  <div class="search-form">
+    <input type="text" id="username" [(ngModel)]="searchUsername" 
+           (keyup.enter)="fetchPreviousTrips()" class="form-control" 
+           placeholder="Search by Username" />
   </div>
-  <button (click)="fetchPreviousTrips()" class="btn btn-primary">Search</button>
-
-  <div *ngIf="previousTrips.length > 0">
+  
+  <div *ngIf="previousTrips.length > 0" class="trip-results">
     <table class="trip-table">
       <thead>
         <tr>
@@ -31,34 +37,23 @@
           <td>{{ trip.travelEnd | date: 'short' }}</td>
           <td>
             <div class="button-group">
-              <button (click)="editTrip(trip)" class="action-button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Edit
-              </button>
-              <button (click)="deleteTrip(trip.tripId)" class="action-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                Delete
-              </button>
-
-              <button 
-  (click)="navigateToCreatePostChecklist(trip.tripId)" 
-  class="btn-submit text-white font-bold py-2 px-4 rounded"
-  [ngStyle]="{
-    'background-color': isTravelEndPassed(trip.travelEnd) ? 'grey' : '#3b82f6',
-    'cursor': isTravelEndPassed(trip.travelEnd) ? 'not-allowed' : 'pointer'
-  }"
-  [disabled]="isTravelEndPassed(trip.travelEnd)">
-  Create Post Checklist
-</button>
-
+              <button (click)="editTrip(trip)" class="action-button edit">Edit</button>
               
-              <button 
-                (click)="navigateToRefuel(trip.tripId)" 
-                class="action-button text-white font-bold py-2 px-4 rounded"
-                [ngStyle]="{'background-color': isTravelEndPassed(trip.travelEnd) ? 'grey' : '#10b981', 'cursor': isTravelEndPassed(trip.travelEnd) ? 'not-allowed' : 'pointer'}"
+              <button (click)="navigateToCreatePostChecklist(trip.tripId)" 
+                class="action-button checklist" 
+                [ngStyle]="{'background-color': isTravelEndPassed(trip.travelEnd) ? 'grey' : '#27ae60'}" 
+                [disabled]="isTravelEndPassed(trip.travelEnd)">
+                Create Post Checklist
+              </button>
+              <button (click)="navigateToRefuel(trip.tripId)" 
+                class="action-button refuel" 
+                [ngStyle]="{'background-color': isTravelEndPassed(trip.travelEnd) ? 'grey' : '#f39c12'}" 
                 [disabled]="isTravelEndPassed(trip.travelEnd)">
                 Refuel
               </button>
             </div>
           </td>
+          
         </tr>
       </tbody>
     </table>

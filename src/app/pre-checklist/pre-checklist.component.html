@@ -1,8 +1,14 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 <div class="container">
-  <form [formGroup]="preChecklistForm" (ngSubmit)="onSubmit()">
-    <h3 class="form-title">Pre-Checklist</h3>
-    
-    <button type="button" class="btn btn-secondary" (click)="checkAll(true)">Check All</button>
+  <form [formGroup]="preChecklistForm" (ngSubmit)="onSubmit()" class="form-container shadow p-4">
+    <h3 class="form-title mb-4">
+      <i class="fas fa-check-circle"></i>Complete Pre-Checklist
+    </h3>
+
+    <button type="button" class="btn btn-outline-secondary mb-3" (click)="checkAll(true)">
+      Check All
+    </button>
 
     <div class="form-group">
       <label for="openingKms">Opening Kms:</label>
@@ -12,6 +18,7 @@
         formControlName="openingKms"
         required
         class="form-control"
+        placeholder="Enter opening kilometers"
       />
       <div
         *ngIf="
@@ -24,15 +31,19 @@
       </div>
     </div>
 
-    <div class="checkbox-container">
+    <div class="checkbox-container mb-4">
+      <h5 class="checkbox-title">Checklist Items:</h5>
       <div class="form-group" *ngFor="let check of checkboxes">
-        <label class="checkbox-item">
+        <div class="form-check d-flex justify-content-between align-items-center mb-3">
+          <label class="form-check-label">
+            {{ check.label }}
+          </label>
           <input
             type="checkbox"
             [formControlName]="check.formControlName"
+            class="form-check-input"
           />
-          {{ check.label }}
-        </label>
+        </div>
       </div>
     </div>
 
@@ -43,6 +54,7 @@
         formControlName="comments"
         class="form-control"
         placeholder="Enter Comments"
+        rows="3"
       ></textarea>
     </div>
 
@@ -53,23 +65,24 @@
         formControlName="additionalComments"
         class="form-control"
         placeholder="Enter Additional Comments"
+        rows="3"
       ></textarea>
     </div>
 
     <input type="hidden" formControlName="preChecklistId" />
 
-    <div class="button-group">
+    <div class="button-group text-center">
       <button
         type="submit"
         class="btn btn-primary"
         [disabled]="!preChecklistForm.valid"
       >
-        Submit Checklist
+      <i class="fas fa-paper-plane"></i> Submit Checklist
       </button>
     </div>
-  </form>
 
-  <div *ngIf="!preChecklistForm.get('licenseDiskValid')?.value && preChecklistForm.touched" class="text-danger">
-    License disk must be valid.
-  </div>
+    <div *ngIf="!preChecklistForm.get('licenseDiskValid')?.value && preChecklistForm.touched" class="text-danger text-center mt-3">
+      License disk must be valid.
+    </div>
+  </form>
 </div>

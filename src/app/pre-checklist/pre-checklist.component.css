@@ -1,55 +1,83 @@
+/* Container for the form */
 .container {
   padding: 30px;
-  max-width: 800px; /* Adjust to your desired width */
-  margin: 20px auto; /* Center the container horizontally with some top margin */
-  border: 1px solid #ccc; /* Optional: border around the container */
-  border-radius: 12px; /* Optional: rounded corners */
-  background-color: #f9f9f9; /* Optional: background color */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow for depth */
+  max-width: 900px; /* Desired width */
+  margin: 20px auto; /* Center container */
+  background-color: #2c3d50; /* Blue background for the container */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Shadow effect for the container */
+}
+
+
+.form-container {
+  background-color: #ffffff; /* White background */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
 }
 
 .form-title {
-  text-align: center;
-  font-size: 1.5rem;
-  margin-bottom: 20px;
-  color: #333;
+  font-size: 1.8rem; /* Title font size */
+  color: #082749; /* Primary color */
+  text-align: center; /* Center the title */
 }
 
 .checkbox-container {
-  max-height: 300px; /* Adjust the height as needed */
-  overflow-y: auto; /* Enables vertical scrolling */
-  padding: 10px;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  margin-bottom: 20px;
+  max-height: 250px; /* Limit height for scrolling */
+  overflow-y: auto; /* Enable scrolling */
+  padding: 10px; /* Padding inside */
+  border: 1px solid #ddd; /* Light border */
+  border-radius: 8px; /* Rounded corners */
+  margin-bottom: 20px; /* Spacing below */
 }
 
-.checkbox-item {
-  margin-bottom: 10px;
+.checkbox-title {
+  font-weight: bold; /* Make checkbox title bold */
+  margin-bottom: 10px; /* Space below title */
 }
 
-.form-group {
-  margin-bottom: 20px;
+.form-check {
+  display: flex; /* Flex display for alignment */
+  justify-content: space-between; /* Space items evenly */
+  align-items: center; /* Center items vertically */
+}
+
+.form-check-input {
+  width: 20px; /* Size of checkbox */
+  height: 20px; /* Size of checkbox */
 }
 
 textarea.form-control {
-  resize: vertical; /* Allows vertical resizing of text areas */
-  min-height: 80px; /* Ensures a minimum height for text areas */
+  resize: vertical; /* Allow vertical resizing */
 }
 
 .button-group {
-  margin-top: 30px;
-  display: flex;
-  justify-content: center;
-}
-
-.btn-secondary {
-  margin-right: 10px;
+  margin-top: 20px; /* Space above button */
 }
 
 .text-danger {
-  margin-top: 5px;
-  font-size: 0.9rem;
-  color: #dc3545;
+  font-size: 0.9rem; /* Font size for error messages */
+  color: #dc3545; /* Danger color */
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #021325, #021830); /* Gradient background */
+  border: none; /* Remove border */
+  color: white; /* Text color */
+  padding: 12px 24px; /* Increased padding for a larger button */
+  border-radius: 30px; /* Fully rounded corners */
+  font-size: 1rem; /* Font size */
+  cursor: pointer; /* Pointer on hover */
+  transition: background 0.3s ease, transform 0.3s ease; /* Smooth transition for background and scale */
+  box-shadow: 0 4px 8px rgba(0, 91, 255, 0.2); /* Subtle shadow effect */
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #021325, #021830); /* Reversed gradient on hover */
+  transform: translateY(-2px); /* Slight upward movement on hover */
+}
+
+.btn-primary:disabled {
+  background: linear-gradient(135deg, #162433, #162433); /* Lighter gradient when disabled */
+  color: #fff; /* Keep text white when disabled */
+  cursor: not-allowed; /* Change cursor to indicate it's disabled */
 }
