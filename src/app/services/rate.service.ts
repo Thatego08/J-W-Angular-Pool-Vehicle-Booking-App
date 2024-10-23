@@ -21,8 +21,10 @@ export class RateService {
   }
 
   updateRate(RateID: number, rate: Rate): Observable<any> {
-    return this.http.put(`${this.baseUrl}/update-rate`, rate);
+    return this.http.put(`${this.baseUrl}/update-rate/${RateID}`, rate);
   }
+ 
+  
 
   deleteRate(RateID: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}/${RateID}`);

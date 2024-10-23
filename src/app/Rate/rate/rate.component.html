@@ -6,7 +6,7 @@
     <div class="flex justify-between mb-6">
       <button 
         class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300"
-        (click)="editRateModal"
+        (click)="openAddRateModal()"
       >
         Add Rate
       </button>
@@ -90,10 +90,13 @@
       </div>
     </ng-template>
 
+
+   
+
    <!-- Edit/Add Rate Modal -->
 <ng-template #editRateModal let-modal>
   <div class="modal-body">
-    <form #rateForm="ngForm">
+    <form #rateForm="ngForm" (ngSubmit)="onSubmit(rateForm)">
       <!-- Conditions Input -->
       <div class="form-group mb-4">
         <label for="conditions" class="block">Conditions:</label>
@@ -105,6 +108,8 @@
           placeholder="Enter rate conditions"
         />
       </div>
+
+      
 
       <!-- Rate Value Input -->
       <div class="form-group mb-4">
@@ -124,13 +129,13 @@
       <div class="form-group mb-4">
         <label for="projectID" class="block">Project:</label>
         <select
-          [(ngModel)]="rateToEdit.ProjectID"
+          [(ngModel)]="rateToEdit.projectID"
           name="projectID"
           required
           class="form-control"
         >
-          <option *ngFor="let project of projects" [value]="project.ProjectID">
-            {{ project.ProjectID }}
+          <option *ngFor="let project of projects" [value]="project.projectID">
+            {{ project.projectID }} - {{project.projectNumber}}
           </option>
         </select>
       </div>
@@ -147,12 +152,14 @@
       </div>
     </form>
   </div>
+
+
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Cancel</button>
     <button type="button" class="btn btn-primary" (click)="saveRate()">
       {{ isEditMode ? 'Update' : 'Create' }}
     </button>
   </div>
-</ng-template>
+  </ng-template>
   </div>
 </div>

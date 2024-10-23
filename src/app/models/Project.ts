@@ -1,6 +1,6 @@
 export interface Project{
-    ProjectID: number;
-  ProjectNumber: number;
+    projectID: number;
+  projectNumber: number;
   jobNo: number;
   taskCode: number;
   description: string;
