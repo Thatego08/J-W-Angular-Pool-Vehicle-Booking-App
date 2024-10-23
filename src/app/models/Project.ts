@@ -1,9 +1,10 @@
 export interface Project{
-    projectID: number;
-  projectNumber: number;
+    ProjectID: number;
+  ProjectNumber: number;
   jobNo: number;
   taskCode: number;
   description: string;
   activityCode: number;
 
+  
 }

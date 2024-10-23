@@ -21,17 +21,14 @@ export class RateComponent implements OnInit {
   currentPage: number = 1;
   itemsPerPage: number = 10;
   totalPages: number = 1;
-  rateTypes: string[] = ['Type1', 'Type2', 'Type3']; // Replace with actual rate types
-  projects: Project[] = []; // Replace with actual projects
+ projects: Project[] = []; // Replace with actual projects
   
   rateToEdit: Rate =  {
     RateID: 0,
-    conditions: 'Standard',
     rateValue: 200,
-    projectNumber: 0,
-    ProjectID: 1,
-    RateTypeID: 1,
-    rateTypeName: 'Standard',
+    ProjectID: 0,
+    ProjectNumber: 0,
+    conditions: '',
     applicableTimePeriod: ''
   };
   isEditMode: boolean = false;
@@ -39,10 +36,12 @@ export class RateComponent implements OnInit {
   @ViewChild('deleteConfirmationModal') deleteConfirmationModal!: TemplateRef<any>;
   @ViewChild('editRateModal') editRateModal!: TemplateRef<any>;
 
-  constructor(private rateService: RateService, private modalService: NgbModal) { }
+  constructor(private rateService: RateService,private projectService: ProjectService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.fetchRates();
+    this.loadProjects();
+
   }
 
   fetchRates(): void {
@@ -58,6 +57,19 @@ export class RateComponent implements OnInit {
     );
   }
   
+  loadProjects(): void {
+    // Fetch project data from the ProjectService
+    this.projectService.getAllProjects().subscribe(
+      (projects: Project[]) => {
+        console.log(this.projects);
+        this.projects = projects;
+      },
+      error => {
+        console.error('Error loading projects', error);
+      }
+    );
+  }
+
   openAddRateModal(): void {
     this.isEditMode = false;
     //this.rateToEdit = new Rate(); // Reset the form
