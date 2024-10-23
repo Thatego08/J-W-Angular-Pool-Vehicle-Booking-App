@@ -1,8 +1,8 @@
 export interface Rate {
-  RateID: number;
+  RateID: number ;
  rateValue: number;
-  ProjectID: number; // Foreign key to Project
-  ProjectNumber: number; // Project Number from Project
+  projectID: number; // Foreign key to Project
+  projectNumber: number; // Project Number from Project
   applicableTimePeriod: string;
   conditions: string;
 }

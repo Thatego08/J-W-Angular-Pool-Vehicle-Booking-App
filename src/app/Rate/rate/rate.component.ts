@@ -7,6 +7,7 @@ import { Project } from '../../models/Project';
 import { ProjectService } from '../../services/project.service';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-rate',
@@ -24,10 +25,10 @@ export class RateComponent implements OnInit {
  projects: Project[] = []; // Replace with actual projects
   
   rateToEdit: Rate =  {
-    RateID: 0,
+    RateID: 1,
     rateValue: 200,
-    ProjectID: 0,
-    ProjectNumber: 0,
+    projectID: 0,
+    projectNumber: 0,
     conditions: '',
     applicableTimePeriod: ''
   };
@@ -57,6 +58,8 @@ export class RateComponent implements OnInit {
     );
   }
   
+
+  
   loadProjects(): void {
     // Fetch project data from the ProjectService
     this.projectService.getAllProjects().subscribe(
@@ -72,9 +75,17 @@ export class RateComponent implements OnInit {
 
   openAddRateModal(): void {
     this.isEditMode = false;
-    //this.rateToEdit = new Rate(); // Reset the form
+    this.rateToEdit = {
+      RateID: 1,
+      rateValue: 200,
+      projectID: 0,
+      projectNumber: 0,
+      conditions: '',
+      applicableTimePeriod: ''
+    };
     this.modalService.open(this.editRateModal);
   }
+  
 
   deleteRate(): void {
     if (this.rateToDelete) {
@@ -103,6 +114,35 @@ export class RateComponent implements OnInit {
     this.displayedRates = this.rates.slice(startIndex, endIndex);
   }
 
+  onSubmit(form: NgForm): void {
+    if (form.valid) {
+      if (this.isEditMode) {
+        this.rateService.updateRate(this.rateToEdit.RateID, this.rateToEdit).subscribe(
+          () => {
+            console.log('Rate updated successfully');
+            this.fetchRates(); // Refresh the list after updating
+            this.modalService.dismissAll();
+          },
+          (error) => {
+            console.error('Error updating rate', error);
+          }
+        );
+      } else {
+        this.rateService.createRate(this.rateToEdit).subscribe(
+          () => {
+            console.log('Rate created successfully');
+            this.fetchRates(); // Refresh the list after adding new rate
+            this.modalService.dismissAll();
+          },
+          (error) => {
+            console.error('Error creating rate', error);
+          }
+        );
+      }
+    }
+  }
+  
+
   nextPage(): void {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
@@ -127,11 +167,14 @@ export class RateComponent implements OnInit {
     if (this.isEditMode) {
       this.rateService.updateRate(this.rateToEdit.RateID, this.rateToEdit).subscribe(
         () => {
+          console.log('Editing rate:', this.rateToEdit);
+
           this.fetchRates();
           this.modalService.dismissAll();
         },
         error => {
           console.error('Error updating rate', error);
+          console.error('API Response:', error.error); // Inspect the full error response
         }
       );
     } else {
@@ -146,6 +189,7 @@ export class RateComponent implements OnInit {
       );
     }
   }
+  
 
   openDeleteConfirmation(rate: Rate): void {
     this.rateToDelete = rate;

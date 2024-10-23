@@ -19,8 +19,8 @@ export class ProjectComponent implements OnInit {
   totalPages: number = 1;
 
   projectToEdit: Project = {
-    ProjectID: 0,
-    ProjectNumber: 0,
+    projectID: 0,
+    projectNumber: 0,
     jobNo: 0,
     taskCode: 0,
     description: '',
@@ -42,6 +42,7 @@ export class ProjectComponent implements OnInit {
     this.projectService.getAllProjects().subscribe(
       (data: Project[]) => {
         this.projects = data;
+        console.log(data);
         this.updateDisplayedProjects();
       },
       error => {
@@ -52,10 +53,10 @@ export class ProjectComponent implements OnInit {
 
   deleteProject(): void {
     if (this.projectToDelete) {
-      this.projectService.deleteProject(this.projectToDelete.ProjectID).subscribe(
+      this.projectService.deleteProject(this.projectToDelete.projectID).subscribe(
         () => {
-          console.log('Project deleted:', this.projectToDelete!.ProjectID);
-          this.projects = this.projects.filter(p => p.ProjectID !== this.projectToDelete!.ProjectID);
+          console.log('Project deleted:', this.projectToDelete!.projectID);
+          this.projects = this.projects.filter(p => p.projectID !== this.projectToDelete!.projectID);
           this.updateDisplayedProjects();
           this.projectToDelete = null;
           this.modalService.dismissAll();
@@ -106,7 +107,7 @@ export class ProjectComponent implements OnInit {
       this.fetchProjects();
     } else {
       this.projects = this.projects.filter(project =>
-        project.ProjectNumber.toString().includes(this.searchProjectNumber)
+        project.projectNumber.toString().includes(this.searchProjectNumber)
       );
       this.updateDisplayedProjects();
     }
@@ -115,7 +116,7 @@ export class ProjectComponent implements OnInit {
 saveProject(): void {
     if (this.projectToEdit) {
       if (this.isEditMode) {
-        this.projectService.updateProject(this.projectToEdit.ProjectID, this.projectToEdit).subscribe(
+        this.projectService.updateProject(this.projectToEdit.projectID, this.projectToEdit).subscribe(
           () => {
             this.fetchProjects();
             this.modalService.dismissAll();
@@ -140,7 +141,7 @@ saveProject(): void {
 
   openRateModal(rate: Project | null): void {
     this.isEditMode = rate !== null;
-    this.projectToEdit = rate ? { ...rate } : { ProjectID: 0, ProjectNumber: 0, taskCode: 0, activityCode: 0, jobNo: 0, description: '' };
+    this.projectToEdit = rate ? { ...rate } : { projectID: 0, projectNumber: 0, taskCode: 0, activityCode: 0, jobNo: 0, description: '' };
     this.modalService.open(this.editProjectModal, { ariaLabelledBy: 'modal-basic-title' });
   }
 
