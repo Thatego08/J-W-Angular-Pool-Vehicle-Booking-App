@@ -35,6 +35,8 @@
 
 /* Profile picture styling */
 .profile-picture-container {
+  display: flex;
+  justify-content: center; /* Center the image horizontally */
   margin-bottom: 20px;
 }
 
