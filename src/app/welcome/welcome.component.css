@@ -6,6 +6,7 @@
   align-items: center;
   min-height: calc(100vh - 80px); /* Fill screen up to navbar */
   background-color: transparent; /* Background transparent */
+  max-width: 2500%; /* Set max width to 80% of the parent */
   margin-left: 250px; /* Sidebar width */
   margin-top: 0; /* Remove top margin */
 }
@@ -17,7 +18,7 @@
     padding: 40px;
     border-radius: 15px; /* Rounded corners */
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    max-width: 100%; /* Set max width to 80% of the parent */
+    max-width: 1100%; /* Set max width to 80% of the parent */
     margin: 0 auto; /* Center the container */
     margin-left: -250px; /* Adjust this for positioning */
   }
