@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Project } from '../models/Project';
 import { Rate } from '../models/rate';
 import { RateService } from '../services/rate.service';
+import { StatusService } from '../services/status.service';
 
 @Component({
   selector: 'app-project',
@@ -18,20 +19,43 @@ export class ProjectComponent implements OnInit {
   searchQuery = '';
   currentPage = 1;
   itemsPerPage = 5;
-Math: any;
-newProject: any;
-rates: Rate[] = []; 
+  Math: any;
+  newProject: any;
+  rates: Rate[] = []; 
 
-  constructor(private projectService: ProjectService,private rateService: RateService, private modalService: NgbModal) {}
+  statusName: string = '';
+
+
+  constructor(private projectService: ProjectService,private rateService: RateService,  private statusService: StatusService,private modalService: NgbModal) {}
 
   ngOnInit(): void {
     this.fetchProjects();
     this.fetchRates();
+
+    if (this.projects && this.projects.length > 0) {
+      this.projects.forEach(project => {
+        if (project.statusId) {
+          this.loadStatusName(project.statusId);
+        }
+      });
+    }
+  }
+
+  loadStatusName(statusId: number): void {
+    this.statusService.getStatusById(statusId).subscribe(
+      (status) => {
+        this.statusName = status.name;  // Assuming the backend returns a 'name' field
+      },
+      (error) => {
+        console.error('Error fetching status', error);
+      }
+    );
   }
 
   fetchProjects(): void {
     this.projectService.getAllProjects().subscribe((projects: Project[]) => {
       this.projects = projects;
+      console.log(this.projects);
       this.filteredProjects = [...this.projects];  // Initialize filtered projects
       this.updateDisplayedProjects();
     });

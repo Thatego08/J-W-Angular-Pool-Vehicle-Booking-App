@@ -271,11 +271,13 @@ formatDate(dateString: string): string {
     yOffset += 20;
     pdf.text('Cancelled Bookings per Month Report', 10, yOffset);
     yOffset += 10;
+ 
   
     const cancelledBookingRows = this.cancelledBookingsReport.map((report: any) => [
       report.userName,
       report.bookingId,
-      this.formatDate(report.cancelledDate)
+      this.formatDate(report.endDate),
+      
     ]);
   
     (pdf as any).autoTable({
@@ -309,6 +311,7 @@ formatDate(dateString: string): string {
   
     // Save the PDF
     pdf.save('J&W Reports.pdf');
+    
   }
   
 }

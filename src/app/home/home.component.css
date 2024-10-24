@@ -3,6 +3,7 @@ html, body {
   padding: 0;
   height: 100%;
   width: 100%;
+  
 }
 
 body {
@@ -13,7 +14,7 @@ body {
   flex-direction: column;
   }
   
-  .container {
+  .container-fluid {
     display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -29,7 +30,7 @@ body {
 
   header.jumbotron {
     width: 100%;
-    padding: 10px 0; /* Reduced padding to decrease height */
+    padding: 2rem  0; /* Reduced padding to decrease height */
     text-align: center;
     align-items: center;
   }

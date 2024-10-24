@@ -68,7 +68,7 @@ export interface BookingsPerUserReport {
 export interface CancelledBookingsReport {
   userName: string;
   bookingId: number;
-  cancelledDate: string;
+  endDate: string;
 }
 
 

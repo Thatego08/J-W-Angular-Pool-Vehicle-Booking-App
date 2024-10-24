@@ -4,9 +4,6 @@
   <!-- Search Bar -->
   <input type="text" [(ngModel)]="searchQuery" (input)="searchProjects()" placeholder="Search by project number or description" />
 
-  <!-- Add Project Button -->
-  <button class="btn btn-primary" (click)="openProjectModal(addProjectModal)">Add New Project</button>
-
   <!-- Project List Table -->
   <table class="table table-bordered mt-3">
     <thead>
@@ -21,7 +18,7 @@
       <tr *ngFor="let project of filteredProjects">
         <td>{{ project.projectNumber }}</td>
         <td>{{ project.description }}</td>
-        <td>{{ project.status }}</td>
+        <td>{{ project.statusName }}</td>
         <td>
           <button class="btn btn-warning" (click)="openProjectModal(editProjectModal, project)">Edit</button>
           <button class="btn btn-danger" (click)="deleteProject(project.projectID)">Delete</button>
@@ -95,7 +92,7 @@
       </div>
       <div class="form-group">
         <label>Status</label>
-        <select [(ngModel)]="selectedProject!.status" name="status" required class="form-control">
+        <select [(ngModel)]="selectedProject!.statusId" name="status" required class="form-control">
           <option value="Active">Active</option>
           <option value="Inactive">Inactive</option>
           <option value="Concluded">Concluded</option>
@@ -116,5 +113,11 @@
     <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Cancel</button>
     <button type="button" class="btn btn-primary" (click)="selectedProject && updateProject(selectedProject)">Save Changes</button>
   </div>
+
 </ng-template>
 
+
+  <br>
+  
+  <!-- Add Project Button -->
+  <button class="btn btn-primary" (click)="openProjectModal(addProjectModal)">Add New Project</button>

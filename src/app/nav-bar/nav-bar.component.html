@@ -99,7 +99,7 @@
 <body>
 
 <nav class="navbar" *ngIf="authService.isLoggedIn | async">
-    <ul class="navbar-list">
+    <ul *ngIf="authService.isAdmin() || authService.isDriver()" class="navbar-list">
         <li class="navbar-item dropdown hover:bg-gray-700">
             <a class="dropdown-toggle py-1"><i class="fas fa-bookmark mr-1"></i> Bookings</a>
             <ul class="dropdown-menu">
@@ -139,7 +139,7 @@
                 <li><a class="hover:bg-gray-700" routerLink="/rate"><i class="fas fa-tags mr-1"></i> Manage Rates</a></li>
                 <li><a class="hover:bg-gray-700" routerLink="/dashboard"><i class="fas fa-tachometer-alt mr-1"></i> Dashboard</a></li>
                 <li><a class="hover:bg-gray-700" routerLink="/app-report"><i class="fas fa-chart-line mr-1"></i> Report</a></li>
-                <li><a class="hover:bg-gray-700" routerLink="/view-post-check"><i class="fas fa-check-circle mr-1"></i> Post Checklists</a></li>
+                <!-- <li><a class="hover:bg-gray-700" routerLink="/view-post-check"><i class="fas fa-check-circle mr-1"></i> Post Checklists</a></li> -->
                 <li><a class="hover:bg-gray-700" routerLink="/admin-section"><i class="fas fa-cogs mr-1"></i> OTP Settings</a></li>
                 <li><a class="hover:bg-gray-700" routerLink="/audit-log"><i class="fas fa-file-alt mr-1"></i> Audit Trails</a></li>
             
@@ -151,10 +151,10 @@
             </ul>
         </li>
 
-        <li class="navbar-item dropdown hover:bg-gray-700">
+        <li *ngIf="authService.isAdmin()" class="navbar-item dropdown hover:bg-gray-700">
             <a class="dropdown-toggle py-1"><i class="fas fa-comments mr-1"></i> Feedbacks</a>
             <ul class="dropdown-menu">
-                <li *ngIf="authService.isAdmin()"><a class="hover:bg-gray-700" routerLink="/app-feedback-list"><i class="fas fa-list mr-1"></i> Feedback List</a></li>
+                <li><a class="hover:bg-gray-700" routerLink="/app-feedback-list"><i class="fas fa-list mr-1"></i> Feedback List</a></li>
             </ul>
         </li>
 
