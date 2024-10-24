@@ -135,7 +135,7 @@
       <tr *ngFor="let report of cancelledBookingsReport">
         <td>{{ report.userName }}</td>
         <td>{{ report.bookingId }}</td>
-        <td>{{ formatDate(report.cancelledDate) }}</td>
+        <td>{{ formatDate(report.endDate) }}</td>
       </tr>
     </tbody>
   </table>

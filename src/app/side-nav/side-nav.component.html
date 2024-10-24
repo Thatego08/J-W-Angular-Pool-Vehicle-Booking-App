@@ -44,7 +44,7 @@
     </div>
     <!-- Navigation -->
     <nav class="flex-1 px-4 py-6">
-        <ul>
+        <ul *ngIf="authService.isAdmin() || authService.isDriver()">
             <li>
                 <a routerLink="/app-profile" class="flex items-center py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700">
                     <i class="fas fa-user mr-2"></i> Profile

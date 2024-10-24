@@ -3,6 +3,7 @@ import { BookingService } from '../../services/booking.service';
 import { BookingModel } from '../../models/booking.model';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { EditBookingComponent } from '../edit-booking/edit-booking.component';
+import { AuthService } from '../../user/auth.service';
 
 @Component({
   selector: 'app-booking-list',
@@ -15,23 +16,40 @@ export class BookingListComponent implements OnInit{
   bookings: BookingModel[] = [];
   selectedBooking: BookingModel | null = null;
   modalRef: NgbModalRef | null = null; // Initialize modalRef to null
+  userName: string | null = null; // Store logged-in user's username
 
-  constructor(private bookingService: BookingService, private modalService: NgbModal) {}
+  constructor(private bookingService: BookingService, private modalService: NgbModal, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.loadBookings();
+
+    // Load the logged-in user's profile first
+    this.authService.getProfile().subscribe({
+      next: (user) => {
+        this.userName = user.userName; // Store the logged-in user's username
+        this.loadBookings(); // Now load bookings filtered by this username
+      },
+      error: (error) => {
+        console.error('Error fetching user profile:', error);
+      }
+    });
   }
 
   loadBookings(): void {
-    this.bookingService.getBookings().subscribe({
-      next: (data: BookingModel[]) => {
-        console.log('Bookings data:', data); // Check the data received
-        this.bookings = data.sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime());
-     },
-      error: (error) => {
-        console.error('Error loading bookings:', error);
-      }
-    });
+    if (this.userName) {
+      this.bookingService.getBookings().subscribe({
+        next: (data: BookingModel[]) => {
+          // Filter bookings for the logged-in user only
+          this.bookings = data
+            .filter(booking => booking.userName === this.userName)
+            .sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime());
+          console.log('Filtered bookings for user:', this.userName, this.bookings);
+        },
+        error: (error) => {
+          console.error('Error loading bookings:', error);
+        }
+      });
+    }
   }
 
 
@@ -59,8 +77,9 @@ export class BookingListComponent implements OnInit{
       this.bookingService.deleteBooking(id).subscribe(
         () => {
           alert('Booking has been successfully deleted!');
-          // Refresh the booking list or handle the UI update
-        },
+          this.loadBookings();// Refresh the booking list or handle the UI update
+        
+          },
         (error) => {
           console.error('Error deleting booking:', error);
           alert('There was an error deleting the booking. Please try again.');
