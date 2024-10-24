@@ -1,0 +1,56 @@
+/* Styles for Add FAQ button */
+.faq-btn {
+  background-color: #14063b;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-bottom: 2px solid #14063b;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.faq-btn i {
+  margin-right: 5px; /* Space between icon and text */
+}
+
+.faq-btn:hover {
+  background-color: #0e052a; /* Darker shade on hover */
+}
+
+/* Style for the table header (columns) */
+thead tr {
+  background-color: #14063b; /* Blue background for the header */
+  color: white; /* White text for the headers */
+}
+
+th {
+  padding: 8px;
+}
+
+/* Styles for Delete button */
+.btn-danger {
+  background-color: #da1e31;
+  border-color: #d82537;
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+}
+
+.btn-danger:hover {
+  background-color: #b5192b; /* Slightly darker red on hover */
+}
+
+/* Style for the table header (columns) */
+thead tr {
+  background-color: #14063b; /* Blue background for the header */
+  color: white; /* White text for the headers */
+}
+
+th {
+  padding: 8px;
+}

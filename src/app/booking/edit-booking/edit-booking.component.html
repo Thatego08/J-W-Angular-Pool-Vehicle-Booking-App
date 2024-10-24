@@ -3,7 +3,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">Edit Booking</h4>
-        <button type="button" class="close ml-auto text-white" (click)="activeModal.dismiss()" aria-label="Close">
+        <button type="button" class="btn edit-btn" (click)="activeModal.dismiss()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -64,8 +64,9 @@
               [min]="minDate"
             />
           </div>
-          <button type="submit" class="btn btn-success" [disabled]="!bookingForm.valid">Save Changes</button>
-          <button type="button" class="btn btn-danger" (click)="activeModal.dismiss()">Cancel</button>
+          <button type="submit" class="btn btn-success" [disabled]="!bookingForm.valid" style="background-color: #14063b;">Save Changes</button>
+          <button type="button" class="btn btn-danger" (click)="activeModal.dismiss()" style="background-color: #da1e31; border-color: #d82537;">Cancel</button>
+
         </form>
       </div>
     </div>

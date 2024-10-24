@@ -4,17 +4,18 @@
   <!-- Add/Edit FAQ -->
   <div class="mb-5">
     <!-- Add/Edit Heading -->
-    <h3 class="text-lg font-semibold mb-2" *ngIf="editFaqId === null">Add New FAQ</h3>  
+    <h3 class="text-lg font-semibold mb-2" *ngIf="editFaqId === null">Add New FAQ</h3>
     <h3 class="text-lg font-semibold mb-2" *ngIf="editFaqId !== null">Edit FAQ</h3>
-  
+
     <!-- Add/Edit FAQ -->
-    <div *ngIf="editFaqId === null">  
+    <div *ngIf="editFaqId === null">
       <input type="text" placeholder="Question" [(ngModel)]="newFaq.question"
           class="border border-gray-300 p-2 w-full mb-2" />
       <textarea placeholder="Answer" [(ngModel)]="newFaq.answer"
           class="border border-gray-300 p-2 w-full mb-2"></textarea>
       <button (click)="addFaq()"
-              class="bg-blue-500 text-white px-4 py-2 rounded">
+      class="faq-btn">
+      <i class="fas fa-plus"></i> <!-- Add icon -->
         Add FAQ
       </button>
       <p *ngIf="showError" class="text-red-500 mt-2">
@@ -22,7 +23,7 @@
       </p>
     </div>
   </div>
-  
+
   <!-- Edit FAQ -->
   <div *ngIf="editFaqId !== null">
     <input type="text" placeholder="Question" [(ngModel)]="editedFaq.question"
@@ -39,10 +40,10 @@
     <h3 class="text-lg font-semibold mb-3">Existing FAQs</h3>
     <table class="min-w-full bg-white border border-gray-300">
       <thead>
-        <tr class="bg-gray-100 border-b">
-          <th class="py-2 px-4 text-left">Question</th>
-          <th class="py-2 px-4 text-left">Answer</th>
-          <th class="py-2 px-4 text-left">Actions</th>
+        <tr class="bg-blue-700 border-b"> <!-- Updated header color -->
+          <th class="py-2 px-4 text-left text-white">Question</th>
+          <th class="py-2 px-4 text-left text-white">Answer</th>
+          <th class="py-2 px-4 text-left text-white">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -50,8 +51,8 @@
           <td class="py-2 px-4 border-b">{{ faq.question }}</td>
           <td class="py-2 px-4 border-b">{{ faq.answer }}</td>
           <td class="py-2 px-4 border-b">
-            <button (click)="editFaq(faq)" class="bg-yellow-500 text-white px-3 py-1 rounded mr-2">Edit</button>
-            <button (click)="deleteFaq(faq)" class="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
+            <button (click)="editFaq(faq)" class="btn-edit">Edit</button>
+            <button (click)="deleteFaq(faq)" class="btn-danger">Delete</button>
           </td>
         </tr>
       </tbody>

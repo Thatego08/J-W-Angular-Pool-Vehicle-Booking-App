@@ -1,26 +1,57 @@
 .audit-log-container {
     padding: 20px;
   }
-  
+
   .search-bar {
     margin-bottom: 10px;
   }
-  
+
+  .search-bar input {
+    padding: 5px;
+  }
+
+  .search-bar button {
+    background-color: #14063b;;
+  border-bottom: 2px solid #14063b;; /* Blue background */
+    color: white; /* White text */
+    border: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+  }
+
+  .search-bar button i {
+    margin-right: 5px; /* Space between icon and text */
+  }
+
+  .search-bar button:hover {
+    background-color: #cfa013; /* Yellow on hover */
+  }
+
+
   table {
     width: 100%;
     border-collapse: collapse;
   }
-  
+
   table, th, td {
     border: 1px solid #ddd;
   }
-  
+
   th, td {
     padding: 8px;
     text-align: left;
   }
-  
-  th {
-    background-color: #f2f2f2;
+
+  th.blue-header {
+    background-color: #14063b;;
+  border-bottom: 2px solid #14063b;;
+    color: white; /* White text for headers */
   }
-  
+
+  tbody tr:nth-child(even) {
+    background-color: #f9f9f9; /* Alternating row colors */
+  }

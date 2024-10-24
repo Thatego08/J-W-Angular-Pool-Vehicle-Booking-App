@@ -3,28 +3,28 @@
 
 
 <div  *ngIf="user" >
- 
- 
- 
+  <div class="profile-card">
   <h2>User Profile</h2>
- 
+
    <!-- Profile Picture Section -->
-   <div *ngIf="user.profilePhotoUrl">
-    <img [src]="user.profilePhotoUrl" alt="Profile Photo" style="width: 150px; height: 150px; border-radius: 50%;" />
+   <div *ngIf="user.profilePhotoUrl" class="profile-picture-container">
+    <img [src]="user.profilePhotoUrl" alt="Profile Photo" style="width: 150px; height: 150px; border-radius: 50%;" class="profile-picture" />
   </div>
 
- 
+
   <p><strong>Username:</strong> {{user.userName}}</p>
     <p><strong>Email:</strong> {{user.email}}</p>
     <p><strong>Name:</strong> {{user.name}}</p>
     <p><strong>Surname:</strong> {{user.surname}} </p>
     <p><strong>Role:</strong> {{user.role}}</p>
 
-
+    <div class="button-group">
      <!-- Edit Button -->
-  <button mat-stroked-button color="primary" (click)="openEditModal()">Update Password</button>
-  
-  <button mat-stroked-button color="primary" (click)="openDetailsModal()">Update Details</button>
+  <button mat-stroked-button class="update-button" (click)="openEditModal()">Update Password</button>
+
+  <button mat-stroked-button class="update-button" (click)="openDetailsModal()">Update Details</button>
+</div>
+</div>
 </div>
 
 <!-- Error message -->
@@ -34,10 +34,9 @@
 
 <app-notifications *ngIf="notificationMessage" [message]="notificationMessage" [isSuccess]="isSuccess"></app-notifications>
 
-  
+
   <!-- <div *ngIf="errorMessage">
     <p>Error: {{errorMessage}}</p>
   </div> -->
-  
+
   <!-- <button (click)="logout()">Logout</button> -->
-  

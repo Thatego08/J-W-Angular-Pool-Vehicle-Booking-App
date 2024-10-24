@@ -2,12 +2,12 @@
     color: white; /* Text color */
     background-color: #96b9df91; /* Button background */
   }
-  
+
   ::ng-deep button.mat-button:hover {
     background-color: #8ab4e085; /* Darker background on hover */
     color: white; /* Ensure text stays white on hover */
   }
-  
+
   ::ng-deep button.mat-button:focus {
     background-color: #8ab4e085; /* Keep the same hover background for focus state */
   }
@@ -16,18 +16,68 @@
     border-color: #007bff; /* Border color */
     color: #007bff; /* Text color */
   }
-  
+
   ::ng-deep button.mat-stroked-button:hover {
     background-color: rgba(0, 123, 255, 0.1); /* Light blue background on hover */
     border-color: #0056b3; /* Darker border on hover */
   }
-  
-  
 
-  .profile-picture {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-bottom: 10px;
+  /* Card for the profile form */
+.profile-card {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: 20px auto;
+  text-align: center;
+}
+
+/* Profile picture styling */
+.profile-picture-container {
+  margin-bottom: 20px;
+}
+
+.profile-picture {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Button group styling with spacing */
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 15px; /* Adds space between buttons */
+  margin-top: 20px;
+}
+
+/* Style for the update buttons */
+.update-button {
+  background-color: #042446; /* Dark blue */
+  color: white !important; /* Make the button text white */
+  border: none; /* Remove any border if needed */
+}
+
+.update-button:hover {
+  background-color: #0d3356; /* Slightly darker blue on hover */
+  color: white; /* Ensure the text stays white on hover */
+}
+
+/* Ensure the text remains white even when focused */
+.update-button:focus {
+  color: white !important;
+}
+
+/* Error message styling */
+.error-message {
+  color: red;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Notifications styling */
+app-notifications {
+  margin-top: 10px;
 }

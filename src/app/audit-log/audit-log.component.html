@@ -1,22 +1,24 @@
 <div class="audit-log-container">
     <h2>Audit Logs</h2>
-  
+
     <div class="search-bar">
-      <input 
-        type="text" 
-        [(ngModel)]="searchUsername" 
+      <input
+        type="text"
+        [(ngModel)]="searchUsername"
         placeholder="Search by username">
-      <button (click)="onSearch()">Search</button>
+      <button (click)="onSearch()">
+        <i class="fas fa-search"></i>
+        Search</button>
     </div>
-  
+
     <table>
       <thead>
         <tr>
-           <th>User</th>
-          <th>Action</th>
-          <th>Details</th>
-          <th>Date</th>
-          <th>Actions</th>
+          <th class="blue-header">User</th>
+          <th class="blue-header">Action</th>
+          <th class="blue-header">Details</th>
+          <th class="blue-header">Date</th>
+          <th class="blue-header">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -30,17 +32,16 @@
           <td>{{ log.timestamp | date:'short' }}</td>
           <td>
             <!-- <button (click)="onEdit(log)">Edit</button> -->
-            <button (click)="onDelete(log.id)">Delete</button>
+            <button (click)="onDelete(log.id)" style="background-color: #da1e31; border-color: #d82537;">Delete</button>
           </td>
 
-          
+
         </tr>
       </tbody>
 
-      
+
     </table>
-    
+
   <!-- Pagination Controls -->
   <pagination-controls (pageChange)="page = $event"></pagination-controls>
   </div>
-  
