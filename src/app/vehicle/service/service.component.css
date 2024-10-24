@@ -5,12 +5,37 @@
     height: 80px; /* Adjust height as needed */
     background-color: #f0f0f0; /* Optional background color */
   }
-  
+
   .logo {
     max-width: 80%;
     max-height: 80%;
     /* Add any additional styling for the logo */
   }
+
+  .blue-header {
+    background-color: #14063b; /* Blue color for the table header */
+    color: white; /* Text color */
+    text-align: center; /* Center the text */
+}
+
+.btn-edit {
+    background-color: #14063b; /* Blue color for the Edit button */
+    color: white; /* Text color */
+    border: none; /* Remove border */
+    padding: 8px 12px; /* Padding */
+    cursor: pointer; /* Pointer cursor on hover */
+}
+
+.btn-edit:hover {
+  background-color: #cfa013; /* Yellow on hover */
+}
+
+.error-message {
+  color: rgb(222, 11, 11);
+  font-size: 14px;
+  margin-top: 5px;
+}
+
 
   .feedback-form {
     max-width: 400px;
@@ -43,7 +68,7 @@
     background-color: #0056b3;
   }
 
-    
+
 .navbar {
   background-color: #333;
   overflow: hidden;
@@ -115,7 +140,7 @@
   align-items: center;
   padding: 0 5%;
   position: relative;
-  
+
   margin-top: 12rem ;
 }
 .menu-bar ul {

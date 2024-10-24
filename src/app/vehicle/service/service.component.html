@@ -1,77 +1,74 @@
- <div class="header-container">
-    <img src="assets/logo.png" alt="Logo" class="logo">
-  </div>
-  
-  <!-- List of Services -->
+<div class="header-container">
+  <img src="assets/logo.png" alt="Logo" class="logo">
+</div>
+
+<!-- List of Services -->
+<br><br>
+<h3>List of Services</h3>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th class="blue-header">Vehicle</th>
+      <th class="blue-header">Admin Name</th>
+      <th class="blue-header">Admin Email</th>
+      <th class="blue-header">Service Date</th>
+      <th class="blue-header">Description</th>
+      <th class="blue-header">Edit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let service of services">
+      <td>{{ service.vehicleID }}</td>
+      <td>{{ service.adminName }}</td>
+      <td>{{ service.adminEmail }}</td>
+      <td>{{ service.serviceDate | date }}</td>
+      <td>{{ service.description }}</td>
+      <td>
+        <button
+          (click)="service.serviceId !== undefined ? editService(service.serviceId) : null"
+          class="btn btn-edit">
+          Edit
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="container">
   <br><br>
-  <h3>List of Services</h3>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Vehicle</th>
-        <th>Admin Name</th>
-        <th>Admin Email</th>
-        <th>Service Date</th>
-        <th>Description</th>
-        <th> Edit </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let service of services">
-        <td>{{ service.vehicleID }}</td> <!-- You may want to display the vehicle name or registration instead -->
-        <td>{{ service.adminName }}</td>
-        <td>{{ service.adminEmail }}</td>
-        <td>{{ service.serviceDate | date }}</td>
-        <td>{{ service.description }}</td>
-        <button 
-    (click)="service.serviceId !== undefined ? editService(service.serviceId) : null" 
-    class="btn btn-success">
-    Edit 
-  </button>
-      </tr>
-    </tbody>
-  </table> 
-
-  <div class="container">
-    <br><br>
-    <h2>Book Vehicle For Service</h2>
-    <br><br>
-    <form (ngSubmit)="submitService()">
-      <div>
-        <label for="vehicle">Select Vehicle:</label>&nbsp;
-        <select id="vehicle" [(ngModel)]="service.vehicleID" name="vehicleId" required>
-          <option *ngFor="let vehicle of vehicles" [value]="vehicle.vehicleID">
-            {{ vehicle.name }} - {{ vehicle.registrationNumber }}
-          </option>
-        </select>
-      </div>
-      <br>
-      <div>
-        <label for="adminName">Admin Name:</label>&nbsp;
-        <input type="text" id="adminName" [(ngModel)]="service.adminName" name="adminName" required />
-      </div>
-      <br>
-      <div>
-        <label for="adminEmail">Admin Email:</label>&nbsp;
-        <input type="email" id="adminEmail" [(ngModel)]="service.adminEmail" name="adminEmail" required />
-      </div>
-      <br>
-      <div>
-        <label for="description">Description:</label><br>
-        <textarea id="description" [(ngModel)]="service.description" name="description" rows="4" cols="50" required></textarea>
-      </div>
-      <br>
-      <div>
-        <label for="serviceDate">Service Date:</label>&nbsp;
-        <input type="date" id="serviceDate" [(ngModel)]="service.serviceDate" name="serviceDate" required />
-      </div>
-      <br>
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-    <p>{{ message }}</p>
-  </div>
-  
-  
-
-  
-      
+  <h2>Book Vehicle For Service</h2>
+  <br><br>
+  <form (ngSubmit)="submitService()">
+    <div>
+      <label for="vehicle">Select Vehicle:</label>&nbsp;
+      <select id="vehicle" [(ngModel)]="service.vehicleID" name="vehicleId" required>
+        <option *ngFor="let vehicle of vehicles" [value]="vehicle.vehicleID">
+          {{ vehicle.name }} - {{ vehicle.registrationNumber }}
+        </option>
+      </select>
+    </div>
+    <br>
+    <div>
+      <label for="adminName">Admin Name:</label>&nbsp;
+      <input type="text" id="adminName" [(ngModel)]="service.adminName" name="adminName" required />
+    </div>
+    <br>
+    <div>
+      <label for="adminEmail">Admin Email:</label>&nbsp;
+      <input type="email" id="adminEmail" [(ngModel)]="service.adminEmail" name="adminEmail" required />
+    </div>
+    <br>
+    <div>
+      <label for="description">Description:</label><br>
+      <textarea id="description" [(ngModel)]="service.description" name="description" rows="4" cols="50" required></textarea>
+    </div>
+    <br>
+    <div>
+      <label for="serviceDate">Service Date:</label>&nbsp;
+      <input type="date" id="serviceDate" [(ngModel)]="service.serviceDate" name="serviceDate" required />
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary" style="background-color: #14063b;">Submit</button>
+  </form>
+  <p class="error-message">{{ message }}</p>
+</div>

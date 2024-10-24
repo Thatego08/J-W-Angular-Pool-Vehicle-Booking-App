@@ -42,8 +42,8 @@
 
 /* Button Styling */
 .btn-edit {
-  background-color: #28a745;
-  border: none;
+  background-color: #14063b;;
+  border-bottom: 2px solid #14063b;;
   color: white;
   padding: 8px 12px; /* Reduce padding */
   border-radius: 4px;
@@ -52,10 +52,12 @@
 }
 
 .btn-edit:hover {
-  background-color: #218838;
+  background-color: #cfa013; /* Yellow on hover */
 }
 
 .btn-danger {
+  background-color: #da1e31;
+  border-color: #d82537;
   padding: 8px 12px; /* Ensure consistency with edit button */
   font-size: 14px;
 }

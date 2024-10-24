@@ -10,14 +10,28 @@
   box-sizing: border-box; /* Ensure padding is included in the width calculation */
 }
 
-.btn-success {
-  background-color: rgb(7, 185, 7);
-  border-color: #28a745;
+
+button.booking-button {
+  background-color: #14063b;;
+  border-bottom: 2px solid #14063b;;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  display: inline-flex;
+  justify-content: center; /* Center the content */
+  align-items: center; /* Vertically center the icon and text */
+  width: 100%; /* Adjust based on your design. This makes the button fill the container. */
+  text-align: center;
+}
+
+/* Add some margin or padding between the icon and text */
+.booking-button i {
+  margin-right: 8px;
 }
 
 .btn-danger {
-  background-color: #dc3545;
-  border-color: #dc3545;
+  background-color: #da1e31;
+  border-color: #d82537;
 }
 
 .close.text-white {

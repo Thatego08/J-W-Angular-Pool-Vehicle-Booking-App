@@ -39,7 +39,8 @@
 .search-button {
   padding: 12px 20px; /* Adjust padding for button size */
   font-size: 16px;
-  background-color: #042446; /* Dark blue */
+  background-color: #14063b;;
+  border-bottom: 2px solid #14063b;;
   color: white;
   border: none;
   border-radius: 4px;
@@ -47,7 +48,7 @@
 }
 
 .search-button:hover {
-  background-color: #ffcc00; /* Yellow on hover */
+  background-color: #cfa013; /* Yellow on hover */
   color: #042446; /* Dark blue text on hover */
 }
 
@@ -93,8 +94,8 @@
 }
 
 .btn-primary {
-  background-color: #007bff;
-  border-color: #007bff;
+  background-color: #29a941;
+  border-color: #29a941;
 }
 
 .btn-success {

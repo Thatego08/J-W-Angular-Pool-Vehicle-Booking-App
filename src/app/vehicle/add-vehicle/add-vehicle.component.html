@@ -18,14 +18,14 @@
 
     <div class="form-group">
       <label for="dateAcquired">Date Acquired:</label>
-      <input id="dateAcquired" type="date" 
+      <input id="dateAcquired" type="date"
              formControlName="dateAcquired" class="form-control"
              [min]="minDate" [max]="maxDate" />
       <div *ngIf="vehicleForm.get('dateAcquired')?.invalid && vehicleForm.get('dateAcquired')?.touched" class="text-danger">
         Date Acquired is required.
       </div>
     </div>
-    
+
 
     <div class="form-group">
       <label for="licenseExpiryDate">License Expiry Date:</label>
@@ -121,7 +121,7 @@
       {{ submissionStatus }}
     </div>
 
-    <button type="submit" class="btn btn-primary" [disabled]="vehicleForm.invalid">Add Vehicle</button>
+    <button type="submit" class="btn btn-primary" [disabled]="vehicleForm.invalid" style="background-color: #0b0125;">Add Vehicle</button>
   </form>
 
 

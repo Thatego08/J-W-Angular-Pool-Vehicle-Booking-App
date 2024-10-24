@@ -2,14 +2,14 @@
   margin-left: auto;
 }
 
-.btn-success {
-  background-color: rgb(7, 185, 7);
-  border-color: #28a745;
+button.btn-success {
+  background-color: #14063b;;
+  border-bottom: 2px solid #14063b;;
 }
 
-.btn-danger {
-  background-color: #dc3545;
-  border-color: #dc3545;
+button.btn-danger {
+  background-color: #da1e31;
+  border-color: #d82537;
 }
 
 .close.text-white {

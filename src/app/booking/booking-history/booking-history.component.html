@@ -7,7 +7,10 @@
     <label for="username">Enter Username:</label>
     <input type="text" id="username" [(ngModel)]="searchUsername" class="form-control" />
   </div>
-  <button (click)="searchBookingHistory()" class="btn btn-primary">Search</button>
+  <button (click)="searchBookingHistory()" class="btn search-button">
+    <i class="fas fa-search"></i> Search
+  </button>
+
 
   <div *ngIf="bookings.length > 0">
     <h3>Booking Results</h3>
@@ -30,13 +33,13 @@
           <td>{{ booking.userName }}</td>
           <td>{{ booking.event }}</td>
           <td>{{ booking.startDate | date }}</td>
-           <td>{{ booking.endDate | date }}</td> 
+           <td>{{ booking.endDate | date }}</td>
           <td>{{ booking.vehicleName }}</td>
           <td>{{ booking.projectNumber }}</td>
           <td>
-            <button 
-      (click)="initiatePreChecklist(booking.bookingID)" 
-      [disabled]="isStartDatePassed(booking.startDate)" 
+            <button
+      (click)="initiatePreChecklist(booking.bookingID)"
+      [disabled]="isStartDatePassed(booking.startDate)"
       [ngClass]="{'disabled-button': isStartDatePassed(booking.startDate)}">
       Complete Pre-Checklist
     </button>
@@ -45,7 +48,7 @@
       </tbody>
     </table>
   </div>
-  
+
   <!-- Pagination Controls -->
   <pagination-controls (pageChange)="page = $event"></pagination-controls>
 </div>

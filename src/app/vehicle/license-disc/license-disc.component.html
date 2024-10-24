@@ -26,11 +26,11 @@
      <!-- Pagination Controls -->
 
     <pagination-controls (pageChange)="page = $event"></pagination-controls>
- 
+
   </div>
   <div *ngIf="disks.length === 0" class="text-center mt-4 text-gray-600">
     No license discs found.
   </div>
 
-   <button class="btn btn-danger" routerLink="/vehicles"> Back to Vehicles  </button>
-  
+   <button class="btn btn-danger" style="background-color: #da1e31; border-color: #d82537;" routerLink="/vehicles" > Back to Vehicles  </button>
+
