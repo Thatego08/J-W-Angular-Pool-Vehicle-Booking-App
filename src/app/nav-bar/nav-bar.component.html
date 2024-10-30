@@ -99,6 +99,9 @@
 <body>
 
 <nav class="navbar" *ngIf="authService.isLoggedIn | async">
+
+      <!-- Logo on the left side of the navbar -->
+      <!-- <img [src]="logoURL" alt="Logo" class="navbar-logo"> -->
     <ul *ngIf="authService.isAdmin() || authService.isDriver()" class="navbar-list">
         <li class="navbar-item dropdown hover:bg-gray-700">
             <a class="dropdown-toggle py-1"><i class="fas fa-bookmark mr-1"></i> Bookings</a>

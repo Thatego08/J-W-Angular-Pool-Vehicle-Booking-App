@@ -10,6 +10,7 @@ export class SideNavComponent {
 
   constructor(public authService: AuthService, private router: Router) { }
 
+  logoURL = 'assets/logo2.png';
 
   logout() {
     this.authService.logout().subscribe(() => {

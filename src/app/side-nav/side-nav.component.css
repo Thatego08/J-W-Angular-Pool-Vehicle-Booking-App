@@ -47,6 +47,7 @@
   margin-left: 0; /* Adjust when sidebar is hidden */
 }
 
+
 /* Media queries for responsiveness */
 @media (max-width: 768px) {
   .navbar {
