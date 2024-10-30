@@ -7,5 +7,6 @@ import { Component } from '@angular/core';
 })
 export class HomeComponent {
 
-  backgroundUrl = 'assets/Home.png';
+  backgroundUrl = 'assets/HomeRe.png';
+  footerURL = 'assets/logo.png';
 }
