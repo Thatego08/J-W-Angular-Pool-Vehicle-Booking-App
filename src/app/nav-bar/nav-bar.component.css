@@ -114,4 +114,12 @@
       margin-left: 0; /* Remove left margin for small screens */
       padding: 1rem;
   }
+
+
+  .navbar-logo {
+    height: 10px; /* Adjust as needed */
+    margin-right: 1rem; /* Space between the logo and the navbar items */
+    cursor: pointer;
+}
+
 }

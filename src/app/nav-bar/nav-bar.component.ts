@@ -10,6 +10,8 @@ export class NavBarComponent {
   constructor(public authService: AuthService) {
   }
 
+  logoURL = 'assets/logo2.png';
+
   NgOnInit(): void {
   this.authService.isAdmin();
   

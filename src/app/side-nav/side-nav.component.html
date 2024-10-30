@@ -39,8 +39,9 @@
 
 <div class="w-64 h-screen bg-gray-800 text-white flex flex-col fixed z-50" *ngIf="authService.isLoggedIn | async">
     <!-- Logo -->
-    <div class="h-20 flex items-center justify-center border-b border-gray-700">
-        <span class="text-2xl font-semibold"></span>
+      <!-- Logo Section at the Top -->
+      <div class="h-20 flex items-center justify-center border-b border-gray-700">
+        <img [src]="logoURL" alt="Logo" class="logo-image">
     </div>
     <!-- Navigation -->
     <nav class="flex-1 px-4 py-6">
