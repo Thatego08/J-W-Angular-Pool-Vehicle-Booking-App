@@ -8,11 +8,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let postCheck of pagedPostChecks">
+        <tr *ngFor="let postCheck of pagedPostChecks | slice:0:5">
           <td *ngFor="let column of visibleColumns">
             <ng-container [ngSwitch]="column">
               <ng-container *ngSwitchCase="'postCheckId'">{{ postCheck.postCheckId }}</ng-container>
-             
               <ng-container *ngSwitchCase="'closingKms'">{{ postCheck.closingKms }}</ng-container>
               <ng-container *ngSwitchCase="'oilLeaks'">{{ postCheck.oilLeaks ? 'Yes' : 'No' }}</ng-container>
               <ng-container *ngSwitchCase="'fuelLevel'">{{ postCheck.fuelLevel ? 'Yes' : 'No' }}</ng-container>
@@ -64,12 +63,17 @@
   </div>
 </div>
 
-
 <!-- Modal for Image Viewing -->
 <div id="imageModal" class="modal" *ngIf="selectedMedia">
   <span class="close" (click)="closeModal()">&times;</span>
   <img class="modal-content" [src]="selectedMedia ? 'data:' + selectedMedia.mediaType + ';base64,' + selectedMedia.fileContent : ''">
   <div id="caption">{{ selectedMedia?.fileName }}</div>
+</div>
+
+<div class="table-controls">
+  <button *ngIf="pagedPostChecks.length > 5" (click)="toggleRows()">
+    {{ displayedRows ? 'Show Less' : 'Show More' }}
+  </button>
 </div>
 
 <app-help></app-help>

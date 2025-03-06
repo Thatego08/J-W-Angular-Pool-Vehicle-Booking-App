@@ -12,8 +12,10 @@ export class ViewPostCheckComponent implements OnInit {
   currentPage: number = 1;
   columnsPerPage: number = 10;
   visibleColumns: string[] = [];
+  displayedRows: number = 5; // ✅ Added property
+  rowsPerPage: number = 5;
   allColumns: string[] = [
-    'postCheckId',  'closingKms', 'oilLeaks', 'fuelLevel', 'mirrors', 'sunVisor', 'seatBelts', 'headLights',
+    'postCheckId', 'closingKms', 'oilLeaks', 'fuelLevel', 'mirrors', 'sunVisor', 'seatBelts', 'headLights',
     'indicators', 'parkLights', 'brakeLights', 'strobeLight', 'reverseLight', 'reverseHooter', 'horn',
     'windscreenWiper', 'tyreCondition', 'spareWheelPresent', 'jackAndWheelSpannerPresent', 'brakes',
     'handbrake', 'jwMarketingMagnets', 'checkedByJWSecurity', 'licenseDiskValid', 'comments',
@@ -79,5 +81,9 @@ export class ViewPostCheckComponent implements OnInit {
 
   closeModal() {
     this.selectedMedia = null;
+  }
+
+  toggleRows() {
+    this.displayedRows = this.displayedRows === 5 ? 10 : 5;  // Toggle between 5 and 10 rows
   }
 }
