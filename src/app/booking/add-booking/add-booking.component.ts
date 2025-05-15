@@ -19,6 +19,9 @@ export class AddBookingComponent implements OnInit {
   vehicles: Vehicle[] = [];
   projects: number[] = [];
 
+  vehicleTypes: string[] = ['All', 'Double Cab', 'Single Cab', 'Extra Cab'];
+  selectedVehicleType: string = 'All';
+
   notificationMessage: string | null = null;
   isSuccess: boolean = true;
   minDate: string; // Add this to restrict past dates
@@ -63,6 +66,7 @@ export class AddBookingComponent implements OnInit {
       this.bookingService.getAvailableVehicles(startDate, endDate).subscribe({
         next: (vehicles) => {
           this.vehicles = vehicles; // Update vehicles list
+      this.vehicles = this.filterVehiclesByType(vehicles); // Apply initial filter
         },
         error: (error) => {
           console.error('Error fetching available vehicles', error);
@@ -71,7 +75,20 @@ export class AddBookingComponent implements OnInit {
       });
     }
 
+// Add this method to handle vehicle type changes
+// onVehicleTypeChange(): void {
+//   const startDate = this.bookingForm.value.startDate;
+//   const endDate = this.bookingForm.value.endDate;
+  
+//   if (startDate && endDate) {
+//     this.fetchAvailableVehicles(new Date(startDate), new Date(endDate));
+//   }
+// }
 
+// Add this to handle vehicle type changes
+onVehicleTypeChange(): void {
+  this.vehicles = this.filterVehiclesByType(this.vehicles);
+}
     onStartDateEndDateChange(): void {
       const startDateString = this.bookingForm.value.startDate;
       const endDateString = this.bookingForm.value.endDate;
@@ -196,6 +213,18 @@ export class AddBookingComponent implements OnInit {
   handleError(message: string): void {
     this.notificationMessage = message;
     this.isSuccess = false;
+  }
+
+  //Bambisa Changes
+
+  filterVehiclesByType(vehicles: Vehicle[]): Vehicle[] {
+    if (this.selectedVehicleType === 'Double Cab') {
+      return vehicles.filter(v => v.name.toLowerCase().includes('toyota'));
+    }
+    if (this.selectedVehicleType === 'Single Cab') {
+      return vehicles.filter(v => v.name.toLowerCase().includes('isuzu'));
+    }
+    return [...vehicles];
   }
 
 
