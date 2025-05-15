@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
 import { BookingModel, CreateBookingModel } from '../models/booking.model';
 import { Vehicle } from '../models/vehicle.model';
@@ -20,13 +20,28 @@ export class BookingService {
     return this.http.get<BookingModel>(`${this.baseUrl}/GetBooking/${id}`);
 }
 
-getAvailableVehicles(startDate: Date, endDate: Date): Observable<Vehicle[]> {
-  const url = `${this.baseUrl}/GetAvailableVehicles?startDate=${startDate.toISOString()}&endDate=${endDate.toISOString()}`;
-  return this.http.get<Vehicle[]>(url).pipe(
+// getAvailableVehicles(startDate: Date, endDate: Date): Observable<Vehicle[]> {
+//   const url = `${this.baseUrl}/GetAvailableVehicles?startDate=${startDate.toISOString()}&endDate=${endDate.toISOString()}`;
+//   return this.http.get<Vehicle[]>(url).pipe(
+//     catchError(this.handleError)
+//   );
+// }
+
+// booking.service.ts
+getAvailableVehicles(startDate: Date, endDate: Date, vehicleType?: string): Observable<Vehicle[]> {
+  let params = new HttpParams()
+    .set('startDate', startDate.toISOString())
+    .set('endDate', endDate.toISOString());
+
+  // Only send vehicleType if it's not "All"
+  if (vehicleType && vehicleType !== 'All') {
+    params = params.set('vehicleType', vehicleType);
+  }
+
+  return this.http.get<Vehicle[]>(`${this.baseUrl}/GetAvailableVehicles`, { params }).pipe(
     catchError(this.handleError)
   );
 }
-
 
   searchBookingHistory(username: string): Observable<BookingModel[]> {
     return this.http.get<BookingModel[]>(`${this.baseUrl}/SearchBookingHistory/${username}`);

@@ -44,6 +44,17 @@
       <input id="endDate" formControlName="endDate" class="form-control" type="datetime-local"   [min]="minDate" />
     </div>
 
+    <!-- Just above Vehicle Drop -->
+    <div class="form-group">
+      <label for="vehicleType">Vehicle Type</label>
+      <select id="vehicleType" class="form-control" 
+              [(ngModel)]="selectedVehicleType"
+              [ngModelOptions]="{standalone: true}"
+              (change)="onVehicleTypeChange()"> <!-- Changed to onVehicleTypeChange -->
+        <option *ngFor="let type of vehicleTypes" [value]="type">{{type}}</option>
+      </select>
+    </div>
+
     <div class="form-group">
       <label for="vehicleName">Vehicle</label>
       <select id="vehicleName" formControlName="vehicleName" class="form-control">
