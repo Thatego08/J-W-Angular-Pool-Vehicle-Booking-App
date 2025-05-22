@@ -19,6 +19,63 @@ export class AddBookingComponent implements OnInit {
   vehicles: Vehicle[] = [];
   projects: number[] = [];
 
+  // New properties
+filteredVehicles: Vehicle[] = [];
+selectedDriveType: string = 'All';
+selectedTransmission: string = 'All';
+hasTowBar: boolean = false;
+hasCanopy: boolean = false;
+
+//Additions 
+// Update your fetchAvailableVehicles method
+fetchAvailableVehicles(startDate: Date, endDate: Date): void {
+  this.bookingService.getAvailableVehicles(startDate, endDate).subscribe({
+    next: (vehicles) => {
+      this.vehicles = vehicles;
+      this.filteredVehicles = this.applyAllFilters(vehicles);
+    },
+    error: (error) => {
+      console.error('Error fetching available vehicles', error);
+      this.toastr.error('Failed to fetch available vehicles.');
+    }
+  });
+}
+
+// Combined filter method
+applyAllFilters(vehicles: Vehicle[]): Vehicle[] {
+  return vehicles.filter(vehicle => {
+    // Cabin Type filter
+    const typeMatch = this.selectedVehicleType === 'All' || 
+      (this.selectedVehicleType === 'Double Cab' && vehicle.name.includes('Toyota')) ||
+      (this.selectedVehicleType === 'Single Cab' && vehicle.name.includes('Isuzu'));
+
+    // Drive Type filter
+    const driveMatch = this.selectedDriveType === 'All' || 
+      vehicle.description.includes(this.selectedDriveType);
+
+    // // Transmission filter
+    // const transmissionMatch = this.selectedTransmission === 'All' ||
+    //   vehicle.transmission === this.selectedTransmission;
+
+    // Features filter
+    const towBarMatch = !this.hasTowBar || vehicle.description.includes('Tow bar');
+    const canopyMatch = !this.hasCanopy || vehicle.description.includes('Canopy');
+
+    return typeMatch && driveMatch && /*transmissionMatch */  towBarMatch && canopyMatch;
+  });
+}
+
+// Update all filters when any change occurs
+updateFilters(): void {
+  this.filteredVehicles = this.applyAllFilters(this.vehicles);
+}
+
+// Modify your existing filter method
+myfilterVehiclesByType(vehicles: Vehicle[]): Vehicle[] {
+  // This is now handled in applyAllFilters
+  return vehicles;
+}
+
   vehicleTypes: string[] = ['All', 'Double Cab', 'Single Cab', 'Extra Cab'];
   selectedVehicleType: string = 'All';
 
@@ -62,18 +119,18 @@ export class AddBookingComponent implements OnInit {
       this.bookingForm.get('endDate')?.valueChanges.subscribe(() => this.onStartDateEndDateChange());
     }
     
-    fetchAvailableVehicles(startDate: Date, endDate: Date): void {
-      this.bookingService.getAvailableVehicles(startDate, endDate).subscribe({
-        next: (vehicles) => {
-          this.vehicles = vehicles; // Update vehicles list
-      this.vehicles = this.filterVehiclesByType(vehicles); // Apply initial filter
-        },
-        error: (error) => {
-          console.error('Error fetching available vehicles', error);
-          this.toastr.error('Failed to fetch available vehicles.');
-        }
-      });
-    }
+    // fetchAvailableVehicles(startDate: Date, endDate: Date): void {
+    //   this.bookingService.getAvailableVehicles(startDate, endDate).subscribe({
+    //     next: (vehicles) => {
+    //       this.vehicles = vehicles; // Update vehicles list
+    //   this.vehicles = this.filterVehiclesByType(vehicles); // Apply initial filter
+    //     },
+    //     error: (error) => {
+    //       console.error('Error fetching available vehicles', error);
+    //       this.toastr.error('Failed to fetch available vehicles.');
+    //     }
+    //   });
+    // }
 
 // Add this method to handle vehicle type changes
 // onVehicleTypeChange(): void {
