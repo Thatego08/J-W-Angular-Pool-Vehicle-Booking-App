@@ -13,6 +13,8 @@ export class PreChecklistComponent implements OnInit {
   preChecklistId: number | null = null;
   bookingId: number | null = null;
 
+  states = ['Compliant', 'Not-Compliant', 'Not-Applicable'];
+
   checkboxes = [
     { label: 'Oil Leaks', formControlName: 'oilLeaks' },
     { label: 'Fuel Level', formControlName: 'fuelLevel' },
@@ -46,38 +48,24 @@ export class PreChecklistComponent implements OnInit {
   ) {
     this.preChecklistForm = this.fb.group({
       openingKms: [0, [Validators.required, this.nonNegativeValidator]],
-      oilLeaks: [false],
-      fuelLevel: [false],
-      mirrors: [false],
-      sunVisor: [false],
-      seatBelts: [false],
-      headLights: [false],
-      indicators: [false],
-      parkLights: [false],
-      brakeLights: [false],
-      strobeLight: [false],
-      reverseLight: [false],
-      reverseHooter: [false],
-      horn: [false],
-      windscreenWiper: [false],
-      tyreCondition: [false],
-      spareWheelPresent: [false],
-      jackAndWheelSpannerPresent: [false],
-      brakes: [false],
-      handbrake: [false],
-      jwMarketingMagnets: [false],
-      checkedByJWSecurity: [false],
-      licenseDiskValid: [false, Validators.requiredTrue],
       comments: [''],
       additionalComments: [''],
-      bookingId: [null],
+      bookingId: [null, Validators.required],
       preChecklistId: [null]
+    });
+
+    // Add form controls dynamically for each checklist item with validation
+    this.checkboxes.forEach(check => {
+      this.preChecklistForm.addControl(
+        check.formControlName,
+        this.fb.control(null, check.required ? Validators.required : [])
+      );
     });
   }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      this.bookingId = params['bookingId'];
+      this.bookingId = +params['bookingId'];
       if (this.bookingId) {
         this.preChecklistForm.patchValue({ bookingId: this.bookingId });
       }
@@ -87,17 +75,18 @@ export class PreChecklistComponent implements OnInit {
   onSubmit() {
     const openingKmsControl = this.preChecklistForm.get('openingKms');
     const licenseDiskControl = this.preChecklistForm.get('licenseDiskValid');
-
+  
     if (openingKmsControl?.hasError('nonNegative')) {
-      console.log('Opening Kms cannot be negative.');
-      return; // Prevent submission
+      // Prevent submission and log (or you can show UI error - you already do in template)
+      console.log('Opening kms should be positive');
+      return;  // Prevent submission
     }
-
+  
     if (!licenseDiskControl?.value) {
       console.log('License disk must be valid.');
-      return; // Prevent submission
+      return;
     }
-
+  
     if (this.preChecklistForm.valid) {
       this.preChecklistService.createPreChecklist(this.preChecklistForm.value)
         .subscribe(
@@ -105,7 +94,10 @@ export class PreChecklistComponent implements OnInit {
             if (response && response.id) {
               this.preChecklistId = response.id;
               this.router.navigate(['/create-trip'], {
-                queryParams: { preChecklistId: this.preChecklistId, bookingId: this.bookingId }
+                queryParams: {
+                  preChecklistId: this.preChecklistId,
+                  bookingId: this.bookingId
+                }
               });
             } else {
               console.error('Id is missing in the response');
@@ -119,12 +111,13 @@ export class PreChecklistComponent implements OnInit {
       console.log('Form is invalid');
     }
   }
+  
 
-  checkAll(checked: boolean) {
+  checkAll(state: string) {
     this.checkboxes.forEach(check => {
       const control = this.preChecklistForm.get(check.formControlName);
       if (control) {
-        control.setValue(checked);
+        control.setValue(state);
       }
     });
   }

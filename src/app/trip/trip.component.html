@@ -1,40 +1,214 @@
-<div class="trips-list">
-  <h2>All Trips</h2>
-  <button (click)="downloadXML()" class="action-button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-    Download All Trips as XML
-  </button>
-  <table>
-    <thead>
-      <tr>
-        <th>Trip ID</th>
-        <th>Vehicle Name</th>
-        <th>Location</th>
-        <th>Comment</th>
-        <th>Travel Start</th>
-        <th>Travel End</th>
-        <th>Booking ID</th>
-        <th>Pre-Checklist ID</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let trip of trips">
-        <td>{{ trip.tripId }}</td>
-        <td>{{ trip.name }}</td>
-        <td>{{ trip.location }}</td>
-        <td>{{ trip.comment }}</td>
-        <td>{{ trip.travelStart }}</td>
-        <td>{{ trip.travelEnd }}</td>
-        <td>{{ trip.bookingID }}</td>
-        <td>{{ trip.preChecklist?.id }}</td>
-        <td>
-          <button (click)="deleteTrip(trip.tripId)" class="action-button bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-            Delete
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trip List</title>
 
-<app-help></app-help>
+  <!-- Google Fonts (Poppins & Raleway) -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
+  <!-- Animate.css for animations -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+  <!-- Custom Styles -->
+  <style>
+    /* 🌟 Global Styles */
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f7f8fa; /* Light pastel background */
+        color: #333;
+        margin: 0;
+        padding: 20px;
+        overflow-x: hidden;
+    }
+
+    h2 {
+        text-align: center;
+        color: #042236;
+        font-weight: 600;
+    }
+
+    /* 💎 Card-style Table */
+    .modern-table {
+        width: 100%;
+        border-collapse: collapse;
+        border-radius: 10px;
+        overflow: hidden;
+        background-color: #ffffff;
+        box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+        border: 1px solid #ddd; /* Added border */
+    }
+
+    .modern-table th, .modern-table td {
+        padding: 14px 20px;
+        text-align: left;
+        border: 1px solid #ddd; /* Added border */
+    }
+
+    .modern-table th {
+        background-color: #061722;
+        color: white;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    .modern-table tr {
+        transition: background-color 0.3s ease;
+    }
+
+    .modern-table tr:hover {
+        background-color: #f0f7ff;
+    }
+
+    /* 💖 Action Buttons */
+    .action-button {
+        padding: 12px 20px;
+        background: linear-gradient(135deg, #e74c3c, #f39c12);
+        color: white;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease-in-out;
+    }
+
+    .action-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .action-button:active {
+        transform: translateY(1px);
+        box-shadow: none;
+    }
+
+    /* 💥 Delete Button */
+    .delete-button {
+        padding: 10px 18px;
+        background: #ff4b5c;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: background 0.3s ease;
+    }
+
+    .delete-button:hover {
+        background: #e74c3c;
+    }
+
+    .delete-button:active {
+        background: #c0392b;
+    }
+
+    /* 🌓 Light Mode Toggle */
+    .theme-toggle {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #3498db;
+        color: white;
+        border: none;
+        padding: 12px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 20px;
+        transition: all 0.3s ease;
+    }
+
+    .theme-toggle:hover {
+        background: #2980b9;
+    }
+
+    /* 📱 Mobile Responsive */
+    @media (max-width: 768px) {
+        .modern-table {
+            font-size: 12px;
+        }
+
+        .action-button,
+        .delete-button {
+            padding: 10px;
+            font-size: 12px;
+        }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="trips-list">
+    <h2 class="animate__animated animate__fadeInUp">All Trips</h2>
+
+    <button (click)="downloadXML()" class="action-button animate__animated animate__fadeIn">
+      <span class="material-icons">cloud_download</span> Download XML
+    </button>
+    
+    <table class="modern-table animate__animated animate__fadeIn animate__delay-1s">
+      <thead>
+        <tr>
+          <th>Trip ID</th>
+          <th>Vehicle Name</th>
+          <th>Location</th>
+          <th>Comment</th>
+          <th>Travel Start</th>
+          <th>Travel End</th>
+          <th>Booking ID</th>
+          <th>Pre-Checklist ID</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let trip of trips">
+          <td>{{ trip.tripId }}</td>
+          <td>{{ trip.name }}</td>
+          <td>{{ trip.location }}</td>
+          <td>{{ trip.comment }}</td>
+          <td>{{ trip.travelStart }}</td>
+          <td>{{ trip.travelEnd }}</td>
+          <td>{{ trip.bookingID }}</td>
+          <td>{{ trip.preChecklist?.id }}</td>
+          <td>
+            <button (click)="deleteTrip(trip.tripId)" class="delete-button">
+              <span class="material-icons">delete</span> Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Light Mode Toggle Button -->
+  <button class="theme-toggle" onclick="toggleTheme()">
+    <span class="material-icons">brightness_4</span>
+  </button>
+
+  <app-help></app-help>
+
+  <script>
+    // Toggle Between Light/Dark Mode
+    function toggleTheme() {
+        const body = document.body;
+        if (body.style.backgroundColor === "white") {
+            body.style.backgroundColor = "#f7f8fa"; /* Light pastel background */
+            body.style.color = "#333";
+        } else {
+            body.style.backgroundColor = "white";
+            body.style.color = "#333";
+        }
+    }
+  </script>
+</body>
+</html>
