@@ -1,88 +1,104 @@
+<!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <div class="container">
-  <form [formGroup]="preChecklistForm" (ngSubmit)="onSubmit()" class="form-container shadow p-4">
-    <h3 class="form-title mb-4">
-      <i class="fas fa-check-circle"></i>Complete Pre-Checklist
-    </h3>
-
-    <button type="button" class="btn btn-outline-secondary mb-3" (click)="checkAll(true)">
-      Check All
-    </button>
-
-    <div class="form-group">
-      <label for="openingKms">Opening Kms:</label>
+  <h2 class="form-title mb-4">Pre-Checklist Form</h2>
+  <div class="button-group d-flex flex-wrap gap-2">
+    <button type="button" class="btn btn-secondary mark-compliant" (click)="checkAll('Compliant')">Mark All Compliant</button>
+    <button type="button" class="btn btn-secondary mark-not-compliant" (click)="checkAll('Not-Compliant')">Mark All Not-Compliant</button>
+    <button type="button" class="btn btn-secondary mark-not-applicable" (click)="checkAll('Not-Applicable')">Mark All Not-Applicable</button>
+  </div>
+  
+  <form [formGroup]="preChecklistForm" (ngSubmit)="onSubmit()">
+    <div class="form-group mb-3">
+      <label for="openingKms" class="fw-bold text-white">Opening Kilometers:</label>
       <input
         type="number"
         id="openingKms"
+        class="form-control"
         formControlName="openingKms"
         required
-        class="form-control"
-        placeholder="Enter opening kilometers"
       />
-      <div
-        *ngIf="
-          preChecklistForm.get('openingKms')?.hasError('nonNegative') &&
-          preChecklistForm.get('openingKms')?.touched
-        "
-        class="text-danger"
-      >
-        Opening Kms cannot be negative.
+      <div *ngIf="preChecklistForm.get('openingKms')?.hasError('nonNegative')" class="text-danger">
+        Opening kms should be positive.
       </div>
+      
     </div>
 
-    <div class="checkbox-container mb-4">
-      <h5 class="checkbox-title">Checklist Items:</h5>
-      <div class="form-group" *ngFor="let check of checkboxes">
-        <div class="form-check d-flex justify-content-between align-items-center mb-3">
-          <label class="form-check-label">
-            {{ check.label }}
-          </label>
-          <input
-            type="checkbox"
-            [formControlName]="check.formControlName"
-            class="form-check-input"
-          />
+    <div class="checkbox-container">
+      <!-- Labels and radio buttons arranged in columns -->
+      <div class="radio-labels d-flex justify-content-end mb-2 me-4" style="color: rgb(29, 28, 28); font-weight: 600; gap: 1.5rem; width: 350px; margin-left: auto;">
+        <div style="width: 100px; text-align: center;">
+          <div>Compliant</div>
+          <!-- Empty space to align radios below -->
+        </div>
+        <div style="width: 110px; text-align: center;">
+          <div>Not-Compliant</div>
+        </div>
+        <div style="width: 110px; text-align: center;">
+          <div>N/A</div>
+        </div>
+      </div>
+
+      <!-- Checklist items with radios stacked under labels -->
+      <div *ngFor="let item of checkboxes" class="form-group mb-3 d-flex align-items-center justify-content-between">
+        <label class="checkbox-title mb-0" style="flex: 1; color: white;">{{ item.label }}</label>
+
+        <div class="form-check d-flex justify-content-end flex-grow-0" style="gap: 1.5rem; width: 350px;">
+          <div style="width: 100px; text-align: center;">
+            <input
+              type="radio"
+              class="form-check-input"
+              [id]="item.formControlName + '_compliant'"
+              [formControlName]="item.formControlName"
+              value="Compliant"
+              style="display: block; margin: 0 auto;"
+            />
+          </div>
+          <div style="width: 110px; text-align: center;">
+            <input
+              type="radio"
+              class="form-check-input"
+              [id]="item.formControlName + '_not_compliant'"
+              [formControlName]="item.formControlName"
+              value="Not-Compliant"
+              style="display: block; margin: 0 auto;"
+            />
+          </div>
+          <div style="width: 110px; text-align: center;">
+            <input
+              type="radio"
+              class="form-check-input"
+              [id]="item.formControlName + '_not_applicable'"
+              [formControlName]="item.formControlName"
+              value="Not-Applicable"
+              style="display: block; margin: 0 auto;"
+            />
+          </div>
+        </div>
+
+        <div
+          *ngIf="preChecklistForm.get(item.formControlName)?.invalid && preChecklistForm.get(item.formControlName)?.touched"
+          class="text-danger"
+          style="flex-basis: 100%; margin-top: 0.25rem;"
+        >
+          This field is required.
         </div>
       </div>
     </div>
 
-    <div class="form-group">
-      <label for="comments">Comments:</label>
-      <textarea
-        id="comments"
-        formControlName="comments"
-        class="form-control"
-        placeholder="Enter Comments"
-        rows="3"
-      ></textarea>
+    <div class="form-group mb-3">
+      <label for="comments" class="fw-bold text-white">Comments:</label>
+      <textarea id="comments" class="form-control" formControlName="comments"></textarea>
     </div>
 
-    <div class="form-group">
-      <label for="additionalComments">Additional Comments:</label>
-      <textarea
-        id="additionalComments"
-        formControlName="additionalComments"
-        class="form-control"
-        placeholder="Enter Additional Comments"
-        rows="3"
-      ></textarea>
+    <div class="form-group mb-3">
+      <label for="additionalComments" class="fw-bold text-white">Additional Comments:</label>
+      <textarea id="additionalComments" class="form-control" formControlName="additionalComments"></textarea>
     </div>
-
-    <input type="hidden" formControlName="preChecklistId" />
-
-    <div class="button-group text-center">
-      <button
-        type="submit"
-        class="btn btn-primary"
-        [disabled]="!preChecklistForm.valid"
-      >
-      <i class="fas fa-paper-plane"></i> Submit Checklist
-      </button>
+    <div class="button-group d-flex flex-wrap gap-2">
+      <button type="submit" class="btn btn-primary ms-auto">Submit Checklist</button>
     </div>
-
-    <div *ngIf="!preChecklistForm.get('licenseDiskValid')?.value && preChecklistForm.touched" class="text-danger text-center mt-3">
-      License disk must be valid.
-    </div>
+   
   </form>
 </div>

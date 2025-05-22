@@ -3,7 +3,7 @@
   padding: 30px;
   max-width: 900px; /* Desired width */
   margin: 20px auto; /* Center container */
-  background-color: #2c3d50; /* Blue background for the container */
+  background-color: #bac9f7; /* Blue background for the container */
   border-radius: 10px; /* Rounded corners */
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Shadow effect for the container */
   margin-top: 100px; /* Remove top margin */
@@ -62,7 +62,7 @@ textarea.form-control {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #021325, #021830); /* Gradient background */
+  background: linear-gradient(135deg, #3481d4, #3e76b3); /* Gradient background */
   border: none; /* Remove border */
   color: white; /* Text color */
   padding: 12px 24px; /* Increased padding for a larger button */
@@ -82,4 +82,32 @@ textarea.form-control {
   background: linear-gradient(135deg, #162433, #162433); /* Lighter gradient when disabled */
   color: #fff; /* Keep text white when disabled */
   cursor: not-allowed; /* Change cursor to indicate it's disabled */
+}
+
+body, label, .form-title, .checkbox-title, input, textarea, .form-check-label, .button-group button {
+  color: black !important;
+}
+
+/* Make all text black */
+body, label, .form-title, .checkbox-title, input, textarea, .form-check-label, .button-group button {
+  color: black !important;
+}
+
+/* Button colors */
+.btn.mark-compliant {
+  background-color: #7edd94 !important; /* green */
+  color: black !important;
+  border: none !important;
+}
+
+.btn.mark-not-compliant {
+  background-color: #ebb386 !important; /* orange */
+  color: black !important;
+  border: none !important;
+}
+
+.btn.mark-not-applicable {
+  background-color: #45505a !important; /* grey */
+  color: black !important;
+  border: none !important;
 }
