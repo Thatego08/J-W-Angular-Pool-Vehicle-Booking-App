@@ -55,12 +55,70 @@
       </select>
     </div>
 
+<!-- Add this section below the Vehicle Type dropdown -->
+<div class="filter-section">
+  <h5>Additional Vehicle Filters</h5>
+  
+  <!-- Drive Type -->
+  <div class="form-group">
+    <label>Drive Type</label>
+    <div class="btn-group-vertical">
+      <label class="btn btn-outline-secondary">
+        <input type="radio" name="driveType" [(ngModel)]="selectedDriveType" 
+               [ngModelOptions]="{standalone: true}" value="All" (change)="updateFilters()"> All
+      </label>
+      <label class="btn btn-outline-secondary">
+        <input type="radio" name="driveType" [(ngModel)]="selectedDriveType" 
+               [ngModelOptions]="{standalone: true}" value="4x4" (change)="updateFilters()"> 4x4
+      </label>
+      <label class="btn btn-outline-secondary">
+        <input type="radio" name="driveType" [(ngModel)]="selectedDriveType" 
+               [ngModelOptions]="{standalone: true}" value="4x2" (change)="updateFilters()"> 4x2
+      </label>
+    </div>
+  </div>
+
+  <!-- Transmission -->
+  <div class="form-group">
+    <label>Transmission</label>
+    <select class="form-control" [(ngModel)]="selectedTransmission" 
+            [ngModelOptions]="{standalone: true}" (change)="updateFilters()">
+      <option value="All">All Transmissions</option>
+      <option value="Manual">Manual</option>
+      <option value="Automatic">Automatic</option>
+    </select>
+  </div>
+
+  <!-- Features -->
+  <div class="form-group">
+    <label>Features</label>
+    <div class="checkbox-group">
+      <label class="checkbox-inline">
+        <input type="checkbox" [(ngModel)]="hasTowBar" 
+               [ngModelOptions]="{standalone: true}" (change)="updateFilters()"> Tow Bar
+      </label>
+      <label class="checkbox-inline">
+        <input type="checkbox" [(ngModel)]="hasCanopy" 
+               [ngModelOptions]="{standalone: true}" (change)="updateFilters()"> Canopy
+      </label>
+    </div>
+  </div>
+</div>
+
+<!-- Existing Vehicle Dropdown -->
+<div class="form-group">
+  <label for="vehicleName">Vehicle</label>
+  <select id="vehicleName" formControlName="vehicleName" class="form-control">
+    <option *ngFor="let vehicle of filteredVehicles" [value]="vehicle.name">{{ vehicle.name }}</option>
+  </select>
+</div>
+<!-- 
     <div class="form-group">
       <label for="vehicleName">Vehicle</label>
       <select id="vehicleName" formControlName="vehicleName" class="form-control">
         <option *ngFor="let vehicle of vehicles" [value]="vehicle.name">{{ vehicle.name }}</option>
       </select>
-    </div>
+    </div> -->
 
 
 
