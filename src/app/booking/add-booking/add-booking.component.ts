@@ -26,6 +26,10 @@ selectedDriveType: string = 'All';
 selectedTransmission: string = 'All';
 hasTowBar: boolean = false;
 hasCanopy: boolean = false;
+selectedCompliance: string = 'All';
+selectedProtection: string = 'All';
+complianceOptions: string[] = ['All', 'Sasol Sasolburg','Private use', 'Sasol Secunda','Venetia','Sishen','Medupi'];
+protectionOptions: string[] = ['All','ROPS'];
 
 //Additions 
 // Update your fetchAvailableVehicles method
@@ -47,17 +51,40 @@ fetchAvailableVehicles(startDate: Date, endDate: Date): void {
   this.bookingService.getAvailableVehicles(startDate, endDate).subscribe({
     next: (vehicles) => {
       console.log('Raw API Response:', vehicles);
+
+       // Generate compliance options - include empty as "None"
+      const allCompliance = vehicles.map(v => v.compliance || 'None');
+      this.complianceOptions = ['All', ...new Set(allCompliance)];
       
+      // Generate protection options - include empty as "None"
+      const allProtection = vehicles.map(v => v.protection || 'None');
+      this.protectionOptions = ['All', ...new Set(allProtection)];
+      
+      console.log('Compliance Options:', this.complianceOptions);
+      console.log('Protection Options:', this.protectionOptions);
+      
+      vehicles = vehicles.map(v => ({
+        ...v,
+        hasTowBar: v.hasTowBar === true || 
+                   (typeof v.hasTowBar === 'string' && (v.hasTowBar as string).toLowerCase().includes('tow')),
+        hasCanopy: v.hasCanopy === true || 
+                   (typeof v.hasCanopy === 'string' && (v.hasCanopy as string).toLowerCase().includes('canopy')),
+        
+      }));
+
       // Log each vehicle's details
       vehicles.forEach(v => {
         console.log(
           `Vehicle: ${v.name} | ` +
           `Cabin: ${v.cabinType} | Drive: ${v.driveType} | ` +
-          `Trans: ${v.transmission} | Tow: ${v.hasTowBar} | Canopy: ${v.hasCanopy}`
+          `Trans: ${v.transmission} | Tow: ${v.hasTowBar} | Canopy: ${v.hasCanopy}`+
+          ` Compliance: "${v.compliance}", Protection: "${v.protection}"`
         );
       });
       
-      this.vehicles = vehicles;
+      
+
+
       this.filteredVehicles = this.applyAllFilters(vehicles);
       console.log('Filtered Vehicles:', this.filteredVehicles);
     },
@@ -65,6 +92,8 @@ fetchAvailableVehicles(startDate: Date, endDate: Date): void {
       console.error('Error fetching available vehicles', error);
       this.toastr.error('Failed to fetch available vehicles.');
     }
+
+    
   });
 }
 // Combined filter method
@@ -91,11 +120,29 @@ applyAllFilters(vehicles: Vehicle[]): Vehicle[] {
     const towBarMatch = !this.hasTowBar || vehicle.description.includes('Tow bar')|| vehicle.hasTowBar;
     const canopyMatch = !this.hasCanopy || vehicle.description.includes('Canopy') || vehicle.hasCanopy;
 
-    return typeMatch && driveMatch && transmissionMatch &&  towBarMatch && canopyMatch;
+     // Compliance filter (handle "None")
+    const vehicleCompliance = vehicle.compliance || 'None';
+    const complianceMatch = this.selectedCompliance === 'All' || 
+                           vehicleCompliance === this.selectedCompliance;
+    
+    // Protection filter (handle "None")
+    const vehicleProtection = vehicle.protection || 'None';
+    const protectionMatch = this.selectedProtection === 'All' || 
+                           vehicleProtection === this.selectedProtection;
+
+    return typeMatch && driveMatch && transmissionMatch &&  towBarMatch && canopyMatch && complianceMatch && protectionMatch;
   });
 }
 
 // Update all filters when any change occurs
+
+onComplianceChange(): void {
+  this.updateFilters();
+}
+
+onProtectionChange(): void {
+  this.updateFilters();
+}
 updateFilters(): void {
   this.filteredVehicles = this.applyAllFilters(this.vehicles);
 }
@@ -105,6 +152,8 @@ myfilterVehiclesByType(vehicles: Vehicle[]): Vehicle[] {
   // This is now handled in applyAllFilters
   return vehicles;
 }
+
+
 
   vehicleTypes: string[] = ['All', 'Double Cab', 'Single Cab', 'Extra Cab', 'SUV'];
   selectedVehicleType: string = 'All';
