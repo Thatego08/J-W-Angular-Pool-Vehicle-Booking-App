@@ -24,6 +24,7 @@ export interface Vehicle {
   hasCanopy:boolean;
   compliance: string;
   protection:string;
+  vehicleType: string; // e.g., 'Car', 'Truck', 'Motorcycle'
 
   licenseDisk?: LicenseDisk;
   vin: string;

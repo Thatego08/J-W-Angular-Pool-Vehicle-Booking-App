@@ -25,6 +25,13 @@ export class AddVehicleComponent implements OnInit {
   statuses: Status[] = [];
   vehicleMakes: VehicleMake[] = [];
   vehicleModels: VehicleModel[] = [];
+   cabinTypes: string[] = ['Double', 'Single', 'Extra',  'SUV'];
+  driveTypes: string[] = ['4x4', '4x2', 'AWD', 'FWD', 'RWD'];
+  transmissions: string[] = ['Manual', 'Automatic', 'CVT', 'Semi-Automatic'];
+  complianceOptions: string[] = ['Sasol Secunda', 'Sasol Sasolburg','Sishen','Medupi','Venetia'];
+protectionOptions: string[] = ['Full', 'ROPS', 'None'];
+vehicleTypeOptions: string[] = ['Sedan', 'SUV', 'Truck', 'Hatchback', 'Coupe', 'Convertible'];
+
   selectedModelID: number | null = null;
   selectedMakeID: number | null = null;
   minDate: string;
@@ -72,7 +79,15 @@ export class AddVehicleComponent implements OnInit {
       statusID: [1] ,
       vehicleMakeID: ['', Validators.required],
       vehicleModelID: ['', Validators.required],
-      insuranceCoverID: ['', Validators.required]
+      insuranceCoverID: ['', Validators.required],
+      cabinType: ['', Validators.required],
+      driveType: ['', Validators.required],
+      transmission: ['', Validators.required],
+      hasTowBar: [false],
+      hasCanopy: [false],
+      compliance: ['', Validators.required],
+    protection: ['', Validators.required],
+    vehicleType: ['', Validators.required]
     });
   }
 

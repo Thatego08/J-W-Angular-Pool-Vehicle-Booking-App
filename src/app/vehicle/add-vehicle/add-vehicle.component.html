@@ -117,6 +117,69 @@
       </div>
     </div>
 
+    <!-- Add after insurance cover field -->
+<div class="form-group">
+  <label for="cabinType">Cabin Type:</label>
+  <select id="cabinType" formControlName="cabinType" class="form-control" required>
+    <option [ngValue]="null">-- Select Cabin Type --</option>
+    <option *ngFor="let type of cabinTypes" [value]="type">{{ type }}</option>
+  </select>
+</div>
+
+<div class="form-group">
+  <label for="driveType">Drive Type:</label>
+  <select id="driveType" formControlName="driveType" class="form-control" required>
+    <option [ngValue]="null">-- Select Drive Type --</option>
+    <option *ngFor="let type of driveTypes" [value]="type">{{ type }}</option>
+  </select>
+</div>
+
+<div class="form-group">
+  <label for="transmission">Transmission:</label>
+  <select id="transmission" formControlName="transmission" class="form-control" required>
+    <option [ngValue]="null">-- Select Transmission --</option>
+    <option *ngFor="let type of transmissions" [value]="type">{{ type }}</option>
+  </select>
+</div>
+
+<div class="form-group">
+  <div class="form-check">
+    <input type="checkbox" id="hasTowBar" formControlName="hasTowBar" class="form-check-input">
+    <label for="hasTowBar" class="form-check-label">Has Towbar</label>
+  </div>
+</div>
+
+<div class="form-group">
+  <div class="form-check">
+    <input type="checkbox" id="hasCanopy" formControlName="hasCanopy" class="form-check-input">
+    <label for="hasCanopy" class="form-check-label">Has Canopy</label>
+  </div>
+</div>
+<!-- Add after canopy field -->
+<div class="form-group">
+  <label for="compliance">Compliance:</label>
+  <select id="compliance" formControlName="compliance" class="form-control" required>
+    <option [ngValue]="null">-- Select Compliance --</option>
+    <option *ngFor="let option of complianceOptions" [value]="option">{{ option }}</option>
+  </select>
+</div>
+
+<div class="form-group">
+  <label for="protection">Protection:</label>
+  <select id="protection" formControlName="protection" class="form-control" required>
+    <option [ngValue]="null">-- Select Protection --</option>
+    <option *ngFor="let option of protectionOptions" [value]="option">{{ option }}</option>
+  </select>
+</div>
+
+<div class="form-group">
+  <label for="vehicleType">Vehicle Type:</label>
+  <select id="vehicleType" formControlName="vehicleType" class="form-control" required>
+    <option [ngValue]="null">-- Select Vehicle Type --</option>
+    <option *ngFor="let type of vehicleTypeOptions" [value]="type">{{ type }}</option>
+  </select>
+</div>
+
     <div *ngIf="submissionStatus" class="alert alert-info mt-3">
       {{ submissionStatus }}
     </div>

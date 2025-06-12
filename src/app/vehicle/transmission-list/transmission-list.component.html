@@ -1,0 +1,24 @@
+<div class="container">
+  <h2>Manage Transmissions</h2>
+  <a routerLink="/add-transmission" class="btn btn-primary mb-3">Add New Transmission</a>
+  
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let transmission of transmissions">
+        <td>{{ transmission.id }}</td>
+        <td>{{ transmission.name }}</td>
+        <td>
+          <a [routerLink]="['/edit-transmission', transmission.id]" class="btn btn-sm btn-warning">Edit</a>
+          <button (click)="deleteTransmission(transmission.id)" class="btn btn-sm btn-danger ms-2">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

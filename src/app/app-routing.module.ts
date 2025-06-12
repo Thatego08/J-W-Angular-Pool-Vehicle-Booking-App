@@ -81,6 +81,9 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { CalendarDayViewComponent } from 'angular-calendar';
 import { CalendarViewComponent } from './calendar-view/calendar-view.component';
 import { EditServiceComponent } from './vehicle/edit-service/edit-service.component';
+import { AddTransmissionComponent } from './vehicle/add-transmission/add-transmission.component';
+import { TransmissionListComponent } from './vehicle/transmission-list/transmission-list.component';
+import { EditTransmissionListComponent } from './vehicle/edit-transmission-list/edit-transmission-list.component';
 
 
 
@@ -172,7 +175,10 @@ const routes: Routes = [
  {path: 'status', component: StatusComponent },
 
  
-
+//Transmission
+{ path: 'transmission', component: TransmissionListComponent },
+  { path: 'add-transmission', component: AddTransmissionComponent },
+  { path: 'edit-transmission/:id', component: EditTransmissionListComponent },
 
 
  //User routes
