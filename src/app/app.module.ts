@@ -111,6 +111,9 @@ import { AuditLogComponent } from './audit-log/audit-log.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { UpdateDetailsComponent } from './user/update-details/update-details.component';
 import { CalendarViewComponent } from './calendar-view/calendar-view.component';
+import { TransmissionListComponent } from './vehicle/transmission-list/transmission-list.component';
+import { EditTransmissionListComponent } from './vehicle/edit-transmission-list/edit-transmission-list.component';
+import { AddTransmissionComponent } from './vehicle/add-transmission/add-transmission.component';
 
 
 @NgModule({
@@ -195,7 +198,10 @@ import { CalendarViewComponent } from './calendar-view/calendar-view.component';
       AuditLogComponent,
       WelcomeComponent,
       UpdateDetailsComponent,
-      CalendarViewComponent
+      CalendarViewComponent,
+      TransmissionListComponent,
+      EditTransmissionListComponent,
+      AddTransmissionComponent
   ],
   imports: [
     BrowserModule,

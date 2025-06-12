@@ -11,6 +11,12 @@ import { VehicleChecklist } from '../models/checklist.model';
 import { VehicleFuelType } from '../models/fuel.model';
 import { VehicleMake } from '../models/vehicle-make.model';
 import { VehicleModel } from '../models/vehicle-model.model';
+import { Protection } from 'exceljs';
+import { CabinType } from '../models/cabin-type.model';
+import { Compliance } from '../models/compliance.model';
+import { DriveType } from '../models/drive-type.model';
+import { Transmission } from '../models/transmission.model';
+import { VehicleType } from '../models/vehicle-type.model';
 
 @Injectable({
   providedIn: 'root'
@@ -108,6 +114,30 @@ applyAllFilters(vehicles: Vehicle[]): Vehicle[] {
     return this.http.get<Vehicle>(`${this.apiUrl}/${id}`);
   }
 
+  // Add these methods to your VehicleService
+getAllTransmissions(): Observable<Transmission[]> {
+  return this.http.get<Transmission[]>(`${this.apiUrl}/Transmissions`);
+}
+
+getAllDriveTypes(): Observable<DriveType[]> {
+  return this.http.get<DriveType[]>(`${this.apiUrl}/DriveTypes`);
+}
+
+getAllCabinTypes(): Observable<CabinType[]> {
+  return this.http.get<CabinType[]>(`${this.apiUrl}/CabinTypes`);
+}
+
+getAllCompliances(): Observable<Compliance[]> {
+  return this.http.get<Compliance[]>(`${this.apiUrl}/Compliances`);
+}
+
+getAllProtections(): Observable<Protection[]> {
+  return this.http.get<Protection[]>(`${this.apiUrl}/Protections`);
+}
+
+getAllVehicleTypes(): Observable<VehicleType[]> {
+  return this.http.get<VehicleType[]>(`${this.apiUrl}/VehicleTypes`);
+}
   getVehicleId(vehicleId: string): Observable<Vehicle>{
     return this.http.get<Vehicle>(`${this.apiUrl}/GetVehicle/` + vehicleId)
   }
@@ -124,6 +154,23 @@ applyAllFilters(vehicles: Vehicle[]): Vehicle[] {
     return this.http.delete(`${this.apiUrl}/DeleteVehicle/${vehicleId}`);
   }
 
+  //Vehicle Checklist
+  // Add these methods for each entity type
+addTransmission(transmission: Transmission): Observable<Transmission> {
+  return this.http.post<Transmission>(`${this.apiUrl}/Transmissions`, transmission);
+}
+
+getTransmission(id: number): Observable<Transmission> {
+  return this.http.get<Transmission>(`${this.apiUrl}/Transmissions/${id}`);
+}
+
+updateTransmission(id: number, transmission: Transmission): Observable<any> {
+  return this.http.put(`${this.apiUrl}/Transmissions/${id}`, transmission);
+}
+
+deleteTransmission(id: number): Observable<any> {
+  return this.http.delete(`${this.apiUrl}/Transmissions/${id}`);
+}
   
 
   

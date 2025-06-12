@@ -32,14 +32,15 @@ export class EditVehicleComponent implements OnInit {
     statusID: 0,
     vehicleMakeID: 0,
     vehicleModelID: 0,
-    compliance: '',  // 'Compliant', 'Non-Compliant'
+    compliance: '', // 'Compliant', 'Non-Compliant'
     protection: '', // 'Full', 'Partial', 'None'
 
-     cabinType: '',     // 'Double', 'Single', 'Extra', etc.
-  driveType: '',     // '4x4', '4x2'
-  transmission: '',  // 'Manual', 'Automatic'
-  hasTowBar: false,
-  hasCanopy: false
+    cabinType: '', // 'Double', 'Single', 'Extra', etc.
+    driveType: '', // '4x4', '4x2'
+    transmission: '', // 'Manual', 'Automatic'
+    hasTowBar: false,
+    hasCanopy: false,
+    vehicleType: ''
   };
   colours: Colour[] = [];
   insuranceCovers: InsuranceCover[] = [];
@@ -48,6 +49,13 @@ export class EditVehicleComponent implements OnInit {
   vehicleMakes: VehicleMake[] = [];
   vehicleModels: VehicleModel[] = [];
   filteredVehicleModels: VehicleModel[] = [];
+   // Add new dropdown options
+  cabinTypes: string[] = ['Double', 'Single', 'Extra',  'SUV'];
+  driveTypes: string[] = ['4x4', '4x2', 'AWD', 'FWD', 'RWD'];
+  transmissions: string[] = ['Manual', 'Automatic', 'CVT', 'Semi-Automatic'];
+  complianceOptions: string[] = ['Sasol Secunda', 'Sasol Sasolburg','Sishen','Medupi','Venetia'];
+protectionOptions: string[] = ['Full', 'ROPS', 'None'];
+vehicleTypeOptions: string[] = ['Sedan', 'SUV', 'Truck', 'Hatchback', 'Coupe', 'Convertible'];
 
   constructor(
     private fb: FormBuilder,
@@ -71,9 +79,18 @@ export class EditVehicleComponent implements OnInit {
       fuelTypeID: ['', Validators.required],
       statusID: ['', Validators.required],
       vehicleMakeID: ['', Validators.required],
-      vehicleModelID: ['', Validators.required]
+      vehicleModelID: ['', Validators.required],
+      cabinType: ['', Validators.required],
+      driveType: ['', Validators.required],
+      transmission: ['', Validators.required],
+      hasTowBar: [false],
+      hasCanopy: [false],
+      compliance: ['', Validators.required],
+    protection: ['', Validators.required],
+    vehicleType: ['', Validators.required]
     });
 
+    // Update patchValue to include new fields
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
       if (id) {
@@ -84,8 +101,6 @@ export class EditVehicleComponent implements OnInit {
             dateAcquired: new Date(this.vehicle.dateAcquired).toISOString().substring(0, 10),
             licenseExpiryDate: new Date(this.vehicle.licenseExpiryDate).toISOString().substring(0, 10)
           });
-
-          // Load dropdown data after vehicle data is fetched
           this.loadVehicleData();
         });
       }
