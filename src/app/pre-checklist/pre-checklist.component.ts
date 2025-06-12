@@ -40,6 +40,21 @@ export class PreChecklistComponent implements OnInit {
     { label: 'License Disk Valid', formControlName: 'licenseDiskValid', required: true }
   ];
 
+   highlightedItems = [
+    'Oil Leaks',
+    'Mirrors',
+    'Seat Belts',
+    'Head Lights',
+    'Indicators',
+    'Brake Lights',
+    'Windscreen Wiper',
+    'Tyre Condition',
+    'Spare Wheel Present',
+    'Jack and Wheel Spanner Present',
+    'Brakes',
+    'Handbrake'
+  ];
+
   constructor(
     private fb: FormBuilder,
     private preChecklistService: PreChecklistService,
@@ -126,4 +141,14 @@ export class PreChecklistComponent implements OnInit {
     const value = control.value;
     return value >= 0 ? null : { nonNegative: true };
   }
+
+   // ✅ Method to highlight specific items
+  shouldHighlight(value: string | null, label: string): boolean {
+    return (
+      this.highlightedItems.includes(label) &&
+      (value === 'Not-Compliant' || value === 'Not-Applicable')
+    );
+  }
+
 }
+
