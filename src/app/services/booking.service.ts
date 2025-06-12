@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { catchError, Observable, tap, throwError } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { BookingModel, CreateBookingModel } from '../models/booking.model';
 import { Vehicle } from '../models/vehicle.model';
 
@@ -50,14 +51,18 @@ getAvailableVehicles(startDate: Date, endDate: Date, cabinType?: string): Observ
   }
 
   return this.http.get<Vehicle[]>(`${this.baseUrl}/GetAvailableVehicles`, { params }).pipe(
-    tap((response: Vehicle[]) => console.log('API Vehicles Response:', response)), // Add logging
+    map(vehicles => vehicles.map(v => ({
+      ...v,
+      compliance: v.compliance || '',   // Ensure fallback if null
+      protection: v.protection || ''    // Ensure fallback if null
+    }))),
+    tap(response => console.log('API Vehicles Response:', response)),  // Optional debug
     catchError(error => {
       console.error('API Error:', error);
       return throwError(() => new Error('Failed to fetch vehicles'));
     })
   );
 }
-
 
 
   searchBookingHistory(username: string): Observable<BookingModel[]> {

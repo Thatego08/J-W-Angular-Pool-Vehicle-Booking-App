@@ -32,6 +32,8 @@ export class EditVehicleComponent implements OnInit {
     statusID: 0,
     vehicleMakeID: 0,
     vehicleModelID: 0,
+    compliance: '',  // 'Compliant', 'Non-Compliant'
+    protection: '', // 'Full', 'Partial', 'None'
 
      cabinType: '',     // 'Double', 'Single', 'Extra', etc.
   driveType: '',     // '4x4', '4x2'

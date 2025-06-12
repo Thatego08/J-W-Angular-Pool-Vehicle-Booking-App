@@ -22,7 +22,8 @@ export interface Vehicle {
   transmission:string;
   hasTowBar:boolean;
   hasCanopy:boolean;
-
+  compliance: string;
+  protection:string;
 
   licenseDisk?: LicenseDisk;
   vin: string;
