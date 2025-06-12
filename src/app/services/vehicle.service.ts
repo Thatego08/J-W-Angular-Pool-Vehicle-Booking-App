@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { Observable, tap, throwError } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { catchError } from 'rxjs';
 import { Colour } from '../models/colour.model';
 import { InsuranceCover } from '../models/insurance.model';
@@ -17,6 +17,11 @@ import { VehicleModel } from '../models/vehicle-model.model';
 })
 export class VehicleService {
   private apiUrl = 'https://localhost:7041/api/Vehicle'
+  selectedVehicleType!: string;
+  selectedDriveType!: string;
+  selectedTransmission!: string;
+  hasTowBar: any;
+  hasCanopy: any;
   constructor(private http: HttpClient) { }
 
   //Vehicles
@@ -30,16 +35,75 @@ export class VehicleService {
       );
   }
 
-  getAvailableVehicles(): Observable<Vehicle[]> {
-    return this.http.get<Vehicle[]>(`${this.apiUrl}/GetAvailableVehicles`)
+  // Combined filter method
+applyAllFilters(vehicles: Vehicle[]): Vehicle[] {
+  return vehicles.filter(vehicle => {
+    // Cabin Type filter - use cabinType property
+    const typeMatch = this.selectedVehicleType === 'All' || 
+      (this.selectedVehicleType === 'Double Cab' && vehicle.cabinType === 'Double') ||
+      (this.selectedVehicleType === 'Single Cab' && vehicle.cabinType === 'Single') ||
+      (this.selectedVehicleType === 'Extra Cab' && vehicle.cabinType === 'Extra');
+
+    // Drive Type filter - use driveType property
+    const driveMatch = this.selectedDriveType === 'All' || 
+      vehicle.driveType === this.selectedDriveType;
+
+    // Transmission filter - use transmission property
+    const transmissionMatch = this.selectedTransmission === 'All' ||
+      vehicle.transmission === this.selectedTransmission;
+
+    // Features filter - use boolean properties
+    const towBarMatch = !this.hasTowBar || vehicle.hasTowBar;
+    const canopyMatch = !this.hasCanopy || vehicle.hasCanopy;
+
+    return typeMatch && driveMatch && transmissionMatch && towBarMatch && canopyMatch;
+  });
+}
+
+  // getAvailableVehicles(): Observable<Vehicle[]> {
+  //   return this.http.get<Vehicle[]>(`${this.apiUrl}/GetAvailableVehicles`)
+  //     .pipe(
+  //       catchError((error: any) => {
+  //         console.error('API error occurred:', error);
+  //         throw error;
+  //       })
+  //     );
+  // }
+
+ getAvailableVehicles(startDate: Date, endDate: Date): Observable<Vehicle[]> {
+    // Create HTTP params
+    const params = new HttpParams()
+      .set('startDate', startDate.toISOString())
+      .set('endDate', endDate.toISOString());
+
+    return this.http.get<Vehicle[]>(`${this.apiUrl}/GetAvailableVehicles`, { params })
       .pipe(
-        catchError((error: any) => {
-          console.error('API error occurred:', error);
+        tap(response => {
+          // Debugging: Log API response
+          console.log('API Response - Available Vehicles:', response);
+          
+          // Log each vehicle's details
+          if (response && response.length > 0) {
+            console.log('Vehicle Details:');
+            response.forEach(vehicle => {
+              console.log(
+                `ID: ${vehicle.vehicleID} | Name: ${vehicle.name} | ` +
+                `Cabin: ${vehicle.cabinType} | Drive: ${vehicle.driveType} | ` +
+                `Transmission: ${vehicle.transmission} | ` +
+                `Tow: ${vehicle.hasTowBar} | Canopy: ${vehicle.hasCanopy}`
+              );
+            });
+          } else {
+            console.warn('API returned empty vehicle list');
+          }
+        }),
+        catchError(error => {
+          console.error('API Error:', error);
           throw error;
         })
       );
   }
-
+  
   getVehicle(id: number): Observable<Vehicle> {
     return this.http.get<Vehicle>(`${this.apiUrl}/${id}`);
   }

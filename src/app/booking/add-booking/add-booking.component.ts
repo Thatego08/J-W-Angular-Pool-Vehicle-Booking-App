@@ -20,6 +20,7 @@ export class AddBookingComponent implements OnInit {
   projects: number[] = [];
 
   // New properties
+  
 filteredVehicles: Vehicle[] = [];
 selectedDriveType: string = 'All';
 selectedTransmission: string = 'All';
@@ -28,11 +29,37 @@ hasCanopy: boolean = false;
 
 //Additions 
 // Update your fetchAvailableVehicles method
+// fetchAvailableVehicles(startDate: Date, endDate: Date): void {
+//   this.bookingService.getAvailableVehicles(startDate, endDate).subscribe({
+//     next: (vehicles) => {
+//       this.vehicles = vehicles;
+//       this.filteredVehicles = this.applyAllFilters(vehicles);
+//     },
+//     error: (error) => {
+//       console.error('Error fetching available vehicles', error);
+//       this.toastr.error('Failed to fetch available vehicles.');
+//     }
+//   });
+// }
 fetchAvailableVehicles(startDate: Date, endDate: Date): void {
+  console.log('Fetching vehicles for:', startDate, 'to', endDate);
+  
   this.bookingService.getAvailableVehicles(startDate, endDate).subscribe({
     next: (vehicles) => {
+      console.log('Raw API Response:', vehicles);
+      
+      // Log each vehicle's details
+      vehicles.forEach(v => {
+        console.log(
+          `Vehicle: ${v.name} | ` +
+          `Cabin: ${v.cabinType} | Drive: ${v.driveType} | ` +
+          `Trans: ${v.transmission} | Tow: ${v.hasTowBar} | Canopy: ${v.hasCanopy}`
+        );
+      });
+      
       this.vehicles = vehicles;
       this.filteredVehicles = this.applyAllFilters(vehicles);
+      console.log('Filtered Vehicles:', this.filteredVehicles);
     },
     error: (error) => {
       console.error('Error fetching available vehicles', error);
@@ -40,28 +67,31 @@ fetchAvailableVehicles(startDate: Date, endDate: Date): void {
     }
   });
 }
-
 // Combined filter method
 applyAllFilters(vehicles: Vehicle[]): Vehicle[] {
   return vehicles.filter(vehicle => {
     // Cabin Type filter
-    const typeMatch = this.selectedVehicleType === 'All' || 
-      (this.selectedVehicleType === 'Double Cab' && vehicle.name.includes('Toyota')) ||
-      (this.selectedVehicleType === 'Single Cab' && vehicle.name.includes('Isuzu'));
+      const typeMatch = this.selectedVehicleType === 'All' || 
+      (this.selectedVehicleType === 'Double Cab' && vehicle.cabinType === 'Double') ||
+      (this.selectedVehicleType === 'Single Cab' && vehicle.cabinType === 'Single') ||
+
+            (this.selectedVehicleType === 'SUV' && vehicle.cabinType === 'SUV') ||
+      (this.selectedVehicleType === 'Extra Cab' && vehicle.cabinType === 'Extra');
+
 
     // Drive Type filter
     const driveMatch = this.selectedDriveType === 'All' || 
-      vehicle.description.includes(this.selectedDriveType);
+      vehicle.driveType == (this.selectedDriveType);
 
-    // // Transmission filter
-    // const transmissionMatch = this.selectedTransmission === 'All' ||
-    //   vehicle.transmission === this.selectedTransmission;
+    // Transmission filter
+    const transmissionMatch = this.selectedTransmission === 'All' ||
+      vehicle.transmission === this.selectedTransmission;
 
     // Features filter
-    const towBarMatch = !this.hasTowBar || vehicle.description.includes('Tow bar');
-    const canopyMatch = !this.hasCanopy || vehicle.description.includes('Canopy');
+    const towBarMatch = !this.hasTowBar || vehicle.description.includes('Tow bar')|| vehicle.hasTowBar;
+    const canopyMatch = !this.hasCanopy || vehicle.description.includes('Canopy') || vehicle.hasCanopy;
 
-    return typeMatch && driveMatch && /*transmissionMatch */  towBarMatch && canopyMatch;
+    return typeMatch && driveMatch && transmissionMatch &&  towBarMatch && canopyMatch;
   });
 }
 
@@ -76,7 +106,7 @@ myfilterVehiclesByType(vehicles: Vehicle[]): Vehicle[] {
   return vehicles;
 }
 
-  vehicleTypes: string[] = ['All', 'Double Cab', 'Single Cab', 'Extra Cab'];
+  vehicleTypes: string[] = ['All', 'Double Cab', 'Single Cab', 'Extra Cab', 'SUV'];
   selectedVehicleType: string = 'All';
 
   notificationMessage: string | null = null;
@@ -114,11 +144,23 @@ myfilterVehiclesByType(vehicles: Vehicle[]): Vehicle[] {
       this.fetchVehicles(); // Can fetch initially for any vehicles if needed
       this.loadProjects();
       
-      // Listen to form control changes
-      this.bookingForm.get('startDate')?.valueChanges.subscribe(() => this.onStartDateEndDateChange());
-      this.bookingForm.get('endDate')?.valueChanges.subscribe(() => this.onStartDateEndDateChange());
+      // // Listen to form control changes
+      // this.bookingForm.get('startDate')?.valueChanges.subscribe(() => this.onStartDateEndDateChange());
+      // this.bookingForm.get('endDate')?.valueChanges.subscribe(() => this.onStartDateEndDateChange());
     }
-    
+    // Add to your component class
+onDriveTypeChange(): void {
+  this.updateFilters();
+}
+
+onTransmissionChange(): void {
+  this.updateFilters();
+}
+
+onFeaturesChange(): void {
+  this.updateFilters();
+}
+
     // fetchAvailableVehicles(startDate: Date, endDate: Date): void {
     //   this.bookingService.getAvailableVehicles(startDate, endDate).subscribe({
     //     next: (vehicles) => {
@@ -144,8 +186,11 @@ myfilterVehiclesByType(vehicles: Vehicle[]): Vehicle[] {
 
 // Add this to handle vehicle type changes
 onVehicleTypeChange(): void {
-  this.vehicles = this.filterVehiclesByType(this.vehicles);
+  //this.vehicles = this.filterVehiclesByType(this.vehicles);
+  this.updateFilters(); // Update filtered vehicles based on the new type
 }
+
+
     onStartDateEndDateChange(): void {
       const startDateString = this.bookingForm.value.startDate;
       const endDateString = this.bookingForm.value.endDate;
@@ -272,19 +317,7 @@ onVehicleTypeChange(): void {
     this.isSuccess = false;
   }
 
-  //Bambisa Changes
-
-  filterVehiclesByType(vehicles: Vehicle[]): Vehicle[] {
-    if (this.selectedVehicleType === 'Double Cab') {
-      return vehicles.filter(v => v.name.toLowerCase().includes('toyota'));
-    }
-    if (this.selectedVehicleType === 'Single Cab') {
-      return vehicles.filter(v => v.name.toLowerCase().includes('isuzu'));
-    }
-    return [...vehicles];
-  }
-
-
+ 
   updateVehicleStatus(vehicleName: string, statusId: number): void {
     this.bookingService.updateVehicleStatus(vehicleName, statusId).subscribe({
       next: () => {

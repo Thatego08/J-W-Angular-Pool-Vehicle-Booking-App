@@ -15,6 +15,16 @@ export interface Vehicle {
   licenseExpiryDate: Date;
   registrationNumber: string;
   insuranceCoverID: number;
+
+  // Additions  
+  cabinType:string;
+  driveType:string;
+  transmission:string;
+  hasTowBar:boolean;
+  hasCanopy:boolean;
+
+
+  licenseDisk?: LicenseDisk;
   vin: string;
   engineNo: string;
   colourID: number;
