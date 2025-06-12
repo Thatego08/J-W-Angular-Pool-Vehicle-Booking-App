@@ -10,6 +10,28 @@
   box-sizing: border-box; /* Ensure padding is included in the width calculation */
 }
 
+.filter-section {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.checkbox-group {
+  display: flex;
+  gap: 15px;
+  padding: 10px 0;
+}
+
+.btn-group-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.btn-outline-secondary {
+  text-align: left;
+}
 
 button.booking-button {
   background-color: #14063b;;

@@ -65,16 +65,17 @@
     <div class="btn-group-vertical">
       <label class="btn btn-outline-secondary">
         <input type="radio" name="driveType" [(ngModel)]="selectedDriveType" 
-               [ngModelOptions]="{standalone: true}" value="All" (change)="updateFilters()"> All
+               [ngModelOptions]="{standalone: true}" value="All" (change)="onDriveTypeChange()"> All
       </label>
       <label class="btn btn-outline-secondary">
         <input type="radio" name="driveType" [(ngModel)]="selectedDriveType" 
-               [ngModelOptions]="{standalone: true}" value="4x4" (change)="updateFilters()"> 4x4
+               [ngModelOptions]="{standalone: true}" value="4x4" (change)="onDriveTypeChange()"> 4x4
       </label>
       <label class="btn btn-outline-secondary">
         <input type="radio" name="driveType" [(ngModel)]="selectedDriveType" 
-               [ngModelOptions]="{standalone: true}" value="4x2" (change)="updateFilters()"> 4x2
+               [ngModelOptions]="{standalone: true}" value="4x2" (change)="onDriveTypeChange()"> 4x2
       </label>
+      
     </div>
   </div>
 
@@ -82,46 +83,36 @@
   <div class="form-group">
     <label>Transmission</label>
     <select class="form-control" [(ngModel)]="selectedTransmission" 
-            [ngModelOptions]="{standalone: true}" (change)="updateFilters()">
+            [ngModelOptions]="{standalone: true}" (change)="onTransmissionChange()">
       <option value="All">All Transmissions</option>
       <option value="Manual">Manual</option>
       <option value="Automatic">Automatic</option>
     </select>
   </div>
 
-  <!-- Features -->
-  <div class="form-group">
-    <label>Features</label>
-    <div class="checkbox-group">
-      <label class="checkbox-inline">
-        <input type="checkbox" [(ngModel)]="hasTowBar" 
-               [ngModelOptions]="{standalone: true}" (change)="updateFilters()"> Tow Bar
-      </label>
-      <label class="checkbox-inline">
-        <input type="checkbox" [(ngModel)]="hasCanopy" 
-               [ngModelOptions]="{standalone: true}" (change)="updateFilters()"> Canopy
-      </label>
-    </div>
+  <!-- Features Filter -->
+<div class="form-group">
+  <label>Features</label>
+  <div class="checkbox-group">
+    <label class="checkbox-inline">
+      <input type="checkbox" [(ngModel)]="hasTowBar" 
+             [ngModelOptions]="{standalone: true}" (change)="onFeaturesChange()"> Tow Bar
+    </label>
+    <label class="checkbox-inline">
+      <input type="checkbox" [(ngModel)]="hasCanopy" 
+             [ngModelOptions]="{standalone: true}" (change)="onFeaturesChange()"> Canopy
+    </label>
   </div>
+</div>
 </div>
 
 <!-- Existing Vehicle Dropdown -->
 <div class="form-group">
   <label for="vehicleName">Vehicle</label>
   <select id="vehicleName" formControlName="vehicleName" class="form-control">
-    <option *ngFor="let vehicle of filteredVehicles" [value]="vehicle.name">{{ vehicle.name }}</option>
+    <option *ngFor="let vehicle of filteredVehicles" [value]="vehicle.name">{{ vehicle.name }} - {{vehicle.registrationNumber }}</option>
   </select>
 </div>
-<!-- 
-    <div class="form-group">
-      <label for="vehicleName">Vehicle</label>
-      <select id="vehicleName" formControlName="vehicleName" class="form-control">
-        <option *ngFor="let vehicle of vehicles" [value]="vehicle.name">{{ vehicle.name }}</option>
-      </select>
-    </div> -->
-
-
-
 
     <!-- <button type="submit" class="btn btn-success" [disabled]="!bookingForm.valid">Save</button> -->
     <button type="submit" class="btn btn-success booking-button">

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 import { BookingModel, CreateBookingModel } from '../models/booking.model';
 import { Vehicle } from '../models/vehicle.model';
 
@@ -28,20 +28,37 @@ export class BookingService {
 // }
 
 // booking.service.ts
-getAvailableVehicles(startDate: Date, endDate: Date, vehicleType?: string): Observable<Vehicle[]> {
+// getAvailableVehicles(startDate: Date, endDate: Date, vehicleType?: string): Observable<Vehicle[]> {
+//   let params = new HttpParams()
+//     .set('startDate', startDate.toISOString())
+//     .set('endDate', endDate.toISOString());
+
+
+
+//   return this.http.get<Vehicle[]>(`${this.baseUrl}/GetAvailableVehicles`, { params }).pipe(
+//     catchError(this.handleError)
+//   );
+// }
+
+getAvailableVehicles(startDate: Date, endDate: Date, cabinType?: string): Observable<Vehicle[]> {
   let params = new HttpParams()
     .set('startDate', startDate.toISOString())
     .set('endDate', endDate.toISOString());
 
-  // Only send vehicleType if it's not "All"
-  if (vehicleType && vehicleType !== 'All') {
-    params = params.set('vehicleType', vehicleType);
+  if (cabinType) {
+    params = params.set('cabinType', cabinType);
   }
 
   return this.http.get<Vehicle[]>(`${this.baseUrl}/GetAvailableVehicles`, { params }).pipe(
-    catchError(this.handleError)
+    tap((response: Vehicle[]) => console.log('API Vehicles Response:', response)), // Add logging
+    catchError(error => {
+      console.error('API Error:', error);
+      return throwError(() => new Error('Failed to fetch vehicles'));
+    })
   );
 }
+
+
 
   searchBookingHistory(username: string): Observable<BookingModel[]> {
     return this.http.get<BookingModel[]>(`${this.baseUrl}/SearchBookingHistory/${username}`);

@@ -17,6 +17,8 @@ export class PoolVehicleComponent implements OnInit {
   vehicles: Vehicle[] = [];
 
   page: number = 1; // Default page number
+  filteredVehicles: any;
+  toastr: any;
 
   constructor(private vehicleService: VehicleService,
     private router: Router, private http: HttpClient,
@@ -24,14 +26,27 @@ export class PoolVehicleComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getAllVehicles();
+    const today = new Date();
+    const tomorrow = new Date();
+    tomorrow.setDate(today.getDate() + 1);
+    this.getAllVehicles(today, tomorrow);
   }
 
   
-  getAllVehicles(): void {
-    this.vehicleService.getAvailableVehicles().subscribe(vehicles => {
+  getAllVehicles(startDate: Date, endDate:Date): void {
+    this.vehicleService.getAvailableVehicles(startDate, endDate).subscribe({
+    next: (vehicles) => {
       this.vehicles = vehicles;
-    });
+      this.filteredVehicles = this.applyAllFilters(vehicles);
+    },
+    error: (error) => {
+      console.error('Error fetching available vehicles', error);
+      this.toastr.error('Failed to fetch available vehicles.');
+    }
+  });
+  }
+  applyAllFilters(vehicles: Vehicle[]): any {
+    throw new Error('Method not implemented.');
   }
 
   loadVehicles(): void {

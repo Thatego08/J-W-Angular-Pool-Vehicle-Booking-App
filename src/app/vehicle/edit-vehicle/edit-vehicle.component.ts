@@ -31,7 +31,13 @@ export class EditVehicleComponent implements OnInit {
     fuelTypeID: 0,
     statusID: 0,
     vehicleMakeID: 0,
-    vehicleModelID: 0
+    vehicleModelID: 0,
+
+     cabinType: '',     // 'Double', 'Single', 'Extra', etc.
+  driveType: '',     // '4x4', '4x2'
+  transmission: '',  // 'Manual', 'Automatic'
+  hasTowBar: false,
+  hasCanopy: false
   };
   colours: Colour[] = [];
   insuranceCovers: InsuranceCover[] = [];
