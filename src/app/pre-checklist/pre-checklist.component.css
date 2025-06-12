@@ -111,3 +111,12 @@ body, label, .form-title, .checkbox-title, input, textarea, .form-check-label, .
   color: black !important;
   border: none !important;
 }
+
+.red-highlight {
+  background-color: #cf6969; /* Bright red background */
+  color: white; /* Optional: makes text stand out on red */
+  border-radius: 8px;
+  padding: 8px;
+  font-weight: bold;
+  box-shadow: 0 0 10px rgba(226, 127, 127, 0.6); /* Optional: red glow */
+}

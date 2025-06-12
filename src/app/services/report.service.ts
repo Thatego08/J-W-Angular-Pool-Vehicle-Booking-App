@@ -71,6 +71,18 @@ export interface CancelledBookingsReport {
   endDate: string;
 }
 
+export interface TripDurationReport {
+  tripId: number;
+  vehicleName: string;
+  location: string;
+  openingKms: number | null;
+  closingKms: number | null;
+  travelStart: string | null;
+  travelEnd: string | null;
+  duration: string | null;
+}
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -119,6 +131,11 @@ export class ReportService {
       catchError(this.handleError)
     );
   }
+
+ getTripDurationReport() {
+  return this.http.get<TripDurationReport[]>(`${this.baseUrl}/trip-duration-report`);
+}
+
 
   //New Additions
 

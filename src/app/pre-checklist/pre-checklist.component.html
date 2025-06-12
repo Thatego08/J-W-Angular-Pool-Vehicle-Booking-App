@@ -41,50 +41,54 @@
       </div>
 
       <!-- Checklist items with radios stacked under labels -->
-      <div *ngFor="let item of checkboxes" class="form-group mb-3 d-flex align-items-center justify-content-between">
-        <label class="checkbox-title mb-0" style="flex: 1; color: white;">{{ item.label }}</label>
+    <div *ngFor="let item of checkboxes" class="form-group mb-3 d-flex align-items-center justify-content-between"
+     [ngClass]="{
+        'red-highlight': shouldHighlight(preChecklistForm.get(item.formControlName)?.value, item.label)
+     }">
+  <label class="checkbox-title mb-0" style="flex: 1; color: white;">{{ item.label }}</label>
 
-        <div class="form-check d-flex justify-content-end flex-grow-0" style="gap: 1.5rem; width: 350px;">
-          <div style="width: 100px; text-align: center;">
-            <input
-              type="radio"
-              class="form-check-input"
-              [id]="item.formControlName + '_compliant'"
-              [formControlName]="item.formControlName"
-              value="Compliant"
-              style="display: block; margin: 0 auto;"
-            />
-          </div>
-          <div style="width: 110px; text-align: center;">
-            <input
-              type="radio"
-              class="form-check-input"
-              [id]="item.formControlName + '_not_compliant'"
-              [formControlName]="item.formControlName"
-              value="Not-Compliant"
-              style="display: block; margin: 0 auto;"
-            />
-          </div>
-          <div style="width: 110px; text-align: center;">
-            <input
-              type="radio"
-              class="form-check-input"
-              [id]="item.formControlName + '_not_applicable'"
-              [formControlName]="item.formControlName"
-              value="Not-Applicable"
-              style="display: block; margin: 0 auto;"
-            />
-          </div>
-        </div>
+  <div class="form-check d-flex justify-content-end flex-grow-0" style="gap: 1.5rem; width: 350px;">
+    <div style="width: 100px; text-align: center;">
+      <input
+        type="radio"
+        class="form-check-input"
+        [id]="item.formControlName + '_compliant'"
+        [formControlName]="item.formControlName"
+        value="Compliant"
+        style="display: block; margin: 0 auto;"
+      />
+    </div>
+    <div style="width: 110px; text-align: center;">
+      <input
+        type="radio"
+        class="form-check-input"
+        [id]="item.formControlName + '_not_compliant'"
+        [formControlName]="item.formControlName"
+        value="Not-Compliant"
+        style="display: block; margin: 0 auto;"
+      />
+    </div>
+    <div style="width: 110px; text-align: center;">
+      <input
+        type="radio"
+        class="form-check-input"
+        [id]="item.formControlName + '_not_applicable'"
+        [formControlName]="item.formControlName"
+        value="Not-Applicable"
+        style="display: block; margin: 0 auto;"
+      />
+    </div>
+  </div>
 
-        <div
-          *ngIf="preChecklistForm.get(item.formControlName)?.invalid && preChecklistForm.get(item.formControlName)?.touched"
-          class="text-danger"
-          style="flex-basis: 100%; margin-top: 0.25rem;"
-        >
-          This field is required.
-        </div>
-      </div>
+  <div
+    *ngIf="preChecklistForm.get(item.formControlName)?.invalid && preChecklistForm.get(item.formControlName)?.touched"
+    class="text-danger"
+    style="flex-basis: 100%; margin-top: 0.25rem;"
+  >
+    This field is required.
+  </div>
+</div>
+
     </div>
 
     <div class="form-group mb-3">
