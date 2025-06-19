@@ -174,10 +174,11 @@ export class ReportComponent implements OnInit {
     );
   }
 
-  formatDate(dateString: string | null): string {
+   formatDate(dateString: string | null): string {
     if (!dateString) return '';
     const date = new Date(dateString);
-    return this.datePipe.transform(date, 'dd MMMM yyyy') || '';
+    // Format: e.g. "19 June 2025 14:30"
+    return this.datePipe.transform(date, 'dd MMMM yyyy HH:mm') || '';
   }
 
   private calculateTotal(data: any[], key: string): number {
@@ -200,14 +201,18 @@ export class ReportComponent implements OnInit {
     }
 
     const worksheet = XLSX.utils.json_to_sheet(this.tripDurationReport.map(trip => ({
-      'Trip ID': trip.tripId,
-      'Vehicle Name': trip.vehicleName,
-      'Location': trip.location,
-      'Opening Kms': trip.openingKms ?? '',
-      'Closing Kms': trip.closingKms ?? '',
-      'Travel Start': this.formatDate(trip.travelStart),
-      'Travel End': this.formatDate(trip.travelEnd),
-      'Duration (hh:mm:ss)': trip.duration ?? ''
+       'Trip ID': trip.tripId,
+    'Vehicle Name': trip.vehicleName,
+    'Location': trip.location,
+    'Booking Start Time & Date': this.formatDate(trip.bookingStart),
+    'Booking End Time & Date': this.formatDate(trip.bookingEnd),
+    'Travel Start Time & Date': this.formatDate(trip.travelStart),
+    'Travel End Time & Date': this.formatDate(trip.travelEnd),
+    'Earliest Start': this.formatDate(trip.earliestStart),
+    'Duration': trip.duration ?? '',
+    'Opening Kms': trip.openingKms ?? '',
+    'Closing Kms': trip.closingKms ?? '',
+    'Travelled Kms': trip.travelledKms ?? ''
     })));
 
     const workbook = XLSX.utils.book_new();

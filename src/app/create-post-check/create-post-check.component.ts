@@ -3,7 +3,6 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 
-
 @Component({
   selector: 'app-create-post-check',
   templateUrl: './create-post-check.component.html',
@@ -12,10 +11,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class CreatePostCheckComponent {
   postCheckForm: FormGroup;
   mediaFiles: File[] = [];
-  successMessage: string | null = null; 
+  successMessage: string | null = null;
   errorMessage: string | null = null;
   tripId: number | null = null;
+  openingKms: number | null = null;
   mediaPreviews: { file: File, previewUrl: string, type: string }[] = [];
+
   checkboxes = [
     { id: 'OilLeaks', label: 'Oil Leaks', formControlName: 'OilLeaks' },
     { id: 'FuelLevel', label: 'Fuel Level', formControlName: 'FuelLevel' },
@@ -41,7 +42,12 @@ export class CreatePostCheckComponent {
     { id: 'LicenseDiskValid', label: 'License Disk Valid', formControlName: 'LicenseDiskValid' }
   ];
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router,private route: ActivatedRoute) {
+  constructor(
+    private fb: FormBuilder,
+    private http: HttpClient,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
     this.postCheckForm = this.fb.group({
       TripId: [null],
       ClosingKms: [null, [Validators.required, this.validatePositiveKms]],
@@ -76,12 +82,22 @@ export class CreatePostCheckComponent {
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       this.tripId = +params.get('tripId')!;
-      console.log('Trip ID:', this.tripId);
-
       if (this.tripId) {
-        this.postCheckForm.patchValue({
-          TripId: this.tripId
-        });
+        this.postCheckForm.patchValue({ TripId: this.tripId });
+
+        // Fetch openingKms from backend
+       this.http.get<any>(`https://localhost:7041/api/Trip/${this.tripId}/opening-kms`)
+
+          .subscribe({
+            next: (data) => {
+              this.openingKms = data.openingKms;
+              this.addClosingKmsValidator(); // Add validator once openingKms is received
+            },
+            error: (err) => {
+              console.error('Failed to load opening Kms', err);
+              this.errorMessage = 'Could not load opening KMs for validation.';
+            }
+          });
       }
     });
   }
@@ -91,11 +107,28 @@ export class CreatePostCheckComponent {
     return value !== null && value < 0 ? { negativeKms: true } : null;
   }
 
+  addClosingKmsValidator() {
+    const closingKmsControl = this.postCheckForm.get('ClosingKms');
+    closingKmsControl?.addValidators((control: AbstractControl) => {
+      const closing = control.value;
+      if (this.openingKms !== null && closing < this.openingKms) {
+        return { lessThanOpening: true };
+      }
+      return null;
+    });
+    closingKmsControl?.updateValueAndValidity();
+  }
+
   checkClosingKmsError() {
     const closingKmsControl = this.postCheckForm.get('ClosingKms');
     if (closingKmsControl?.errors) {
-      this.errorMessage = closingKmsControl.errors['required'] ? 'Closing Kms is required.' :
-                          closingKmsControl.errors['negativeKms'] ? 'Closing Kms cannot be negative.' : null;
+      this.errorMessage = closingKmsControl.errors['required']
+        ? 'Closing Kms is required.'
+        : closingKmsControl.errors['negativeKms']
+          ? 'Closing Kms cannot be negative.'
+          : closingKmsControl.errors['lessThanOpening']
+            ? `Closing Kms cannot be less than Opening Kms (${this.openingKms}).`
+            : null;
     } else {
       this.errorMessage = null;
     }
@@ -103,13 +136,11 @@ export class CreatePostCheckComponent {
 
   onFileChange(event: any) {
     const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'video/mp4', 'video/ogg', 'video/webm'];
-
     this.errorMessage = null;
     this.mediaFiles = [];
 
     for (let i = 0; i < event.target.files.length; i++) {
       const file = event.target.files[i];
-
       if (allowedTypes.includes(file.type)) {
         this.mediaFiles.push(file);
       } else {
@@ -120,7 +151,11 @@ export class CreatePostCheckComponent {
   }
 
   submitForm() {
-    if (this.errorMessage) return;
+    this.validateClosingKms();
+    if (this.errorMessage || this.postCheckForm.invalid) {
+      this.checkClosingKmsError();
+      return;
+    }
 
     const formData = new FormData();
     for (const key of Object.keys(this.postCheckForm.value)) {
@@ -133,7 +168,6 @@ export class CreatePostCheckComponent {
       }
     }
 
-    // Make the API call
     this.http.post('https://localhost:7041/api/PostCheck/CreatePostCheck', formData).subscribe({
       next: (response) => {
         console.log('Post check created successfully', response);
@@ -150,6 +184,23 @@ export class CreatePostCheckComponent {
         this.successMessage = null;
       }
     });
+  }
+
+  validateClosingKms() {
+    const closingKms = this.postCheckForm.get('ClosingKms')?.value;
+    if (this.openingKms !== null && closingKms !== null && closingKms < this.openingKms) {
+      this.postCheckForm.get('ClosingKms')?.setErrors({ lessThanOpening: true });
+    } else {
+      const errors = this.postCheckForm.get('ClosingKms')?.errors;
+      if (errors) {
+        delete errors['lessThanOpening'];
+        if (Object.keys(errors).length === 0) {
+          this.postCheckForm.get('ClosingKms')?.setErrors(null);
+        } else {
+          this.postCheckForm.get('ClosingKms')?.setErrors(errors);
+        }
+      }
+    }
   }
 
   checkAll(checked: boolean) {

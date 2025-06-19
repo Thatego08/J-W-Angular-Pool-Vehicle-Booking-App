@@ -75,11 +75,15 @@ export interface TripDurationReport {
   tripId: number;
   vehicleName: string;
   location: string;
-  openingKms: number | null;
-  closingKms: number | null;
-  travelStart: string | null;
-  travelEnd: string | null;
-  duration: string | null;
+  bookingStart: string;
+  bookingEnd: string;
+  travelStart: string;
+  travelEnd: string;
+  earliestStart: string;
+  duration: string;
+  openingKms: number;
+  closingKms: number;
+  travelledKms: number;
 }
 
 
