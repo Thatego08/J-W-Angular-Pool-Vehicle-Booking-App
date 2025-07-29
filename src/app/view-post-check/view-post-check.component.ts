@@ -12,8 +12,7 @@ export class ViewPostCheckComponent implements OnInit {
   currentPage: number = 1;
   columnsPerPage: number = 10;
   visibleColumns: string[] = [];
-  displayedRows: number = 5; // ✅ Added property
-  rowsPerPage: number = 5;
+  displayedRows: number = 5;
   allColumns: string[] = [
     'postCheckId', 'closingKms', 'oilLeaks', 'fuelLevel', 'mirrors', 'sunVisor', 'seatBelts', 'headLights',
     'indicators', 'parkLights', 'brakeLights', 'strobeLight', 'reverseLight', 'reverseHooter', 'horn',
@@ -32,17 +31,13 @@ export class ViewPostCheckComponent implements OnInit {
 
   loadPostChecks(): void {
     this.postCheckService.getAllPostChecks().subscribe(data => {
-      console.log('Data from API:', data);
       this.postChecks = data;
-
-      // Immediately update visible columns and paged data after loading
       this.updateVisibleColumns();
       this.updatePagedData();
     });
   }
 
   updateVisibleColumns() {
-    // Determine which columns should be visible based on current page
     const startIndex = (this.currentPage - 1) * this.columnsPerPage;
     this.visibleColumns = this.allColumns.slice(startIndex, startIndex + this.columnsPerPage);
   }
@@ -50,11 +45,9 @@ export class ViewPostCheckComponent implements OnInit {
   updatePagedData() {
     this.pagedPostChecks = this.postChecks.map((postCheck: any) => {
       const pagedCheck: { [key: string]: any } = {};
-      
       this.visibleColumns.forEach(column => {
         pagedCheck[column] = postCheck[column];
       });
-      
       return pagedCheck;
     });
   }
@@ -84,6 +77,7 @@ export class ViewPostCheckComponent implements OnInit {
   }
 
   toggleRows() {
-    this.displayedRows = this.displayedRows === 5 ? 10 : 5;  // Toggle between 5 and 10 rows
+    // Toggle between showing 5 rows or all rows
+    this.displayedRows = this.displayedRows === 5 ? this.pagedPostChecks.length : 5;
   }
 }

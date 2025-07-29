@@ -84,6 +84,7 @@ export interface TripDurationReport {
   openingKms: number;
   closingKms: number;
   travelledKms: number;
+    projectNumber?: number;
 }
 
 

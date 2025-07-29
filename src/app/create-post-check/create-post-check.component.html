@@ -17,7 +17,7 @@
                  (input)="validateClosingKms()"
                  class="form-control">
 
-          <!-- Only Reactive Form Validation Messages -->
+          <!-- Reactive Form Validation Messages -->
           <div *ngIf="postCheckForm.get('ClosingKms')?.invalid && (postCheckForm.get('ClosingKms')?.touched || postCheckForm.get('ClosingKms')?.dirty)" class="error-message">
             <div *ngIf="postCheckForm.get('ClosingKms')?.errors?.['required']">Closing Kms is required.</div>
             <div *ngIf="postCheckForm.get('ClosingKms')?.errors?.['negativeKms']">Closing Kms must be a positive number.</div>
@@ -28,16 +28,50 @@
 
       <!-- Check All Button -->
       <div class="form-header mb-3">
-        <button type="button" class="check-all-btn" (click)="checkAll(true)">Check All</button>
+        <button type="button" class="check-all-btn btn btn-outline-primary" (click)="checkAll(true)">Check All as Compliant</button>
       </div>
 
       <!-- Checklist Items -->
-      <div class="mb-3">
+      <div class="mb-4">
         <h5>Checklist Items:</h5>
-        <div class="scrollable-checklist" style="max-height: 300px; overflow-y: auto;">
-          <div *ngFor="let check of checkboxes" class="checkbox-item">
-            <input type="checkbox" [id]="check.id" [formControlName]="check.formControlName" class="form-check-input">
-            <label [for]="check.id">{{ check.label }}</label>
+        <div class="scrollable-checklist" style="max-height: 400px; overflow-y: auto;">
+          <!-- Header Row -->
+          <div class="checklist-header d-flex fw-bold mb-2 ps-3">
+            <div style="flex: 2;">Item</div>
+            <div style="flex: 1; text-align: center;">Compliant</div>
+            <div style="flex: 1; text-align: center;">Not-Compliant</div>
+            <div style="flex: 1; text-align: center;">N/A</div>
+          </div>
+
+          <!-- Checklist Rows -->
+          <div *ngFor="let check of checkboxes"
+               class="checklist-row d-flex align-items-center ps-3 mb-2"
+               [ngClass]="{'not-compliant-row': postCheckForm.get(check.formControlName)?.value === 'not-compliant'}">
+
+            <div style="flex: 2;" class="fw-bold">
+              {{ check.label }}
+            </div>
+
+            <div style="flex: 1; text-align: center;">
+              <input type="radio"
+                     [formControlName]="check.formControlName"
+                     value="compliant"
+                     class="form-check-input">
+            </div>
+
+            <div style="flex: 1; text-align: center;">
+              <input type="radio"
+                     [formControlName]="check.formControlName"
+                     value="not-compliant"
+                     class="form-check-input">
+            </div>
+
+            <div style="flex: 1; text-align: center;">
+              <input type="radio"
+                     [formControlName]="check.formControlName"
+                     value="not-applicable"
+                     class="form-check-input">
+            </div>
           </div>
         </div>
       </div>

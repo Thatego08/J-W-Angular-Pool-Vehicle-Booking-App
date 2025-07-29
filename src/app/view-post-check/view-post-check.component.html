@@ -8,33 +8,33 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let postCheck of pagedPostChecks | slice:0:5">
+        <tr *ngFor="let postCheck of pagedPostChecks | slice:0:displayedRows">
           <td *ngFor="let column of visibleColumns">
-            <ng-container [ngSwitch]="column">
-              <ng-container *ngSwitchCase="'postCheckId'">{{ postCheck.postCheckId }}</ng-container>
-              <ng-container *ngSwitchCase="'closingKms'">{{ postCheck.closingKms }}</ng-container>
-              <ng-container *ngSwitchCase="'oilLeaks'">{{ postCheck.oilLeaks ? 'Yes' : 'No' }}</ng-container>
-              <ng-container *ngSwitchCase="'fuelLevel'">{{ postCheck.fuelLevel ? 'Yes' : 'No' }}</ng-container>
-              <ng-container *ngSwitchCase="'mirrors'">{{ postCheck.mirrors ? 'Yes' : 'No' }}</ng-container>
-              <ng-container *ngSwitchCase="'sunVisor'">{{ postCheck.sunVisor ? 'Yes' : 'No' }}</ng-container>
-              <ng-container *ngSwitchCase="'seatBelts'">{{ postCheck.seatBelts ? 'Yes' : 'No' }}</ng-container>
-              <ng-container *ngSwitchCase="'headLights'">{{ postCheck.headLights ? 'Yes' : 'No' }}</ng-container>
-              <ng-container *ngSwitchCase="'indicators'">{{ postCheck.indicators ? 'Yes' : 'No' }}</ng-container>
-              <ng-container *ngSwitchCase="'parkLights'">{{ postCheck.parkLights ? 'Yes' : 'No' }}</ng-container>
-              <ng-container *ngSwitchCase="'brakeLights'">{{ postCheck.brakeLights ? 'Yes' : 'No' }}</ng-container>
-              <ng-container *ngSwitchCase="'strobeLight'">{{ postCheck.strobeLight ? 'Yes' : 'No' }}</ng-container>
-              <ng-container *ngSwitchCase="'reverseLight'">{{ postCheck.reverseLight ? 'Yes' : 'No' }}</ng-container>
-              <ng-container *ngSwitchCase="'reverseHooter'">{{ postCheck.reverseHooter ? 'Yes' : 'No' }}</ng-container>
-              <ng-container *ngSwitchCase="'horn'">{{ postCheck.horn ? 'Yes' : 'No' }}</ng-container>
-              <ng-container *ngSwitchCase="'windscreenWiper'">{{ postCheck.windscreenWiper ? 'Yes' : 'No' }}</ng-container>
-              <ng-container *ngSwitchCase="'tyreCondition'">{{ postCheck.tyreCondition ? 'Yes' : 'No' }}</ng-container>
-              <ng-container *ngSwitchCase="'spareWheelPresent'">{{ postCheck.spareWheelPresent ? 'Yes' : 'No' }}</ng-container>
-              <ng-container *ngSwitchCase="'jackAndWheelSpannerPresent'">{{ postCheck.jackAndWheelSpannerPresent ? 'Yes' : 'No' }}</ng-container>
-              <ng-container *ngSwitchCase="'brakes'">{{ postCheck.brakes ? 'Yes' : 'No' }}</ng-container>
-              <ng-container *ngSwitchCase="'handbrake'">{{ postCheck.handbrake ? 'Yes' : 'No' }}</ng-container>
-              <ng-container *ngSwitchCase="'jwMarketingMagnets'">{{ postCheck.jwMarketingMagnets ? 'Yes' : 'No' }}</ng-container>
-              <ng-container *ngSwitchCase="'checkedByJWSecurity'">{{ postCheck.checkedByJWSecurity ? 'Yes' : 'No' }}</ng-container>
-              <ng-container *ngSwitchCase="'licenseDiskValid'">{{ postCheck.licenseDiskValid ? 'Yes' : 'No' }}</ng-container>
+             <ng-container [ngSwitch]="column">
+        <ng-container *ngSwitchCase="'postCheckId'">{{ postCheck.postCheckId }}</ng-container>
+        <ng-container *ngSwitchCase="'closingKms'">{{ postCheck.closingKms }}</ng-container>
+        <ng-container *ngSwitchCase="'oilLeaks'">{{ postCheck.oilLeaks || 'N/A' }}</ng-container>
+        <ng-container *ngSwitchCase="'fuelLevel'">{{ postCheck.fuelLevel || 'N/A' }}</ng-container>
+        <ng-container *ngSwitchCase="'mirrors'">{{ postCheck.mirrors || 'N/A' }}</ng-container>
+        <ng-container *ngSwitchCase="'sunVisor'">{{ postCheck.sunVisor || 'N/A' }}</ng-container>
+        <ng-container *ngSwitchCase="'seatBelts'">{{ postCheck.seatBelts || 'N/A' }}</ng-container>
+        <ng-container *ngSwitchCase="'headLights'">{{ postCheck.headLights || 'N/A' }}</ng-container>
+        <ng-container *ngSwitchCase="'indicators'">{{ postCheck.indicators || 'N/A' }}</ng-container>
+        <ng-container *ngSwitchCase="'parkLights'">{{ postCheck.parkLights || 'N/A' }}</ng-container>
+        <ng-container *ngSwitchCase="'brakeLights'">{{ postCheck.brakeLights || 'N/A' }}</ng-container>
+        <ng-container *ngSwitchCase="'strobeLight'">{{ postCheck.strobeLight || 'N/A' }}</ng-container>
+        <ng-container *ngSwitchCase="'reverseLight'">{{ postCheck.reverseLight || 'N/A' }}</ng-container>
+        <ng-container *ngSwitchCase="'reverseHooter'">{{ postCheck.reverseHooter || 'N/A' }}</ng-container>
+        <ng-container *ngSwitchCase="'horn'">{{ postCheck.horn || 'N/A' }}</ng-container>
+        <ng-container *ngSwitchCase="'windscreenWiper'">{{ postCheck.windscreenWiper || 'N/A' }}</ng-container>
+        <ng-container *ngSwitchCase="'tyreCondition'">{{ postCheck.tyreCondition || 'N/A' }}</ng-container>
+        <ng-container *ngSwitchCase="'spareWheelPresent'">{{ postCheck.spareWheelPresent || 'N/A' }}</ng-container>
+        <ng-container *ngSwitchCase="'jackAndWheelSpannerPresent'">{{ postCheck.jackAndWheelSpannerPresent || 'N/A' }}</ng-container>
+        <ng-container *ngSwitchCase="'brakes'">{{ postCheck.brakes || 'N/A' }}</ng-container>
+        <ng-container *ngSwitchCase="'handbrake'">{{ postCheck.handbrake || 'N/A' }}</ng-container>
+        <ng-container *ngSwitchCase="'jwMarketingMagnets'">{{ postCheck.jwMarketingMagnets || 'N/A' }}</ng-container>
+        <ng-container *ngSwitchCase="'checkedByJWSecurity'">{{ postCheck.checkedByJWSecurity || 'N/A' }}</ng-container>
+        <ng-container *ngSwitchCase="'licenseDiskValid'">{{ postCheck.licenseDiskValid || 'N/A' }}</ng-container>
               <ng-container *ngSwitchCase="'comments'">{{ postCheck.comments }}</ng-container>
               <ng-container *ngSwitchCase="'additionalComments'">{{ postCheck.additionalComments }}</ng-container>
               <ng-container *ngSwitchCase="'tripMedia'">
@@ -61,6 +61,12 @@
     <button (click)="showPreviousColumns()" [disabled]="currentPage === 1">Previous</button>
     <button (click)="showNextColumns()" [disabled]="(currentPage * columnsPerPage) >= allColumns.length">Next</button>
   </div>
+
+  <div class="table-controls" *ngIf="pagedPostChecks.length > 5">
+    <button (click)="toggleRows()">
+      {{ displayedRows === 5 ? 'Show More' : 'Show Less' }}
+    </button>
+  </div>
 </div>
 
 <!-- Modal for Image Viewing -->
@@ -68,12 +74,6 @@
   <span class="close" (click)="closeModal()">&times;</span>
   <img class="modal-content" [src]="selectedMedia ? 'data:' + selectedMedia.mediaType + ';base64,' + selectedMedia.fileContent : ''">
   <div id="caption">{{ selectedMedia?.fileName }}</div>
-</div>
-
-<div class="table-controls">
-  <button *ngIf="pagedPostChecks.length > 5" (click)="toggleRows()">
-    {{ displayedRows ? 'Show Less' : 'Show More' }}
-  </button>
 </div>
 
 <app-help></app-help>
