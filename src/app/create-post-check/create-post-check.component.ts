@@ -38,8 +38,7 @@ export class CreatePostCheckComponent {
     { id: 'Brakes', label: 'Brakes', formControlName: 'Brakes' },
     { id: 'Handbrake', label: 'Handbrake', formControlName: 'Handbrake' },
     { id: 'JWMarketingMagnets', label: 'JW Marketing Magnets', formControlName: 'JWMarketingMagnets' },
-    { id: 'CheckedByJWSecurity', label: 'Checked by JW Security', formControlName: 'CheckedByJWSecurity' },
-    { id: 'LicenseDiskValid', label: 'License Disk Valid', formControlName: 'LicenseDiskValid' }
+    { id: 'CheckedByJWSecurity', label: 'Checked by JW Security', formControlName: 'CheckedByJWSecurity' }
   ];
 
   constructor(
@@ -51,31 +50,14 @@ export class CreatePostCheckComponent {
     this.postCheckForm = this.fb.group({
       TripId: [null],
       ClosingKms: [null, [Validators.required, this.validatePositiveKms]],
-      OilLeaks: [false],
-      FuelLevel: [false],
-      Mirrors: [false],
-      SunVisor: [false],
-      SeatBelts: [false],
-      HeadLights: [false],
-      Indicators: [false],
-      ParkLights: [false],
-      BrakeLights: [false],
-      StrobeLight: [false],
-      ReverseLight: [false],
-      ReverseHooter: [false],
-      Horn: [false],
-      WindscreenWiper: [false],
-      TyreCondition: [false],
-      SpareWheelPresent: [false],
-      JackAndWheelSpannerPresent: [false],
-      Brakes: [false],
-      Handbrake: [false],
-      JWMarketingMagnets: [false],
-      CheckedByJWSecurity: [false],
-      LicenseDiskValid: [false, Validators.requiredTrue],
       Comments: [''],
       AdditionalComments: [''],
-      MediaDescription: ['']
+      MediaDescription: [''],
+      LicenseDiskValid: [false, Validators.requiredTrue],
+    });
+
+    this.checkboxes.forEach(check => {
+      this.postCheckForm.addControl(check.formControlName, this.fb.control('', Validators.required));
     });
   }
 
@@ -85,13 +67,11 @@ export class CreatePostCheckComponent {
       if (this.tripId) {
         this.postCheckForm.patchValue({ TripId: this.tripId });
 
-        // Fetch openingKms from backend
-       this.http.get<any>(`https://localhost:7041/api/Trip/${this.tripId}/opening-kms`)
-
+        this.http.get<any>(`https://localhost:7041/api/Trip/${this.tripId}/opening-kms`)
           .subscribe({
             next: (data) => {
               this.openingKms = data.openingKms;
-              this.addClosingKmsValidator(); // Add validator once openingKms is received
+              this.addClosingKmsValidator();
             },
             error: (err) => {
               console.error('Failed to load opening Kms', err);
@@ -119,73 +99,6 @@ export class CreatePostCheckComponent {
     closingKmsControl?.updateValueAndValidity();
   }
 
-  checkClosingKmsError() {
-    const closingKmsControl = this.postCheckForm.get('ClosingKms');
-    if (closingKmsControl?.errors) {
-      this.errorMessage = closingKmsControl.errors['required']
-        ? 'Closing Kms is required.'
-        : closingKmsControl.errors['negativeKms']
-          ? 'Closing Kms cannot be negative.'
-          : closingKmsControl.errors['lessThanOpening']
-            ? `Closing Kms cannot be less than Opening Kms (${this.openingKms}).`
-            : null;
-    } else {
-      this.errorMessage = null;
-    }
-  }
-
-  onFileChange(event: any) {
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'video/mp4', 'video/ogg', 'video/webm'];
-    this.errorMessage = null;
-    this.mediaFiles = [];
-
-    for (let i = 0; i < event.target.files.length; i++) {
-      const file = event.target.files[i];
-      if (allowedTypes.includes(file.type)) {
-        this.mediaFiles.push(file);
-      } else {
-        this.errorMessage = `Invalid file type: ${file.name}. Only images and videos are allowed.`;
-        break;
-      }
-    }
-  }
-
-  submitForm() {
-    this.validateClosingKms();
-    if (this.errorMessage || this.postCheckForm.invalid) {
-      this.checkClosingKmsError();
-      return;
-    }
-
-    const formData = new FormData();
-    for (const key of Object.keys(this.postCheckForm.value)) {
-      formData.append(key, this.postCheckForm.value[key]);
-    }
-
-    if (this.mediaFiles.length > 0) {
-      for (let i = 0; i < this.mediaFiles.length; i++) {
-        formData.append('MediaFiles', this.mediaFiles[i], this.mediaFiles[i].name);
-      }
-    }
-
-    this.http.post('https://localhost:7041/api/PostCheck/CreatePostCheck', formData).subscribe({
-      next: (response) => {
-        console.log('Post check created successfully', response);
-        this.successMessage = 'Post check created successfully!';
-        this.postCheckForm.reset();
-        this.mediaFiles = [];
-
-        setTimeout(() => {
-          this.router.navigate(['/get-trip']);
-        }, 2000);
-      },
-      error: (error) => {
-        console.error('Error creating post check', error);
-        this.successMessage = null;
-      }
-    });
-  }
-
   validateClosingKms() {
     const closingKms = this.postCheckForm.get('ClosingKms')?.value;
     if (this.openingKms !== null && closingKms !== null && closingKms < this.openingKms) {
@@ -203,9 +116,61 @@ export class CreatePostCheckComponent {
     }
   }
 
-  checkAll(checked: boolean) {
+  checkAll(setToCompliant: boolean) {
+    const value = setToCompliant ? 'compliant' : '';
     this.checkboxes.forEach(check => {
-      this.postCheckForm.controls[check.formControlName].setValue(checked);
+      this.postCheckForm.controls[check.formControlName].setValue(value);
+    });
+  }
+
+  onFileChange(event: any) {
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'video/mp4', 'video/ogg', 'video/webm'];
+    this.errorMessage = null;
+    this.mediaFiles = [];
+    this.mediaPreviews = [];
+
+    for (let file of event.target.files) {
+      if (allowedTypes.includes(file.type)) {
+        this.mediaFiles.push(file);
+
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          const type = file.type.startsWith('image') ? 'image' : 'video';
+          this.mediaPreviews.push({ file, previewUrl: e.target.result, type });
+        };
+        reader.readAsDataURL(file);
+      } else {
+        this.errorMessage = `Invalid file type: ${file.name}`;
+      }
+    }
+  }
+
+  submitForm() {
+    this.validateClosingKms();
+    if (this.postCheckForm.invalid) {
+      return;
+    }
+
+    const formData = new FormData();
+    for (const key of Object.keys(this.postCheckForm.value)) {
+      formData.append(key, this.postCheckForm.value[key]);
+    }
+
+    this.mediaFiles.forEach(file => {
+      formData.append('MediaFiles', file, file.name);
+    });
+
+    this.http.post('https://localhost:7041/api/PostCheck/CreatePostCheck', formData).subscribe({
+      next: () => {
+        this.successMessage = 'Post check created successfully!';
+        this.postCheckForm.reset();
+        this.mediaFiles = [];
+        setTimeout(() => this.router.navigate(['/get-trip']), 2000);
+      },
+      error: (error) => {
+        console.error('Error creating post check', error);
+        this.successMessage = null;
+      }
     });
   }
 }

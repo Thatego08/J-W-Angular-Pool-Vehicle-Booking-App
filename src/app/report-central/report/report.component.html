@@ -3,7 +3,7 @@
 
   <div class="button-container">
     
-    <button (click)="exportToPdf()" id="export-button">Export Reports</button>
+    <!--<button (click)="exportToPdf()" id="export-button">Export Reports</button> -->
 
     <!-- Wrap all reports except Trip Duration Report in *ngIf="false" to hide them -->
     <div *ngIf="false">
@@ -194,6 +194,14 @@
 
     <!-- Trip Duration Report -->
     <!-- Trip Duration Report -->
+  <!-- Month Filter Dropdown -->
+<label for="tripMonthFilter">Filter by Month:</label>
+<select id="tripMonthFilter" [(ngModel)]="tripMonthFilter" (change)="filterTripDurationReport()">
+  <option value="">All Months</option>
+  <option *ngFor="let month of months" [value]="month.value">{{ month.name }}</option>
+</select>
+
+<!-- Trip Duration Report -->
 <button (click)="toggleReport('trip-duration-report')">Generate Trip Duration Report</button>
 <div *ngIf="visibleReports.includes('trip-duration-report')">
   <p>Date Generated: {{ currentDate | date: 'yyyy-MM-dd' }}</p>
@@ -204,42 +212,43 @@
   </div>
   <img [src]="companyLogoUrl" class="report-logo" />
 
-  <button (click)="exportTripDurationToExcel()" id="export-trip-duration-excel-button">Export Trip Duration Report to Excel</button>
+  <button (click)="exportTripDurationToExcel()" id="export-trip-duration-excel-button">
+    Export Trip Duration Report to Excel
+  </button>
 
   <table class="report-table table-with-total">
     <thead>
       <tr>
-         <th>Trip ID</th>
-  <th>Vehicle Name</th>
-  <th>Location</th>
-  <th>Booked start date & time</th>
-  <th>Booking end date & time</th>
-  <th>Travel Start date & time</th>
-  <th>Travel End date & time</th>
-  <th>Earliest Start</th>
-  <th>Use duration</th>
-  <th>Start Kms</th>
-  <th>End Kms</th>
-  <th>Travelled Kms</th>
+        <th>Trip ID</th>
+        <th>Vehicle Name</th>
+        <th>Location</th>
+        <th>Project Number</th>
+        <th>Booked start date & time</th>
+        <th>Booking end date & time</th>
+        <th>Travel Start date & time</th>
+        <th>Travel End date & time</th>
+        <th>Earliest Start</th>
+        <th>Use duration</th>
+        <th>Start Kms</th>
+        <th>End Kms</th>
+        <th>Travelled Kms</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let report of tripDurationReport">
+      <tr *ngFor="let report of filteredTripDurationReport">
         <td>{{ report.tripId }}</td>
         <td>{{ report.vehicleName }}</td>
+        
         <td>{{ report.location }}</td>
+        <td>{{ report.projectNumber ?? '-' }}</td>
+
         <td>{{ report.bookingStart ? (report.bookingStart | date:'yyyy-MM-dd HH:mm') : '-' }}</td>
         <td>{{ report.bookingEnd ? (report.bookingEnd | date:'yyyy-MM-dd HH:mm') : '-' }}</td>
         <td>{{ report.travelStart ? (report.travelStart | date:'yyyy-MM-dd HH:mm') : '-' }}</td>
         <td>{{ report.travelEnd ? (report.travelEnd | date:'yyyy-MM-dd HH:mm') : '-' }}</td>
-        <td>
-          {{
-            report.earliestStart
-              ? (report.earliestStart | date:'yyyy-MM-dd HH:mm')
-              : '-'
-          }}
-        </td>
-        <td>{{ report.duration }}</td>
+        <td>{{ report.earliestStart ? (report.earliestStart | date:'yyyy-MM-dd HH:mm') : '-' }}</td>
+        <td>{{ calculateDays(report.travelStart, report.travelEnd) }}</td>
+
         <td>{{ report.openingKms !== null ? report.openingKms : '-' }}</td>
         <td>{{ report.closingKms !== null ? report.closingKms : '-' }}</td>
         <td>

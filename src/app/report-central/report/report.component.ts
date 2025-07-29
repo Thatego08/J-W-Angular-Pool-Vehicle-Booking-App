@@ -41,24 +41,26 @@ export class ReportComponent implements OnInit {
   cancelledBookingsReport: CancelledBookingsReport[] = [];
   userTripReport: UserTripReportDto[] = [];
   tripDurationReport: TripDurationReport[] = [];
+  filteredTripDurationReport: TripDurationReport[] = [];
 
   filteredUserTripReport: UserTripReportDto[] = [];
   filteredUserBookingReport: BookingsPerUserReport[] = [];
 
   monthFilter: string = '';
+  tripMonthFilter: string = '';
   months = [
-    { name: 'January', value: 'January' },
-    { name: 'February', value: 'February' },
-    { name: 'March', value: 'March' },
-    { name: 'April', value: 'April' },
-    { name: 'May', value: 'May' },
-    { name: 'June', value: 'June' },
-    { name: 'July', value: 'July' },
-    { name: 'August', value: 'August' },
-    { name: 'September', value: 'September' },
-    { name: 'October', value: 'October' },
-    { name: 'November', value: 'November' },
-    { name: 'December', value: 'December' }
+    { name: 'January', value: '01' },
+    { name: 'February', value: '02' },
+    { name: 'March', value: '03' },
+    { name: 'April', value: '04' },
+    { name: 'May', value: '05' },
+    { name: 'June', value: '06' },
+    { name: 'July', value: '07' },
+    { name: 'August', value: '08' },
+    { name: 'September', value: '09' },
+    { name: 'October', value: '10' },
+    { name: 'November', value: '11' },
+    { name: 'December', value: '12' }
   ];
 
   totalTrips: number = 0;
@@ -154,10 +156,25 @@ export class ReportComponent implements OnInit {
     this.reportService.getTripDurationReport().subscribe(
       data => {
         this.tripDurationReport = data;
-        console.log('Trip Duration Report Data:', data);
+        this.filteredTripDurationReport = data;
+        this.filterTripDurationReport(); // Filter on load if month is selected
       },
       error => console.error('Error loading trip duration report', error)
     );
+  }
+
+  filterTripDurationReport(): void {
+    if (!this.tripMonthFilter) {
+      this.filteredTripDurationReport = [...this.tripDurationReport];
+    } else {
+      this.filteredTripDurationReport = this.tripDurationReport.filter(report => {
+        if (report.earliestStart) {
+          const month = new Date(report.earliestStart).toISOString().slice(5, 7);
+          return month === this.tripMonthFilter;
+        }
+        return false;
+      });
+    }
   }
 
   filterUserBookings(): void {
@@ -174,11 +191,10 @@ export class ReportComponent implements OnInit {
     );
   }
 
-   formatDate(dateString: string | null): string {
+  formatDate(dateString: string | null): string {
     if (!dateString) return '';
     const date = new Date(dateString);
-    // Format: e.g. "19 June 2025 14:30"
-    return this.datePipe.transform(date, 'dd MMMM yyyy HH:mm') || '';
+    return this.datePipe.transform(date, 'yyyy-MM-dd HH:mm') || '';
   }
 
   private calculateTotal(data: any[], key: string): number {
@@ -195,30 +211,78 @@ export class ReportComponent implements OnInit {
   }
 
   exportTripDurationToExcel(): void {
-    if (!this.tripDurationReport || this.tripDurationReport.length === 0) {
-      alert('No trip duration data to export!');
-      return;
-    }
-
-    const worksheet = XLSX.utils.json_to_sheet(this.tripDurationReport.map(trip => ({
-       'Trip ID': trip.tripId,
-    'Vehicle Name': trip.vehicleName,
-    'Location': trip.location,
-    'Booking Start Time & Date': this.formatDate(trip.bookingStart),
-    'Booking End Time & Date': this.formatDate(trip.bookingEnd),
-    'Travel Start Time & Date': this.formatDate(trip.travelStart),
-    'Travel End Time & Date': this.formatDate(trip.travelEnd),
-    'Earliest Start': this.formatDate(trip.earliestStart),
-    'Duration': trip.duration ?? '',
-    'Opening Kms': trip.openingKms ?? '',
-    'Closing Kms': trip.closingKms ?? '',
-    'Travelled Kms': trip.travelledKms ?? ''
-    })));
-
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Trip Duration Report');
-    XLSX.writeFile(workbook, 'TripDurationReport.xlsx');
+  if (!this.filteredTripDurationReport || this.filteredTripDurationReport.length === 0) {
+    alert('No trip duration data to export!');
+    return;
   }
+
+  const header = [
+    'Trip ID',
+    'Vehicle Name',
+    'Location',
+    'Project Number',
+    'Booking Start Time & Date',
+    'Booking End Time & Date',
+    'Travel Start Time & Date',
+    'Travel End Time & Date',
+    'Earliest Start',
+    'Use Duration',
+    'Opening Kms',
+    'Closing Kms',
+    'Travelled Kms'
+  ];
+
+  const data = this.filteredTripDurationReport.map(trip => [
+    trip.tripId,
+    trip.vehicleName,
+    trip.location,
+    trip.projectNumber ?? '',
+    this.formatDate(trip.bookingStart),
+    this.formatDate(trip.bookingEnd),
+    this.formatDate(trip.travelStart),
+    this.formatDate(trip.travelEnd),
+    this.formatDate(trip.earliestStart),
+   this.calculateDays(trip.travelStart, trip.travelEnd),
+
+    trip.openingKms ?? '',
+    trip.closingKms ?? '',
+    trip.closingKms && trip.openingKms ? (trip.closingKms - trip.openingKms) : ''
+  ]);
+
+  const worksheet = XLSX.utils.aoa_to_sheet([header, ...data]);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, 'Trip Duration Report');
+  XLSX.writeFile(workbook, 'TripDurationReport.xlsx');
+}
+
+
+  formatDurationDays(duration: string | null): string {
+    if (!duration) return '-';
+    const parts = duration.split(':'); // Expecting format "hh:mm:ss"
+    if (parts.length !== 3) return duration;
+    const hours = parseInt(parts[0], 10);
+    const days = Math.floor(hours / 24);
+    return days === 1 ? '' : `${days} `;
+  }
+
+  calculateDays(start: string | Date, end: string | Date): string {
+  if (!start || !end) return '-';
+  const startDate = new Date(start);
+  const endDate = new Date(end);
+
+  // Round down both dates to midnight to ignore time component
+  startDate.setHours(0, 0, 0, 0);
+  endDate.setHours(0, 0, 0, 0);
+
+  const diffInMs = endDate.getTime() - startDate.getTime();
+
+  if (diffInMs < 0) return '-'; // Optional: handle invalid ranges
+
+  const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24)) + 1;
+
+  return `${diffInDays}`;
+}
+
 
   exportToPdf(): void {
     const pdf = new jsPDF('p', 'mm', 'a4');
@@ -231,10 +295,6 @@ export class ReportComponent implements OnInit {
       pdf.setFontSize(12);
       pdf.text(`Generated by: ${this.user.name} ${this.user.surname}`, 10, 50);
       pdf.text(`Date Generated: ${new Date().toLocaleDateString()}`, 10, 60);
-
-      // Example: Add table or text here for report details, e.g.:
-      // pdf.autoTable({ head: [['Column1', 'Column2']], body: [ ['Data1', 'Data2'] ], startY: 70 });
-
       pdf.save('J&W Reports.pdf');
     };
   }

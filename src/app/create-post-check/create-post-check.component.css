@@ -80,7 +80,10 @@
   resize: vertical; /* Allow vertical resizing */
 }
 
-
+/*Highlight Non-Compliant Items*/
+.bg-danger-subtle {
+  background-color: #f8d7da;
+}
 
 /* Ensure the button container centers its content */
 .button {
@@ -257,3 +260,23 @@ label {
 }
 
 /* More form styling... */
+
+.scrollable-checklist {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.checklist-header {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 0.3rem;
+  user-select: none;
+}
+
+.checklist-row {
+  padding: 0.4rem 0;
+  border-radius: 4px;
+}
+
+.not-compliant-row {
+  background-color: #f8d7da;
+}
