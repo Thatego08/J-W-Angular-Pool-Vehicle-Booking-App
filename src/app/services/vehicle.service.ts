@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, tap, throwError } from 'rxjs';
+import { map, Observable, tap, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { catchError } from 'rxjs';
 import { Colour } from '../models/colour.model';
@@ -110,6 +110,36 @@ applyAllFilters(vehicles: Vehicle[]): Vehicle[] {
       );
   }
   
+// getPoolVehicles(startDate: Date, endDate: Date): Observable<Vehicle[]> {
+//   const params = new HttpParams()
+//     .set('startDate', startDate.toISOString())
+//     .set('endDate', endDate.toISOString());
+
+//   return this.http.get<Vehicle[]>(`${this.apiUrl}/GetAvailableVehicles`, { params })
+//     .pipe(
+//       map((vehicles: Vehicle[]) => vehicles.map(vehicle => ({
+//         ...vehicle,
+//         // Map nested properties
+//         vehicleMake: vehicle.vehicleMake || { name: 'N/A' },
+//         vehicleModel: vehicle.vehicleModel || { vehicleModelName: 'N/A' },
+//         colour: vehicle.colour || { name: 'N/A' },
+//         status: vehicle.status || { name: 'N/A' }
+//       }))),
+//       tap(response => {
+//         console.log('Enhanced Vehicle Details:', response);
+//         response.forEach(vehicle => {
+//           console.log(
+//             `Make: ${vehicle.vehicleMake?.name}, Model: ${vehicle.vehicleModel?.vehicleModelName}, Color: ${vehicle.colour?.name}`
+//           );
+//         });
+//       }),
+//       catchError(error => {
+//         console.error('API Error:', error);
+//         throw error;
+//       })
+//     );
+// }
+
   getVehicle(id: number): Observable<Vehicle> {
     return this.http.get<Vehicle>(`${this.apiUrl}/${id}`);
   }

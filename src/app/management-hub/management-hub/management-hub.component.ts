@@ -9,16 +9,12 @@ import { AuthService } from '../../user/auth.service';
 })
 
 export class ManagementHubComponent implements OnInit {
-  dashboardSummary: any = {};
+ dashboardSummary: any = {};
   recentBookings: any[] = [];
   recentVehicles: any[] = [];
   activeIssues: any[] = [];
   overdueBookings: any[] = [];
   loading = true;
-totalVehicles: any;
-availableVehicles: any;
-bookedVehicles: any;
-todayBookings: any;
 
   constructor(
     private dashboardService: DashboardService,
@@ -30,25 +26,40 @@ todayBookings: any;
   }
 
   loadDashboardData(): void {
-    this.dashboardService.getDashboardSummary().subscribe(summary => {
-      this.dashboardSummary = summary;
+    this.dashboardService.getDashboardSummary().subscribe({
+      next: (summary) => {
+        this.dashboardSummary = summary;
+      },
+      error: (err) => console.error('Failed to load summary', err)
     });
 
-    this.dashboardService.getRecentBookings().subscribe(bookings => {
-      this.recentBookings = bookings;
+    this.dashboardService.getRecentBookings().subscribe({
+      next: (bookings) => {
+        this.recentBookings = bookings;
+      },
+      error: (err) => console.error('Failed to load bookings', err)
     });
 
-    this.dashboardService.getRecentlyAddedVehicles().subscribe(vehicles => {
-      this.recentVehicles = vehicles;
-      this.loading = false;
+    this.dashboardService.getRecentlyAddedVehicles().subscribe({
+      next: (vehicles) => {
+        this.recentVehicles = vehicles;
+      },
+      error: (err) => console.error('Failed to load vehicles', err)
     });
 
-    this.dashboardService.getActiveIssues().subscribe(issues => {
-      this.activeIssues = issues;
+    this.dashboardService.getActiveIssues().subscribe({
+      next: (issues) => {
+        this.activeIssues = issues;
+      },
+      error: (err) => console.error('Failed to load issues', err)
     });
 
-    this.dashboardService.getOverdueBookings().subscribe(bookings => {
-      this.overdueBookings = bookings;
+    this.dashboardService.getOverdueBookings().subscribe({
+      next: (bookings) => {
+        this.overdueBookings = bookings;
+        this.loading = false;
+      },
+      error: (err) => console.error('Failed to load overdue bookings', err)
     });
   }
 
