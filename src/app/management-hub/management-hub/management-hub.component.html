@@ -9,13 +9,20 @@
     </div>
   </div>
 
+  <div *ngIf="loading" class="text-center p-5">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+  <p class="mt-2">Loading dashboard data...</p>
+</div>
+
   <!-- Summary Cards -->
   <div class="row mb-4">
     <div class="col-md-2 mb-3">
       <div class="card border-primary">
         <div class="card-body text-center">
           <h5 class="card-title">Total Vehicles</h5>
-          <p class="card-text display-5"> <!-- {{ totalVehicles }} --> 15</p>
+          <p class="card-text display-5">{{ dashboardSummary.totalVehicles || 0 }}</p>
         </div>
       </div>
     </div>
@@ -24,7 +31,7 @@
       <div class="card border-success">
         <div class="card-body text-center">
           <h5 class="card-title">Available</h5>
-          <p class="card-text display-5"><!--{{ availableVehicles }} -->10</p>
+          <p class="card-text display-5">{{ dashboardSummary.availableVehicles || 0 }}</p>
         </div>
       </div>
     </div>
@@ -33,7 +40,7 @@
       <div class="card border-warning">
         <div class="card-body text-center">
           <h5 class="card-title">Booked</h5>
-          <p class="card-text display-5"><!--{{ bookedVehicles }} -->5 </p>
+          <p class="card-text display-5">{{ dashboardSummary.bookedVehicles || 0 }}</p>
         </div>
       </div>
     </div>
@@ -42,7 +49,7 @@
       <div class="card border-info">
         <div class="card-body text-center">
           <h5 class="card-title">Today's Bookings</h5>
-          <p class="card-text display-5"><!--{{ todayBookings }}--> 3</p>
+          <p class="card-text display-5">{{ dashboardSummary.todaysBookings || 0 }}</p>
         </div>
       </div>
     </div>
@@ -51,25 +58,25 @@
       <div class="card border-danger">
         <div class="card-body text-center">
           <h5 class="card-title">Overdue</h5>
-          <p class="card-text display-5"><!--{{ overdueBookings }}--> 1 </p>
+          <p class="card-text display-5">{{ dashboardSummary.overdueBookings || 0 }}</p>
         </div>
       </div>
     </div>
     
-    <!-- <div class="col-md-2 mb-3">
+    <div class="col-md-2 mb-3">
       <div class="card border-danger">
         <div class="card-body text-center">
           <h5 class="card-title">Open Issues</h5>
-          <p class="card-text display-5">{{ unresolvedIssues }}</p>
+          <p class="card-text display-5">{{ dashboardSummary.unresolvedIssues || 0 }}</p>
         </div>
       </div>
     </div>
-  </div> -->
+  </div>
 
   <!-- Recent Activity -->
   <div class="row">
     <!-- Recent Bookings -->
-    <!-- <div class="col-md-4 mb-4">
+    <div class="col-md-4 mb-4">
       <div class="card h-100">
         <div class="card-header bg-primary text-white">
           <i class="bi bi-calendar-check me-2"></i> Recent Bookings
@@ -93,17 +100,17 @@
           </a>
         </div>
       </div>
-    </div> -->
+    </div>
     
-    <!-- Recent Issues
+    <!-- Recent Issues -->
     <div class="col-md-4 mb-4">
       <div class="card h-100">
         <div class="card-header bg-warning text-dark">
-          <i class="bi bi-exclamation-triangle me-2"></i> Recent Issues
+          <i class="bi bi-exclamation-triangle me-2"></i> Active Issues
         </div>
         <div class="card-body">
           <ul class="list-group list-group-flush">
-            <li *ngFor="let issue of recentIssues" class="list-group-item">
+            <li *ngFor="let issue of activeIssues" class="list-group-item">
               <div class="d-flex justify-content-between">
                 <strong>{{ issue.vehicleName }}</strong>
                 <span>{{ issue.reportedDate | date: 'shortDate' }}</span>
@@ -116,12 +123,12 @@
               </div>
             </li>
           </ul>
-        </div> -->
-        <!-- <div class="card-footer text-end">
+        </div>
+        <div class="card-footer text-end">
           <a routerLink="/issues" class="btn btn-sm btn-outline-warning">
             View All
           </a>
-        </div> -->
+        </div>
       </div>
     </div>
     
@@ -181,3 +188,4 @@
       </div>
     </div>
   </div>
+</div>

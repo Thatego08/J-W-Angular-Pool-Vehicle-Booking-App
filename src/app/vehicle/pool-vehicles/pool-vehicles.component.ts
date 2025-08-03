@@ -34,7 +34,7 @@ export class PoolVehicleComponent implements OnInit {
 
   
   getAllVehicles(startDate: Date, endDate:Date): void {
-    this.vehicleService.getAvailableVehicles(startDate, endDate).subscribe({
+    this.vehicleService.getAllVehicles().subscribe({
     next: (vehicles) => {
       this.vehicles = vehicles;
       this.filteredVehicles = this.applyAllFilters(vehicles);
