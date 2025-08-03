@@ -128,4 +128,8 @@ getAvailableVehicles(startDate: Date, endDate: Date, cabinType?: string): Observ
   sendConfirmationEmail(bookingID: number): Observable<any> {
     return this.http.post(`${this.baseUrl}/SendConfirmationEmail/${bookingID}`, {});
   }
+
+  getAllBookings(): Observable<any[]> {
+  return this.http.get<any[]>(`${this.baseUrl}/bookings`);
+}
 }

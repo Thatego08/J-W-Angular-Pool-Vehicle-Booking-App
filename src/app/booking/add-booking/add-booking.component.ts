@@ -133,7 +133,7 @@ applyAllFilters(vehicles: Vehicle[]): Vehicle[] {
     return typeMatch && driveMatch && transmissionMatch &&  towBarMatch && canopyMatch && complianceMatch && protectionMatch;
   });
 }
-
+  loadingVehicles: boolean = false;
 // Update all filters when any change occurs
 
 onComplianceChange(): void {
@@ -196,11 +196,69 @@ myfilterVehiclesByType(vehicles: Vehicle[]): Vehicle[] {
       // // Listen to form control changes
       // this.bookingForm.get('startDate')?.valueChanges.subscribe(() => this.onStartDateEndDateChange());
       // this.bookingForm.get('endDate')?.valueChanges.subscribe(() => this.onStartDateEndDateChange());
+   this.bookingForm.get('startDate')?.valueChanges.subscribe(() => this.onStartDateEndDateChange());
+    this.bookingForm.get('endDate')?.valueChanges.subscribe(() => this.onStartDateEndDateChange());
+
+      
     }
-    // Add to your component class
-onDriveTypeChange(): void {
-  this.updateFilters();
-}
+onStartDateEndDateChange(): void {
+    const startDateString = this.bookingForm.value.startDate;
+    const endDateString = this.bookingForm.value.endDate;
+  
+    if (startDateString && endDateString) {
+      const startDate = new Date(startDateString);
+      const endDate = new Date(endDateString);
+  
+      // Ensure valid date conversion
+      if (!isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
+        this.loadingVehicles = true;
+        this.fetchAvailableVehicles(startDate, endDate);
+      } else {
+        console.error('Invalid date provided');
+        this.toastr.error('Invalid date provided', 'BookingForm');
+        this.filteredVehicles = [];
+      }
+    } else {
+      this.filteredVehicles = [];
+    }
+  }
+//  fetchAvailableVehicles(startDate: Date, endDate: Date): void {
+//     this.bookingService.getAvailableVehicles(startDate, endDate).subscribe({
+//       next: (vehicles) => {
+//         // Process and filter vehicles
+//         this.vehicles = vehicles.map(v => ({
+//           ...v,
+//           hasTowBar: v.hasTowBar === true || 
+//                      (typeof v.hasTowBar === 'string' && (v.hasTowBar as string).toLowerCase().includes('tow')),
+//           hasCanopy: v.hasCanopy === true || 
+//                      (typeof v.hasCanopy === 'string' && (v.hasCanopy as string).toLowerCase().includes('canopy')),
+//         }));
+
+//         // Generate filter options
+//         const allCompliance = vehicles.map(v => v.compliance || 'None');
+//         this.complianceOptions = ['All', ...new Set(allCompliance)];
+        
+//         const allProtection = vehicles.map(v => v.protection || 'None');
+//         this.protectionOptions = ['All', ...new Set(allProtection)];
+        
+//         // Apply initial filters
+//         this.filteredVehicles = this.applyAllFilters(vehicles);
+//         this.loadingVehicles = false;
+//       },
+//       error: (error) => {
+//         console.error('Error fetching available vehicles', error);
+//         this.toastr.error('Failed to fetch available vehicles.');
+//         this.filteredVehicles = [];
+//         this.loadingVehicles = false;
+//       }
+//     });
+//   }
+//     // Add to your component class
+// onDriveTypeChange(): void {
+//   this.updateFilters();
+// }
+
+
 
 onTransmissionChange(): void {
   this.updateFilters();
@@ -240,23 +298,23 @@ onVehicleTypeChange(): void {
 }
 
 
-    onStartDateEndDateChange(): void {
-      const startDateString = this.bookingForm.value.startDate;
-      const endDateString = this.bookingForm.value.endDate;
+    // onStartDateEndDateChange(): void {
+    //   const startDateString = this.bookingForm.value.startDate;
+    //   const endDateString = this.bookingForm.value.endDate;
     
-      if (startDateString && endDateString) {
-        const startDate = new Date(startDateString); // Convert to Date object
-        const endDate = new Date(endDateString);
+    //   if (startDateString && endDateString) {
+    //     const startDate = new Date(startDateString); // Convert to Date object
+    //     const endDate = new Date(endDateString);
     
-        // Ensure valid date conversion
-        if (!isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
-          this.fetchAvailableVehicles(startDate, endDate);
-        } else {
-          console.error('Invalid date provided');
-          this.toastr.error('Invalid date provided', 'BookingForm');
-        }
-      }
-    }
+    //     // Ensure valid date conversion
+    //     if (!isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
+    //       this.fetchAvailableVehicles(startDate, endDate);
+    //     } else {
+    //       console.error('Invalid date provided');
+    //       this.toastr.error('Invalid date provided', 'BookingForm');
+    //     }
+    //   }
+    // }
     
   
 
@@ -332,7 +390,7 @@ onVehicleTypeChange(): void {
       this.bookingService.createBooking(booking).subscribe({
         next: (response) => {
           console.log('API Response:', response);
-          this.updateVehicleStatus(this.bookingForm.value.vehicleName, 2);
+          //this.updateVehicleStatus(this.bookingForm.value.vehicleName, 2);
           this.notificationMessage = 'Your Booking has successfully been made!';
           this.isSuccess = true;
   

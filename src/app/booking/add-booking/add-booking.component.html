@@ -59,7 +59,7 @@
 <div class="filter-section">
   <h5>Additional Vehicle Filters</h5>
   
-  <!-- Drive Type -->
+  <!-- Drive Type
   <div class="form-group">
     <label>Drive Type</label>
     <div class="btn-group-vertical">
@@ -77,7 +77,7 @@
       </label>
       
     </div>
-  </div>
+  </div> -->
 
   <!-- Transmission -->
   <div class="form-group">
@@ -126,11 +126,38 @@
   </select>
 </div>
 <!-- Existing Vehicle Dropdown -->
+<!-- Vehicle Selection -->
 <div class="form-group">
-  <label for="vehicleName">Vehicle</label>
-  <select id="vehicleName" formControlName="vehicleName" class="form-control">
-    <option *ngFor="let vehicle of filteredVehicles" [value]="vehicle.name">{{ vehicle.name }} - {{vehicle.registrationNumber }}</option>
+  <label for="vehicleName">Select Vehicle:</label>
+  
+  <!-- Loading indicator -->
+  <div *ngIf="loadingVehicles" class="alert alert-info">
+    <i class="fa fa-spinner fa-spin"></i> Loading available vehicles...
+  </div>
+
+  <!-- No vehicles available message -->
+  <div *ngIf="!loadingVehicles && filteredVehicles.length === 0" class="alert alert-warning">
+    No vehicles available for the selected dates. Please try different dates.
+  </div>
+
+  <!-- Vehicle dropdown -->
+  <select *ngIf="!loadingVehicles && filteredVehicles.length > 0"
+          id="vehicleName" 
+          formControlName="vehicleName" 
+          class="form-control" 
+          required>
+    <option [ngValue]="null">-- Select Vehicle --</option>
+    <option *ngFor="let vehicle of filteredVehicles" 
+            [value]="vehicle.name">
+      {{ vehicle.name }} - {{ vehicle.registrationNumber }}
+      {{ vehicle.vehicleMake?.name }} {{ vehicle.vehicleModel?.vehicleModelName }}
+    </option>
   </select>
+  
+  <div *ngIf="bookingForm.get('vehicleName')?.invalid && bookingForm.get('vehicleName')?.touched" 
+       class="text-danger">
+    Please select a vehicle
+  </div>
 </div>
 
     <!-- <button type="submit" class="btn btn-success" [disabled]="!bookingForm.valid">Save</button> -->
@@ -142,6 +169,12 @@
   </form>
 </div>
 
+<!-- ... existing form ... -->
+
+
+
+
+
 <!-- <div *ngIf="complianceOptions.length > 1">
   <h5>Debug Info</h5>
   <p>Compliance Options: {{ complianceOptions | json }}</p>
@@ -150,6 +183,9 @@
   <p>Selected Protection: {{ selectedProtection }}</p>
 </div> -->
 
+
+
+<!-- ... rest of form ... -->
 
 
 <app-notifications *ngIf="notificationMessage" [message]="notificationMessage" [isSuccess]="isSuccess"></app-notifications>
