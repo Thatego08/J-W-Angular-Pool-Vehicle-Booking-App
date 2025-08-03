@@ -4,14 +4,15 @@ import { catchError, Observable, tap, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { BookingModel, CreateBookingModel } from '../models/booking.model';
 import { Vehicle } from '../models/vehicle.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookingService {
   private baseUrl = 'https://localhost:7041/api/Booking';
+  constructor(private http: HttpClient, private toastr: ToastrService) { }
 
-  constructor(private http: HttpClient) { }
 
   getBookings(): Observable<BookingModel[]> {
     return this.http.get<BookingModel[]>(`${this.baseUrl}/GetAllBookings`);
@@ -41,24 +42,30 @@ export class BookingService {
 //   );
 // }
 
-getAvailableVehicles(startDate: Date, endDate: Date, cabinType?: string): Observable<Vehicle[]> {
+getAvailableVehicles(startDate: Date, endDate: Date): Observable<Vehicle[]> {
   let params = new HttpParams()
     .set('startDate', startDate.toISOString())
     .set('endDate', endDate.toISOString());
 
-  if (cabinType) {
-    params = params.set('cabinType', cabinType);
-  }
+
 
   return this.http.get<Vehicle[]>(`${this.baseUrl}/GetAvailableVehicles`, { params }).pipe(
     map(vehicles => vehicles.map(v => ({
       ...v,
       compliance: v.compliance || '',   // Ensure fallback if null
-      protection: v.protection || ''    // Ensure fallback if null
+      protection: v.protection || '',
+      description: v.description || '' ,   // Ensure fallback if null
+
+          // Convert to boolean
+     hasTowBar: v.hasTowBar === true || 
+                  (typeof v.hasTowBar === 'string' && (v.hasTowBar as string).toLowerCase().includes('tow')),
+        hasCanopy: v.hasCanopy === true || 
+                  (typeof v.hasCanopy === 'string' && (v.hasCanopy as string).toLowerCase().includes('canopy'))
     }))),
-    tap(response => console.log('API Vehicles Response:', response)),  // Optional debug
+    tap(response => console.log('API Available Vehicles Response:', response)),  // Optional debug
     catchError(error => {
       console.error('API Error:', error);
+      this.toastr.error('Failed to load available vehicles. Please try different dates.');
       return throwError(() => new Error('Failed to fetch vehicles'));
     })
   );

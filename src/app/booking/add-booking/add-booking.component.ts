@@ -45,94 +45,187 @@ protectionOptions: string[] = ['All','ROPS'];
 //     }
 //   });
 // }
+// fetchAvailableVehicles(startDate: Date, endDate: Date): void {
+//   console.log('Fetching vehicles for:', startDate, 'to', endDate);
+  
+//   this.bookingService.getAvailableVehicles(startDate, endDate).subscribe({
+//     next: (vehicles: Vehicle[]) => {
+//       console.log('Raw API Response:', vehicles);
+
+      
+
+//             // Process vehicle features
+//       const processedVehicles = vehicles.map(v => ({
+//         ...v,
+//         hasTowBar: v.hasTowBar === true || 
+//                   (typeof v.hasTowBar === 'string' && (v.hasTowBar as string).toLowerCase().includes('tow')),
+//         hasCanopy: v.hasCanopy === true || 
+//                   (typeof v.hasCanopy === 'string' && (v.hasCanopy as string).toLowerCase().includes('canopy'))
+//       }));
+
+      
+
+//        // Generate compliance options - include empty as "None"
+//       const allCompliance = vehicles.map(v => v.compliance || 'None');
+//       this.complianceOptions = ['All', ...new Set(allCompliance)];
+      
+//       // Generate protection options - include empty as "None"
+//       const allProtection = vehicles.map(v => v.protection || 'None');
+//       this.protectionOptions = ['All', ...new Set(allProtection)];
+      
+//       console.log('Compliance Options:', this.complianceOptions);
+//       console.log('Protection Options:', this.protectionOptions);
+      
+//       vehicles = vehicles.map(v => ({
+//         ...v,
+//         hasTowBar: v.hasTowBar === true || 
+//                    (typeof v.hasTowBar === 'string' && (v.hasTowBar as string).toLowerCase().includes('tow')),
+//         hasCanopy: v.hasCanopy === true || 
+//                    (typeof v.hasCanopy === 'string' && (v.hasCanopy as string).toLowerCase().includes('canopy')),
+        
+//       }));
+
+//       // Log each vehicle's details
+//       vehicles.forEach(v => {
+//         console.log(
+//           `Vehicle: ${v.name} | ` +
+//           `Cabin: ${v.cabinType} | Drive: ${v.driveType} | ` +
+//           `Trans: ${v.transmission} | Tow: ${v.hasTowBar} | Canopy: ${v.hasCanopy}`+
+//           ` Compliance: "${v.compliance}", Protection: "${v.protection}"`
+//         );
+//       });
+      
+      
+
+
+//       this.filteredVehicles = this.applyAllFilters(vehicles);
+//       console.log('Filtered Vehicles:', this.filteredVehicles);
+//     },
+//     error: (error) => {
+//       console.error('Error fetching available vehicles', error);
+//       this.toastr.error('Failed to fetch available vehicles.');
+//     }
+
+    
+//   });
+// }
+
 fetchAvailableVehicles(startDate: Date, endDate: Date): void {
   console.log('Fetching vehicles for:', startDate, 'to', endDate);
-  
-  this.bookingService.getAvailableVehicles(startDate, endDate).subscribe({
-    next: (vehicles) => {
-      console.log('Raw API Response:', vehicles);
+  this.loadingVehicles = true;
 
-       // Generate compliance options - include empty as "None"
-      const allCompliance = vehicles.map(v => v.compliance || 'None');
-      this.complianceOptions = ['All', ...new Set(allCompliance)];
+  this.bookingService.getAvailableVehicles(startDate, endDate).subscribe({
+    next: (vehicles: Vehicle[]) => {
+      console.log('API Response:', vehicles);
       
-      // Generate protection options - include empty as "None"
-      const allProtection = vehicles.map(v => v.protection || 'None');
-      this.protectionOptions = ['All', ...new Set(allProtection)];
-      
-      console.log('Compliance Options:', this.complianceOptions);
-      console.log('Protection Options:', this.protectionOptions);
-      
-      vehicles = vehicles.map(v => ({
+      // Process vehicle features
+      const processedVehicles = vehicles.map(v => ({
         ...v,
         hasTowBar: v.hasTowBar === true || 
-                   (typeof v.hasTowBar === 'string' && (v.hasTowBar as string).toLowerCase().includes('tow')),
+                  (typeof v.hasTowBar === 'string' && (v.hasTowBar as string).toLowerCase().includes('tow')),
         hasCanopy: v.hasCanopy === true || 
-                   (typeof v.hasCanopy === 'string' && (v.hasCanopy as string).toLowerCase().includes('canopy')),
-        
+                  (typeof v.hasCanopy === 'string' && (v.hasCanopy as string).toLowerCase().includes('canopy'))
       }));
 
-      // Log each vehicle's details
-      vehicles.forEach(v => {
-        console.log(
-          `Vehicle: ${v.name} | ` +
-          `Cabin: ${v.cabinType} | Drive: ${v.driveType} | ` +
-          `Trans: ${v.transmission} | Tow: ${v.hasTowBar} | Canopy: ${v.hasCanopy}`+
-          ` Compliance: "${v.compliance}", Protection: "${v.protection}"`
-        );
-      });
+      // Update filter options
+      const allCompliance = processedVehicles.map(v => v.compliance || 'None');
+      this.complianceOptions = ['All', ...new Set(allCompliance)];
       
+      const allProtection = processedVehicles.map(v => v.protection || 'None');
+      this.protectionOptions = ['All', ...new Set(allProtection)];
       
-
-
-      this.filteredVehicles = this.applyAllFilters(vehicles);
+      // Update vehicles
+      this.vehicles = processedVehicles;
+      this.filteredVehicles = this.applyAllFilters(processedVehicles);
+      
+      this.loadingVehicles = false;
       console.log('Filtered Vehicles:', this.filteredVehicles);
     },
     error: (error) => {
       console.error('Error fetching available vehicles', error);
-      this.toastr.error('Failed to fetch available vehicles.');
+      this.toastr.error('Failed to load available vehicles. Please try different dates.');
+      this.filteredVehicles = [];
+      this.loadingVehicles = false;
     }
-
-    
   });
 }
-// Combined filter method
+
+// Update filter method for better type handling
 applyAllFilters(vehicles: Vehicle[]): Vehicle[] {
   return vehicles.filter(vehicle => {
-    // Cabin Type filter
-      const typeMatch = this.selectedVehicleType === 'All' || 
-      (this.selectedVehicleType === 'Double Cab' && vehicle.cabinType === 'Double') ||
-      (this.selectedVehicleType === 'Single Cab' && vehicle.cabinType === 'Single') ||
+    // Simplify vehicle type matching
+    const cabinTypeMap: Record<string, string> = {
+      'Double Cab': 'Double',
+      'Single Cab': 'Single',
+      'Extra Cab': 'Extra',
+      'SUV': 'SUV'
+    };
+    
+    const typeMatch = this.selectedVehicleType === 'All' || 
+                     vehicle.cabinType === cabinTypeMap[this.selectedVehicleType];
 
-            (this.selectedVehicleType === 'SUV' && vehicle.cabinType === 'SUV') ||
-      (this.selectedVehicleType === 'Extra Cab' && vehicle.cabinType === 'Extra');
-
-
-    // Drive Type filter
+    // Other filters remain the same
     const driveMatch = this.selectedDriveType === 'All' || 
-      vehicle.driveType == (this.selectedDriveType);
+                      vehicle.driveType === this.selectedDriveType;
 
-    // Transmission filter
     const transmissionMatch = this.selectedTransmission === 'All' ||
-      vehicle.transmission === this.selectedTransmission;
+                             vehicle.transmission === this.selectedTransmission;
 
-    // Features filter
-    const towBarMatch = !this.hasTowBar || vehicle.description.includes('Tow bar')|| vehicle.hasTowBar;
-    const canopyMatch = !this.hasCanopy || vehicle.description.includes('Canopy') || vehicle.hasCanopy;
+    const towBarMatch = !this.hasTowBar || 
+                       (vehicle.description?.includes('Tow bar') || vehicle.hasTowBar);
+    
+    const canopyMatch = !this.hasCanopy || 
+                       (vehicle.description?.includes('Canopy') || vehicle.hasCanopy);
 
-     // Compliance filter (handle "None")
     const vehicleCompliance = vehicle.compliance || 'None';
     const complianceMatch = this.selectedCompliance === 'All' || 
                            vehicleCompliance === this.selectedCompliance;
     
-    // Protection filter (handle "None")
     const vehicleProtection = vehicle.protection || 'None';
     const protectionMatch = this.selectedProtection === 'All' || 
                            vehicleProtection === this.selectedProtection;
 
-    return typeMatch && driveMatch && transmissionMatch &&  towBarMatch && canopyMatch && complianceMatch && protectionMatch;
+    return typeMatch && driveMatch && transmissionMatch && 
+           towBarMatch && canopyMatch && complianceMatch && protectionMatch;
   });
 }
+// // Combined filter method
+// applyAllFilters(vehicles: Vehicle[]): Vehicle[] {
+//   return vehicles.filter(vehicle => {
+//     // Cabin Type filter
+//       const typeMatch = this.selectedVehicleType === 'All' || 
+//       (this.selectedVehicleType === 'Double Cab' && vehicle.cabinType === 'Double') ||
+//       (this.selectedVehicleType === 'Single Cab' && vehicle.cabinType === 'Single') ||
+
+//             (this.selectedVehicleType === 'SUV' && vehicle.cabinType === 'SUV') ||
+//       (this.selectedVehicleType === 'Extra Cab' && vehicle.cabinType === 'Extra');
+
+
+//     // Drive Type filter
+//     const driveMatch = this.selectedDriveType === 'All' || 
+//       vehicle.driveType == (this.selectedDriveType);
+
+//     // Transmission filter
+//     const transmissionMatch = this.selectedTransmission === 'All' ||
+//       vehicle.transmission === this.selectedTransmission;
+
+//     // Features filter
+//     const towBarMatch = !this.hasTowBar || vehicle.description.includes('Tow bar')|| vehicle.hasTowBar;
+//     const canopyMatch = !this.hasCanopy || vehicle.description.includes('Canopy') || vehicle.hasCanopy;
+
+//      // Compliance filter (handle "None")
+//     const vehicleCompliance = vehicle.compliance || 'None';
+//     const complianceMatch = this.selectedCompliance === 'All' || 
+//                            vehicleCompliance === this.selectedCompliance;
+    
+//     // Protection filter (handle "None")
+//     const vehicleProtection = vehicle.protection || 'None';
+//     const protectionMatch = this.selectedProtection === 'All' || 
+//                            vehicleProtection === this.selectedProtection;
+
+//     return typeMatch && driveMatch && transmissionMatch &&  towBarMatch && canopyMatch && complianceMatch && protectionMatch;
+//   });
+// }
   loadingVehicles: boolean = false;
 // Update all filters when any change occurs
 
@@ -222,41 +315,7 @@ onStartDateEndDateChange(): void {
       this.filteredVehicles = [];
     }
   }
-//  fetchAvailableVehicles(startDate: Date, endDate: Date): void {
-//     this.bookingService.getAvailableVehicles(startDate, endDate).subscribe({
-//       next: (vehicles) => {
-//         // Process and filter vehicles
-//         this.vehicles = vehicles.map(v => ({
-//           ...v,
-//           hasTowBar: v.hasTowBar === true || 
-//                      (typeof v.hasTowBar === 'string' && (v.hasTowBar as string).toLowerCase().includes('tow')),
-//           hasCanopy: v.hasCanopy === true || 
-//                      (typeof v.hasCanopy === 'string' && (v.hasCanopy as string).toLowerCase().includes('canopy')),
-//         }));
 
-//         // Generate filter options
-//         const allCompliance = vehicles.map(v => v.compliance || 'None');
-//         this.complianceOptions = ['All', ...new Set(allCompliance)];
-        
-//         const allProtection = vehicles.map(v => v.protection || 'None');
-//         this.protectionOptions = ['All', ...new Set(allProtection)];
-        
-//         // Apply initial filters
-//         this.filteredVehicles = this.applyAllFilters(vehicles);
-//         this.loadingVehicles = false;
-//       },
-//       error: (error) => {
-//         console.error('Error fetching available vehicles', error);
-//         this.toastr.error('Failed to fetch available vehicles.');
-//         this.filteredVehicles = [];
-//         this.loadingVehicles = false;
-//       }
-//     });
-//   }
-//     // Add to your component class
-// onDriveTypeChange(): void {
-//   this.updateFilters();
-// }
 
 
 
@@ -281,15 +340,6 @@ onFeaturesChange(): void {
     //   });
     // }
 
-// Add this method to handle vehicle type changes
-// onVehicleTypeChange(): void {
-//   const startDate = this.bookingForm.value.startDate;
-//   const endDate = this.bookingForm.value.endDate;
-  
-//   if (startDate && endDate) {
-//     this.fetchAvailableVehicles(new Date(startDate), new Date(endDate));
-//   }
-// }
 
 // Add this to handle vehicle type changes
 onVehicleTypeChange(): void {
@@ -298,24 +348,7 @@ onVehicleTypeChange(): void {
 }
 
 
-    // onStartDateEndDateChange(): void {
-    //   const startDateString = this.bookingForm.value.startDate;
-    //   const endDateString = this.bookingForm.value.endDate;
-    
-    //   if (startDateString && endDateString) {
-    //     const startDate = new Date(startDateString); // Convert to Date object
-    //     const endDate = new Date(endDateString);
-    
-    //     // Ensure valid date conversion
-    //     if (!isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
-    //       this.fetchAvailableVehicles(startDate, endDate);
-    //     } else {
-    //       console.error('Invalid date provided');
-    //       this.toastr.error('Invalid date provided', 'BookingForm');
-    //     }
-    //   }
-    // }
-    
+
   
 
   prepopulateUserName(): void {
