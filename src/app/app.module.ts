@@ -114,6 +114,7 @@ import { CalendarViewComponent } from './calendar-view/calendar-view.component';
 import { TransmissionListComponent } from './vehicle/transmission-list/transmission-list.component';
 import { EditTransmissionListComponent } from './vehicle/edit-transmission-list/edit-transmission-list.component';
 import { AddTransmissionComponent } from './vehicle/add-transmission/add-transmission.component';
+import { ManagementHubComponent } from './management-hub/management-hub/management-hub.component';
 
 
 @NgModule({
@@ -201,7 +202,8 @@ import { AddTransmissionComponent } from './vehicle/add-transmission/add-transmi
       CalendarViewComponent,
       TransmissionListComponent,
       EditTransmissionListComponent,
-      AddTransmissionComponent
+      AddTransmissionComponent,
+      ManagementHubComponent
   ],
   imports: [
     BrowserModule,

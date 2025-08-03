@@ -84,6 +84,7 @@ import { EditServiceComponent } from './vehicle/edit-service/edit-service.compon
 import { AddTransmissionComponent } from './vehicle/add-transmission/add-transmission.component';
 import { TransmissionListComponent } from './vehicle/transmission-list/transmission-list.component';
 import { EditTransmissionListComponent } from './vehicle/edit-transmission-list/edit-transmission-list.component';
+import { ManagementHubComponent } from './management-hub/management-hub/management-hub.component';
 
 
 
@@ -180,6 +181,13 @@ const routes: Routes = [
   { path: 'add-transmission', component: AddTransmissionComponent },
   { path: 'edit-transmission/:id', component: EditTransmissionListComponent },
 
+//Dashboard
+
+{path: 'management-hub', 
+    component: ManagementHubComponent,
+    canActivate: [AuthGuard],
+    // data: { roles: ['Admin'] } 
+},
 
  //User routes
   {path: 'auth', component: AuthComponent},

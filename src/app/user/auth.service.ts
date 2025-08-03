@@ -23,6 +23,7 @@ export class AuthService {
   private apiUrl = 'https://localhost:7041/api/User';
   private FapiUrl = 'https://localhost:7041/api/Feedback';
   private bapiUrl = 'https://localhost:7041/api/Admin';
+currentUser: any;
   constructor(private http: HttpClient) 
   {
 
