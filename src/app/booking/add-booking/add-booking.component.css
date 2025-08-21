@@ -29,6 +29,78 @@
   gap: 5px;
 }
 
+ body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header h2 {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #34495e;
+        }
+        .date-input-group {
+            position: relative;
+        }
+        .date-input-group i {
+            position: absolute;
+            left: 12px;
+            top: 12px;
+            color: #7f8c8d;
+        }
+        .date-input {
+            padding-left: 40px;
+        }
+        .btn-book {
+            background-color: #3498db;
+            border: none;
+            padding: 12px;
+            font-weight: 600;
+            margin-top: 10px;
+            width: 100%;
+            transition: all 0.3s;
+        }
+        .btn-book:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+        .date-format-hint {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+        .summary-card {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .summary-card h5 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
 .btn-outline-secondary {
   text-align: left;
 }
