@@ -85,6 +85,7 @@ import { AddTransmissionComponent } from './vehicle/add-transmission/add-transmi
 import { TransmissionListComponent } from './vehicle/transmission-list/transmission-list.component';
 import { EditTransmissionListComponent } from './vehicle/edit-transmission-list/edit-transmission-list.component';
 import { ManagementHubComponent } from './management-hub/management-hub/management-hub.component';
+import { DashboardsComponent } from './Admin/dashboards/dashboards.component';
 
 
 
@@ -198,7 +199,8 @@ const routes: Routes = [
 
 { path: 'audit-log', component: AuditLogComponent },
   
-  {path: 'app-dashboard', component: DashboardComponent},
+
+  {path: 'app-dashboard', component: DashboardsComponent},
   { path: 'app-profile', component: ProfileComponent},
 
   { path: 'app-notifications', component: NotificationsComponent, canActivate: [AuthGuard]},
