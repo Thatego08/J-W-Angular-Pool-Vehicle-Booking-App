@@ -115,6 +115,7 @@ import { TransmissionListComponent } from './vehicle/transmission-list/transmiss
 import { EditTransmissionListComponent } from './vehicle/edit-transmission-list/edit-transmission-list.component';
 import { AddTransmissionComponent } from './vehicle/add-transmission/add-transmission.component';
 import { ManagementHubComponent } from './management-hub/management-hub/management-hub.component';
+import { DashboardsComponent } from './Admin/dashboards/dashboards.component';
 
 
 @NgModule({
@@ -203,7 +204,8 @@ import { ManagementHubComponent } from './management-hub/management-hub/manageme
       TransmissionListComponent,
       EditTransmissionListComponent,
       AddTransmissionComponent,
-      ManagementHubComponent
+      ManagementHubComponent,
+      DashboardsComponent
   ],
   imports: [
     BrowserModule,
