@@ -19,6 +19,11 @@ jobs:
         with:
           submodules: true
           lfs: false
+          # --- FIX: Set git config file permissions ---
+      - name: Fix git config file permissions
+        run: |
+          chmod 664 .git/config
+          find . -name config -path "*/.git/config" -exec chmod 664 {} \;
 
       # --- NEW: Setup Node ---
       - name: Setup Node.js
@@ -55,4 +60,5 @@ jobs:
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_POLITE_CLIFF_020409010 }}
           action: "close"
+
 
