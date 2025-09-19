@@ -20,7 +20,8 @@ export class AuthService {
   private loggedIn = new BehaviorSubject<boolean>(false);
   private userRole = new BehaviorSubject<string>('');
   
-  private apiUrl = 'https://localhost:7041/api/User';
+  private apiUrl = 'https://team34finalapi20250911203340.azurewebsites.net/api/User';
+
   private FapiUrl = 'https://localhost:7041/api/Feedback';
   private bapiUrl = 'https://localhost:7041/api/Admin';
 currentUser: any;
@@ -51,11 +52,18 @@ currentUser: any;
   }
 
   register(registerData: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/register`, registerData)
-      .pipe(
-        catchError(this.handleError)
-      );
-  }
+  return this.http.post<any>(`${this.apiUrl}/register`, registerData).pipe(
+    tap(response => {
+      if (response.token) {
+        console.log('Storing token after registration:', response.token);
+        localStorage.setItem('token', response.token);
+        this.loggedIn.next(true);
+      }
+    }),
+    catchError(this.handleError)
+  );
+}
+
 
   // Update user profile
   updateUserProfile(userName: string, profileData: any): Observable<any> {
