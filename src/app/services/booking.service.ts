@@ -5,12 +5,13 @@ import { map } from 'rxjs/operators';
 import { BookingModel, CreateBookingModel } from '../models/booking.model';
 import { Vehicle } from '../models/vehicle.model';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from '../environments/environment'
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookingService {
-  private baseUrl = 'https://localhost:7041/api/Booking';
+   private baseUrl = `${environment.apiUrl}/Booking`;
   constructor(private http: HttpClient, private toastr: ToastrService) { }
 
 
@@ -114,7 +115,7 @@ getAvailableVehicles(startDate: Date, endDate: Date): Observable<Vehicle[]> {
   
 
   getVehicles(): Observable<Vehicle[]> {
-    return this.http.get<Vehicle[]>('https://localhost:7041/api/Vehicle/GetAllVehicles');
+    return this.http.get<Vehicle[]>(`${environment.apiUrl}/Vehicle/GetAllVehicles`);
   }
 
   private handleError(error: any): Observable<never> {
