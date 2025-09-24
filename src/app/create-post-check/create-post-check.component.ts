@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
+import { environment } from '../environments/environment';
+
 
 @Component({
   selector: 'app-create-post-check',
@@ -67,7 +69,8 @@ export class CreatePostCheckComponent {
       if (this.tripId) {
         this.postCheckForm.patchValue({ TripId: this.tripId });
 
-        this.http.get<any>(`https://localhost:7041/api/Trip/${this.tripId}/opening-kms`)
+       this.http.get<any>(`${environment.apiUrl}/Trip/${this.tripId}/opening-kms`)
+
           .subscribe({
             next: (data) => {
               this.openingKms = data.openingKms;
@@ -160,7 +163,8 @@ export class CreatePostCheckComponent {
       formData.append('MediaFiles', file, file.name);
     });
 
-    this.http.post('https://localhost:7041/api/PostCheck/CreatePostCheck', formData).subscribe({
+    this.http.post(`${environment.apiUrl}/PostCheck/CreatePostCheck`, formData)
+.subscribe({
       next: () => {
         this.successMessage = 'Post check created successfully!';
         this.postCheckForm.reset();
