@@ -4,12 +4,13 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { VehicleChecklist } from '../models/checklist.model';
 import { PostChecklist } from '../models/postchecklist.model';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChecklistService {
-  private apiUrl = 'https://localhost:7041/api/Checklist';
+ private apiUrl = `${environment.apiUrl}/Checklist`;
 
   httpOptions = {
     headers: new HttpHeaders({
