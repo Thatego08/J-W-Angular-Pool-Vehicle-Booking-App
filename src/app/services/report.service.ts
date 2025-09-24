@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError,map } from 'rxjs';
+import { environment } from '../environments/environment'
 
 export interface VehicleReport {
   status: string;
@@ -95,7 +96,7 @@ export interface TripDurationReport {
 export class ReportService {
 
 
-  private baseUrl = 'https://localhost:7041/api/reports';
+ private baseUrl = `${environment.apiUrl}/reports`; 
 
   constructor(private http: HttpClient) {}
 

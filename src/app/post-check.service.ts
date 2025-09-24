@@ -1,12 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from './environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostCheckService {
-  private apiUrl = 'https://localhost:7041/api/PostCheck'; 
+  private apiUrl = `${environment.apiUrl}/PostCheck`;
+
 
   constructor(private http: HttpClient) { }
 

@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Rate } from '../models/rate';
+import { environment } from '../environments/environment'
 
 @Injectable({
   providedIn: 'root'
 })
 export class RateService {
 
-  private baseUrl = `https://localhost:7041/api/Rate`;
+  private baseUrl = `${environment.apiUrl}/Rate`;
 
   constructor(private http: HttpClient) { }
 

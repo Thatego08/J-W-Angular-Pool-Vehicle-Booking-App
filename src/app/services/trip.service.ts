@@ -3,12 +3,13 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { TripModel } from '../trip.model';
+import { environment } from '../environments/environment'
 
 @Injectable({
   providedIn: 'root'
 })
 export class TripService {
-  private apiUrl = 'https://localhost:7041/api/Trip'; // Ensure this matches your backend URL
+  private apiUrl = `${environment.apiUrl}/Trip`; // use environment URL
 
   constructor(private http: HttpClient) {}
 

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
 import { RefuelVehicle } from './refuel-vehicle';
+import { environment } from './environments/environment';
  // Assuming you have a model defined for RefuelVehicle
 
 @Injectable({
@@ -9,7 +10,8 @@ import { RefuelVehicle } from './refuel-vehicle';
 })
 export class RefuelVehicleService {
 
-  private apiUrl = 'https://localhost:7041/api/refuelvehicle'; // Update with your actual API URL
+  
+  private apiUrl = `${environment.apiUrl}/refuelvehicle`;  // Update with your actual API URL
 
   constructor(private http: HttpClient) { }
 
