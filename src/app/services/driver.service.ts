@@ -1,45 +1,52 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, Subject, of, throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { DriverModel } from '../models/driver.model'; 
-import { Router } from '@angular/router';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DriverService {
-  private baseUrl = 'https://localhost:7041/api/Driver';
-
+  private baseUrl = `${environment.apiUrl}/Driver`;
 
   constructor(private http: HttpClient) { }
 
-  getAllDrivers(): Observable<any[]> {
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${localStorage.getItem('token')}`
+  private getHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token');
+    return new HttpHeaders({
+      'Authorization': token ? `Bearer ${token}` : ''
     });
-    return this.http.get<any[]>(`${this.baseUrl}/GetAllDrivers`, { headers });
   }
+
+  getAllDrivers(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/GetAllDrivers`, { headers: this.getHeaders() })
+      .pipe(catchError(this.handleError));
+  }
+
   getDriver(userName: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/SearchDriver/${userName}`);
+    return this.http.get(`${this.baseUrl}/SearchDriver/${userName}`, { headers: this.getHeaders() })
+      .pipe(catchError(this.handleError));
   }
   
   registerDriver(driver: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/RegisterDriver`, driver);
+    return this.http.post(`${this.baseUrl}/RegisterDriver`, driver, { headers: this.getHeaders() })
+      .pipe(catchError(this.handleError));
   }
 
   updateDriver(userName: string, driver: DriverModel): Observable<any> {
-    return this.http.put(`https://localhost:7041/api/Driver/UpdateDriver/${userName}`, driver);
+    return this.http.put(`${this.baseUrl}/UpdateDriver/${userName}`, driver, { headers: this.getHeaders() })
+      .pipe(catchError(this.handleError));
   }
-  
   
   deleteDriver(userName: string): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/DeleteDriver/${userName}`);
+    return this.http.delete(`${this.baseUrl}/DeleteDriver/${userName}`, { headers: this.getHeaders() })
+      .pipe(catchError(this.handleError));
   }
 
-    
-    private handleError(error: any): Observable<never> {
-      console.error(error);
-      return throwError(error.error || 'Server error');
-    }
+  private handleError(error: any): Observable<never> {
+    console.error('DriverService error:', error);
+    return throwError(error.error || 'Server error');
   }
+}
