@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../environments/environment'
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class StatusService {
   constructor(private http: HttpClient) {}
 
   
-  apiUrl = 'https://localhost:7041/api/Status'
+   private apiUrl = `${environment.apiUrl}/Status`; // use deployed API
 
   // Fetch all statuses
   getStatuses(): Observable<any[]> {

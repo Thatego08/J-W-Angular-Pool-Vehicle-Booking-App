@@ -7,14 +7,15 @@ import { Vehicle } from '../models/vehicle.model';
 import { User } from '../models/user';
 import { VehicleMake } from '../models/vehicle-make.model';
 import { VehicleModel } from '../models/vehicle-model.model';
+import { environment } from '../environments/environment'
 
 @Injectable({
   providedIn: 'root'
 })
 export class ServiceService {
 
-  apiUrl = 'https://localhost:7041/api/Service'
-  VapiUrl = 'https://localhost:7041/api/Vehicle/GetAllVehicles'
+    private apiUrl = `${environment.apiUrl}/Service`; // use deployed API
+  private VapiUrl = `${environment.apiUrl}/Vehicle/GetAllVehicles`; // use deploye
   
 httpOptions ={
   headers: new HttpHeaders({

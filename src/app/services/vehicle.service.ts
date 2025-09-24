@@ -17,12 +17,13 @@ import { Compliance } from '../models/compliance.model';
 import { DriveType } from '../models/drive-type.model';
 import { Transmission } from '../models/transmission.model';
 import { VehicleType } from '../models/vehicle-type.model';
+import { environment } from '../environments/environment'
 
 @Injectable({
   providedIn: 'root'
 })
 export class VehicleService {
-  private apiUrl = 'https://localhost:7041/api/Vehicle'
+  private apiUrl = `${environment.apiUrl}/Vehicle`;
   selectedVehicleType!: string;
   selectedDriveType!: string;
   selectedTransmission!: string;
@@ -206,7 +207,7 @@ deleteTransmission(id: number): Observable<any> {
   
   //Colours
 
-  private colourUrl = 'https://localhost:7041/api/Vehicle/GetAllColours'
+private colourUrl = `${environment.apiUrl}/Vehicle/GetAllColours`;
 
 
   getAllColours(): Observable<Colour[]> {
