@@ -4,6 +4,8 @@ import { Observable, tap, catchError, throwError, BehaviorSubject } from 'rxjs';
 import { Feedback } from '../models/feedback.model';
 import { jwtDecode } from 'jwt-decode';
 import { AuditLog } from '../models/auditlog';
+import { environment } from '../environments/environment'
+
 
 // Define the interface for the response from the login API
 
@@ -20,10 +22,9 @@ export class AuthService {
   private loggedIn = new BehaviorSubject<boolean>(false);
   private userRole = new BehaviorSubject<string>('');
   
-  private apiUrl = 'https://team34finalapi20250911203340.azurewebsites.net/api/User';
-
-  private FapiUrl = 'https://localhost:7041/api/Feedback';
-  private bapiUrl = 'https://localhost:7041/api/Admin';
+  private apiUrl = `${environment.apiUrl}/User`;
+  private FapiUrl = `${environment.apiUrl}/Feedback`;
+  private bapiUrl = `${environment.apiUrl}/Admin`;
 currentUser: any;
   constructor(private http: HttpClient) 
   {
