@@ -116,6 +116,8 @@ import { EditTransmissionListComponent } from './vehicle/edit-transmission-list/
 import { AddTransmissionComponent } from './vehicle/add-transmission/add-transmission.component';
 import { ManagementHubComponent } from './management-hub/management-hub/management-hub.component';
 import { DashboardsComponent } from './Admin/dashboards/dashboards.component';
+import { SimpleRegisterComponent } from './user/simple-register/simple-register.component';
+import { SimpleLoginComponent } from './user/simple-login/simple-login.component';
 
 
 @NgModule({
@@ -205,7 +207,9 @@ import { DashboardsComponent } from './Admin/dashboards/dashboards.component';
       EditTransmissionListComponent,
       AddTransmissionComponent,
       ManagementHubComponent,
-      DashboardsComponent
+      DashboardsComponent,
+      SimpleRegisterComponent,
+      SimpleLoginComponent
   ],
   imports: [
     BrowserModule,

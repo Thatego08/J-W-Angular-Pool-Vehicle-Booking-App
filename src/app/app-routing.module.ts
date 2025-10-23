@@ -86,6 +86,8 @@ import { TransmissionListComponent } from './vehicle/transmission-list/transmiss
 import { EditTransmissionListComponent } from './vehicle/edit-transmission-list/edit-transmission-list.component';
 import { ManagementHubComponent } from './management-hub/management-hub/management-hub.component';
 import { DashboardsComponent } from './Admin/dashboards/dashboards.component';
+import { SimpleLoginComponent } from './user/simple-login/simple-login.component';
+import { SimpleRegisterComponent } from './user/simple-register/simple-register.component';
 
 
 
@@ -196,6 +198,9 @@ const routes: Routes = [
 //   { path: 'app-register', component: RegisterComponent },
   { path: 'app-forgot-password', component: ForgotPasswordComponent },
   { path: 'app-reset-password', component: ResetPasswordComponent },
+
+   { path: 'simple-register', component: SimpleRegisterComponent },
+  { path: 'simple-login', component: SimpleLoginComponent },
 
 { path: 'audit-log', component: AuditLogComponent },
   

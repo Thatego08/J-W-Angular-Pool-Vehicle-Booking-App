@@ -428,7 +428,7 @@ onVehicleTypeChange(): void {
           this.isSuccess = true;
   
           setTimeout(() => {
-            this.router.navigate(['/booking-history']);
+            this.router.navigate(['/app-trip']);
           }, 3000); // Delay for 3 seconds
   
         },

@@ -1,31 +1,40 @@
 <div class="container" [class.active]="isActive" id="container">
   <div class="form-container sign-up" style="padding-top: 40px;">
-    <form (ngSubmit)="register()">
+    <form (ngSubmit)="register()" #registerForm="ngForm">
       <h1>Register Account</h1>
-      <input type="text" [(ngModel)]="user.name" name="name" placeholder="Name" required />
-      <input type="text" [(ngModel)]="user.surname" name="surname" placeholder="Surname" required />
-      <input type="email" [(ngModel)]="user.email" name="email" placeholder="Email" required />
-      <input type="phonenumber" [(ngModel)]="user.phoneNumber" name="phoneNumber" placeholder="Phone Number" required />
+      <input type="text" [(ngModel)]="user.name" name="name" placeholder="Name" required 
+             [disabled]="isSubmitting" />
+      <input type="text" [(ngModel)]="user.surname" name="surname" placeholder="Surname" required 
+             [disabled]="isSubmitting" />
+      <input type="email" [(ngModel)]="user.email" name="email" placeholder="Email (@jaws.co.za)" required 
+             [disabled]="isSubmitting" />
+      <small style="color: #666;">Only jaws.co.za emails allowed</small>
+      <input type="tel" [(ngModel)]="user.phoneNumber" name="phoneNumber" placeholder="Phone Number" required 
+             [disabled]="isSubmitting" />
+      
       <div class="password-container">
-        <input [type]="passwordFieldType" [(ngModel)]="user.password" name="password" placeholder="Password" required />
-        <i class="fa" [ngClass]="passwordFieldType === 'password' ? 'fa-eye' : 'fa-eye-slash'" (click)="togglePasswordVisibility()"></i>
+        <input [type]="passwordFieldType" [(ngModel)]="user.password" name="password" 
+               placeholder="Password" required [disabled]="isSubmitting" />
+        <i class="fa" [ngClass]="passwordFieldType === 'password' ? 'fa-eye' : 'fa-eye-slash'" 
+           (click)="togglePasswordVisibility('password')"></i>
       </div>
-      <input type="text" [(ngModel)]="user.role" name="role" placeholder="Role" required />
       
+      <!-- <div class="password-container">
+        <input [type]="confirmPasswordFieldType" [(ngModel)]="user.confirmPassword" name="confirmPassword" 
+               placeholder="Confirm Password" required [disabled]="isSubmitting" />
+        <i class="fa" [ngClass]="confirmPasswordFieldType === 'password' ? 'fa-eye' : 'fa-eye-slash'" 
+           (click)="togglePasswordVisibility('confirmPassword')"></i>
+      </div> -->
 
-    <input type="file" (change)="onFileSelected($event)" name="profilePhoto" />
+      <input type="file" (change)="onFileSelected($event)" name="profilePhoto" 
+             [disabled]="isSubmitting" />
       
-      <button type="submit">Register</button>
+      <button type="submit" [disabled]="isSubmitting">
+        {{ isSubmitting ? 'Registering...' : 'Register' }}
+      </button>
 
-
-      <!-- <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
-      <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div> -->
-
-      <app-notifications  *ngIf="notificationMessage" [message]="notificationMessage" [isSuccess]="isSuccess"></app-notifications>
-
-
-
-
+      <app-notifications *ngIf="notificationMessage" [message]="notificationMessage" [isSuccess]="isSuccess">
+      </app-notifications>
     </form>
   </div>
 
@@ -38,10 +47,11 @@
         <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
         <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
       </div>
-      <span>or use your email password</span>
-      <input type="email" [(ngModel)]="credentials.userName" name="userName" placeholder="User Name" required />
+      <span>or use your username and password</span>
+      <input type="text" [(ngModel)]="credentials.userName" name="userName" placeholder="Username" required />
       <input type="password" [(ngModel)]="credentials.password" name="password" placeholder="Password" required />
-      <a href="app-forgot-password">Forget Your Password?</a>
+      <!-- 5. Fixed logout link -->
+      <a routerLink="/forgot-password">Forgot Your Password?</a>
       <button type="submit">Login</button>
       <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
       <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
@@ -57,10 +67,10 @@
       </div>
       <div class="toggle-panel toggle-right">
         <h1>Hello, Driver!</h1>
-        <p>Register with your personal details to use all of site features</p>
+        <p>Register with your JAWS email to use all of site features</p>
         <button id="register" (click)="toggleForm()">Register</button>
       </div>
-      <button id="home" routerLink="/home">Go Back to Home</button> <!-- Home Button -->
+      <button id="home" routerLink="/home">Go Back to Home</button>
     </div>
   </div>
 </div>

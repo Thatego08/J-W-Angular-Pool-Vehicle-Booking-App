@@ -22,7 +22,7 @@ export class AuthService {
   private loggedIn = new BehaviorSubject<boolean>(false);
   private userRole = new BehaviorSubject<string>('');
   
-  private apiUrl = `${environment.apiUrl}/User`;
+  private apiUrl = `${environment.apiUrl}/Auth`;
   private FapiUrl = `${environment.apiUrl}/Feedback`;
   private bapiUrl = `${environment.apiUrl}/Admin`;
 currentUser: any;
@@ -80,6 +80,15 @@ currentUser: any;
     this.loggedIn.next(false);
     return this.http.post(`${this.apiUrl}/logout`, {});
   }
+
+  // Add to AuthService
+registerSimple(userData: any): Observable<any> {
+  return this.http.post<any>(`${this.apiUrl}/register-simpler`, userData);
+}
+
+loginSimple(credentials: { userName: string; password: string }): Observable<any> {
+  return this.http.post<any>(`${this.apiUrl}/login-simple`, credentials);
+}
 
 
   getAuditLogs(username: string = ''): Observable<AuditLog[]> {
