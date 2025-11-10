@@ -1,28 +1,28 @@
-/* Navbar styles */
+/* === Navbar styles === */
 .navbar {
   position: fixed;
   top: 0;
-  left: 12rem;
+  left: 250px; /* Sidebar width on desktop */
   right: 0;
-  height: 80px; /* Add this line */
+  height: 80px;
   padding: 1rem;
   background-color: #2e405a;
   box-sizing: border-box;
-  z-index: 101;
+  z-index: 1001; /* Above sidebar */
   border-bottom: 2px solid #374151;
-  transition: all 0.3s;
   display: flex;
   flex-wrap: wrap;
-  align-items: center; /* Add this to center items vertically */
+  align-items: center;
+  transition: left 0.3s ease, width 0.3s ease;
 }
 
 .navbar-list {
   display: flex;
-  justify-content: flex-start; /* Align items to the left */
+  justify-content: flex-start;
   margin: 0;
   padding: 0;
   list-style: none;
-  flex-wrap: wrap; /* Items will wrap on smaller screens */
+  flex-wrap: wrap;
 }
 
 .navbar-item {
@@ -55,73 +55,93 @@
   background-color: #374151;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   border-radius: 4px;
-  z-index: 1000;
-}
-
-.dropdown-menu li {
-  margin: 0;
-}
-
-.dropdown-menu li a {
-  padding: 0.5rem 1rem;
-  display: block;
-  color: #ffffff;
-  transition: background-color 0.2s ease;
-}
-
-.dropdown-menu li a:hover {
-  background-color: #475569;
-  border-radius: 4px;
+  z-index: 1002; /* Above navbar */
 }
 
 .dropdown:hover .dropdown-menu {
   display: block;
 }
 
-/* Main content */
+/* === Sidebar styles === */
+.sidebar-wrapper {
+  width: 250px;
+  background-color: #0c1c2e;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.wrapper.toggled .sidebar-wrapper {
+  margin-left: -250px; /* Hide sidebar when toggled */
+}
+
+/* === Main content === */
 .main-content {
-  margin-top: 80px; /* Increase this value to add more space */
-  margin-left: 250px; /* Adjust based on sidebar width */
+  margin-top: 80px;
+  margin-left: 250px; /* Space for sidebar on desktop */
   padding: 1rem;
+  transition: margin-left 0.3s ease;
 }
 
-/* Media Queries */
-@media screen and (max-width: 1024px) {
+.wrapper.toggled .main-content {
+  margin-left: 0;
+}
+
+/* === Responsive Styles === */
+@media (max-width: 1024px) {
   .navbar {
-      left: 0; /* Remove the left offset */
-      padding: 0.5rem;
+    left: 0;
+    padding: 0.5rem;
   }
-  
+
   .navbar-list {
-      justify-content: center; /* Center items on smaller screens */
+    justify-content: center;
   }
 
   .navbar-item {
-      margin-right: 0.5rem;
+    margin-right: 0.5rem;
   }
 }
 
-@media screen and (max-width: 768px) {
-  .navbar-list {
-      flex-direction: column; /* Stack items vertically */
-      align-items: center;
+@media (max-width: 768px) {
+  .navbar {
+    left: 0;
+    width: 100%;
   }
 
-  .navbar-item {
-      margin-bottom: 0.5rem; /* Add space between items when stacked */
-      margin-right: 0;
+  .sidebar-wrapper {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 1002; /* Above navbar */
+  }
+
+  .wrapper.toggled .sidebar-wrapper {
+    margin-left: -100%;
   }
 
   .main-content {
-      margin-left: 0; /* Remove left margin for small screens */
-      padding: 1rem;
+    margin-left: 0;
   }
 
+  .navbar-list {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .navbar-item {
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
 
   .navbar-logo {
-    height: 10px; /* Adjust as needed */
-    margin-right: 1rem; /* Space between the logo and the navbar items */
+    height: auto;
+    margin-right: 1rem;
     cursor: pointer;
-}
-
+  }
 }
