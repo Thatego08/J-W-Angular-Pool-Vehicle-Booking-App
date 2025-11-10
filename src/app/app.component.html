@@ -1,18 +1,19 @@
-<div *ngIf="isLoggedIn | async; else loginLayout" class="flex h-screen">
-  <!-- Sidebar Component -->
-  <app-side-nav class="w-64 bg-gray-800 text-white"></app-side-nav>
+<div *ngIf="isLoggedIn | async; else loginLayout" class="app-layout">
+  <!-- Sidebar -->
+  <app-side-nav class="sidebar"></app-side-nav>
 
+  <!-- Main content area -->
+  <div class="main-section">
+    <!-- Top Navbar -->
+    <app-nav-bar class="navbar"></app-nav-bar>
 
-  <!-- Navbar Component -->
-  <app-nav-bar class="mb-auto"></app-nav-bar>
-
-  <!-- Main Content -->
-  <main>
-    <router-outlet class="mt-24 relative z-0"></router-outlet>
-  </main>
+    <!-- Routed content -->
+    <main class="content-area">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
 </div>
 
 <ng-template #loginLayout>
   <router-outlet></router-outlet>
 </ng-template>
-

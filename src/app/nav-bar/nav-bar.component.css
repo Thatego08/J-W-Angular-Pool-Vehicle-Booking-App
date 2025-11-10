@@ -2,16 +2,18 @@
 .navbar {
   position: fixed;
   top: 0;
-  left: 12rem; /* Same as sidebar width */
+  left: 12rem;
   right: 0;
+  height: 80px; /* Add this line */
   padding: 1rem;
-  background-color: #1f2937;
+  background-color: #2e405a;
   box-sizing: border-box;
-  z-index: 101; /* Ensure it stays on top of the sidebar */
+  z-index: 101;
   border-bottom: 2px solid #374151;
   transition: all 0.3s;
   display: flex;
-  flex-wrap: wrap; /* Allows items to wrap on smaller screens */
+  flex-wrap: wrap;
+  align-items: center; /* Add this to center items vertically */
 }
 
 .navbar-list {

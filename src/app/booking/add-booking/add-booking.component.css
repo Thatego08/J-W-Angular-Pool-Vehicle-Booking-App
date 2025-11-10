@@ -1,15 +1,141 @@
-.modal-header .close {
-  margin-left: auto;
+/* === VARIABLES === */
+:root {
+  --navbar-height: 80px;
+  --sidebar-width: 12rem;
 }
 
-.logo-image {
-  max-width: 5000px; /* Adjust maximum width as needed */
-  height: 150px;
-  margin: auto; /* Center align the container */
-  padding: 20px; /* Add padding to create space inside the container */
-  box-sizing: border-box; /* Ensure padding is included in the width calculation */
+/* === BODY ADJUSTMENT === */
+body {
+  background: #f4f4f4;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+  /* Remove overflow: hidden to allow natural scrolling */
 }
 
+/* === MAIN CONTENT WRAPPER === */
+.main-content {
+  margin-left: var(--sidebar-width);
+  padding: 2rem;
+  margin-top: var(--navbar-height);
+  min-height: calc(100vh - var(--navbar-height));
+  box-sizing: border-box;
+  /* Remove fixed positioning and overflow */
+  position: relative;
+  overflow: visible;
+}
+
+/* === SCROLLABLE BOOKING FORM === */
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  /* Make the form container scrollable */
+  max-height: calc(100vh - 180px); /* Leaves space for navbar + padding */
+  overflow-y: auto;
+  /* Ensure the top is always visible */
+  position: relative;
+}
+
+/* Centered header */
+.header {
+  text-align: center;
+  margin-bottom: 30px;
+  position: sticky;
+  top: 0;
+  background: white;
+  padding: 10px 0;
+  z-index: 10;
+  border-bottom: 1px solid #eee;
+}
+
+.header h2 {
+  color: #2c3e50;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Form groups */
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #34495e;
+  display: block;
+}
+
+/* Date input with icon */
+.date-input-group {
+  position: relative;
+}
+
+.date-input-group i {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #7f8c8d;
+  z-index: 2;
+}
+
+.date-input {
+  padding-left: 40px;
+  width: 100%;
+  height: 40px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+/* Buttons - make them sticky at bottom */
+.form-buttons {
+  position: sticky;
+  bottom: 0;
+  background: white;
+  padding: 15px 0;
+  margin-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+.btn-book,
+.booking-button {
+  background-color: #14063b;
+  border: none;
+  padding: 12px;
+  font-weight: 600;
+  margin-top: 10px;
+  width: 100%;
+  transition: all 0.3s;
+  border-radius: 5px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  cursor: pointer;
+}
+
+.booking-button i {
+  margin-right: 8px;
+}
+
+.booking-button:hover {
+  background-color: #2b1462;
+  transform: translateY(-2px);
+}
+
+/* Cancel button */
+.btn-danger {
+  background-color: #da1e31;
+  border-color: #d82537;
+}
+
+/* Filter section */
 .filter-section {
   background: #f8f9fa;
   padding: 15px;
@@ -17,146 +143,14 @@
   margin-bottom: 20px;
 }
 
+/* Checkbox layout */
 .checkbox-group {
   display: flex;
   gap: 15px;
   padding: 10px 0;
 }
 
-.btn-group-vertical {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
- body {
-            background-color: #f8f9fa;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            padding: 20px;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .header h2 {
-            color: #2c3e50;
-            font-weight: 600;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        label {
-            font-weight: 500;
-            margin-bottom: 8px;
-            color: #34495e;
-        }
-        .date-input-group {
-            position: relative;
-        }
-        .date-input-group i {
-            position: absolute;
-            left: 12px;
-            top: 12px;
-            color: #7f8c8d;
-        }
-        .date-input {
-            padding-left: 40px;
-        }
-        .btn-book {
-            background-color: #3498db;
-            border: none;
-            padding: 12px;
-            font-weight: 600;
-            margin-top: 10px;
-            width: 100%;
-            transition: all 0.3s;
-        }
-        .btn-book:hover {
-            background-color: #2980b9;
-            transform: translateY(-2px);
-        }
-        .date-format-hint {
-            font-size: 0.85rem;
-            color: #7f8c8d;
-            margin-top: 5px;
-        }
-        .summary-card {
-            background-color: #f8f9fa;
-            border-radius: 8px;
-            padding: 20px;
-            margin-top: 20px;
-        }
-        .summary-card h5 {
-            color: #2c3e50;
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-        }
-
-.btn-outline-secondary {
-  text-align: left;
-}
-
-button.booking-button {
-  background-color: #14063b;;
-  border-bottom: 2px solid #14063b;;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 5px;
-  display: inline-flex;
-  justify-content: center; /* Center the content */
-  align-items: center; /* Vertically center the icon and text */
-  width: 100%; /* Adjust based on your design. This makes the button fill the container. */
-  text-align: center;
-}
-
-/* Add some margin or padding between the icon and text */
-.booking-button i {
-  margin-right: 8px;
-}
-
-.btn-danger {
-  background-color: #da1e31;
-  border-color: #d82537;
-}
-
-.close.text-white {
-  color: #fff;
-  background-color: #dc3545;
-  border: none;
-  padding: 0.75rem 1.25rem;
-  border-radius: 0.25rem;
-}
-
-.close.text-white span {
-  color: #fff;
-}
-
-.form-group {
-  margin-bottom: 15px;
-}
-
-#event {
-  width: 100%;
-}
-
-.radio-group {
-  display: flex;
-  align-items: center;
-}
-
-.radio-group label {
-  margin-right: 20px;
-}
-
+/* Dropdown select styling */
 .custom-select-wrapper {
   position: relative;
   display: inline-block;
@@ -166,7 +160,12 @@ button.booking-button {
 .custom-select-wrapper select {
   width: 100%;
   appearance: none;
-  padding-right: 30px; /* Space for the icon */
+  padding-right: 30px;
+  height: 40px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding-left: 12px;
+  box-sizing: border-box;
 }
 
 .dropdown-icon {
@@ -174,5 +173,84 @@ button.booking-button {
   right: 10px;
   top: 50%;
   transform: translateY(-50%);
-  pointer-events: none; /* To make sure icon doesn't interfere with select box */
+  pointer-events: none;
+}
+
+/* Custom scrollbar for the form */
+.container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 0 10px 10px 0;
+}
+
+.container::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.container::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Smooth scrolling */
+.container {
+  scroll-behavior: smooth;
+}
+
+/* === RESPONSIVE ADJUSTMENTS === */
+@media (max-width: 1024px) {
+  .navbar {
+    left: 0;
+  }
+  
+  .main-content {
+    margin-left: 0;
+    padding: 1rem;
+  }
+  
+  .container {
+    max-height: calc(100vh - 140px);
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --navbar-height: 120px;
+  }
+  
+  .main-content {
+    padding: 1rem;
+    margin-top: 120px;
+  }
+
+  .container {
+    padding: 20px;
+    margin: 0 auto;
+    max-height: calc(100vh - 160px);
+  }
+  
+  .header {
+    position: relative;
+    background: transparent;
+    padding: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-content {
+    padding: 0.5rem;
+  }
+  
+  .container {
+    padding: 15px;
+    max-height: calc(100vh - 140px);
+  }
+  
+  .form-buttons {
+    position: relative;
+    bottom: auto;
+  }
 }
