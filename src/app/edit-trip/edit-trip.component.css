@@ -1,202 +1,148 @@
+/* CONTAINER */
 .container {
-    max-width: 5000px; /* Adjust maximum width as needed */
-    margin: auto; /* Center align the container */
-    padding: 20px; /* Add padding to create space inside the container */
-    background-color: #dde2f0;
-    box-sizing: border-box; /* Ensure padding is included in the width calculation */
-  }
-  
-  .logo-image {
-    max-width: 5000px; /* Adjust maximum width as needed */
-    height: 150px;
-    margin: auto; /* Center align the container */
-    padding: 20px; /* Add padding to create space inside the container */
-    box-sizing: border-box; /* Ensure padding is included in the width calculation */
-  }
-  
-  /* Table styling */
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  th, td {
-    padding: 12px 6px;
-    text-align: left;
-  }
-  
-  /* Table header styling */
-  thead {
-    background-color: #1a365d; /* Dark blue */
-  }
-  
-  /* Buttons styling */
-  .action-button {
-    padding: 8px 16px;
-    font-size: 14px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .action-button.bg-blue-500 {
-    background-color: #1a365d; /* Dark blue */
-    color: white;
-  }
-  
-  .action-button.bg-red-500 {
-    background-color: #e53e3e; /* Red */
-    color: white;
-  }
-  
-  .action-button:hover {
-    transform: translateY(-1px);
-  }
-  
-  .action-button.hover\:bg-blue-700:hover {
-    background-color: #2c5282; /* Darker blue on hover */
-  }
-  
-  .action-button.hover\:bg-red-700:hover {
-    background-color: #fc8181; /* Darker red on hover */
-  }
-  
-  .search-bar {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .search-input {
-    flex-grow: 1;
-    padding: 12px; /* Increase padding for larger input */
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-right: 10px;
-  }
-  
-  .search-button {
-    padding: 12px 20px; /* Adjust padding for button size */
-    font-size: 16px;
-    background-color: #042446; /* Dark blue */
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .search-button:hover {
-    background-color: #ffcc00; /* Yellow on hover */
-    color: #042446; /* Dark blue text on hover */
-  }
-  
+  max-width: 900px;
+  margin: 20px auto;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #e5e5e5;
+}
 
-  /* Add these styles in your styles.css or component-specific CSS file */
+/* LOGO */
+.logo-image {
+  display: block;
+  margin: 0 auto 20px;
+  height: 120px;
+  object-fit: contain;
+}
 
-.container {
-    max-width: 800px;
-  }
-  
-  h1 {
-    color: #333;
-  }
-  
-  .form-container {
-    background-color: #fff;
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 1.5rem;
-    border: 1px solid #ddd;
-  }
-  
-  .form-group {
-    margin-bottom: 1.5rem;
-  }
-  
-  .form-label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-  }
-  
-  .form-control {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 0.25rem;
-    box-sizing: border-box;
-  }
-  
-  .form-control:focus {
-    border-color: #3b82f6;
-    outline: none;
-  }
-  
-  .button-group {
-    display: flex;
-    gap: 0.5rem;
-  }
-  
-  .action-button {
-    display: inline-block;
-    text-align: center;
-    width: 100px; /* Ensure buttons are the same width */
-    height: 50px; /* Ensure buttons are the same height */
-    line-height: 40px; /* Center text vertically */
-  }
-  
-  .bg-blue-500 {
-    background-color: #3b82f6;
-  }
-  
-  .bg-blue-700 {
-    background-color: #2563eb;
-  }
-  
-  .bg-red-500 {
-    background-color: #ef4444;
-  }
-  
-  .bg-red-700 {
-    background-color: #dc2626;
-  }
-  
-  .hover\:bg-blue-700:hover {
-    background-color: #2563eb;
-  }
-  
-  .hover\:bg-red-700:hover {
-    background-color: #dc2626;
-  }
-  
-  .text-white {
-    color: white;
-  }
-  
-  .font-bold {
-    font-weight: bold;
-  }
-  
-  .rounded {
-    border-radius: 0.25rem;
-  }
-  
-  .alert {
-    padding: 0.75rem 1.25rem;
-    border-radius: 0.25rem;
-    border: 1px solid transparent;
-  }
-  
-  .alert-success {
-    background-color: #d4edda;
-    border-color: #c3e6cb;
-    color: #155724;
-  }
-  
-  .alert-danger {
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
-    color: #721c24;
-  }
-  
+/* TABLE */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+}
+
+thead {
+  background: #f5f5f5;
+  border-bottom: 1px solid #ddd;
+}
+
+tbody tr {
+  border-bottom: 1px solid #eee;
+}
+
+tbody tr:nth-child(even) {
+  background: #fafafa;
+}
+
+/* SEARCH INPUT + BUTTON */
+.search-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.search-input {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.search-input:focus {
+  border-color: #888;
+  outline: none;
+}
+
+.search-button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  background: #4a4a4a;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+.search-button:hover {
+  background: #6a6a6a;
+}
+
+/* FORM ELEMENTS */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.form-control:focus {
+  border-color: #777;
+  outline: none;
+}
+
+h2, h3 {
+  color: #333;
+  margin-bottom: 18px;
+  font-weight: 500;
+}
+
+/* BUTTONS (subtle colour) */
+.action-button {
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: none;
+  color: white;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+/* Soft minimal colors */
+.edit {
+  background: #4a90e2;
+}
+.edit:hover {
+  background: #3b78c2;
+}
+
+.delete {
+  background: #e57373;
+}
+.delete:hover {
+  background: #d15050;
+}
+
+.checklist {
+  background: #66bb6a;
+}
+.checklist:hover {
+  background: #4e9c52;
+}
+
+.refuel {
+  background: #ffa726;
+}
+.refuel:hover {
+  background: #e18f1e;
+}
+
+/* Button group */
+.button-group {
+  display: flex;
+  gap: 8px;
+}

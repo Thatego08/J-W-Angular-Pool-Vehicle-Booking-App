@@ -1,89 +1,79 @@
-/* Table styling */
+/* Clean table styling */
 .trip-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px; /* Space above the table */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  border-radius: 10px; /* Rounded corners */
-  overflow: hidden; /* Round the corners */
+  margin-top: 20px;
+  border: 1px solid #e0e0e0;
+  background: white;
 }
 
-.trip-table th, .trip-table td {
-  padding: 15px;
+.trip-table th, 
+.trip-table td {
+  padding: 10px;
   text-align: left;
-  font-family: 'Arial', sans-serif; /* Clean font */
-  font-size: 14px; /* Adjust font size */
+  font-size: 14px;
+  border: 1px solid #e0e0e0;
 }
 
 .trip-table th {
-  background-color: #4a4a4a; /* Dark grey for the header */
-  color: #ffffff; /* White text */
-  font-weight: 600; /* Semi-bold for headers */
+  background: #f5f5f5;
+  font-weight: 500;
 }
 
-.trip-table tbody tr {
-  border-bottom: 1px solid #e0e0e0; /* Light border for rows */
-}
-
+/* Even rows subtle background */
 .trip-table tbody tr:nth-child(even) {
-  background-color: #f9f9f9; /* Light grey for even rows */
+  background: #fafafa;
 }
 
+/* Very subtle hover */
 .trip-table tbody tr:hover {
-  background-color: #f1f1f1; /* Very light grey on hover */
+  background: #f2f2f2;
 }
-
-.trip-table tbody tr td {
-  font-weight: 400; /* Regular weight for cells */
-}
-
-/* Action buttons styling */
+/* Action buttons */
 .action-button {
-  padding: 10px 20px; /* Padding for buttons */
-  border-radius: 5px; /* Rounded corners */
-  border: none; /* Remove default border */
-  color: white; /* White text color */
-  font-weight: 500; /* Medium weight */
-  font-family: 'Arial', sans-serif; /* Clean font */
-  transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
-  cursor: pointer; /* Pointer on hover */
+  padding: 6px 14px;
+  border-radius: 4px;
+  border: none;
+  color: white;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
+/* Soft blue - Edit */
 .edit {
-  background-color: #007bff; /* Blue for Edit */
+  background: #4a90e2;
 }
-
 .edit:hover {
-  background-color: #0056b3; /* Darker blue on hover */
+  background: #3b78c2;
 }
 
+/* Soft red - Delete */
 .delete {
-  background-color: #dc3545; /* Red for Delete */
+  background: #e57373;
 }
-
 .delete:hover {
-  background-color: #c82333; /* Darker red on hover */
+  background: #d15050;
 }
 
+/* Soft green - Checklist */
 .checklist {
-  background-color: #4caf50; /* Green for Checklist */
+  background: #66bb6a;
 }
-
 .checklist:hover {
-  background-color: #388e3c; /* Darker green on hover */
+  background: #4e9c52;
 }
 
+/* Soft orange - Refuel */
 .refuel {
-  background-color: #ff9800; /* Orange for Refuel */
+  background: #ffa726;
 }
-
 .refuel:hover {
-  background-color: #e68900; /* Darker orange on hover */
+  background: #e18f1e;
 }
 
-/* Adjustments for the button group */
+/* Button group spacing */
 .button-group {
   display: flex;
-  gap: 10px; /* Space between buttons */
-  justify-content: flex-start; /* Align buttons to the left */
+  gap: 8px;
 }
