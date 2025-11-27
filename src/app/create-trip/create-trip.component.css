@@ -1,79 +1,94 @@
+/* === OUTER CONTAINER === */
 .outer-container {
-  background-color: #2c3d50; /* Blue background */
-  padding: 30px; /* Reduced padding around the inner container */
-  border-radius: 10px; /* Rounded corners */
+  background-color: transparent; /* remove blue background */
+  padding: 30px;
+  border-radius: 5px; /* subtle rounding */
 }
 
+/* === FORM CONTAINER === */
 .container.trip-form-container {
-  max-width: 600px; /* Set maximum width */
-  margin: 0 auto; /* Center the container */
-  padding: 30px; /* Inner padding */
-  background-color: #ffffff; /* White background for the form */
-  border-radius: 10px; /* Rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 30px;
+  background-color: #ffffff; /* clean white background */
+  border-radius: 5px; /* subtle rounding */
+  border: 1px solid #ddd; /* soft border instead of shadow */
+  max-height: calc(100vh - 180px);
+  overflow-y: auto;
+  position: relative;
+  scroll-behavior: smooth;
 }
 
+/* === HEADER === */
 .trip-form h2 {
-  text-align: center; /* Center title */
-  margin-bottom: 20px; /* Spacing below */
-  color: #082749; /* Title color */
+  text-align: center;
+  margin-bottom: 20px;
+  color: #2c3e50; /* formal dark gray-blue */
+  font-weight: 600;
 }
 
+/* === FORM GROUPS === */
 .form-group {
-  margin-bottom: 20px; /* Increased spacing for form groups */
+  margin-bottom: 15px;
 }
 
 .form-group label {
-  font-weight: bold; /* Bold labels */
-  color: #495057; /* Darker color for readability */
+  font-weight: 500;
+  color: #34495e;
+  display: block;
+  margin-bottom: 5px;
 }
 
+/* === INPUTS === */
 .form-control {
-  border-radius: 8px; /* Rounded corners */
-  border: 1px solid #ced4da; /* Border color */
-  padding: 12px; /* Inner padding */
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-sizing: border-box;
+  font-size: 14px;
 }
 
+/* === FORM ROWS / COLUMNS === */
 .form-row {
-  display: flex; /* Flex display for alignment */
-  justify-content: space-between; /* Space between columns */
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
 }
 
 .form-group.col-md-6 {
-  width: 48%; /* Ensure consistent column width */
+  width: 48%;
 }
 
-.btn-block {
-  width: 200px; /* Set a specific width */
-  padding: 10px; /* Adjust padding if needed */
-  font-size: 16px; /* Font size */
-  border-radius: 30px; /* Fully rounded button */
-  margin: 0 auto; /* Center the button */
-}
-
-
-.alert {
-  margin-top: 20px; /* Spacing above alert */
-}
-
+/* === BUTTONS === */
+.btn-block,
 .btn-primary {
-  background: linear-gradient(135deg, #021325, #021830); /* Gradient background */
-  border: none; /* Remove border */
-  color: white; /* White text color */
-  padding: 12px 24px; /* Padding for button */
-  border-radius: 30px; /* Fully rounded corners */
-  font-size: 1rem; /* Font size */
-  cursor: pointer; /* Pointer cursor */
-  transition: background 0.3s ease, transform 0.3s ease; /* Smooth transition */
+  background-color: #14063b; /* simple solid color */
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px; /* subtle rounding */
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  width: 100%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 
 .btn-primary:hover {
-  background: linear-gradient(135deg, #021325, #021830); /* Change gradient on hover */
-  transform: translateY(-2px); /* Slight upward movement on hover */
+  background-color: #2b1462; /* slightly darker on hover */
+  transform: translateY(-1px);
 }
 
 .btn-primary:disabled {
-  background: linear-gradient(135deg, #b3d7ff, #a1c6e7); /* Lighter gradient when disabled */
-  color: #fff; /* Keep text white when disabled */
-  cursor: not-allowed; /* Change cursor to indicate it's disabled */
+  background-color: #b3b3b3;
+  cursor: not-allowed;
+}
+
+/* === ALERTS === */
+.alert {
+  margin-top: 20px;
 }
