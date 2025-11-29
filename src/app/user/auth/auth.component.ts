@@ -5,15 +5,15 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
-  styleUrl: './auth.component.css'
+  styleUrls: ['./auth.component.css']
 })
-export class AuthComponent implements OnInit{
-  isActive = false;  // Control active state for form toggle
-  credentials = { userName: '', password: '' };
+export class AuthComponent implements OnInit {
+  isActive = false;
+  credentials = { userName: '', password: '' }; // userName will be email
   user = { name: '', surname: '', phoneNumber: '', email: '', password: '', confirmPassword: '', role: '', profilePhoto: null as File | null };
   errorMessage: string | null = null;
   successMessage: string | null = null;
-  passwordFieldType: string = 'password'; // Password field type
+  passwordFieldType: string = 'password';
 
   notificationMessage: string | null = null;
   isSuccess: boolean = true;
@@ -21,28 +21,20 @@ export class AuthComponent implements OnInit{
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
     this.user.profilePhoto = file;
-}
-
+  }
 
   ngOnInit(): void {}
-
-
-    // Function to generate username based on first and last name
-    generateUsername(firstName: string, lastName: string): string {
-      const firstPart = firstName.length >= 4 ? firstName.substring(0, 4) : firstName;
-      const lastPart = lastName.length >= 2 ? lastName.substring(0, 2) : lastName;
-      return firstPart + lastPart;
-    }
-
 
   toggleForm() {
     this.isActive = !this.isActive;
     this.clearMessages();
   }
+
   clearMessages() {
     this.errorMessage = null;
     this.successMessage = null;
   }
+
   togglePasswordVisibility() {
     this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password';
   }
@@ -61,14 +53,13 @@ export class AuthComponent implements OnInit{
       },
       error => {
         console.error('Login error:', error);
-        this.errorMessage = 'Login failed. Please check your credentials and try again.';
+        this.errorMessage = error.error?.message || 'Login failed. Please check your credentials and try again.';
       }
     );
   }
 
-  register() {const formData = new FormData();
-   
-   this.credentials.userName = this.generateUsername(this.user.name, this.user.surname);
+  register() {
+    const formData = new FormData();
    
     formData.append('name', this.user.name);
     formData.append('surname', this.user.surname);
@@ -77,6 +68,7 @@ export class AuthComponent implements OnInit{
     formData.append('password', this.user.password);
     formData.append('confirmPassword', this.user.confirmPassword);
     formData.append('role', this.user.role);
+    
     if (this.user.profilePhoto) {
       formData.append('profilePhoto', this.user.profilePhoto);
     }
@@ -84,23 +76,21 @@ export class AuthComponent implements OnInit{
     this.authService.register(formData).subscribe(
       response => {
         console.log('Registration successful', response);
-        this.notificationMessage = 'Registration successful! Your Username is: ' + this.credentials.userName;
-
-         //this.notificationMessage = 'Your Booking has successfully been made, but there were some issues.';
-            this.isSuccess = true;
+        this.notificationMessage = 'Registration successful! You can now login with your email.';
+        this.isSuccess = true;
+        
+        // Clear form
+        this.user = { name: '', surname: '', phoneNumber: '', email: '', password: '', confirmPassword: '', role: '', profilePhoto: null };
+        
         setTimeout(() => {
-          this.router.navigate(['/auth']);
+          this.toggleForm(); // Switch to login form
         }, 2000);
       },
       error => {
         console.error('Registration error:', error);
-        this.notificationMessage = error.error.message || 'Registration failed. Please try again.';
+        this.notificationMessage = error.error?.message || 'Registration failed. Please try again.';
         this.isSuccess = false;
-            }
-    
+      }
     );
   }
-
-
-
 }
