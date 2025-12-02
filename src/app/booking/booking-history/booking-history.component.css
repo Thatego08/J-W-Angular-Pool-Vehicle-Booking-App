@@ -28,14 +28,17 @@ button.btn, button {
   padding: 8px 14px;
   border: none;
   border-radius: 6px;
-  background: #f2f2f2;
+  background: #0a1525; /* Dark blue */
+  color: white;        /* White text */
+  font-weight: bold;   /* Bold text */
   cursor: pointer;
   transition: background 0.2s ease;
 }
 
 button.btn:hover, button:hover {
-  background: #e0e0e0;
+  background: #0a1525; /* Slightly lighter blue on hover */
 }
+
 
 /* Clean table */
 table {
