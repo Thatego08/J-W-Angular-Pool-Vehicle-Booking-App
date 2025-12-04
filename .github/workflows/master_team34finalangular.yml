@@ -29,11 +29,10 @@ jobs:
       - name: Build Angular app
         run: npm run build
 
-      # Step 5: Deploy to Azure App Service
+      # Step 5: Deploy to Azure Web App (Production)
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'team34finalangular'   # Your App Service name
-          slot-name: 'Production'
           package: '.'                     # Deploy the whole repo (server.js + dist)
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
