@@ -23,22 +23,17 @@ jobs:
 
       # Step 3: Install dependencies
       - name: Install dependencies
-        run: npm ci   # Ensures a clean and consistent install in CI
+        run: npm ci
 
       # Step 4: Build Angular production app
       - name: Build Angular app
-        run: npm run build -- --configuration production
+        run: npm run build
 
       # Step 5: Deploy to Azure App Service
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'team34finalangular'              # Your App Service name
-          slot-name: 'Production'                     # Production slot
-          package: './dist/admin-account/browser'    # Angular build output folder
+          app-name: 'team34finalangular'   # Your App Service name
+          slot-name: 'Production'
+          package: '.'                     # Deploy the whole repo (server.js + dist)
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
-
-
-
-
-
