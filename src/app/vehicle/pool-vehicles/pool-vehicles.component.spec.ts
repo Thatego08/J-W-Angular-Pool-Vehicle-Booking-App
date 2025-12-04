@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PoolVehiclesComponent } from './pool-vehicles.component';
+import { PoolVehicleComponent } from './pool-vehicles.component';
 
 describe('PoolVehiclesComponent', () => {
-  let component: PoolVehiclesComponent;
-  let fixture: ComponentFixture<PoolVehiclesComponent>;
+  let component: PoolVehicleComponent;
+  let fixture: ComponentFixture<PoolVehicleComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PoolVehiclesComponent]
+      declarations: [PoolVehicleComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(PoolVehiclesComponent);
+    fixture = TestBed.createComponent(PoolVehicleComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
