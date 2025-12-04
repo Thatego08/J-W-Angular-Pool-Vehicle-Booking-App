@@ -35,6 +35,7 @@ jobs:
         with:
           app-name: 'team34finalangular'              # Your App Service name
           slot-name: 'Production'                     # Production slot
-          package: './dist/browser/Admin-Account'    # Angular build output folder
+          package: './dist/admin-account'    # Angular build output folder
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
+
 
