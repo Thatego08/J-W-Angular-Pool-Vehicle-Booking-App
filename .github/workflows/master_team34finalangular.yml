@@ -11,23 +11,39 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Checkout code
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Step 2: Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '22'
 
+      # Step 3: Install dependencies
       - name: Install dependencies
         run: npm ci
 
+      # Step 4: Build Angular production app
       - name: Build Angular app
         run: npm run build
 
+      # Step 5: Prepare deploy package
+      - name: Prepare deployment package
+        run: |
+          mkdir deploy
+          cp server.js deploy/
+          cp package.json deploy/
+          cp -r dist/admin-account/browser deploy/dist
+          cd deploy
+          zip -r ../deploy-package.zip .
+          cd ..
+
+      # Step 6: Deploy to Azure Web App
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'team34finalangular'
-          package: '.'  
+          package: './deploy-package.zip'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
