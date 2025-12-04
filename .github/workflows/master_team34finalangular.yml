@@ -19,11 +19,11 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '22'  # Updated to match your App Service runtime
+          node-version: '22'  # Match your Azure App Service Node runtime
 
       # Step 3: Install dependencies
       - name: Install dependencies
-        run: npm ci   # Using 'ci' for consistent installs in CI/CD
+        run: npm ci   # Ensures a clean and consistent install in CI
 
       # Step 4: Build Angular production app
       - name: Build Angular app
