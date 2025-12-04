@@ -2,12 +2,12 @@
   "name": "admin-account",
   "version": "0.0.0",
   "scripts": {
-  "ng": "ng",
-  "start": "node server.js",
-  "build": "ng build --configuration production",
-  "watch": "ng build --watch --configuration development",
-  "test": "ng test"
-},
+    "ng": "ng",
+    "start": "node server.js",
+    "build": "ng build --configuration production",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test"
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "^17.3.10",
