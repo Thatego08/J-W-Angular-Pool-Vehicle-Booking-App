@@ -24,11 +24,12 @@ jobs:
       - name: Build Angular
         run: npm run build --if-present
 
+      # Upload ONLY the Angular browser build
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: angular-dist
-          path: dist/** # Upload ONLY the build output
+          path: dist/admin-account/browser
           
   deploy:
     runs-on: ubuntu-latest
@@ -45,5 +46,5 @@ jobs:
         with:
           app-name: 'team34Angular'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_7B5DF5EF9CDD4C5F8649242082AE5FA0 }}
-          package: './dist'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
+          package: 'dist/admin-account/browser'
