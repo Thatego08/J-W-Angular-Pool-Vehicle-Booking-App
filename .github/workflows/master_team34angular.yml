@@ -11,24 +11,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout the repository
       - uses: actions/checkout@v4
 
-      # Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '22.x'
 
-      # Install dependencies
       - name: Install dependencies
         run: npm install
 
-      # Build Angular app
       - name: Build Angular
-        run: npm run build -- --output-path=dist/admin-account/browser --configuration=production
+        run: npm run build -- --configuration=production  # Fixed
 
-      # Upload the browser build for deployment
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
@@ -40,13 +35,12 @@ jobs:
     needs: build
 
     steps:
-      # Download the artifact
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
           name: angular-dist
+          path: dist/admin-account/browser  # Add this
 
-      # Deploy to Azure Web App
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
