@@ -3,12 +3,12 @@ const path = require('path');
 
 const app = express();
 
-// Serve Angular build output
-app.use(express.static(path.join(__dirname, 'dist/admin-account/browser')));
+// Serve static files from current directory (Angular build)
+app.use(express.static(__dirname));
 
 // Serve index.html for all routes (Angular routing)
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist/admin-account/browser/index.html'));
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // Use Azure PORT or default 8080
