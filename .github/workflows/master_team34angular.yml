@@ -6,6 +6,9 @@ on:
       - master
   workflow_dispatch:
 
+env:
+  NODE_VERSION: '22.x'
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -16,13 +19,37 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '22.x'
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
+
+      # Install express for the server
+      - name: Install production dependencies
+        run: npm install express --save
 
       - name: Build Angular
-        run: npm run build -- --configuration=production  # Fixed
+        run: npm run build -- --configuration=production
+
+      # Copy server.js to the build output directory
+      - name: Prepare server for deployment
+        run: |
+          # Copy server.js to build directory
+          cp server.js dist/admin-account/browser/
+          
+          # Also create package.json in build directory
+          cat > dist/admin-account/browser/package.json << 'EOF'
+          {
+            "name": "team34angular",
+            "version": "1.0.0",
+            "scripts": {
+              "start": "node server.js"
+            },
+            "dependencies": {
+              "express": "^4.18.2"
+            }
+          }
+          EOF
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
@@ -39,7 +66,16 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: angular-dist
-          path: dist/admin-account/browser  # Add this
+          path: .  # Download to current directory
+
+      - name: Verify files
+        run: |
+          echo "Files in deployment package:"
+          ls -la
+          echo "Checking for server.js:"
+          ls server.js
+          echo "Checking for index.html:"
+          ls index.html
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
@@ -47,4 +83,4 @@ jobs:
           app-name: 'team34Angular'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
-          package: 'dist/admin-account/browser'
+          package: '.'  # Deploy everything in current directory
