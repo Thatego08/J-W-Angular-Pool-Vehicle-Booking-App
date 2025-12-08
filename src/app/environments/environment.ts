@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://team34finalapi-fzdsc6hyhzaga6ab.southafricanorth-01.azurewebsites.net' //apiUrl: 'https://localhost:7041/api' // local API URL'
+  apiUrl: 'https://team34finalapi-fzdsc6hyhzaga6ab.southafricanorth-01.azurewebsites.net/api' //apiUrl: 'https://localhost:7041/api' // local API URL'
   //apiUrl: 'https://localhost:7041/api' // local API URL
 };
 
