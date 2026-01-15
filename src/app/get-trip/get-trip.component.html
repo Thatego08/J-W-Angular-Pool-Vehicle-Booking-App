@@ -23,7 +23,7 @@
           <th>Location</th>
           <th>Comment</th>
           <th>Travel Start</th>
-          <th>Travel End</th>
+         <!-- <th>Travel End</th>-->
           <th>Actions</th>
         </tr>
       </thead>
@@ -34,7 +34,7 @@
           <td>{{ trip.location }}</td>
           <td>{{ trip.comment }}</td>
           <td>{{ trip.travelStart | date: 'short' }}</td>
-          <td>{{ trip.travelEnd | date: 'short' }}</td>
+          <!--<td>{{ trip.travelEnd | date: 'short' }}</td>-->
           <td>
             <div class="button-group">
               <button (click)="editTrip(trip)" class="action-button edit">Edit</button>

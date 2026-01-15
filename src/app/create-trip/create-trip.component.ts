@@ -111,7 +111,7 @@ export class CreateTripComponent implements OnInit {
           this.tripForm.reset();
           this.imagePreview = null;
           localStorage.removeItem('currentBookingId'); // Clear if desired
-          this.router.navigate(['/create-trip']);
+          this.router.navigate(['/get-trip']);
         },
         error => {
           this.message = 'Failed to create trip';
