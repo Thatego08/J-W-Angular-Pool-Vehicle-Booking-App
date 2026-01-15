@@ -32,7 +32,7 @@ export class CreateTripComponent implements OnInit {
       location: ['', Validators.required],
       comment: [''],
       travelStart: ['', Validators.required],
-      travelEnd: [''],
+      //travelEnd: [''],
       bookingID: [''],
       checklistId: [0],
       mediaFiles: [''],
@@ -91,7 +91,7 @@ export class CreateTripComponent implements OnInit {
       formData.append('Location', this.tripForm.value.location || '');
       formData.append('Comment', this.tripForm.value.comment || '');
       formData.append('TravelStart', this.tripForm.value.travelStart || '');
-      formData.append('TravelEnd', this.tripForm.value.travelEnd || '');
+     // formData.append('TravelEnd', this.tripForm.value.travelEnd || '');
       formData.append('BookingID', this.tripForm.value.bookingID || '');
       formData.append('PreChecklistId', this.tripForm.value.checklistId || '');
 
