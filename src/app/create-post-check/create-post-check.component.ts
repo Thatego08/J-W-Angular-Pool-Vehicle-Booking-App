@@ -176,5 +176,10 @@ export class CreatePostCheckComponent {
         this.successMessage = null;
       }
     });
+
+    
+    setTimeout(() => {
+          this.router.navigate(['/app-trip']);
+        }, 2000);
   }
 }
