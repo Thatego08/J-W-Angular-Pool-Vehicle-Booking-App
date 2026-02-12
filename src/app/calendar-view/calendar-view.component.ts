@@ -10,11 +10,19 @@ import { BookingModel } from '../models/booking.model';
 export class CalendarViewComponent implements OnInit {
   currentMonth: number;
   currentYear: number;
-  daysInMonth!: { date: number; dayOfWeek: number }[];
-  events: { [key: number]: BookingModel[] } = {}; // Key is the day of the month
   currentMonthName: string;
-  selectedDate: number | null = null; // Track the selected date
-  bookingDetails: BookingModel[] = []; // Store details for the selected date
+
+  // All bookings (filtered once, excludes cancelled)
+  allBookings: BookingModel[] = [];
+
+  // Calendar grid: 42 cells (6 weeks × 7 days). date = null for empty cells.
+  calendarDays: { date: number | null; dayOfWeek: number }[] = [];
+
+  // Lookup: date (day of month) -> list of bookings on that day
+  events: { [key: number]: BookingModel[] } = {};
+
+  selectedDate: number | null = null;
+  bookingDetails: BookingModel[] = [];
 
   constructor(private bookingService: BookingService) {
     const today = new Date();
@@ -24,101 +32,137 @@ export class CalendarViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.calculateDaysInMonth();
     this.loadBookings(() => {
       const today = new Date().getDate();
-      this.onDateClick(today); // Automatically select today's date and show its bookings
+      this.onDateClick(today); // auto‑select today
     });
   }
-  
-  loadBookings(callback?: () => void) {
+
+  /**
+   * Load bookings, filter out cancelled, and build the events object
+   * for multi‑day display.
+   */
+  loadBookings(callback?: () => void): void {
     this.bookingService.getBookings().subscribe((bookings: BookingModel[]) => {
-      console.log("Fetched Bookings:", bookings); // Debugging log for all bookings
-      this.events = {}; // Reset events for the new month
+      // Exclude cancelled bookings (statusId === 4)
+      this.allBookings = bookings.filter(b => b.statusId !== 4);
+      this.buildEvents();
+      this.calculateDaysInMonth(); // rebuild grid (calls buildEvents again? We'll separate)
+      if (callback) callback();
+    });
+  }
 
-      bookings.forEach(booking => {
-        const bookingStartDate = new Date(booking.startDate);
-        const bookingMonth = bookingStartDate.getMonth();
-        const bookingYear = bookingStartDate.getFullYear();
-        const bookingDate = bookingStartDate.getDate(); // Get the date from the booking
-        
-        // Debugging log to show the booking details
-        console.log(`Checking booking: ${booking.bookingID}, Status: ${booking.statusId}, Month: ${bookingMonth}, Year: ${bookingYear}`);
+  /**
+   * Build the events object: for each booking, add it to EVERY day
+   * from startDate to endDate (inclusive) that falls in the current month/year.
+   */
+  buildEvents(): void {
+    this.events = {};
 
-        // Exclude bookings with statusId 4
-        if (booking.statusId !== 4 && bookingMonth === this.currentMonth && bookingYear === this.currentYear) {
-          if (!this.events[bookingDate]) {
-            this.events[bookingDate] = [];
+    this.allBookings.forEach(booking => {
+      const start = new Date(booking.startDate);
+      const end = new Date(booking.endDate);
+
+      // Iterate day by day
+      for (let day = new Date(start); day <= end; day.setDate(day.getDate() + 1)) {
+        const year = day.getFullYear();
+        const month = day.getMonth();
+        const date = day.getDate();
+
+        // Only include days belonging to the currently displayed month/year
+        if (year === this.currentYear && month === this.currentMonth) {
+          if (!this.events[date]) {
+            this.events[date] = [];
           }
-          this.events[bookingDate].push(booking); // Store actual BookingModel in the events
-          console.log(`Booking added for date ${bookingDate}:`, booking); // Debugging log for added bookings
-        } else {
-          console.log(`Booking with statusId ${booking.statusId} excluded:`, booking); // Debugging log for excluded bookings
+          this.events[date].push(booking);
         }
-      });
-  
-      console.log("Events after loading bookings:", this.events); // Log events after loading
-      // Invoke the callback function if provided
-      if (callback) {
-        callback();
       }
     });
   }
-  
-  calculateDaysInMonth() {
+
+  /**
+   * Build the 42‑cell calendar grid, correctly offsetting empty cells
+   * before the first day of the month.
+   */
+  calculateDaysInMonth(): void {
     const firstDay = new Date(this.currentYear, this.currentMonth, 1);
     const lastDay = new Date(this.currentYear, this.currentMonth + 1, 0);
-    this.daysInMonth = []; // Initialize daysInMonth
+    const startDayOfWeek = firstDay.getDay(); // 0 = Sunday
+    const totalDays = lastDay.getDate();
 
-    for (let date = 1; date <= lastDay.getDate(); date++) {
+    this.calendarDays = [];
+
+    // Empty cells before the 1st
+    for (let i = 0; i < startDayOfWeek; i++) {
+      this.calendarDays.push({ date: null, dayOfWeek: i });
+    }
+
+    // Actual days of the month
+    for (let date = 1; date <= totalDays; date++) {
       const dayOfWeek = new Date(this.currentYear, this.currentMonth, date).getDay();
-      this.daysInMonth.push({ date, dayOfWeek });
+      this.calendarDays.push({ date, dayOfWeek });
+    }
+
+    // Fill remaining cells to always have 42 (6 rows × 7 columns)
+    const totalCells = 42;
+    const remaining = totalCells - this.calendarDays.length;
+    for (let i = 0; i < remaining; i++) {
+      this.calendarDays.push({ date: null, dayOfWeek: (startDayOfWeek + totalDays + i) % 7 });
     }
   }
 
-  prevMonth() {
+  prevMonth(): void {
     if (this.currentMonth === 0) {
-      this.currentMonth = 11; // December
+      this.currentMonth = 11;
       this.currentYear--;
     } else {
       this.currentMonth--;
     }
-    this.currentMonthName = new Date(this.currentYear, this.currentMonth).toLocaleString('default', { month: 'long' });
-    this.loadBookings();
-    this.calculateDaysInMonth();
+    this.updateMonthView();
   }
 
-  nextMonth() {
+  nextMonth(): void {
     if (this.currentMonth === 11) {
-      this.currentMonth = 0; // January
+      this.currentMonth = 0;
       this.currentYear++;
     } else {
       this.currentMonth++;
     }
-    this.currentMonthName = new Date(this.currentYear, this.currentMonth).toLocaleString('default', { month: 'long' });
-    this.loadBookings();
-    this.calculateDaysInMonth();
+    this.updateMonthView();
   }
 
-  // Method to handle date clicks
-  onDateClick(date: number) {
-    this.selectedDate = date;
+  /**
+   * Common tasks after changing month/year:
+   * - update month name
+   * - rebuild calendar grid
+   * - rebuild events for the new month
+   * - clear selection or keep it (here we clear)
+   */
+  private updateMonthView(): void {
+    this.currentMonthName = new Date(this.currentYear, this.currentMonth)
+      .toLocaleString('default', { month: 'long' });
+    this.calculateDaysInMonth();
+    this.buildEvents();
+    this.selectedDate = null;
+    this.bookingDetails = [];
+  }
 
-    // Load bookings for the selected date
-    this.bookingDetails = this.events[date] ? this.events[date].map(booking => {
-      let eventDescription = booking.event;
-      if (!eventDescription && booking.projectNumber) {
-        eventDescription = `Project: ${booking.projectNumber}`;
-      }
-      return {
-        bookingID: booking.bookingID,
-        userName: booking.userName,
-        event: eventDescription, // Display either "Project: [project number]" or "No event"
-        startDate: booking.startDate,
-        endDate: booking.endDate,
-        vehicleName: booking.vehicleName,
-        projectNumber: booking.projectNumber !== undefined ? booking.projectNumber : undefined // Ensure this is number or undefined
-      } as BookingModel; // Cast the result to BookingModel
-    }) : []; // If no bookings exist for the selected date, initialize as an empty array
+  /**
+   * Handle click on a day cell.
+   * Show all bookings that cover this date (start ≤ date ≤ end).
+   */
+  onDateClick(date: number): void {
+    this.selectedDate = date;
+    const selectedDay = new Date(this.currentYear, this.currentMonth, date);
+
+    this.bookingDetails = this.allBookings.filter(booking => {
+      const start = new Date(booking.startDate);
+      const end = new Date(booking.endDate);
+      return selectedDay >= start && selectedDay <= end;
+    }).map(booking => ({
+      ...booking,
+      // Provide a readable event/project display
+      event: booking.event || (booking.projectNumber ? `Project: ${booking.projectNumber}` : 'No event')
+    }));
   }
 }

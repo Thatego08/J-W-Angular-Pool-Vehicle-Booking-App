@@ -30,6 +30,8 @@ export class EditTransmissionListComponent {
       next: (transmission: { name: any; }) => {
         this.transmissionForm.patchValue({
           name: transmission.name
+
+          //name: transmission.name
         });
       },
       error: (err: any) => console.error('Error fetching transmission', err)

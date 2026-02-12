@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class AuthComponent implements OnInit {
   isActive = false;
   credentials = { userName: '', password: '' }; // userName will be email
-  user = { name: '', surname: '', phoneNumber: '', email: '', password: '', confirmPassword: '', role: '', profilePhoto: null as File | null };
+  user = { name: '', surname: '', phoneNumber: '', email: '', password: '', profilePhoto: null as File | null };
   errorMessage: string | null = null;
   successMessage: string | null = null;
   passwordFieldType: string = 'password';
@@ -66,8 +66,7 @@ export class AuthComponent implements OnInit {
     formData.append('phoneNumber', this.user.phoneNumber);
     formData.append('email', this.user.email);
     formData.append('password', this.user.password);
-    formData.append('confirmPassword', this.user.confirmPassword);
-    formData.append('role', this.user.role);
+
     
     if (this.user.profilePhoto) {
       formData.append('profilePhoto', this.user.profilePhoto);
@@ -80,7 +79,7 @@ export class AuthComponent implements OnInit {
         this.isSuccess = true;
         
         // Clear form
-        this.user = { name: '', surname: '', phoneNumber: '', email: '', password: '', confirmPassword: '', role: '', profilePhoto: null };
+        this.user = { name: '', surname: '', phoneNumber: '', email: '', password: '', profilePhoto: null };
         
         setTimeout(() => {
           this.toggleForm(); // Switch to login form

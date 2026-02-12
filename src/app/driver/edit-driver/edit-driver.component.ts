@@ -17,9 +17,11 @@ export class EditDriverComponent implements OnInit {
     name: '',
     surname: '',
     email: '',
-    phoneNumber: ''
+    phoneNumber: '',
+    role: 'Driver'  
   };
 
+  roles: string[] = ['Driver', 'Admin'];
   successMessage: string = '';
   errorMessage: string = '';
   loading: boolean = false;  // New loading indicator
@@ -30,13 +32,17 @@ export class EditDriverComponent implements OnInit {
     private driverService: DriverService
   ) {}
 
-  ngOnInit(): void {
+   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       const userName = params.get('userName');
       if (userName) {
         this.driverService.getDriver(userName).subscribe({
           next: (response) => {
             this.updatedDriver = response;
+            // If the backend doesn't return role, default to 'Driver'
+            if (!this.updatedDriver.role) {
+              this.updatedDriver.role = 'Driver';
+            }
           },
           error: (error) => {
             this.errorMessage = 'Error fetching driver details';
@@ -49,18 +55,18 @@ export class EditDriverComponent implements OnInit {
 
   updateDrivers(form: NgForm) {
     if (form.valid) {
-      this.loading = true;  // Set loading to true when updating starts
+      this.loading = true;
       this.driverService.updateDriver(this.updatedDriver.userName, this.updatedDriver).subscribe({
         next: () => {
           this.successMessage = 'Driver updated successfully';
-          this.loading = false;  // Reset loading
+          this.loading = false;
           setTimeout(() => {
             this.router.navigate(['driver']);
           }, 2000);
         },
         error: (error) => {
-          this.errorMessage = `Error updating driver: ${error.error}`;
-          this.loading = false;  // Reset loading
+          this.errorMessage = `Error updating driver: ${error.error?.message || error.error || 'Unknown error'}`;
+          this.loading = false;
           console.error('Error updating driver', error);
         }
       });

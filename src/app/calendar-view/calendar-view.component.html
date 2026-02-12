@@ -1,44 +1,62 @@
-
 <div class="calendar-container">
-    <h2>{{ currentMonthName }} {{ currentYear }}</h2>
-    
-    <div class="navigation">
-      <button class="nav-button" (click)="prevMonth()">Previous</button>
-      <button class="nav-button" (click)="nextMonth()">Next</button>
-    </div>
-  
-    <div class="calendar">
-      <div class="day-names">
-        <div *ngFor="let day of ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']" class="day-name">
-          {{ day }}
-        </div>
+  <h2>{{ currentMonthName }} {{ currentYear }}</h2>
+
+  <div class="navigation">
+    <button class="nav-button" (click)="prevMonth()">Previous</button>
+    <button class="nav-button" (click)="nextMonth()">Next</button>
+  </div>
+
+  <div class="calendar">
+    <!-- Day names (Sunday first) -->
+    <div class="day-names">
+      <div *ngFor="let day of ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']" class="day-name">
+        {{ day }}
       </div>
-      <div class="days">
-        <div *ngFor="let day of daysInMonth" class="day" [class.empty]="!day.date">
-          <div *ngIf="day.date" (click)="onDateClick(day.date)" class="day-content" [class.selected]="day.date === selectedDate">
-            <span class="date">{{ day.date }}</span>
-            <div *ngIf="events[day.date] && events[day.date].length > 0" class="events">
-              <div *ngFor="let booking of events[day.date]">
-                <span>{{ booking.userName }} - {{ booking.projectNumber ? 'Project: ' + booking.projectNumber : (booking.event || 'No event') }}</span>
-              </div>
+    </div>
+
+    <!-- Calendar grid – 42 cells -->
+    <div class="days">
+      <div *ngFor="let day of calendarDays" class="day" [class.empty]="!day.date">
+        <!-- Capture the non‑null date into a variable 'date' -->
+        <div *ngIf="day.date as date" 
+             (click)="onDateClick(date)" 
+             class="day-content" 
+             [class.selected]="date === selectedDate">
+          <span class="date">{{ date }}</span>
+          <!-- Safe access to events[date] -->
+          <div *ngIf="events[date]?.length" class="events">
+            <div *ngFor="let booking of events[date] | slice:0:3">
+              <span class="event-item">
+                {{ booking.vehicleRegistration ?? 'No Reg' }}
+                <span *ngIf="booking.projectNumber">– P{{ booking.projectNumber }}</span>
+                <span *ngIf="!booking.projectNumber && booking.event">– {{ booking.event }}</span>
+              </span>
+            </div>
+            <div *ngIf="(events[date]?.length ?? 0) > 3" class="more-events">
+              +{{ (events[date]?.length ?? 0) - 3 }} more
             </div>
           </div>
         </div>
+        <div *ngIf="!day.date" class="empty-day"></div>
       </div>
     </div>
   </div>
-  
-  <div class="booking-details-container" *ngIf="selectedDate">
-    <h3>Bookings for {{ selectedDate }}</h3>
-    <ul>
-      <li *ngFor="let detail of bookingDetails" class="booking-detail-item">
-        <strong>User Name:</strong> {{ detail.userName }}<br>
-        <strong>Event:</strong> {{ detail.event }}<br>
-        <strong>Start Date:</strong> {{ detail.startDate }}<br>
-        <strong>End Date:</strong> {{ detail.endDate }}<br>
-        <strong>Vehicle Name:</strong> {{ detail.vehicleName }}<br>
-        <hr>
-      </li>
-    </ul>
+</div>
+
+<!-- Booking details panel for the selected date -->
+<div class="booking-details-container" *ngIf="selectedDate">
+  <h3>Bookings for {{ selectedDate }} {{ currentMonthName }} {{ currentYear }}</h3>
+  <div *ngIf="bookingDetails.length === 0" class="no-bookings">
+    No bookings on this day.
   </div>
-  
+  <ul *ngIf="bookingDetails.length > 0">
+    <li *ngFor="let detail of bookingDetails" class="booking-detail-item">
+      <strong>User:</strong> {{ detail.userName }}<br>
+      <strong>Vehicle:</strong> {{ detail.vehicleName }} ({{ detail.vehicleRegistration ?? 'N/A' }})<br>
+      <strong>Event / Project:</strong> {{ detail.event }}<br>
+      <strong>Start:</strong> {{ detail.startDate | date:'dd/MM/yyyy' }}<br>
+      <strong>End:</strong> {{ detail.endDate | date:'dd/MM/yyyy' }}<br>
+      <hr>
+    </li>
+  </ul>
+</div>

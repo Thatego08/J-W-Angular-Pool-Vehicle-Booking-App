@@ -33,6 +33,24 @@
           <input style="border-color: darkgray;" type="text" class="form-control" id="phoneNumber" name="phoneNumber" [(ngModel)]="updatedDriver.phoneNumber" required>
           <div *ngIf="form.submitted && !getControl(form, 'phoneNumber')?.valid" class="text-danger">Phone number is required</div>
         </div>
+        <!-- Role dropdown -->
+<div class="row mb-3">
+  <label for="role" class="col-sm-2 col-form-label">Role</label>
+  <div class="col-sm-10">
+    <select 
+      style="border-color: darkgray;" 
+      class="form-control" 
+      id="role" 
+      name="role" 
+      [(ngModel)]="updatedDriver.role" 
+      required>
+      <option *ngFor="let r of roles" [value]="r">{{ r }}</option>
+    </select>
+    <div *ngIf="form.submitted && !getControl(form, 'role')?.valid" class="text-danger">
+      Role is required
+    </div>
+  </div>
+</div>
 
         <button type="submit" class="btn-save action-button bg-blue-500 hover:bg-blue-700" [disabled]="form.invalid || loading">Save</button>
         <button type="button" class="btn-cancel action-button bg-red-500 hover:bg-red-700" (click)="cancel()">Cancel</button>
