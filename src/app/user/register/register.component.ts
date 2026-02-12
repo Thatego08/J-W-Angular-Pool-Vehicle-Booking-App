@@ -9,7 +9,7 @@ import { AuthService } from '../auth.service';
 })
 export class RegisterComponent {
 
-  user = { name: '', surname: '', phoneNumber: '', email: '', password: '', confirmPassword: '', role: '' };
+  user = { name: '', surname: '', phoneNumber: '', email: '', password: '', confirmPassword: '' };
   errorMessage: string | null = null;
   successMessage: string | null = null;
   //errorMessage: string | null = null;

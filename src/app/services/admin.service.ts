@@ -34,7 +34,7 @@ export class AdminService {
 
   // Fetch a specific admin by username
   getAdmin(userName: string): Observable<Admin> {
-    return this.http.get<Admin>(`${this.apiUrl}/getAllAdmins/${userName}`, { headers: this.getAuthHeaders() })
+    return this.http.get<Admin>(`${this.apiUrl}/${userName}`, { headers: this.getAuthHeaders() })
       .pipe(catchError(this.handleError));
   }
 

@@ -1,26 +1,65 @@
-<div class="feedback-form">
-  <h2>Submit Feedback</h2>
-  <form (ngSubmit)="submitFeedback()">
-    <div>
-      <label for="userName">Name</label>
-      <input type="text" id="userName" [(ngModel)]="feedback.userName" name="userName" placeholder="Enter Username" required>
+<div *ngIf="currentUser; else loading">
+  <div class="feedback-card">
+    <h2>Submit Feedback</h2>
+
+    <!-- User information – read‑only, exactly like profile -->
+    <div class="user-info">
+      <p><strong>Username:</strong> {{ currentUser.userName }}</p>
+      <p><strong>Email:</strong> {{ currentUser.email }}</p>
+      <p *ngIf="currentUser.name"><strong>Name:</strong> {{ currentUser.name }} {{ currentUser.surname }}</p>
     </div>
-    <div>
-      <label for="email">Email</label>
-      <input type="email" id="email" [(ngModel)]="feedback.email" name="email" placeholder="Enter Email Address"required>
-    </div>
-    <div>
-      <label for="message">Message</label>
-      <textarea id="message" [(ngModel)]="feedback.message" name="message" required placeholder="Enter Message Below"></textarea>
-    </div>
-    <div>
-      <label for="rating">Rating</label>
-      <select id="rating" [(ngModel)]="feedback.rating" name="rating" required>
-        <option value="" disabled>Select rating</option>
-        <option *ngFor="let rating of ratings" [value]="rating">{{ rating }}</option>
-      </select>
-    </div>
-    <button type="submit">Submit</button>
-  </form>
-  <p>{{ message }}</p>
+
+    <!-- Feedback form -->
+    <form (ngSubmit)="submitFeedback()">
+      <!-- Hidden fields to carry user data to the backend -->
+      <input type="hidden" name="userName" [value]="feedback.userName" />
+      <input type="hidden" name="email" [value]="feedback.email" />
+
+      <div class="form-group">
+        <label for="message">Your Feedback</label>
+        <textarea
+          id="message"
+          [(ngModel)]="feedback.message"
+          name="message"
+          required
+          placeholder="Tell us what you think..."
+          rows="5"
+        ></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="rating">Rating (1-5)</label>
+        <select
+          id="rating"
+          [(ngModel)]="feedback.rating"
+          name="rating"
+          required
+        >
+          <option value="" disabled selected>Select a rating</option>
+          <option *ngFor="let rating of ratings" [value]="rating">
+            {{ rating }} star{{ rating > 1 ? 's' : '' }}
+          </option>
+        </select>
+      </div>
+
+      <button type="submit" [disabled]="!feedback.message || !feedback.rating">
+        Submit Feedback
+      </button>
+    </form>
+
+    <!-- Success/Error message -->
+    <p *ngIf="message" class="message" [class.success]="message.includes('success')" [class.error]="message.includes('error')">
+      {{ message }}
+    </p>
+  </div>
 </div>
+
+<!-- Loading / Error state -->
+<ng-template #loading>
+  <div *ngIf="errorMessage; else loadingSpinner">
+    <p class="error">{{ errorMessage }}</p>
+  </div>
+  <ng-template #loadingSpinner>
+    <p>Loading user information...</p>
+  </ng-template>
+</ng-template>

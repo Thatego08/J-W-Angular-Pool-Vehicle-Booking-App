@@ -5,4 +5,5 @@ export interface DriverModel {
   surname: string;
   email: string;
   phoneNumber: string;
+  role?: string; 
   }
