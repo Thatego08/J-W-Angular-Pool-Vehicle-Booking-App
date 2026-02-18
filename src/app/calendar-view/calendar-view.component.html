@@ -17,13 +17,13 @@
     <!-- Calendar grid – 42 cells -->
     <div class="days">
       <div *ngFor="let day of calendarDays" class="day" [class.empty]="!day.date">
-        <!-- Capture the non‑null date into a variable 'date' -->
+        <!-- If day has a date, show clickable content -->
         <div *ngIf="day.date as date" 
              (click)="onDateClick(date)" 
              class="day-content" 
              [class.selected]="date === selectedDate">
           <span class="date">{{ date }}</span>
-          <!-- Safe access to events[date] -->
+          <!-- Display bookings for this date -->
           <div *ngIf="events[date]?.length" class="events">
             <div *ngFor="let booking of events[date] | slice:0:3">
               <span class="event-item">
@@ -37,6 +37,7 @@
             </div>
           </div>
         </div>
+        <!-- If day is empty, show placeholder -->
         <div *ngIf="!day.date" class="empty-day"></div>
       </div>
     </div>

@@ -16,7 +16,7 @@ export class AdminComponent  implements OnInit {
   adminToDelete: any = null;
   currentPage: number = 1;
   itemsPerPage: number = 10;
-  totalPages: number = 1;
+  totalPages: number = 5;
 
   @ViewChild('deleteConfirmationModal') deleteConfirmationModal!: TemplateRef<any>;
 
@@ -29,6 +29,7 @@ export class AdminComponent  implements OnInit {
   fetchAdmins() {
     this.adminService.getAllAdmins().subscribe(
       (data: any[]) => {
+        console.log('Admins received:', data); // Log the received data
         this.admins = data;
         this.updateDisplayedAdmins(); // Update the displayed admins list
       },
