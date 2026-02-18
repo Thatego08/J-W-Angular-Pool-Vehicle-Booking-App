@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { BookingService } from '../services/booking.service';
 import { BookingModel } from '../models/booking.model';
+import { VehicleService } from '../services/vehicle.service';
+import { Vehicle } from '../models/vehicle.model';
 
 @Component({
   selector: 'app-calendar-view',
@@ -11,6 +13,11 @@ export class CalendarViewComponent implements OnInit {
   currentMonth: number;
   currentYear: number;
   currentMonthName: string;
+
+  //Vehicle Data
+  vehicles: Vehicle[] = [];
+
+  filteredVehicles: Vehicle[] = [];
 
   // All bookings (filtered once, excludes cancelled)
   allBookings: BookingModel[] = [];
@@ -24,7 +31,7 @@ export class CalendarViewComponent implements OnInit {
   selectedDate: number | null = null;
   bookingDetails: BookingModel[] = [];
 
-  constructor(private bookingService: BookingService) {
+  constructor(private bookingService: BookingService, private vehicleService: VehicleService) {
     const today = new Date();
     this.currentMonth = today.getMonth();
     this.currentYear = today.getFullYear();
@@ -32,6 +39,7 @@ export class CalendarViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loadVehicles();
     this.loadBookings(() => {
       const today = new Date().getDate();
       this.onDateClick(today); // auto‑select today
@@ -51,6 +59,23 @@ export class CalendarViewComponent implements OnInit {
       if (callback) callback();
     });
   }
+
+  // Add a property to store vehicle map
+private vehicleMap: Map<string, string> = new Map(); // key: vehicleName, value: registration
+
+ loadVehicles(): void {
+  this.vehicleService.getAllVehicles().subscribe(
+    (data: Vehicle[]) => {
+      this.vehicles = data;
+      // Build a map for quick lookup by vehicle name (adjust key if needed)
+      this.vehicleMap = new Map(data.map(v => [v.name, v.registrationNumber]));
+      // After vehicles loaded, rebuild events to include registration
+      this.buildEvents();
+    },
+    (error) => console.error('Error fetching vehicles:', error)
+  );
+}
+
 
   /**
    * Build the events object: for each booking, add it to EVERY day

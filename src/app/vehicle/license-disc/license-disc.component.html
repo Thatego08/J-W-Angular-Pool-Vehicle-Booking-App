@@ -1,36 +1,36 @@
-
 <div class="header-container" style="padding-top: 4 rem;">
-    <img src="assets/logo.png" alt="Logo" class="logo">
-  </div>
+  <img src="assets/logo.png" alt="Logo" class="logo">
+</div>
 
-  <h1> License Discs </h1>
-  <div *ngIf="disks.length > 0">
-    <table class="min-w-full bg-white border border-gray-200 shadow-md rounded-md overflow-hidden mt-6">
-      <thead class="bg-blue-500 text-white uppercase text-sm">
-        <tr>
-          <th class="py-3 px-6 text-left">ID </th>
-          <th class="py-3 px-6 text-left">Vehicle ID</th>
-          <th class="py-3 px-6 text-left">License Expiry Date</th>
-          <th class="py-3 px-6 text-left">Status (Valid or Expired ) </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let disk of disks | paginate: { itemsPerPage: 8, currentPage: page }" class="text-gray-700">
-          <td class="py-3 px-6">{{ disk.id }}</td>
-          <td class="py-3 px-6">{{ disk.vehicleID}}</td>
-          <td class="py-3 px-6">{{ disk.licenseExpiryDate| date  }} </td>
-          <td class="py-3 px-6">{{ disk.status }}</td>
-        </tr>
-      </tbody>
-    </table>
-     <!-- Pagination Controls -->
+<h1>License Discs</h1>
+<div *ngIf="disks.length > 0">
+  <table class="min-w-full bg-white border border-gray-200 shadow-md rounded-md overflow-hidden mt-6">
+    <thead class="bg-blue-500 text-white uppercase text-sm">
+      <tr>
+        <th class="py-3 px-6 text-left">ID</th>
+        <th class="py-3 px-6 text-left">Vehicle Name</th>       <!-- new column -->
+        <th class="py-3 px-6 text-left">Registration</th>       <!-- new column -->
+        <th class="py-3 px-6 text-left">License Expiry Date</th>
+        <th class="py-3 px-6 text-left">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let disk of disks | paginate: { itemsPerPage: 8, currentPage: page }" class="text-gray-700">
+        <td class="py-3 px-6">{{ disk.id }}</td>
+        <td class="py-3 px-6">{{ disk.vehicleName }}</td>       <!-- display name -->
+        <td class="py-3 px-6">{{ disk.vehicleRegistration }}</td> <!-- display reg -->
+        <td class="py-3 px-6">{{ disk.licenseExpiryDate | date }}</td>
+        <td class="py-3 px-6">{{ disk.status }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- Pagination Controls -->
+  <pagination-controls (pageChange)="page = $event"></pagination-controls>
+</div>
+<div *ngIf="disks.length === 0" class="text-center mt-4 text-gray-600">
+  No license discs found.
+</div>
 
-    <pagination-controls (pageChange)="page = $event"></pagination-controls>
-
-  </div>
-  <div *ngIf="disks.length === 0" class="text-center mt-4 text-gray-600">
-    No license discs found.
-  </div>
-
-   <button class="btn btn-danger" style="background-color: #da1e31; border-color: #d82537;" routerLink="/vehicles" > Back to Vehicles  </button>
-
+<button class="btn btn-danger" style="background-color: #da1e31; border-color: #d82537;" routerLink="/vehicles">
+  Back to Vehicles
+</button>
