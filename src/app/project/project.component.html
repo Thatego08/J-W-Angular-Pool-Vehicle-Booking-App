@@ -2,7 +2,12 @@
   <h2>Project Management</h2>
 
   <!-- Search Bar -->
-  <input type="text" [(ngModel)]="searchQuery" (input)="searchProjects()" placeholder="Search by project number or description" />
+  <input
+    type="text"
+    [(ngModel)]="searchQuery"
+    (input)="searchProjects()"
+    placeholder="Search by project number or description"
+  />
 
   <!-- Project List Table -->
   <table class="table table-bordered mt-3">
@@ -20,8 +25,18 @@
         <td>{{ project.description }}</td>
         <td>{{ project.statusName }}</td>
         <td>
-          <button class="btn btn-warning" (click)="openProjectModal(editProjectModal, project)">Edit</button>
-          <button class="btn btn-danger" (click)="deleteProject(project.projectID)">Delete</button>
+          <button
+            class="btn btn-warning"
+            (click)="openEditModal(editProjectModal, project)"
+          >
+            Edit
+          </button>
+          <button
+            class="btn btn-danger"
+            (click)="deleteProject(project.projectID)"
+          >
+            Delete
+          </button>
         </td>
       </tr>
     </tbody>
@@ -33,91 +48,217 @@
       <li class="page-item" [class.disabled]="currentPage === 1">
         <a class="page-link" (click)="changePage(currentPage - 1)">Previous</a>
       </li>
-      <li class="page-item" [class.active]="pageIndex === currentPage" *ngFor="let pageIndex of [].constructor(Math.ceil(projects.length / itemsPerPage)); let i = index">
-        <a class="page-link" (click)="changePage(pageIndex + 1)">{{ pageIndex + 1 }}</a>
+      <li
+        class="page-item"
+        [class.active]="page === currentPage"
+        *ngFor="let page of pages"
+      >
+        <a class="page-link" (click)="changePage(page)">{{ page }}</a>
       </li>
-      <li class="page-item" [class.disabled]="currentPage === Math.ceil(projects.length / itemsPerPage)">
+      <li class="page-item" [class.disabled]="currentPage === totalPages">
         <a class="page-link" (click)="changePage(currentPage + 1)">Next</a>
       </li>
     </ul>
   </nav>
 
-  <!-- Add/Edit Project Modal -->
+  <!-- Add Project Modal -->
   <ng-template #addProjectModal let-modal>
     <div class="modal-header">
       <h5 class="modal-title">Add New Project</h5>
       <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
     </div>
     <div class="modal-body">
-      <form #projectForm="ngForm">
+      <form>
         <div class="form-group">
           <label>Project Number</label>
-          <input type="text" [(ngModel)]="newProject.projectNumber" name="projectNumber" required class="form-control" />
+          <input
+            type="number"
+            class="form-control"
+            [(ngModel)]="newProject.projectNumber"
+            name="projectNumber"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label>Job No</label>
+          <input
+            type="number"
+            class="form-control"
+            [(ngModel)]="newProject.jobNo"
+            name="jobNo"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label>Task Code</label>
+          <input
+            type="number"
+            class="form-control"
+            [(ngModel)]="newProject.taskCode"
+            name="taskCode"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label>Activity Code</label>
+          <input
+            type="number"
+            class="form-control"
+            [(ngModel)]="newProject.activityCode"
+            name="activityCode"
+            required
+          />
         </div>
         <div class="form-group">
           <label>Description</label>
-          <input type="text" [(ngModel)]="newProject.description" name="description" required class="form-control" />
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="newProject.description"
+            name="description"
+            required
+          />
         </div>
         <div class="form-group">
           <label>Status</label>
-          <select [(ngModel)]="newProject.status" name="status" required class="form-control">
-            <option value="Active">Active</option>
-            <option value="Inactive">Inactive</option>
-            <option value="Concluded">Concluded</option>
+          <select
+            class="form-control"
+            [(ngModel)]="newProject.statusId"
+            name="statusId"
+            required
+          >
+            <option *ngFor="let status of statuses" [value]="status.id">
+              {{ status.name }}
+            </option>
           </select>
+        </div>
+        <div class="form-group">
+          <label>Rates</label>
+          <select
+            multiple
+            class="form-control"
+            [(ngModel)]="newProject.rateID"
+            name="rateID"
+          >
+            <option *ngFor="let rate of rates" [value]="rate.rateId">
+              {{ rate.rateName }} ({{ rate.rateValue | currency }})
+            </option>
+          </select>
+          <small class="text-muted">Hold Ctrl/Cmd to select multiple</small>
         </div>
       </form>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Cancel</button>
-      <button type="button" class="btn btn-primary" (click)="addProject(newProject)">Add Project</button>
+      <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">
+        Cancel
+      </button>
+      <button type="button" class="btn btn-primary" (click)="addProject()">
+        Add Project
+      </button>
     </div>
   </ng-template>
 
   <!-- Edit Project Modal -->
-<ng-template #editProjectModal let-modal>
-  <div class="modal-header">
-    <h5 class="modal-title">Edit Project</h5>
-    <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
-  </div>
-  <div class="modal-body">
-    <form #editProjectForm="ngForm">
-      <div class="form-group">
-        <label>Project Number</label>
-        <input type="text" [(ngModel)]="selectedProject!.projectNumber" name="projectNumber" required class="form-control" />
-      </div>
-      <div class="form-group">
-        <label>Description</label>
-        <input type="text" [(ngModel)]="selectedProject!.description" name="description" required class="form-control" />
-      </div>
-      <div class="form-group">
-        <label>Status</label>
-        <select [(ngModel)]="selectedProject!.statusId" name="status" required class="form-control">
-          <option value="Active">Active</option>
-          <option value="Inactive">Inactive</option>
-          <option value="Concluded">Concluded</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Rate</label>
-        <select [(ngModel)]="selectedProject!.rateID" name="rateId" required class="form-control">
-          <!-- <option *ngFor="let rate of rates" [value]="rate.RateID">{{ rate.conditions }}</option> -->
-          <option value="Half-Day Rate">Half-Day Rate</option>
-          <option value="Full-Day Rate">Full-Day Rate</option>
-          <option value="Travel Kilometer Rate">Travel Kilometer Rate</option>
-        </select>
-      </div>
-    </form>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Cancel</button>
-    <button type="button" class="btn btn-primary" (click)="selectedProject && updateProject(selectedProject)">Save Changes</button>
-  </div>
+  <ng-template #editProjectModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title">Edit Project</h5>
+      <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+    </div>
+    <div class="modal-body" *ngIf="selectedProject">
+      <form>
+        <div class="form-group">
+          <label>Project Number</label>
+          <input
+            type="number"
+            class="form-control"
+            [(ngModel)]="selectedProject.projectNumber"
+            name="projectNumber"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label>Job No</label>
+          <input
+            type="number"
+            class="form-control"
+            [(ngModel)]="selectedProject.jobNo"
+            name="jobNo"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label>Task Code</label>
+          <input
+            type="number"
+            class="form-control"
+            [(ngModel)]="selectedProject.taskCode"
+            name="taskCode"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label>Activity Code</label>
+          <input
+            type="number"
+            class="form-control"
+            [(ngModel)]="selectedProject.activityCode"
+            name="activityCode"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="selectedProject.description"
+            name="description"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label>Status</label>
+          <select
+            class="form-control"
+            [(ngModel)]="selectedProject.statusId"
+            name="statusId"
+            required
+          >
+            <option *ngFor="let status of statuses" [value]="status.id">
+              {{ status.name }}
+            </option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Rates</label>
+          <select
+            multiple
+            class="form-control"
+            [(ngModel)]="selectedProject.rateID"
+            name="rateID"
+          >
+            <option *ngFor="let rate of rates" [value]="rate.rateId">
+              {{ rate.rateName }} ({{ rate.rateValue | currency }})
+            </option>
+          </select>
+          <small class="text-muted">Hold Ctrl/Cmd to select multiple</small>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">
+        Cancel
+      </button>
+      <button type="button" class="btn btn-primary" (click)="updateProject()">
+        Save Changes
+      </button>
+    </div>
+  </ng-template>
 
-</ng-template>
+  <br />
 
-
-  <br>
-  
   <!-- Add Project Button -->
-  <button class="btn btn-primary" (click)="openProjectModal(addProjectModal)">Add New Project</button>
+  <button class="btn btn-primary" (click)="openAddModal(addProjectModal)">
+    Add New Project
+  </button>
+</div>
