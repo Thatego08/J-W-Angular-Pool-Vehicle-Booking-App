@@ -40,16 +40,16 @@
               <button (click)="editTrip(trip)" class="action-button edit">Edit</button>
               
               <button (click)="navigateToCreatePostChecklist(trip.tripId)" 
-                class="action-button checklist" 
-                [ngStyle]="{'background-color': isTravelEndPassed(trip.travelEnd) ? 'grey' : '#27ae60'}" 
-                [disabled]="isTravelEndPassed(trip.travelEnd)">
-                Create Post Checklist
-              </button>
+        class="action-button checklist"
+        
+        style="background-color: #27ae60;">
+  Create Post Checklist
+</button>
               <button (click)="navigateToRefuel(trip.tripId)" 
-                class="action-button refuel" 
-                [ngStyle]="{'background-color': isTravelEndPassed(trip.travelEnd) ? 'grey' : '#f39c12'}" 
-                [disabled]="isTravelEndPassed(trip.travelEnd)">
-                Refuel
+                 class="action-button refuel"
+        
+        style="background-color: #f39c12;">
+  Refuel
               </button>
             </div>
           </td>
