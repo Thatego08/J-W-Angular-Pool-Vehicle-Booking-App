@@ -159,4 +159,18 @@ export class ProjectComponent implements OnInit {
       });
     }
   }
+
+  getStatusBadgeClass(statusName: string | undefined): string {
+  switch (statusName?.toLowerCase()) {
+    case 'active':
+      return 'bg-active';
+    case 'inactive':
+      return 'bg-inactive';
+    case 'concluded':
+      return 'bg-concluded';
+    default:
+      return 'bg-unknown';
+  }
+}
+
 }

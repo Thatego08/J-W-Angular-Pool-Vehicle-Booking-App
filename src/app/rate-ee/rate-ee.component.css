@@ -1,0 +1,31 @@
+/* Badge base styles */
+.badge {
+  padding: 0.5em 0.8em;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border-radius: 30px;
+  display: inline-block;
+  text-align: center;
+}
+
+/* Active (green) */
+.bg-success {
+  background-color: #28a745 !important;
+  color: white !important;
+}
+
+/* Inactive (gray) */
+.bg-secondary {
+  background-color: #6c757d !important;
+  color: white !important;
+}
+
+.table th {
+  color: #212529;
+  background-color: #f8f9fa;
+  font-weight: 600;
+}
+
+.table td  {
+  background-color: #f2f2f2;
+}
