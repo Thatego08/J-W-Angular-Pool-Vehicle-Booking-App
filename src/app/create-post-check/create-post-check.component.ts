@@ -52,6 +52,7 @@ export class CreatePostCheckComponent {
     this.postCheckForm = this.fb.group({
       TripId: [null],
       ClosingKms: [null, [Validators.required, this.validatePositiveKms]],
+      TravelEnd: [null], // NEW field
       Comments: [''],
       AdditionalComments: [''],
       MediaDescription: [''],
@@ -149,26 +150,37 @@ export class CreatePostCheckComponent {
   }
 
   submitForm() {
-    this.validateClosingKms();
-    if (this.postCheckForm.invalid) {
-      return;
-    }
+  this.validateClosingKms();
 
-    const formData = new FormData();
-    for (const key of Object.keys(this.postCheckForm.value)) {
-      formData.append(key, this.postCheckForm.value[key]);
-    }
+  if (this.postCheckForm.invalid) {
+    return;
+  }
 
-    this.mediaFiles.forEach(file => {
-      formData.append('MediaFiles', file, file.name);
-    });
+  // Create FormData for submission
+  const formData = new FormData();
 
-    this.http.post(`${environment.apiUrl}/PostCheck/CreatePostCheck`, formData)
-.subscribe({
+  // Append all form fields from the form
+  for (const key of Object.keys(this.postCheckForm.value)) {
+    const value = this.postCheckForm.value[key];
+    // Convert Date objects to ISO string if needed (for TravelEnd)
+    formData.append(key, value instanceof Date ? value.toISOString() : value);
+  }
+
+  // Append media files
+  this.mediaFiles.forEach(file => {
+    formData.append('MediaFiles', file, file.name);
+  });
+
+  // Send POST request to backend
+  this.http.post(`${environment.apiUrl}/PostCheck/CreatePostCheck`, formData)
+    .subscribe({
       next: () => {
         this.successMessage = 'Post check created successfully!';
         this.postCheckForm.reset();
         this.mediaFiles = [];
+        this.mediaPreviews = [];
+
+        // Original navigation back to /get-trip
         setTimeout(() => this.router.navigate(['/get-trip']), 2000);
       },
       error: (error) => {
@@ -177,9 +189,9 @@ export class CreatePostCheckComponent {
       }
     });
 
-    
-    setTimeout(() => {
-          this.router.navigate(['/app-trip']);
-        }, 2000);
-  }
+  // Original duplicate navigation
+  setTimeout(() => {
+    this.router.navigate(['/app-trip']);
+  }, 2000);
+}
 }
