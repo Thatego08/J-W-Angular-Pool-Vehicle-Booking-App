@@ -7,6 +7,6 @@ export interface Project{
   activityCode: number;
   statusId: number;
   statusName?: string;
-  rateID: number;
+  rateID: number[];
   
 }
