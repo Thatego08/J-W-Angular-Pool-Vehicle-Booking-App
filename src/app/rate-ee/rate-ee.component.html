@@ -1,0 +1,84 @@
+<div class="container mt-4">
+  <h3>Rate Management (RatesEE)</h3>
+  <button class="btn btn-primary mb-3" (click)="toggleForm()">
+    {{ showForm ? 'Cancel' : 'Add New Rate' }}
+  </button>
+
+  <!-- Form Card -->
+  <div class="card mb-4" *ngIf="showForm">
+    <div class="card-header">{{ isEdit ? 'Edit Rate' : 'Create Rate' }}</div>
+    <div class="card-body">
+      <form [formGroup]="rateForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label>Rate Name</label>
+          <input type="text" class="form-control" formControlName="rateName" />
+        </div>
+        <div class="form-group">
+          <label>Rate Value</label>
+          <input type="number" step="0.01" class="form-control" formControlName="rateValue" />
+        </div>
+        <div class="form-group">
+          <label>Effective Date</label>
+          <input type="datetime-local" class="form-control" formControlName="effectiveDate" />
+        </div>
+        <div class="form-group">
+          <label>Expiry Date</label>
+          <input type="datetime-local" class="form-control" formControlName="expiryDate" />
+        </div>
+        <div class="form-check mb-3">
+          <input type="checkbox" class="form-check-input" formControlName="isActive" />
+          <label class="form-check-label">Active</label>
+        </div>
+        <div class="form-group">
+          <label>Project</label>
+          <select class="form-control" formControlName="projectId">
+            <option [ngValue]="null">-- Select Project --</option>
+            <option *ngFor="let p of projects" [value]="p.projectID">{{ p.projectNumber }}</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-success" [disabled]="rateForm.invalid">
+          {{ isEdit ? 'Update' : 'Create' }}
+        </button>
+        <button type="button" class="btn btn-secondary ml-2" (click)="toggleForm()">Cancel</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Rates Table -->
+  <table class="table table-striped" *ngIf="rates.length > 0; else noData">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Value</th>
+        <th>Effective</th>
+        <th>Expiry</th>
+        <th>Active</th>
+        <th>Project</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let rate of rates">
+        <td>{{ rate.rateId }}</td>
+        <td>{{ rate.rateName }}</td>
+        <td>{{ rate.rateValue | currency }}</td>
+        <td>{{ rate.effectiveDate | date:'short' }}</td>
+        <td>{{ rate.expiryDate | date:'short' }}</td>
+        <td>
+          <span class="badge" [ngClass]="rate.isActive ? 'badge-success' : 'badge-secondary'">
+            {{ rate.isActive ? 'Yes' : 'No' }}
+          </span>
+        </td>
+        <td>{{ rate.projectNumber }} - {{ rate.description }}</td>
+        <td>
+          <button class="btn btn-sm btn-info" (click)="onEdit(rate)">Edit</button>
+          <button class="btn btn-sm btn-danger ml-1" (click)="onDelete(rate.rateId!)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <ng-template #noData>
+    <p class="text-muted">No rates found.</p>
+  </ng-template>
+</div>

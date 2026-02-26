@@ -116,6 +116,7 @@ import { EditTransmissionListComponent } from './vehicle/edit-transmission-list/
 import { AddTransmissionComponent } from './vehicle/add-transmission/add-transmission.component';
 import { ManagementHubComponent } from './management-hub/management-hub/management-hub.component';
 import { DashboardsComponent } from './Admin/dashboards/dashboards.component';
+import { RateEEComponent } from './rate-ee/rate-ee.component';
 
 
 @NgModule({
@@ -205,7 +206,8 @@ import { DashboardsComponent } from './Admin/dashboards/dashboards.component';
       EditTransmissionListComponent,
       AddTransmissionComponent,
       ManagementHubComponent,
-      DashboardsComponent
+      DashboardsComponent,
+      RateEEComponent
   ],
   imports: [
     BrowserModule,
