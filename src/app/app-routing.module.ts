@@ -74,7 +74,7 @@ import { HelpDocumentComponent } from './help-document/help-document.component';
 
 import { FaqlistComponent } from './faqlist/faqlist.component';
 import { FaqadminComponent } from './faqadmin/faqadmin.component';
-
+import {RateEEComponent} from './rate-ee/rate-ee.component';
 import { AdminSectionComponent } from './Admin/admin-section/admin-section.component';
 import { AuditLogComponent } from './audit-log/audit-log.component';
 import { WelcomeComponent } from './welcome/welcome.component';
@@ -211,8 +211,13 @@ const routes: Routes = [
 
   {path: 'app-report', component:ReportComponent},
 
-  {path:'admin-section', component:AdminSectionComponent}
+  {path:'admin-section', component:AdminSectionComponent},
 
+
+  {
+  path: 'rates',
+  component: RateEEComponent
+}
 
 ];
 
