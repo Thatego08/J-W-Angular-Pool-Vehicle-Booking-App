@@ -409,12 +409,20 @@ onVehicleTypeChange(): void {
         return;
       }
   
+      
+    // Find the selected vehicle to get its registration number
+    const selectedVehicle = this.filteredVehicles.find(
+      v => v.name === this.bookingForm.value.vehicleName
+    );
+    const vehicleRegistration = selectedVehicle ? selectedVehicle.registrationNumber : '';
+
       const booking: CreateBookingModel = {
         userName: this.bookingForm.value.userName,
         event: this.isEvent ? this.bookingForm.value.event : null,
         startDate: startDate.toISOString(),  // Convert to ISO string
         endDate: endDate.toISOString(),      // Convert to ISO string
         vehicleName: this.bookingForm.value.vehicleName,
+        vehicleRegistration: vehicleRegistration, // Include registration number
         projectNumber: !this.isEvent ? this.bookingForm.value.projectNumber : null,
         reminderSent: false,
         type: this.bookingForm.value.type,
@@ -433,6 +441,7 @@ onVehicleTypeChange(): void {
   
         },
         error: (error) => {
+          console.error('Validation errors:', error.error.errors); // Log the detailed errors
           console.error('Error Response:', error);
           if (error.status === 500) {
             this.handleError('Failed to create booking. Please try again.');

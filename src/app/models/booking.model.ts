@@ -21,6 +21,7 @@ export interface CreateBookingModel {
   projectNumber?: number;
   reminderSent: boolean;
   type: string;
+  vehicleRegistration: string;
   //statusId: number;
 
 }
