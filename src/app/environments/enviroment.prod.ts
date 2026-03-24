@@ -3,6 +3,6 @@ export const environment = {
    
     // apiUrl: 'https://localhost:7041/api' // local API URL
 
-    apiUrl: 'https://j-w-pool-vehicle-booking-app.onrender.com'
+    apiUrl: 'https://j-w-pool-vehicle-booking-app.onrender.com/api'
   };
   

@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   //apiUrl: 'https://team34finalapi-fzdsc6hyhzaga6ab.southafricanorth-01.azurewebsites.net/api' //apiUrl: 'https://localhost:7041/api' // local API URL'
   //apiUrl: 'https://localhost:7041/api' // local API URL
-  apiUrl: 'https://j-w-pool-vehicle-booking-app.onrender.com'
+  apiUrl: 'https://j-w-pool-vehicle-booking-app.onrender.com/api'
 };
 
   /*
